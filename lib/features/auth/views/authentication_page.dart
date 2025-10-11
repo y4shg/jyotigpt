@@ -31,10 +31,8 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _apiKeyController = TextEditingController();
 
   bool _obscurePassword = true;
-  bool _useApiKey = false;
   String? _loginError;
   bool _isSigningIn = false;
 
@@ -58,7 +56,6 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _apiKeyController.dispose();
     super.dispose();
   }
 
@@ -73,20 +70,11 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
 
     try {
       final actions = ref.read(authActionsProvider);
-      bool success;
-
-      if (_useApiKey) {
-        success = await actions.loginWithApiKey(
-          _apiKeyController.text.trim(),
-          rememberCredentials: true, // Consistent with credentials method
-        );
-      } else {
-        success = await actions.login(
-          _usernameController.text.trim(),
-          _passwordController.text,
-          rememberCredentials: true,
-        );
-      }
+      final success = await actions.login(
+        _usernameController.text.trim(),
+        _passwordController.text,
+        rememberCredentials: true,
+      );
 
       if (!success) {
         final authState = ref.read(authStateManagerProvider);
@@ -171,11 +159,6 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // Server connection status
-                            _buildServerStatus(),
-
-                            const SizedBox(height: Spacing.xl),
-
                             // Welcome section
                             _buildWelcomeSection(),
 
@@ -237,68 +220,6 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     );
   }
 
-  Widget _buildServerStatus() {
-    // Prefer route-provided config; otherwise fall back to active server
-    final activeServerAsync = ref.watch(activeServerProvider);
-    final cfg =
-        widget.serverConfig ??
-        activeServerAsync.maybeWhen(data: (s) => s, orElse: () => null);
-    final hostText = () {
-      try {
-        final url = cfg?.url;
-        if (url != null && url.isNotEmpty) return Uri.parse(url).host;
-      } catch (_) {}
-      return 'Server';
-    }();
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.md,
-        vertical: Spacing.sm,
-      ),
-      decoration: BoxDecoration(
-        color: context.jyotigptTheme.success.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(AppBorderRadius.small),
-        border: Border.all(
-          color: context.jyotigptTheme.success.withValues(alpha: 0.2),
-          width: BorderWidth.standard,
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Platform.isIOS
-                ? CupertinoIcons.checkmark_circle
-                : Icons.check_circle_outline,
-            color: context.jyotigptTheme.success,
-            size: IconSize.small,
-          ),
-          const SizedBox(width: Spacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.connectedToServer,
-                  style: context.jyotigptTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: context.jyotigptTheme.success,
-                  ),
-                ),
-                Text(
-                  hostText,
-                  style: context.jyotigptTheme.bodySmall?.copyWith(
-                    color: context.jyotigptTheme.textSecondary,
-                    fontFamily: 'monospace',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildWelcomeSection() {
     return Column(
       children: [
@@ -334,179 +255,7 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Authentication mode toggle
-        _buildAuthModeToggle(),
-
-        const SizedBox(height: Spacing.lg),
-
-        // Authentication form fields
-        _buildAuthFields(),
-
-        if (_loginError != null) ...[
-          const SizedBox(height: Spacing.md),
-          _buildErrorMessage(_loginError!),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildAuthModeToggle() {
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: context.jyotigptTheme.surfaceContainer.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(AppBorderRadius.small),
-        border: Border.all(
-          color: context.jyotigptTheme.dividerColor.withValues(alpha: 0.5),
-          width: BorderWidth.standard,
-        ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildAuthToggleOption(
-              icon: Platform.isIOS
-                  ? CupertinoIcons.person_circle
-                  : Icons.account_circle_outlined,
-              label: AppLocalizations.of(context)!.credentials,
-              isSelected: !_useApiKey,
-              onTap: () => setState(() => _useApiKey = false),
-            ),
-          ),
-          Expanded(
-            child: _buildAuthToggleOption(
-              icon: Platform.isIOS
-                  ? CupertinoIcons.lock_shield
-                  : Icons.vpn_key_outlined,
-              label: AppLocalizations.of(context)!.apiKey,
-              isSelected: _useApiKey,
-              onTap: () => setState(() => _useApiKey = true),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAuthToggleOption({
-    required IconData icon,
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return AnimatedContainer(
-      duration: AnimationDuration.microInteraction,
-      curve: Curves.easeInOutCubic,
-      child: Material(
-        color: isSelected
-            ? context.jyotigptTheme.buttonPrimary
-            : Colors.transparent,
-        borderRadius: BorderRadius.circular(AppBorderRadius.small - 1),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(AppBorderRadius.small - 1),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: Spacing.sm,
-              horizontal: Spacing.sm,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  size: IconSize.small,
-                  color: isSelected
-                      ? context.jyotigptTheme.buttonPrimaryText
-                      : context.jyotigptTheme.iconSecondary,
-                ),
-                const SizedBox(width: Spacing.xs),
-                Text(
-                  label,
-                  style: context.jyotigptTheme.bodySmall?.copyWith(
-                    color: isSelected
-                        ? context.jyotigptTheme.buttonPrimaryText
-                        : context.jyotigptTheme.textSecondary,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAuthFields() {
-    return AnimatedSwitcher(
-      duration: AnimationDuration.pageTransition,
-      switchInCurve: Curves.easeInOutCubic,
-      switchOutCurve: Curves.easeInOutCubic,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 0.1),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          ),
-        );
-      },
-      child: _useApiKey ? _buildApiKeyForm() : _buildCredentialsForm(),
-    );
-  }
-
-  Widget _buildApiKeyForm() {
-    return Column(
-      key: const ValueKey('api_key_form'),
-      children: [
-        AccessibleFormField(
-          label: AppLocalizations.of(context)!.apiKey,
-          hint: 'sk-...',
-          controller: _apiKeyController,
-          validator: InputValidationService.combine([
-            InputValidationService.validateRequired,
-            (value) => InputValidationService.validateMinLength(
-              value,
-              10,
-              fieldName: AppLocalizations.of(context)!.apiKey,
-            ),
-          ]),
-          obscureText: _obscurePassword,
-          semanticLabel: AppLocalizations.of(context)!.enterApiKey,
-          prefixIcon: Icon(
-            Platform.isIOS
-                ? CupertinoIcons.lock_shield
-                : Icons.vpn_key_outlined,
-            color: context.jyotigptTheme.iconSecondary,
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(
-              _obscurePassword
-                  ? (Platform.isIOS
-                        ? CupertinoIcons.eye_slash
-                        : Icons.visibility_off)
-                  : (Platform.isIOS ? CupertinoIcons.eye : Icons.visibility),
-              color: context.jyotigptTheme.iconSecondary,
-            ),
-            onPressed: () =>
-                setState(() => _obscurePassword = !_obscurePassword),
-          ),
-          onSubmitted: (_) => _signIn(),
-          isRequired: true,
-          autofillHints: const [AutofillHints.password],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCredentialsForm() {
-    return Column(
-      key: const ValueKey('credentials_form'),
-      children: [
+        // Username field
         AccessibleFormField(
           label: AppLocalizations.of(context)!.usernameOrEmail,
           hint: AppLocalizations.of(context)!.usernameOrEmailHint,
@@ -524,7 +273,10 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
           autofillHints: const [AutofillHints.username, AutofillHints.email],
           isRequired: true,
         ),
+
         const SizedBox(height: Spacing.lg),
+
+        // Password field
         AccessibleFormField(
           label: AppLocalizations.of(context)!.password,
           hint: AppLocalizations.of(context)!.passwordHint,
@@ -559,6 +311,11 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
           autofillHints: const [AutofillHints.password],
           isRequired: true,
         ),
+
+        if (_loginError != null) ...[
+          const SizedBox(height: Spacing.md),
+          _buildErrorMessage(_loginError!),
+        ],
       ],
     );
   }
@@ -569,8 +326,6 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
       child: JyotiGPTButton(
         text: _isSigningIn
             ? AppLocalizations.of(context)!.signingIn
-            : _useApiKey
-            ? AppLocalizations.of(context)!.signInWithApiKey
             : AppLocalizations.of(context)!.signIn,
         icon: _isSigningIn
             ? null
