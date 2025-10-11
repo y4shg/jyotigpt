@@ -1,0 +1,2 @@
+Native mobile client for Open‑WebUI. Chat with your self‑hosted AI.
+

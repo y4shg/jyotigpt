@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleLocalizations</key>
+		<array>
+			<string>en</string>
+			<string>de</string>
+			<string>fr</string>
+			<string>it</string>
+		</array>
+		<key>CFBundleDisplayName</key>
+		<string>JyotiGPT</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>jyotigpt</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>$(FLUTTER_BUILD_NAME)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<key>LSRequiresIPhoneOS</key>
+		<true/>
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIMainStoryboardFile</key>
+		<string>Main</string>
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<true/>
+		<!-- Network Access -->
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSAllowsLocalNetworking</key>
+			<true/>
+		</dict>
+		<!-- Permissions -->
+		<key>NSMicrophoneUsageDescription</key>
+		<string>JyotiGPT uses the microphone to record voice messages and enable voice-to-text in chats. For example, when you hold the mic button in a conversation, we capture your speech to send as an audio message or transcript.</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>JyotiGPT uses on-device speech recognition so you can dictate messages hands‑free. Your speech is converted to text on your device when available.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>JyotiGPT uses the camera to take photos or videos you choose to share in chats. For example, you can snap a photo of a document and attach it to a message.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>JyotiGPT needs access to your photo library so you can select existing images or videos to share in chats. For example, you can pick a screenshot to include in a conversation.</string>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<key>UIStatusBarHidden</key>
+		<false/>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>app.y4shg.jyotigpt.share</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>ShareMedia-app.y4shg.jyotigpt</string>
+				</array>
+			</dict>
+		</array>
+		<!-- Background Modes -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>audio</string>
+			<string>processing</string>
+		</array>
+		<!-- Background Task Identifiers -->
+		<key>BGTaskSchedulerPermittedIdentifiers</key>
+		<array>
+			<string>app.y4shg.jyotigpt.refresh</string>
+		</array>
+	</dict>
+</plist>
