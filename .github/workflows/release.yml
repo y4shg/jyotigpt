@@ -66,7 +66,7 @@ jobs:
       - name: Upload Unsigned IPA
         uses: actions/upload-artifact@v4
         with:
-          name: conduit-ios-unsigned
+          name: jyotigpt-ios-unsigned
           path: build/ios/iphoneos/app.ipa
 
       # 9️⃣ Attach to GitHub Release

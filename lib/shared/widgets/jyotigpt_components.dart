@@ -8,7 +8,7 @@ import '../../core/services/platform_service.dart';
 import '../../core/services/settings_service.dart';
 
 /// Unified component library following JyotiGPT design patterns
-/// This provides consistent, reusable UI components throughout the app
+/// This provides consistent, reusable UI components throughout the appf
 
 class JyotiGPTButton extends ConsumerWidget {
   final String text;
