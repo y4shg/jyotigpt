@@ -6,11 +6,14 @@ import '../theme/color_tokens.dart';
 import '../theme/color_palettes.dart';
 
 /// Centralized service for consistent brand identity throughout the app
-/// Uses the hub icon as the primary brand element
+/// Uses a custom brand image as the primary brand element
 class BrandService {
   BrandService._();
 
-  /// Primary brand icon - the hub icon (consistent across platforms)
+  /// Path to the brand logo image
+  static const String _brandLogoPath = 'assets/icons/icon.png';
+
+  /// Primary brand icon - the hub icon (fallback for icon-only contexts)
   static IconData get primaryIcon => Icons.hub;
 
   /// Alternative brand icons for different contexts
@@ -48,7 +51,7 @@ class BrandService {
     return palette.accentFor(resolvedBrightness);
   }
 
-  /// Creates a branded icon with consistent styling
+  /// Creates a branded icon with consistent styling (uses custom image)
   static Widget createBrandIcon({
     double size = 24,
     Color? color,
@@ -57,13 +60,22 @@ class BrandService {
     bool addShadow = false,
     BuildContext? context,
   }) {
-    final iconData = icon ?? primaryIcon;
-    final resolvedColor = color ?? primaryBrandColor(context: context);
-
-    Widget iconWidget = Icon(
-      iconData,
-      size: size,
-      color: useGradient ? null : resolvedColor,
+    // Use custom image by default
+    Widget iconWidget = Image.asset(
+      _brandLogoPath,
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+      color: useGradient ? null : color,
+      colorBlendMode: color != null ? BlendMode.srcIn : null,
+      errorBuilder: (context, error, stackTrace) {
+        // Fallback to icon if image fails to load
+        return Icon(
+          icon ?? primaryIcon,
+          size: size,
+          color: color ?? primaryBrandColor(context: context),
+        );
+      },
     );
 
     if (useGradient) {
@@ -75,7 +87,15 @@ class BrandService {
             secondaryBrandColor(context: context),
           ],
         ).createShader(bounds),
-        child: Icon(iconData, size: size),
+        child: Image.asset(
+          _brandLogoPath,
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(icon ?? primaryIcon, size: size);
+          },
+        ),
       );
     }
 
@@ -97,7 +117,7 @@ class BrandService {
     return iconWidget;
   }
 
-  /// Creates a branded avatar with the hub icon
+  /// Creates a branded avatar with the custom logo
   static Widget createBrandAvatar({
     double size = 40,
     Color? backgroundColor,
@@ -108,9 +128,6 @@ class BrandService {
   }) {
     final bgColor = backgroundColor ?? primaryBrandColor(context: context);
     final tokens = _resolveTokens(context);
-    final iColor =
-        iconColor ??
-        (context?.jyotigptTheme.textInverse ?? tokens.neutralTone00);
 
     return Container(
       width: size,
@@ -141,13 +158,30 @@ class BrandService {
               child: Text(
                 fallbackText.toUpperCase(),
                 style: TextStyle(
-                  color: iColor,
+                  color: iconColor ??
+                      (context?.jyotigptTheme.textInverse ??
+                          tokens.neutralTone00),
                   fontSize: size * 0.4,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             )
-          : Icon(primaryIcon, size: size * 0.5, color: iColor),
+          : Padding(
+              padding: EdgeInsets.all(size * 0.25),
+              child: Image.asset(
+                _brandLogoPath,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    primaryIcon,
+                    size: size * 0.5,
+                    color: iconColor ??
+                        (context?.jyotigptTheme.textInverse ??
+                            tokens.neutralTone00),
+                  );
+                },
+              ),
+            ),
     );
   }
 
@@ -185,7 +219,6 @@ class BrandService {
       return createBrandIcon(
         size: size,
         color: iconColor,
-        icon: primaryIconOutlined,
         context: context,
       );
     }
@@ -201,16 +234,18 @@ class BrandService {
           width: 2,
         ),
       ),
-      child: createBrandIcon(
-        size: size * 0.5,
-        color: iconColor,
-        icon: primaryIconOutlined,
-        context: context,
+      child: Padding(
+        padding: EdgeInsets.all(size * 0.25),
+        child: createBrandIcon(
+          size: size * 0.5,
+          color: iconColor,
+          context: context,
+        ),
       ),
     );
   }
 
-  /// Creates a branded button with hub icon
+  /// Creates a branded button with custom logo
   static Widget createBrandButton({
     required String text,
     required VoidCallback? onPressed,
@@ -231,8 +266,7 @@ class BrandService {
             ? createBrandLoadingIndicator(size: IconSize.sm, context: context)
             : createBrandIcon(
                 size: IconSize.md,
-                icon: icon ?? primaryIcon,
-                color: theme?.textInverse ?? tokens.neutralTone00,
+                icon: icon,
                 context: context,
               ),
         label: Text(text),
@@ -319,10 +353,19 @@ class BrandService {
             ? JyotiGPTShadows.glow(context)
             : JyotiGPTShadows.glowWithTokens(tokens),
       ),
-      child: Icon(
-        primaryIcon,
-        size: size * 0.5,
-        color: theme?.textInverse ?? tokens.neutralTone00,
+      child: Padding(
+        padding: EdgeInsets.all(size * 0.25),
+        child: Image.asset(
+          _brandLogoPath,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(
+              primaryIcon,
+              size: size * 0.5,
+              color: theme?.textInverse ?? tokens.neutralTone00,
+            );
+          },
+        ),
       ),
     );
   }

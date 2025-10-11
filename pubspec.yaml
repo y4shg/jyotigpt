@@ -94,6 +94,7 @@ flutter:
   
   assets:
     - assets/icons/
+    - assets/icons/icon.png
     - assets/mermaid.min.js
 
 flutter_native_splash:
