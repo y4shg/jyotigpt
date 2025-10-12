@@ -55,23 +55,23 @@ class AppPaletteThemeExtension
 }
 
 class AppColorPalettes {
-  static const String defaultPaletteId = 'aurora_violet';
+  static const String defaultPaletteId = 'inner_fire';
 
-  static const AppColorPalette auroraViolet = AppColorPalette(
+  static const AppColorPalette innerFire = AppColorPalette(
     id: defaultPaletteId,
-    label: 'Aurora Violet',
-    description: 'Bold purples inspired by aurora skies.',
+    label: 'Inner Fire',
+    description: 'Radiant reds symbolizing the spark of divine intelligence.',
     light: AppPaletteTone(
-      primary: Color(0xFFA420FF),
-      secondary: Color(0xFFB058FF),
-      accent: Color(0xFFD9A5FF),
+      primary: Color(0xFFFF3131),
+      secondary: Color(0xFFFF5252),
+      accent: Color(0xFFFFA3A3),
     ),
     dark: AppPaletteTone(
-      primary: Color(0xFF9500FF),
-      secondary: Color(0xFFC773FF),
-      accent: Color(0xFFE3BDFF),
+      primary: Color(0xFFFF4C4C),
+      secondary: Color(0xFFFF6B6B),
+      accent: Color(0xFFFFB3B3),
     ),
-    preview: [Color(0xFF9500FF), Color(0xFFA420FF), Color(0xFFB058FF)],
+    preview: [Color(0xFFFF3131), Color(0xFFFF5252), Color(0xFFFFA3A3)],
   );
 
   static const AppColorPalette emeraldRush = AppColorPalette(
@@ -126,7 +126,7 @@ class AppColorPalettes {
   );
 
   static const List<AppColorPalette> all = [
-    auroraViolet,
+    innerFire,
     emeraldRush,
     azurePulse,
     sunsetGlow,
@@ -135,7 +135,7 @@ class AppColorPalettes {
   static AppColorPalette byId(String? id) {
     return all.firstWhere(
       (palette) => palette.id == id,
-      orElse: () => auroraViolet,
+      orElse: () => innerFire,
     );
   }
 }

@@ -349,7 +349,7 @@ class EnhancedAccessibilityService {
     return BoxDecoration(
       border: hasFocus
           ? Border.all(
-              color: focusColor ?? AppColorPalettes.auroraViolet.light.primary,
+              color: focusColor ?? AppColorPalettes.innerFire.light.primary,
               width: borderWidth,
             )
           : null,

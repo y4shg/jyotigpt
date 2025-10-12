@@ -94,14 +94,14 @@ class AppColorTokens extends ThemeExtension<AppColorTokens> {
 
   factory AppColorTokens.light({AppColorPalette? palette}) {
     return AppColorTokens._fromPalette(
-      palette ?? AppColorPalettes.auroraViolet,
+      palette ?? AppColorPalettes.innerFire,
       Brightness.light,
     );
   }
 
   factory AppColorTokens.dark({AppColorPalette? palette}) {
     return AppColorTokens._fromPalette(
-      palette ?? AppColorPalettes.auroraViolet,
+      palette ?? AppColorPalettes.innerFire,
       Brightness.dark,
     );
   }

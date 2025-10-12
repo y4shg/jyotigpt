@@ -826,7 +826,7 @@ extension JyotiGPTThemeContext on BuildContext {
     if (extension != null) return extension;
     final palette =
         theme.extension<AppPaletteThemeExtension>()?.palette ??
-        AppColorPalettes.auroraViolet;
+        AppColorPalettes.innerFire;
     final tokens = theme.brightness == Brightness.dark
         ? AppColorTokens.dark(palette: palette)
         : AppColorTokens.light(palette: palette);
@@ -843,7 +843,7 @@ extension JyotiGPTColorTokensContext on BuildContext {
     if (tokens != null) return tokens;
     final palette =
         theme.extension<AppPaletteThemeExtension>()?.palette ??
-        AppColorPalettes.auroraViolet;
+        AppColorPalettes.innerFire;
     return theme.brightness == Brightness.dark
         ? AppColorTokens.dark(palette: palette)
         : AppColorTokens.light(palette: palette);
@@ -853,7 +853,7 @@ extension JyotiGPTColorTokensContext on BuildContext {
 extension JyotiGPTPaletteContext on BuildContext {
   AppColorPalette get jyotigptPalette {
     return Theme.of(this).extension<AppPaletteThemeExtension>()?.palette ??
-        AppColorPalettes.auroraViolet;
+        AppColorPalettes.innerFire;
   }
 }
 

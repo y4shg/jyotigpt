@@ -210,7 +210,7 @@ class _IllustratedPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Aurora blob illustration
+        // Inner Fire blob illustration
         SizedBox(
           height: 160,
           child: Stack(

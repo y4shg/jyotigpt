@@ -372,10 +372,10 @@ class BrandService {
 
   static AppColorPalette _resolvePalette(BuildContext? context) {
     if (context == null) {
-      return AppColorPalettes.auroraViolet;
+      return AppColorPalettes.innerFire;
     }
     final extension = Theme.of(context).extension<AppPaletteThemeExtension>();
-    return extension?.palette ?? AppColorPalettes.auroraViolet;
+    return extension?.palette ?? AppColorPalettes.innerFire;
   }
 
   static Brightness _resolveBrightness(BuildContext? context) {
