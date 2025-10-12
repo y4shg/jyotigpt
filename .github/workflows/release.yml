@@ -1,4 +1,4 @@
-name: iOS Release (TrollStore)
+name: Flutter Release (Android + iOS TrollStore)
 
 on:
   push:
@@ -7,13 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to rebuild (e.g. v1.2.3)'
+        description: 'Tag to rebuild (e.g. v1.0.0)'
         required: true
         type: string
 
 jobs:
-  build-ios:
-    name: Build iOS (Unsigned IPA)
+  build:
     runs-on: macos-latest
 
     steps:
@@ -31,8 +30,8 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      # 4️⃣ Generate Freezed / Codegen
-      - name: Generate Code
+      # 4️⃣ Generate Code (Freezed, JSON serializable, etc.)
+      - name: Run Build Runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       # 5️⃣ Determine Version
@@ -49,11 +48,24 @@ jobs:
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "Using version $VERSION_NAME"
 
-      # 6️⃣ Build iOS Unsigned
-      - name: Build iOS (No Codesign)
+      ###################################
+      # ANDROID BUILD
+      ###################################
+      - name: Build Android (Release APK)
+        run: flutter build apk --release --build-name "$VERSION_NAME"
+
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jyotigpt-android-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      ###################################
+      # IOS BUILD (UNSIGNED / TROLLSTORE)
+      ###################################
+      - name: Build iOS (Unsigned)
         run: flutter build ios --release --no-codesign --build-name "$VERSION_NAME"
 
-      # 7️⃣ Package IPA
       - name: Package Unsigned IPA
         run: |
           cd build/ios/iphoneos
@@ -62,19 +74,22 @@ jobs:
           zip -r app.ipa Payload
         shell: bash
 
-      # 8️⃣ Upload Artifact
-      - name: Upload Unsigned IPA
+      - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
         with:
           name: jyotigpt-ios-unsigned
           path: build/ios/iphoneos/app.ipa
 
-      # 9️⃣ Attach to GitHub Release
+      ###################################
+      # RELEASE UPLOAD
+      ###################################
       - name: Upload to GitHub Release
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
-          artifacts: build/ios/iphoneos/app.ipa
+          artifacts: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/ios/iphoneos/app.ipa
           tag: ${{ env.RELEASE_TAG }}
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
