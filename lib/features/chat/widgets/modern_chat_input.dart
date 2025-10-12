@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../../../shared/theme/theme_extensions.dart';
-// app_theme not required here; using theme extension tokens
 import '../../../shared/widgets/sheet_handle.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,9 +60,6 @@ class ModernChatInput extends ConsumerStatefulWidget {
   final bool enabled;
   final Function()? onVoiceInput;
   final Function()? onVoiceCall;
-  final Function()? onFileAttachment;
-  final Function()? onImageAttachment;
-  final Function()? onCameraCapture;
 
   const ModernChatInput({
     super.key,
@@ -71,16 +67,11 @@ class ModernChatInput extends ConsumerStatefulWidget {
     this.enabled = true,
     this.onVoiceInput,
     this.onVoiceCall,
-    this.onFileAttachment,
-    this.onImageAttachment,
-    this.onCameraCapture,
   });
 
   @override
   ConsumerState<ModernChatInput> createState() => _ModernChatInputState();
 }
-
-// (Removed legacy _MicButton; inline mic logic now lives in primary button)
 
 class _ModernChatInputState extends ConsumerState<ModernChatInput>
     with TickerProviderStateMixin {
@@ -90,12 +81,10 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
   final FocusNode _focusNode = FocusNode();
   bool _pendingFocus = false;
   bool _isRecording = false;
-  // final String _voiceInputText = '';
-  bool _hasText = false; // track locally without rebuilding on each keystroke
+  bool _hasText = false;
   StreamSubscription<String>? _voiceStreamSubscription;
   late VoiceInputService _voiceService;
-  StreamSubscription<int>?
-  _intensitySub; // removed usage; will be cleaned fully
+  StreamSubscription<int>? _intensitySub;
   StreamSubscription<String>? _textSub;
   String _baseTextAtStart = '';
   bool _isDeactivated = false;
@@ -110,42 +99,31 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     super.initState();
     _voiceService = ref.read(voiceInputServiceProvider);
 
-    // Apply any prefilled text on first frame (focus handled via inputFocusTrigger)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted || _isDeactivated) return;
       final text = ref.read(prefilledInputTextProvider);
       if (text != null && text.isNotEmpty) {
         _controller.text = text;
         _controller.selection = TextSelection.collapsed(offset: text.length);
-        // Clear after applying so it doesn't re-apply on rebuilds
         ref.read(prefilledInputTextProvider.notifier).clear();
       }
     });
 
-    // Removed ref.listen here; it must be used from build in this Riverpod version
-
-    // Listen for text and selection changes in the composer
     _controller.addListener(_handleComposerChanged);
 
-    // Publish focus changes to listeners
     _focusNode.addListener(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted || _isDeactivated) return;
         final hasFocus = _focusNode.hasFocus;
-        // Publish composer focus state
         try {
           ref.read(composerHasFocusProvider.notifier).set(hasFocus);
         } catch (_) {}
       });
     });
-
-    // Do not auto-focus on mount; only focus on explicit user intent
   }
 
   @override
   void dispose() {
-    // Note: Avoid using ref in dispose as per Riverpod best practices
-    // The focus state will be naturally cleared when the widget is disposed
     _controller.removeListener(_handleComposerChanged);
     _controller.dispose();
     _focusNode.dispose();
@@ -158,7 +136,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
   }
 
   void _ensureFocusedIfEnabled() {
-    // Respect global suppression flag to avoid re-opening keyboard
     final autofocusEnabled = ref.read(composerAutofocusEnabledProvider);
     if (!widget.enabled ||
         _focusNode.hasFocus ||
@@ -192,7 +169,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
   @override
   void didUpdateWidget(covariant ModernChatInput oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Avoid auto-focusing when becoming enabled; wait for user intent
     if (!widget.enabled && oldWidget.enabled) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted || _isDeactivated) return;
@@ -210,7 +186,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     PlatformUtils.lightHaptic();
     widget.onSendMessage(text);
     _controller.clear();
-    // Keep focus and keyboard open; do not collapse automatically
   }
 
   void _insertNewline() {
@@ -226,7 +201,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
       selection: TextSelection.collapsed(offset: before.length + 1),
       composing: TextRange.empty,
     );
-    // Ensure field stays focused
     _ensureFocusedIfEnabled();
   }
 
@@ -283,7 +257,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     });
 
     if (!wasShowing && shouldShow) {
-      // Trigger prompt fetch lazily when overlay first appears
       ref.read(promptsListProvider.future);
     }
   }
@@ -556,1493 +529,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     );
   }
 
-  Widget _buildPromptOverlayPlaceholder(
-    BuildContext context,
-    Widget leading,
-    String? message,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.sm,
-        vertical: Spacing.md,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          leading,
-          if (message != null) ...[
-            const SizedBox(width: Spacing.sm),
-            Flexible(
-              child: Text(
-                message,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: context.jyotigptTheme.textSecondary,
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    ref.listen<String?>(prefilledInputTextProvider, (previous, next) {
-      final incoming = next?.trim();
-      if (incoming == null || incoming.isEmpty) return;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted || _isDeactivated) return;
-        _controller.text = incoming;
-        _controller.selection = TextSelection.collapsed(
-          offset: incoming.length,
-        );
-        try {
-          ref.read(prefilledInputTextProvider.notifier).clear();
-        } catch (_) {}
-      });
-    });
-
-    final messages = ref.watch(chatMessagesProvider);
-    final isGenerating =
-        messages.isNotEmpty &&
-        messages.last.role == 'assistant' &&
-        messages.last.isStreaming;
-    final stopGeneration = ref.read(stopGenerationProvider);
-
-    final webSearchEnabled = ref.watch(webSearchEnabledProvider);
-    final imageGenEnabled = ref.watch(imageGenerationEnabledProvider);
-    final imageGenAvailable = ref.watch(imageGenerationAvailableProvider);
-    final selectedQuickPills = ref.watch(
-      appSettingsProvider.select((s) => s.quickPills),
-    );
-    final sendOnEnter = ref.watch(
-      appSettingsProvider.select((s) => s.sendOnEnter),
-    );
-    final toolsAsync = ref.watch(toolsListProvider);
-    final List<Tool> availableTools = toolsAsync.maybeWhen<List<Tool>>(
-      data: (t) => t,
-      orElse: () => const <Tool>[],
-    );
-    final bool showWebPill = selectedQuickPills.contains('web');
-    final bool showImagePillPref = selectedQuickPills.contains('image');
-    final voiceAvailableAsync = ref.watch(voiceInputAvailableProvider);
-    final bool voiceAvailable = voiceAvailableAsync.maybeWhen(
-      data: (v) => v,
-      orElse: () => false,
-    );
-    final selectedToolIds = ref.watch(selectedToolIdsProvider);
-
-    final focusTick = ref.watch(inputFocusTriggerProvider);
-    final autofocusEnabled = ref.watch(composerAutofocusEnabledProvider);
-    if (autofocusEnabled && focusTick != _lastHandledFocusTick) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted || _isDeactivated) return;
-        _ensureFocusedIfEnabled();
-        _lastHandledFocusTick = focusTick;
-      });
-    }
-
-    final Brightness brightness = Theme.of(context).brightness;
-    final bool isActive = _focusNode.hasFocus || _hasText;
-    final Color composerSurface = context.jyotigptTheme.inputBackground;
-    final Color composerBackground = brightness == Brightness.dark
-        ? composerSurface.withValues(alpha: 0.78)
-        : context.jyotigptTheme.surfaceContainerHighest;
-    final Color placeholderBase = context.jyotigptTheme.inputPlaceholder;
-    final Color placeholderFocused = context.jyotigptTheme.inputText.withValues(
-      alpha: 0.64,
-    );
-    final Color outlineColor = Color.lerp(
-      context.jyotigptTheme.inputBorder,
-      context.jyotigptTheme.inputBorderFocused,
-      isActive ? 1.0 : 0.0,
-    )!.withValues(alpha: brightness == Brightness.dark ? 0.55 : 0.45);
-    final Color shellShadowColor = context.jyotigptTheme.cardShadow.withValues(
-      alpha: brightness == Brightness.dark
-          ? 0.22 + (isActive ? 0.08 : 0.0)
-          : 0.12 + (isActive ? 0.06 : 0.0),
-    );
-
-    final List<Widget> quickPills = <Widget>[];
-
-    for (final id in selectedQuickPills) {
-      if (id == 'web' && showWebPill) {
-        final String label = AppLocalizations.of(context)!.web;
-        final IconData icon = Platform.isIOS
-            ? CupertinoIcons.search
-            : Icons.search;
-        void handleTap() {
-          final notifier = ref.read(webSearchEnabledProvider.notifier);
-          notifier.set(!webSearchEnabled);
-        }
-
-        quickPills.add(
-          _buildPillButton(
-            icon: icon,
-            label: label,
-            isActive: webSearchEnabled,
-            onTap: widget.enabled && !_isRecording ? handleTap : null,
-          ),
-        );
-      } else if (id == 'image' && showImagePillPref && imageGenAvailable) {
-        final String label = AppLocalizations.of(context)!.imageGen;
-        final IconData icon = Platform.isIOS
-            ? CupertinoIcons.photo
-            : Icons.image;
-        void handleTap() {
-          final notifier = ref.read(imageGenerationEnabledProvider.notifier);
-          notifier.set(!imageGenEnabled);
-        }
-
-        quickPills.add(
-          _buildPillButton(
-            icon: icon,
-            label: label,
-            isActive: imageGenEnabled,
-            onTap: widget.enabled && !_isRecording ? handleTap : null,
-          ),
-        );
-      } else {
-        Tool? tool;
-        for (final t in availableTools) {
-          if (t.id == id) {
-            tool = t;
-            break;
-          }
-        }
-        if (tool != null) {
-          final bool isSelected = selectedToolIds.contains(id);
-          final String label = tool.name;
-          final IconData icon = Platform.isIOS
-              ? CupertinoIcons.wrench
-              : Icons.build;
-
-          void handleTap() {
-            final current = List<String>.from(selectedToolIds);
-            if (current.contains(id)) {
-              current.remove(id);
-            } else {
-              current.add(id);
-            }
-            ref.read(selectedToolIdsProvider.notifier).set(current);
-          }
-
-          quickPills.add(
-            _buildPillButton(
-              icon: icon,
-              label: label,
-              isActive: isSelected,
-              onTap: widget.enabled && !_isRecording ? handleTap : null,
-            ),
-          );
-        }
-      }
-    }
-
-    final bool showCompactComposer = quickPills.isEmpty;
-
-    final BorderRadius shellRadius = BorderRadius.circular(
-      showCompactComposer ? AppBorderRadius.round : _composerRadius,
-    );
-
-    final BoxDecoration shellDecoration = BoxDecoration(
-      color: showCompactComposer ? Colors.transparent : composerBackground,
-      borderRadius: shellRadius,
-      border: showCompactComposer
-          ? null
-          : Border.all(color: outlineColor, width: BorderWidth.thin),
-      boxShadow: showCompactComposer
-          ? const <BoxShadow>[]
-          : <BoxShadow>[
-              BoxShadow(
-                color: shellShadowColor,
-                blurRadius: 12 + (isActive ? 4 : 0),
-                spreadRadius: -2,
-                offset: const Offset(0, -2),
-              ),
-            ],
-    );
-
-    final List<Widget> composerChildren = <Widget>[
-      if (_showPromptOverlay)
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Spacing.sm,
-            0,
-            Spacing.sm,
-            Spacing.xs,
-          ),
-          child: _buildPromptOverlay(context),
-        ),
-      if (showCompactComposer)
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Spacing.screenPadding,
-            Spacing.xs,
-            Spacing.screenPadding,
-            Spacing.sm,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildOverflowButton(
-                tooltip: AppLocalizations.of(context)!.more,
-                webSearchActive: webSearchEnabled,
-                imageGenerationActive: imageGenEnabled,
-                toolsActive: selectedToolIds.isNotEmpty,
-              ),
-              const SizedBox(width: Spacing.sm),
-              Expanded(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  curve: Curves.easeOutCubic,
-                  padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-                  constraints: const BoxConstraints(
-                    minHeight: TouchTarget.input,
-                  ),
-                  decoration: BoxDecoration(
-                    color: brightness == Brightness.dark
-                        ? composerSurface.withValues(alpha: 0.9)
-                        : context.jyotigptTheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(AppBorderRadius.round),
-                    border: Border.all(
-                      color: outlineColor.withValues(
-                        alpha: brightness == Brightness.dark ? 0.32 : 0.2,
-                      ),
-                      width: BorderWidth.micro,
-                    ),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: shellShadowColor.withValues(
-                          alpha: brightness == Brightness.dark ? 0.4 : 0.22,
-                        ),
-                        blurRadius: 24,
-                        spreadRadius: -6,
-                        offset: const Offset(0, 12),
-                      ),
-                    ],
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: _buildComposerTextField(
-                      brightness: brightness,
-                      sendOnEnter: sendOnEnter,
-                      placeholderBase: placeholderBase,
-                      placeholderFocused: placeholderFocused,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: Spacing.xs,
-                      ),
-                      isActive: isActive,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: Spacing.sm),
-              if (!_hasText && voiceAvailable && !isGenerating)
-                _buildMicButton(voiceAvailable),
-              if (!_hasText && voiceAvailable && !isGenerating)
-                const SizedBox(width: Spacing.sm),
-              _buildPrimaryButton(
-                _hasText,
-                isGenerating,
-                stopGeneration,
-                voiceAvailable,
-              ),
-            ],
-          ),
-        )
-      else ...[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Spacing.sm,
-            Spacing.xs,
-            Spacing.sm,
-            Spacing.xs,
-          ),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(
-              Spacing.sm,
-              Spacing.xs,
-              Spacing.sm,
-              Spacing.xs,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(_composerRadius),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: _buildComposerTextField(
-                    brightness: brightness,
-                    sendOnEnter: sendOnEnter,
-                    placeholderBase: placeholderBase,
-                    placeholderFocused: placeholderFocused,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.sm,
-                      vertical: Spacing.xs,
-                    ),
-                    isActive: isActive,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Spacing.inputPadding,
-            0,
-            Spacing.inputPadding,
-            0,
-          ),
-          child: Row(
-            children: [
-              _buildOverflowButton(
-                tooltip: AppLocalizations.of(context)!.more,
-                webSearchActive: webSearchEnabled,
-                imageGenerationActive: imageGenEnabled,
-                toolsActive: selectedToolIds.isNotEmpty,
-              ),
-              const SizedBox(width: Spacing.xs),
-              Expanded(
-                child: ClipRect(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: _withHorizontalSpacing(quickPills, Spacing.xxs),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: Spacing.sm),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (!_hasText && voiceAvailable && !isGenerating) ...[
-                    _buildMicButton(voiceAvailable),
-                    const SizedBox(width: Spacing.sm),
-                  ],
-                  _buildPrimaryButton(
-                    _hasText,
-                    isGenerating,
-                    stopGeneration,
-                    voiceAvailable,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    ];
-
-    Widget shell = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeOutCubic,
-      decoration: shellDecoration,
-      width: double.infinity,
-      child: SafeArea(
-        top: false,
-        bottom: true,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.4,
-          ),
-          child: AnimatedSize(
-            duration: const Duration(milliseconds: 160),
-            curve: Curves.easeOutCubic,
-            alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: RepaintBoundary(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: composerChildren,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    if (brightness == Brightness.dark && !showCompactComposer) {
-      shell = ClipRRect(
-        borderRadius: shellRadius,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: shell,
-        ),
-      );
-    }
-
-    return Container(
-      color: Colors.transparent,
-      padding: EdgeInsets.zero,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [shell]),
-    );
-  }
-
-  // (Removed legacy _buildVoiceButton; mic functionality moved to primary button)
-
-  List<Widget> _withHorizontalSpacing(List<Widget> children, double gap) {
-    if (children.length <= 1) {
-      return List<Widget>.from(children);
-    }
-    final result = <Widget>[];
-    for (var i = 0; i < children.length; i++) {
-      result.add(children[i]);
-      if (i != children.length - 1) {
-        result.add(SizedBox(width: gap));
-      }
-    }
-    return result;
-  }
-
-  Widget _buildComposerTextField({
-    required Brightness brightness,
-    required bool sendOnEnter,
-    required Color placeholderBase,
-    required Color placeholderFocused,
-    required EdgeInsetsGeometry contentPadding,
-    required bool isActive,
-  }) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        if (!widget.enabled) return;
-        // Explicit user intent to focus: re-enable autofocus and focus
-        try {
-          ref.read(composerAutofocusEnabledProvider.notifier).set(true);
-        } catch (_) {}
-        _ensureFocusedIfEnabled();
-      },
-      child: Semantics(
-        textField: true,
-        label: AppLocalizations.of(context)!.messageInputLabel,
-        hint: AppLocalizations.of(context)!.messageInputHint,
-        child: Shortcuts(
-          shortcuts: () {
-            final map = <LogicalKeySet, Intent>{
-              LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.enter):
-                  const _SendMessageIntent(),
-              LogicalKeySet(
-                LogicalKeyboardKey.control,
-                LogicalKeyboardKey.enter,
-              ): const _SendMessageIntent(),
-            };
-            if (sendOnEnter) {
-              map[LogicalKeySet(LogicalKeyboardKey.enter)] =
-                  const _SendMessageIntent();
-              map[LogicalKeySet(
-                    LogicalKeyboardKey.shift,
-                    LogicalKeyboardKey.enter,
-                  )] =
-                  const _InsertNewlineIntent();
-            }
-            if (_showPromptOverlay) {
-              map[LogicalKeySet(LogicalKeyboardKey.arrowDown)] =
-                  const _SelectNextPromptIntent();
-              map[LogicalKeySet(LogicalKeyboardKey.arrowUp)] =
-                  const _SelectPreviousPromptIntent();
-              map[LogicalKeySet(LogicalKeyboardKey.escape)] =
-                  const _DismissPromptIntent();
-            }
-            return map;
-          }(),
-          child: Actions(
-            actions: <Type, Action<Intent>>{
-              _SendMessageIntent: CallbackAction<_SendMessageIntent>(
-                onInvoke: (intent) {
-                  if (_showPromptOverlay) {
-                    _confirmPromptSelection();
-                    return null;
-                  }
-                  _sendMessage();
-                  return null;
-                },
-              ),
-              _InsertNewlineIntent: CallbackAction<_InsertNewlineIntent>(
-                onInvoke: (intent) {
-                  _insertNewline();
-                  return null;
-                },
-              ),
-              _SelectNextPromptIntent: CallbackAction<_SelectNextPromptIntent>(
-                onInvoke: (intent) {
-                  _movePromptSelection(1);
-                  return null;
-                },
-              ),
-              _SelectPreviousPromptIntent:
-                  CallbackAction<_SelectPreviousPromptIntent>(
-                    onInvoke: (intent) {
-                      _movePromptSelection(-1);
-                      return null;
-                    },
-                  ),
-              _DismissPromptIntent: CallbackAction<_DismissPromptIntent>(
-                onInvoke: (intent) {
-                  _hidePromptOverlay();
-                  return null;
-                },
-              ),
-            },
-            child: Builder(
-              builder: (context) {
-                final double factor = isActive ? 1.0 : 0.0;
-                final Color animatedPlaceholder = Color.lerp(
-                  placeholderBase,
-                  placeholderFocused,
-                  factor,
-                )!;
-                final Color animatedTextColor = Color.lerp(
-                  context.jyotigptTheme.inputText.withValues(alpha: 0.88),
-                  context.jyotigptTheme.inputText,
-                  factor,
-                )!;
-
-                final FontWeight recordingWeight = _isRecording
-                    ? FontWeight.w500
-                    : FontWeight.w400;
-                final TextStyle baseChatStyle = AppTypography.chatMessageStyle;
-
-                return TextField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  enabled: widget.enabled,
-                  autofocus: false,
-                  minLines: 1,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  textCapitalization: TextCapitalization.sentences,
-                  textInputAction: sendOnEnter
-                      ? TextInputAction.send
-                      : TextInputAction.newline,
-                  autofillHints: const <String>[],
-                  showCursor: true,
-                  scrollPadding: const EdgeInsets.only(bottom: 80),
-                  keyboardAppearance: brightness,
-                  cursorColor: animatedTextColor,
-                  style: baseChatStyle.copyWith(
-                    color: animatedTextColor,
-                    fontStyle: _isRecording
-                        ? FontStyle.italic
-                        : FontStyle.normal,
-                    fontWeight: recordingWeight,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.messageHintText,
-                    hintStyle: baseChatStyle.copyWith(
-                      color: animatedPlaceholder,
-                      fontWeight: recordingWeight,
-                      fontStyle: _isRecording
-                          ? FontStyle.italic
-                          : FontStyle.normal,
-                    ),
-                    filled: false,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    contentPadding: contentPadding,
-                    isDense: true,
-                    alignLabelWithHint: true,
-                  ),
-                  onSubmitted: (_) {
-                    if (sendOnEnter) {
-                      _sendMessage();
-                    }
-                  },
-                  onTap: () {
-                    if (!widget.enabled) return;
-                    _ensureFocusedIfEnabled();
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOverflowButton({
-    required String tooltip,
-    required bool webSearchActive,
-    required bool imageGenerationActive,
-    required bool toolsActive,
-  }) {
-    final bool enabled = widget.enabled && !_isRecording;
-
-    IconData icon;
-    Color? activeColor;
-    if (webSearchActive) {
-      icon = Platform.isIOS ? CupertinoIcons.search : Icons.search;
-      activeColor = context.jyotigptTheme.buttonPrimary;
-    } else if (imageGenerationActive) {
-      icon = Platform.isIOS ? CupertinoIcons.photo : Icons.image;
-      activeColor = context.jyotigptTheme.buttonPrimary;
-    } else if (toolsActive) {
-      icon = Platform.isIOS ? CupertinoIcons.wrench : Icons.build;
-      activeColor = context.jyotigptTheme.buttonPrimary;
-    } else {
-      icon = Platform.isIOS ? CupertinoIcons.add : Icons.add;
-      activeColor = null;
-    }
-
-    const double iconSize = IconSize.large;
-    const double buttonSize = TouchTarget.minimum;
-    final Brightness brightness = Theme.of(context).brightness;
-    final bool isActive = activeColor != null;
-
-    final Color iconColor = !enabled
-        ? context.jyotigptTheme.textPrimary.withValues(alpha: Alpha.disabled)
-        : (activeColor ??
-              context.jyotigptTheme.textPrimary.withValues(alpha: Alpha.strong));
-
-    final Color baseBackground = brightness == Brightness.dark
-        ? context.jyotigptTheme.surfaceContainerHighest.withValues(alpha: 0.7)
-        : context.jyotigptTheme.surfaceContainerHighest;
-    final Color backgroundColor = !enabled
-        ? baseBackground.withValues(alpha: Alpha.disabled)
-        : isActive
-        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.16)
-        : baseBackground;
-    final Color borderColor = isActive
-        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.6)
-        : context.jyotigptTheme.cardBorder.withValues(alpha: 0.45);
-    final BoxShadow buttonShadow = BoxShadow(
-      color: context.jyotigptTheme.cardShadow.withValues(
-        alpha: brightness == Brightness.dark ? 0.36 : 0.18,
-      ),
-      blurRadius: 18,
-      spreadRadius: -6,
-      offset: const Offset(0, 8),
-    );
-
-    return Tooltip(
-      message: tooltip,
-      child: Opacity(
-        opacity: enabled ? 1.0 : Alpha.disabled,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(AppBorderRadius.round),
-            onTap: enabled
-                ? () {
-                    HapticFeedback.selectionClick();
-                    _showOverflowSheet();
-                  }
-                : null,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 160),
-              curve: Curves.easeOutCubic,
-              width: buttonSize,
-              height: buttonSize,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(AppBorderRadius.round),
-                border: Border.all(color: borderColor, width: BorderWidth.thin),
-                boxShadow: enabled ? <BoxShadow>[buttonShadow] : const [],
-              ),
-              child: Center(
-                child: Icon(icon, size: iconSize, color: iconColor),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMicButton(bool voiceAvailable) {
-    final bool enabledMic = widget.enabled && voiceAvailable;
-    return Tooltip(
-      message: AppLocalizations.of(context)!.voiceInput,
-      child: Opacity(
-        opacity: enabledMic ? Alpha.primary : Alpha.disabled,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(AppBorderRadius.circular),
-            onTap: enabledMic
-                ? () {
-                    HapticFeedback.selectionClick();
-                    _toggleVoice();
-                  }
-                : null,
-            child: SizedBox(
-              width: TouchTarget.minimum,
-              height: TouchTarget.minimum,
-              child: Icon(
-                Platform.isIOS ? CupertinoIcons.mic : Icons.mic,
-                size: IconSize.large,
-                color: _isRecording
-                    ? context.jyotigptTheme.buttonPrimary
-                    : (enabledMic
-                          ? context.jyotigptTheme.textPrimary.withValues(
-                              alpha: Alpha.strong,
-                            )
-                          : context.jyotigptTheme.textPrimary.withValues(
-                              alpha: Alpha.disabled,
-                            )),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPrimaryButton(
-    bool hasText,
-    bool isGenerating,
-    void Function() stopGeneration,
-    bool voiceAvailable,
-  ) {
-    // Compact 44px touch target, circular radius, md icon size
-    const double buttonSize = TouchTarget.minimum; // 44.0
-    const double radius = AppBorderRadius.round; // big to ensure circle
-
-    final enabled = !isGenerating && hasText && widget.enabled;
-
-    // Generating -> STOP variant
-    if (isGenerating) {
-      return Tooltip(
-        message: AppLocalizations.of(context)!.stopGenerating,
-        child: Material(
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
-            side: BorderSide(
-              color: context.jyotigptTheme.error,
-              width: BorderWidth.regular,
-            ),
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(radius),
-            onTap: () {
-              HapticFeedback.lightImpact();
-              stopGeneration();
-            },
-            child: Container(
-              width: buttonSize,
-              height: buttonSize,
-              decoration: BoxDecoration(
-                color: context.jyotigptTheme.error.withValues(
-                  alpha: Alpha.buttonPressed,
-                ),
-                borderRadius: BorderRadius.circular(radius),
-                boxShadow: JyotiGPTShadows.button(context),
-              ),
-              child: Center(
-                child: Icon(
-                  Platform.isIOS ? CupertinoIcons.stop_fill : Icons.stop,
-                  size: IconSize.large,
-                  color: context.jyotigptTheme.error,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // If there's text, render SEND variant; otherwise render VOICE CALL variant
-    if (hasText) {
-      return Tooltip(
-        message: enabled
-            ? AppLocalizations.of(context)!.sendMessage
-            : AppLocalizations.of(context)!.send,
-        child: Opacity(
-          opacity: enabled ? Alpha.primary : Alpha.disabled,
-          child: IgnorePointer(
-            ignoring: !enabled,
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(radius),
-                onTap: enabled
-                    ? () {
-                        PlatformUtils.lightHaptic();
-                        _sendMessage();
-                      }
-                    : null,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  curve: Curves.easeOutCubic,
-                  width: buttonSize,
-                  height: buttonSize,
-                  decoration: BoxDecoration(
-                    color: enabled
-                        ? context.jyotigptTheme.buttonPrimary
-                        : context.jyotigptTheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(radius),
-                    border: Border.all(
-                      color: enabled
-                          ? context.jyotigptTheme.buttonPrimary.withValues(
-                              alpha: 0.8,
-                            )
-                          : context.jyotigptTheme.cardBorder.withValues(
-                              alpha: 0.45,
-                            ),
-                      width: BorderWidth.thin,
-                    ),
-                    boxShadow: enabled
-                        ? <BoxShadow>[
-                            BoxShadow(
-                              color: context.jyotigptTheme.cardShadow.withValues(
-                                alpha:
-                                    Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? 0.36
-                                    : 0.18,
-                              ),
-                              blurRadius: 18,
-                              spreadRadius: -6,
-                              offset: const Offset(0, 8),
-                            ),
-                          ]
-                        : const [],
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Platform.isIOS
-                          ? CupertinoIcons.arrow_up
-                          : Icons.arrow_upward,
-                      size: IconSize.large,
-                      color: enabled
-                          ? context.jyotigptTheme.buttonPrimaryText
-                          : context.jyotigptTheme.textPrimary.withValues(
-                              alpha: Alpha.disabled,
-                            ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // VOICE CALL variant when no text is present
-    final bool enabledVoiceCall = widget.enabled && widget.onVoiceCall != null;
-    return Tooltip(
-      message: 'Voice Call',
-      child: Opacity(
-        opacity: enabledVoiceCall ? Alpha.primary : Alpha.disabled,
-        child: IgnorePointer(
-          ignoring: !enabledVoiceCall,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(radius),
-              onTap: enabledVoiceCall
-                  ? () {
-                      PlatformUtils.lightHaptic();
-                      widget.onVoiceCall!();
-                    }
-                  : null,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                curve: Curves.easeOutCubic,
-                width: buttonSize,
-                height: buttonSize,
-                decoration: BoxDecoration(
-                  color: enabledVoiceCall
-                      ? context.jyotigptTheme.buttonPrimary
-                      : context.jyotigptTheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(radius),
-                  border: Border.all(
-                    color: enabledVoiceCall
-                        ? context.jyotigptTheme.buttonPrimary.withValues(
-                            alpha: 0.8,
-                          )
-                        : context.jyotigptTheme.cardBorder.withValues(
-                            alpha: 0.45,
-                          ),
-                    width: BorderWidth.thin,
-                  ),
-                  boxShadow: enabledVoiceCall
-                      ? <BoxShadow>[
-                          BoxShadow(
-                            color: context.jyotigptTheme.cardShadow.withValues(
-                              alpha:
-                                  Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? 0.36
-                                  : 0.18,
-                            ),
-                            blurRadius: 18,
-                            spreadRadius: -6,
-                            offset: const Offset(0, 8),
-                          ),
-                        ]
-                      : const [],
-                ),
-                child: Center(
-                  child: Icon(
-                    Platform.isIOS ? CupertinoIcons.waveform : Icons.graphic_eq,
-                    size: IconSize.large,
-                    color: enabledVoiceCall
-                        ? context.jyotigptTheme.buttonPrimaryText
-                        : context.jyotigptTheme.textPrimary.withValues(
-                            alpha: Alpha.disabled,
-                          ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPillButton({
-    required IconData icon,
-    required String label,
-    required bool isActive,
-    VoidCallback? onTap,
-  }) {
-    final bool enabled = onTap != null;
-    final Brightness brightness = Theme.of(context).brightness;
-    final Color baseBackground = context.jyotigptTheme.cardBackground;
-    final Color background = isActive
-        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.16)
-        : baseBackground.withValues(
-            alpha: brightness == Brightness.dark ? 0.18 : 0.12,
-          );
-    final Color outline = isActive
-        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.8)
-        : context.jyotigptTheme.cardBorder.withValues(alpha: 0.6);
-    final Color contentColor = isActive
-        ? context.jyotigptTheme.buttonPrimary
-        : context.jyotigptTheme.textPrimary.withValues(
-            alpha: enabled ? Alpha.strong : Alpha.disabled,
-          );
-
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppBorderRadius.input),
-        onTap: onTap == null
-            ? null
-            : () {
-                HapticFeedback.selectionClick();
-                onTap();
-              },
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.sm,
-            vertical: Spacing.xs,
-          ),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: BorderRadius.circular(AppBorderRadius.input),
-            border: Border.all(color: outline, width: BorderWidth.thin),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: IconSize.medium, color: contentColor),
-              const SizedBox(width: Spacing.xs),
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.labelStyle.copyWith(color: contentColor),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showOverflowSheet() {
-    HapticFeedback.selectionClick();
-    final prevCanRequest = _focusNode.canRequestFocus;
-    final wasFocused = _focusNode.hasFocus;
-    _focusNode.canRequestFocus = false;
-    try {
-      FocusScope.of(context).unfocus();
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
-    } catch (_) {}
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (modalContext) => Consumer(
-        builder: (innerContext, modalRef, _) {
-          final l10n = AppLocalizations.of(innerContext)!;
-          final theme = innerContext.jyotigptTheme;
-
-          final attachments = <Widget>[
-            _buildOverflowAction(
-              icon: Platform.isIOS ? CupertinoIcons.doc : Icons.attach_file,
-              label: l10n.file,
-              onTap: widget.onFileAttachment == null
-                  ? null
-                  : () {
-                      HapticFeedback.lightImpact();
-                      widget.onFileAttachment!.call();
-                    },
-            ),
-            _buildOverflowAction(
-              icon: Platform.isIOS ? CupertinoIcons.photo : Icons.image,
-              label: l10n.photo,
-              onTap: widget.onImageAttachment == null
-                  ? null
-                  : () {
-                      HapticFeedback.lightImpact();
-                      widget.onImageAttachment!.call();
-                    },
-            ),
-            _buildOverflowAction(
-              icon: Platform.isIOS ? CupertinoIcons.camera : Icons.camera_alt,
-              label: l10n.camera,
-              onTap: widget.onCameraCapture == null
-                  ? null
-                  : () {
-                      HapticFeedback.lightImpact();
-                      widget.onCameraCapture!.call();
-                    },
-            ),
-          ];
-
-          final featureTiles = <Widget>[];
-          final webSearchAvailable = modalRef.watch(webSearchAvailableProvider);
-          final webSearchEnabled = modalRef.watch(webSearchEnabledProvider);
-          if (webSearchAvailable) {
-            featureTiles.add(
-              _buildFeatureToggleTile(
-                icon: Platform.isIOS ? CupertinoIcons.search : Icons.search,
-                title: l10n.webSearch,
-                subtitle: l10n.webSearchDescription,
-                value: webSearchEnabled,
-                onChanged: (next) {
-                  modalRef.read(webSearchEnabledProvider.notifier).set(next);
-                },
-              ),
-            );
-          }
-
-          final imageGenAvailable = modalRef.watch(
-            imageGenerationAvailableProvider,
-          );
-          final imageGenEnabled = modalRef.watch(
-            imageGenerationEnabledProvider,
-          );
-          if (imageGenAvailable) {
-            featureTiles.add(
-              _buildFeatureToggleTile(
-                icon: Platform.isIOS ? CupertinoIcons.photo : Icons.image,
-                title: l10n.imageGeneration,
-                subtitle: l10n.imageGenerationDescription,
-                value: imageGenEnabled,
-                onChanged: (next) {
-                  modalRef
-                      .read(imageGenerationEnabledProvider.notifier)
-                      .set(next);
-                },
-              ),
-            );
-          }
-
-          final selectedToolIds = modalRef.watch(selectedToolIdsProvider);
-          final toolsAsync = modalRef.watch(toolsListProvider);
-          final Widget toolsSection = toolsAsync.when(
-            data: (tools) {
-              if (tools.isEmpty) {
-                return _buildInfoCard('No tools available');
-              }
-              final tiles = tools.map((tool) {
-                final isSelected = selectedToolIds.contains(tool.id);
-                return _buildToolTile(
-                  tool: tool,
-                  selected: isSelected,
-                  onToggle: () {
-                    final current = List<String>.from(
-                      modalRef.read(selectedToolIdsProvider),
-                    );
-                    if (isSelected) {
-                      current.remove(tool.id);
-                    } else {
-                      current.add(tool.id);
-                    }
-                    modalRef
-                        .read(selectedToolIdsProvider.notifier)
-                        .set(current);
-                  },
-                );
-              }).toList();
-              return Column(children: _withVerticalSpacing(tiles, Spacing.xxs));
-            },
-            loading: () => Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(strokeWidth: BorderWidth.thin),
-              ),
-            ),
-            error: (error, stack) => _buildInfoCard('Failed to load tools'),
-          );
-
-          final bodyChildren = <Widget>[
-            const SheetHandle(),
-            const SizedBox(height: Spacing.sm),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var i = 0; i < attachments.length; i++) ...[
-                      if (i != 0) const SizedBox(width: Spacing.sm),
-                      Expanded(child: attachments[i]),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ];
-
-          if (featureTiles.isNotEmpty) {
-            bodyChildren
-              ..add(const SizedBox(height: Spacing.sm))
-              ..addAll(_withVerticalSpacing(featureTiles, Spacing.xxs));
-          }
-
-          bodyChildren
-            ..add(const SizedBox(height: Spacing.sm))
-            ..add(_buildSectionLabel(l10n.tools))
-            ..add(toolsSection);
-
-          // Measure content height and cap the sheet's max size to avoid extra blank space
-          final GlobalKey sheetContentKey = GlobalKey();
-          double? measuredContentHeight;
-
-          return StatefulBuilder(
-            builder: (context, setModalState) {
-              // Schedule a post-frame measurement of the content height
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                final ctx = sheetContentKey.currentContext;
-                if (ctx != null) {
-                  final renderObject = ctx.findRenderObject();
-                  if (renderObject is RenderBox) {
-                    final double h = renderObject.size.height;
-                    if (h > 0 && h != measuredContentHeight) {
-                      measuredContentHeight = h;
-                      setModalState(() {});
-                    }
-                  }
-                }
-              });
-
-              final media = MediaQuery.of(modalContext);
-              final double availableHeight =
-                  media.size.height - media.padding.top;
-
-              double computedMax = 0.9;
-              if (measuredContentHeight != null && availableHeight > 0) {
-                computedMax = (measuredContentHeight! / availableHeight).clamp(
-                  0.1,
-                  0.9,
-                );
-              }
-              final double computedMin = math.min(0.2, computedMax);
-              final double computedInitial = math.min(0.34, computedMax);
-
-              return Stack(
-                children: [
-                  Positioned.fill(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => Navigator.of(modalContext).maybePop(),
-                      child: const SizedBox.shrink(),
-                    ),
-                  ),
-                  DraggableScrollableSheet(
-                    expand: false,
-                    initialChildSize: computedInitial,
-                    minChildSize: computedMin,
-                    maxChildSize: computedMax,
-                    snap: true,
-                    snapSizes: [computedMax],
-                    builder: (sheetContext, scrollController) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: theme.surfaceBackground,
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(AppBorderRadius.bottomSheet),
-                          ),
-                          border: Border.all(
-                            color: theme.dividerColor,
-                            width: BorderWidth.thin,
-                          ),
-                          boxShadow: JyotiGPTShadows.modal(context),
-                        ),
-                        child: ModalSheetSafeArea(
-                          padding: const EdgeInsets.fromLTRB(
-                            Spacing.md,
-                            Spacing.xs,
-                            Spacing.md,
-                            Spacing.md,
-                          ),
-                          child: SingleChildScrollView(
-                            controller: scrollController,
-                            padding: EdgeInsets.zero,
-                            child: Column(
-                              key: sheetContentKey,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: bodyChildren,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
-    ).whenComplete(() {
-      if (mounted) {
-        _focusNode.canRequestFocus = prevCanRequest;
-        if (wasFocused && widget.enabled) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!mounted) return;
-            _ensureFocusedIfEnabled();
-          });
-        }
-      }
-    });
-  }
-
-  List<Widget> _withVerticalSpacing(List<Widget> children, double gap) {
-    if (children.length <= 1) {
-      return List<Widget>.from(children);
-    }
-    final spaced = <Widget>[];
-    for (var i = 0; i < children.length; i++) {
-      spaced.add(children[i]);
-      if (i != children.length - 1) {
-        spaced.add(SizedBox(height: gap));
-      }
-    }
-    return spaced;
-  }
-
-  Widget _buildSectionLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: Spacing.xxs),
-      child: Text(
-        text,
-        style: AppTypography.labelStyle.copyWith(
-          color: context.jyotigptTheme.textSecondary.withValues(
-            alpha: Alpha.strong,
-          ),
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFeatureToggleTile({
-    required IconData icon,
-    required String title,
-    String? subtitle,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-  }) {
-    final theme = context.jyotigptTheme;
-    final brightness = Theme.of(context).brightness;
-    final description = subtitle?.trim() ?? '';
-
-    final Color background = value
-        ? theme.buttonPrimary.withValues(
-            alpha: brightness == Brightness.dark ? 0.28 : 0.16,
-          )
-        : theme.surfaceContainer.withValues(
-            alpha: brightness == Brightness.dark ? 0.32 : 0.12,
-          );
-    final Color borderColor = value
-        ? theme.buttonPrimary.withValues(alpha: 0.7)
-        : theme.cardBorder.withValues(alpha: 0.55);
-
-    return Semantics(
-      button: true,
-      toggled: value,
-      label: title,
-      hint: description.isEmpty ? null : description,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppBorderRadius.input),
-          onTap: () {
-            HapticFeedback.selectionClick();
-            onChanged(!value);
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOutCubic,
-            margin: const EdgeInsets.symmetric(vertical: Spacing.xxs),
-            padding: const EdgeInsets.all(Spacing.sm),
-            decoration: BoxDecoration(
-              color: background,
-              borderRadius: BorderRadius.circular(AppBorderRadius.input),
-              border: Border.all(color: borderColor, width: BorderWidth.thin),
-              boxShadow: value ? JyotiGPTShadows.low(context) : const [],
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildToolGlyph(icon: icon, selected: value, theme: theme),
-                const SizedBox(width: Spacing.xs),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: AppTypography.bodySmallStyle.copyWith(
-                          color: theme.textPrimary,
-                          fontWeight: value ? FontWeight.w600 : FontWeight.w500,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (description.isNotEmpty) ...[
-                        const SizedBox(height: Spacing.xs),
-                        Text(
-                          description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.captionStyle.copyWith(
-                            color: theme.textSecondary.withValues(
-                              alpha: Alpha.strong,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                const SizedBox(width: Spacing.xs),
-                _buildTogglePill(isOn: value, theme: theme),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildToolTile({
-    required Tool tool,
-    required bool selected,
-    required VoidCallback onToggle,
-  }) {
-    final theme = context.jyotigptTheme;
-    final brightness = Theme.of(context).brightness;
-    final description = _toolDescriptionFor(tool);
-    final Color background = selected
-        ? theme.buttonPrimary.withValues(
-            alpha: brightness == Brightness.dark ? 0.28 : 0.16,
-          )
-        : theme.surfaceContainer.withValues(
-            alpha: brightness == Brightness.dark ? 0.32 : 0.12,
-          );
-    final Color borderColor = selected
-        ? theme.buttonPrimary.withValues(alpha: 0.7)
-        : theme.cardBorder.withValues(alpha: 0.55);
-
-    return Semantics(
-      button: true,
-      toggled: selected,
-      label: tool.name,
-      hint: description.isEmpty ? null : description,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppBorderRadius.input),
-          onTap: () {
-            HapticFeedback.selectionClick();
-            onToggle();
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOutCubic,
-            margin: const EdgeInsets.symmetric(vertical: Spacing.xxs),
-            padding: const EdgeInsets.all(Spacing.sm),
-            decoration: BoxDecoration(
-              color: background,
-              borderRadius: BorderRadius.circular(AppBorderRadius.input),
-              border: Border.all(color: borderColor, width: BorderWidth.thin),
-              boxShadow: selected ? JyotiGPTShadows.low(context) : const [],
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildToolGlyph(
-                  icon: _toolIconFor(tool),
-                  selected: selected,
-                  theme: theme,
-                ),
-                const SizedBox(width: Spacing.xs),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        tool.name,
-                        style: AppTypography.bodySmallStyle.copyWith(
-                          color: theme.textPrimary,
-                          fontWeight: selected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (description.isNotEmpty) ...[
-                        const SizedBox(height: Spacing.xs),
-                        Text(
-                          description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.captionStyle.copyWith(
-                            color: theme.textSecondary.withValues(
-                              alpha: Alpha.strong,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                const SizedBox(width: Spacing.xs),
-                _buildTogglePill(isOn: selected, theme: theme),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildToolGlyph({
     required IconData icon,
     required bool selected,
@@ -2209,92 +695,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     );
   }
 
-  Widget _buildOverflowAction({
-    required IconData icon,
-    required String label,
-    VoidCallback? onTap,
-  }) {
-    final theme = context.jyotigptTheme;
-    final brightness = Theme.of(context).brightness;
-    final VoidCallback? callback = onTap;
-    final bool enabled = callback != null;
-    final Color iconColor = enabled ? theme.buttonPrimary : theme.iconDisabled;
-    final Color textColor = enabled
-        ? theme.textPrimary
-        : theme.textPrimary.withValues(alpha: Alpha.disabled);
-    final Color background = theme.surfaceContainer.withValues(
-      alpha: brightness == Brightness.dark ? 0.45 : 0.92,
-    );
-    final Color borderColor = theme.cardBorder.withValues(
-      alpha: enabled ? 0.5 : 0.25,
-    );
-    final Color accent = theme.buttonPrimary.withValues(
-      alpha: enabled ? Alpha.selected : Alpha.hover,
-    );
-
-    return Opacity(
-      opacity: enabled ? 1.0 : Alpha.disabled,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppBorderRadius.card),
-          onTap: callback == null
-              ? null
-              : () {
-                  Navigator.of(context).pop();
-                  Future.microtask(callback);
-                },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOutCubic,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.xs,
-              vertical: Spacing.sm,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppBorderRadius.card),
-              border: Border.all(color: borderColor, width: BorderWidth.thin),
-              color: background,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        accent,
-                        theme.buttonPrimary.withValues(
-                          alpha: enabled ? Alpha.highlight : Alpha.hover,
-                        ),
-                      ],
-                    ),
-                  ),
-                  child: Icon(icon, color: iconColor, size: IconSize.modal),
-                ),
-                const SizedBox(height: Spacing.xs),
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: AppTypography.captionStyle.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // --- Inline Voice Input ---
   Future<void> _toggleVoice() async {
     if (_isRecording) {
       await _stopVoice();
@@ -2315,7 +715,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
         );
         return;
       }
-      // Centralized permission + start
       final stream = await _voiceService.beginListening();
       if (!mounted) return;
       setState(() {
@@ -2323,7 +722,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
         _baseTextAtStart = _controller.text;
       });
       _intensitySub?.cancel();
-      // intensity stream no longer used for UI; stop listening
       _textSub?.cancel();
       _textSub = stream.listen(
         (text) async {
@@ -2368,8 +766,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     HapticFeedback.selectionClick();
   }
 
-  // Server transcription removed; only on-device STT updates the input text
-
   void _showVoiceUnavailable(String message) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -2381,3 +777,1242 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     );
   }
 }
+
+  Widget _buildPromptOverlayPlaceholder(
+    BuildContext context,
+    Widget leading,
+    String? message,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Spacing.sm,
+        vertical: Spacing.md,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          leading,
+          if (message != null) ...[
+            const SizedBox(width: Spacing.sm),
+            Flexible(
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: context.jyotigptTheme.textSecondary,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen<String?>(prefilledInputTextProvider, (previous, next) {
+      final incoming = next?.trim();
+      if (incoming == null || incoming.isEmpty) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || _isDeactivated) return;
+        _controller.text = incoming;
+        _controller.selection = TextSelection.collapsed(
+          offset: incoming.length,
+        );
+        try {
+          ref.read(prefilledInputTextProvider.notifier).clear();
+        } catch (_) {}
+      });
+    });
+
+    final messages = ref.watch(chatMessagesProvider);
+    final isGenerating =
+        messages.isNotEmpty &&
+        messages.last.role == 'assistant' &&
+        messages.last.isStreaming;
+    final stopGeneration = ref.read(stopGenerationProvider);
+
+    final selectedQuickPills = ref.watch(
+      appSettingsProvider.select((s) => s.quickPills),
+    );
+    final sendOnEnter = ref.watch(
+      appSettingsProvider.select((s) => s.sendOnEnter),
+    );
+    final toolsAsync = ref.watch(toolsListProvider);
+    final List<Tool> availableTools = toolsAsync.maybeWhen<List<Tool>>(
+      data: (t) => t,
+      orElse: () => const <Tool>[],
+    );
+    final voiceAvailableAsync = ref.watch(voiceInputAvailableProvider);
+    final bool voiceAvailable = voiceAvailableAsync.maybeWhen(
+      data: (v) => v,
+      orElse: () => false,
+    );
+    final selectedToolIds = ref.watch(selectedToolIdsProvider);
+
+    final focusTick = ref.watch(inputFocusTriggerProvider);
+    final autofocusEnabled = ref.watch(composerAutofocusEnabledProvider);
+    if (autofocusEnabled && focusTick != _lastHandledFocusTick) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || _isDeactivated) return;
+        _ensureFocusedIfEnabled();
+        _lastHandledFocusTick = focusTick;
+      });
+    }
+
+    final Brightness brightness = Theme.of(context).brightness;
+    final bool isActive = _focusNode.hasFocus || _hasText;
+    final Color composerSurface = context.jyotigptTheme.inputBackground;
+    final Color composerBackground = brightness == Brightness.dark
+        ? composerSurface.withValues(alpha: 0.78)
+        : context.jyotigptTheme.surfaceContainerHighest;
+    final Color placeholderBase = context.jyotigptTheme.inputPlaceholder;
+    final Color placeholderFocused = context.jyotigptTheme.inputText.withValues(
+      alpha: 0.64,
+    );
+    final Color outlineColor = Color.lerp(
+      context.jyotigptTheme.inputBorder,
+      context.jyotigptTheme.inputBorderFocused,
+      isActive ? 1.0 : 0.0,
+    )!.withValues(alpha: brightness == Brightness.dark ? 0.55 : 0.45);
+    final Color shellShadowColor = context.jyotigptTheme.cardShadow.withValues(
+      alpha: brightness == Brightness.dark
+          ? 0.22 + (isActive ? 0.08 : 0.0)
+          : 0.12 + (isActive ? 0.06 : 0.0),
+    );
+
+    final List<Widget> quickPills = <Widget>[];
+
+    // Only show tool pills
+    for (final id in selectedQuickPills) {
+      Tool? tool;
+      for (final t in availableTools) {
+        if (t.id == id) {
+          tool = t;
+          break;
+        }
+      }
+      if (tool != null) {
+        final bool isSelected = selectedToolIds.contains(id);
+        final String label = tool.name;
+        final IconData icon = Platform.isIOS
+            ? CupertinoIcons.wrench
+            : Icons.build;
+
+        void handleTap() {
+          final current = List<String>.from(selectedToolIds);
+          if (current.contains(id)) {
+            current.remove(id);
+          } else {
+            current.add(id);
+          }
+          ref.read(selectedToolIdsProvider.notifier).set(current);
+        }
+
+        quickPills.add(
+          _buildPillButton(
+            icon: icon,
+            label: label,
+            isActive: isSelected,
+            onTap: widget.enabled && !_isRecording ? handleTap : null,
+          ),
+        );
+      }
+    }
+
+    final bool showCompactComposer = quickPills.isEmpty;
+
+    final BorderRadius shellRadius = BorderRadius.circular(
+      showCompactComposer ? AppBorderRadius.round : _composerRadius,
+    );
+
+    final BoxDecoration shellDecoration = BoxDecoration(
+      color: showCompactComposer ? Colors.transparent : composerBackground,
+      borderRadius: shellRadius,
+      border: showCompactComposer
+          ? null
+          : Border.all(color: outlineColor, width: BorderWidth.thin),
+      boxShadow: showCompactComposer
+          ? const <BoxShadow>[]
+          : <BoxShadow>[
+              BoxShadow(
+                color: shellShadowColor,
+                blurRadius: 12 + (isActive ? 4 : 0),
+                spreadRadius: -2,
+                offset: const Offset(0, -2),
+              ),
+            ],
+    );
+
+    final List<Widget> composerChildren = <Widget>[
+      if (_showPromptOverlay)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            Spacing.sm,
+            0,
+            Spacing.sm,
+            Spacing.xs,
+          ),
+          child: _buildPromptOverlay(context),
+        ),
+      if (showCompactComposer)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            Spacing.screenPadding,
+            Spacing.xs,
+            Spacing.screenPadding,
+            Spacing.sm,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (quickPills.isNotEmpty) ...[
+                _buildOverflowButton(
+                  tooltip: AppLocalizations.of(context)!.tools,
+                  toolsActive: selectedToolIds.isNotEmpty,
+                ),
+                const SizedBox(width: Spacing.sm),
+              ],
+              Expanded(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  curve: Curves.easeOutCubic,
+                  padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+                  constraints: const BoxConstraints(
+                    minHeight: TouchTarget.input,
+                  ),
+                  decoration: BoxDecoration(
+                    color: brightness == Brightness.dark
+                        ? composerSurface.withValues(alpha: 0.9)
+                        : context.jyotigptTheme.surfaceContainer,
+                    borderRadius: BorderRadius.circular(AppBorderRadius.round),
+                    border: Border.all(
+                      color: outlineColor.withValues(
+                        alpha: brightness == Brightness.dark ? 0.32 : 0.2,
+                      ),
+                      width: BorderWidth.micro,
+                    ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: shellShadowColor.withValues(
+                          alpha: brightness == Brightness.dark ? 0.4 : 0.22,
+                        ),
+                        blurRadius: 24,
+                        spreadRadius: -6,
+                        offset: const Offset(0, 12),
+                      ),
+                    ],
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: _buildComposerTextField(
+                      brightness: brightness,
+                      sendOnEnter: sendOnEnter,
+                      placeholderBase: placeholderBase,
+                      placeholderFocused: placeholderFocused,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: Spacing.xs,
+                      ),
+                      isActive: isActive,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Spacing.sm),
+              if (!_hasText && voiceAvailable && !isGenerating)
+                _buildMicButton(voiceAvailable),
+              if (!_hasText && voiceAvailable && !isGenerating)
+                const SizedBox(width: Spacing.sm),
+              _buildPrimaryButton(
+                _hasText,
+                isGenerating,
+                stopGeneration,
+                voiceAvailable,
+              ),
+            ],
+          ),
+        )
+      else ...[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            Spacing.sm,
+            Spacing.xs,
+            Spacing.sm,
+            Spacing.xs,
+          ),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(
+              Spacing.sm,
+              Spacing.xs,
+              Spacing.sm,
+              Spacing.xs,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(_composerRadius),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: _buildComposerTextField(
+                    brightness: brightness,
+                    sendOnEnter: sendOnEnter,
+                    placeholderBase: placeholderBase,
+                    placeholderFocused: placeholderFocused,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: Spacing.sm,
+                      vertical: Spacing.xs,
+                    ),
+                    isActive: isActive,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            Spacing.inputPadding,
+            0,
+            Spacing.inputPadding,
+            0,
+          ),
+          child: Row(
+            children: [
+              _buildOverflowButton(
+                tooltip: AppLocalizations.of(context)!.tools,
+                toolsActive: selectedToolIds.isNotEmpty,
+              ),
+              const SizedBox(width: Spacing.xs),
+              Expanded(
+                child: ClipRect(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: _withHorizontalSpacing(quickPills, Spacing.xxs),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Spacing.sm),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (!_hasText && voiceAvailable && !isGenerating) ...[
+                    _buildMicButton(voiceAvailable),
+                    const SizedBox(width: Spacing.sm),
+                  ],
+                  _buildPrimaryButton(
+                    _hasText,
+                    isGenerating,
+                    stopGeneration,
+                    voiceAvailable,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ];
+
+    Widget shell = AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOutCubic,
+      decoration: shellDecoration,
+      width: double.infinity,
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.4,
+          ),
+          child: AnimatedSize(
+            duration: const Duration(milliseconds: 160),
+            curve: Curves.easeOutCubic,
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: RepaintBoundary(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: composerChildren,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (brightness == Brightness.dark && !showCompactComposer) {
+      shell = ClipRRect(
+        borderRadius: shellRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: shell,
+        ),
+      );
+    }
+
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.zero,
+      child: Column(mainAxisSize: MainAxisSize.min, children: [shell]),
+    );
+  }
+
+  List<Widget> _withHorizontalSpacing(List<Widget> children, double gap) {
+    if (children.length <= 1) {
+      return List<Widget>.from(children);
+    }
+    final result = <Widget>[];
+    for (var i = 0; i < children.length; i++) {
+      result.add(children[i]);
+      if (i != children.length - 1) {
+        result.add(SizedBox(width: gap));
+      }
+    }
+    return result;
+  }
+
+  Widget _buildComposerTextField({
+    required Brightness brightness,
+    required bool sendOnEnter,
+    required Color placeholderBase,
+    required Color placeholderFocused,
+    required EdgeInsetsGeometry contentPadding,
+    required bool isActive,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        if (!widget.enabled) return;
+        try {
+          ref.read(composerAutofocusEnabledProvider.notifier).set(true);
+        } catch (_) {}
+        _ensureFocusedIfEnabled();
+      },
+      child: Semantics(
+        textField: true,
+        label: AppLocalizations.of(context)!.messageInputLabel,
+        hint: AppLocalizations.of(context)!.messageInputHint,
+        child: Shortcuts(
+          shortcuts: () {
+            final map = <LogicalKeySet, Intent>{
+              LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.enter):
+                  const _SendMessageIntent(),
+              LogicalKeySet(
+                LogicalKeyboardKey.control,
+                LogicalKeyboardKey.enter,
+              ): const _SendMessageIntent(),
+            };
+            if (sendOnEnter) {
+              map[LogicalKeySet(LogicalKeyboardKey.enter)] =
+                  const _SendMessageIntent();
+              map[LogicalKeySet(
+                    LogicalKeyboardKey.shift,
+                    LogicalKeyboardKey.enter,
+                  )] =
+                  const _InsertNewlineIntent();
+            }
+            if (_showPromptOverlay) {
+              map[LogicalKeySet(LogicalKeyboardKey.arrowDown)] =
+                  const _SelectNextPromptIntent();
+              map[LogicalKeySet(LogicalKeyboardKey.arrowUp)] =
+                  const _SelectPreviousPromptIntent();
+              map[LogicalKeySet(LogicalKeyboardKey.escape)] =
+                  const _DismissPromptIntent();
+            }
+            return map;
+          }(),
+          child: Actions(
+            actions: <Type, Action<Intent>>{
+              _SendMessageIntent: CallbackAction<_SendMessageIntent>(
+                onInvoke: (intent) {
+                  if (_showPromptOverlay) {
+                    _confirmPromptSelection();
+                    return null;
+                  }
+                  _sendMessage();
+                  return null;
+                },
+              ),
+              _InsertNewlineIntent: CallbackAction<_InsertNewlineIntent>(
+                onInvoke: (intent) {
+                  _insertNewline();
+                  return null;
+                },
+              ),
+              _SelectNextPromptIntent: CallbackAction<_SelectNextPromptIntent>(
+                onInvoke: (intent) {
+                  _movePromptSelection(1);
+                  return null;
+                },
+              ),
+              _SelectPreviousPromptIntent:
+                  CallbackAction<_SelectPreviousPromptIntent>(
+                    onInvoke: (intent) {
+                      _movePromptSelection(-1);
+                      return null;
+                    },
+                  ),
+              _DismissPromptIntent: CallbackAction<_DismissPromptIntent>(
+                onInvoke: (intent) {
+                  _hidePromptOverlay();
+                  return null;
+                },
+              ),
+            },
+            child: Builder(
+              builder: (context) {
+                final double factor = isActive ? 1.0 : 0.0;
+                final Color animatedPlaceholder = Color.lerp(
+                  placeholderBase,
+                  placeholderFocused,
+                  factor,
+                )!;
+                final Color animatedTextColor = Color.lerp(
+                  context.jyotigptTheme.inputText.withValues(alpha: 0.88),
+                  context.jyotigptTheme.inputText,
+                  factor,
+                )!;
+
+                final FontWeight recordingWeight = _isRecording
+                    ? FontWeight.w500
+                    : FontWeight.w400;
+                final TextStyle baseChatStyle = AppTypography.chatMessageStyle;
+
+                return TextField(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  enabled: widget.enabled,
+                  autofocus: false,
+                  minLines: 1,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: sendOnEnter
+                      ? TextInputAction.send
+                      : TextInputAction.newline,
+                  autofillHints: const <String>[],
+                  showCursor: true,
+                  scrollPadding: const EdgeInsets.only(bottom: 80),
+                  keyboardAppearance: brightness,
+                  cursorColor: animatedTextColor,
+                  style: baseChatStyle.copyWith(
+                    color: animatedTextColor,
+                    fontStyle: _isRecording
+                        ? FontStyle.italic
+                        : FontStyle.normal,
+                    fontWeight: recordingWeight,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.messageHintText,
+                    hintStyle: baseChatStyle.copyWith(
+                      color: animatedPlaceholder,
+                      fontWeight: recordingWeight,
+                      fontStyle: _isRecording
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                    ),
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: contentPadding,
+                    isDense: true,
+                    alignLabelWithHint: true,
+                  ),
+                  onSubmitted: (_) {
+                    if (sendOnEnter) {
+                      _sendMessage();
+                    }
+                  },
+                  onTap: () {
+                    if (!widget.enabled) return;
+                    _ensureFocusedIfEnabled();
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOverflowButton({
+    required String tooltip,
+    required bool toolsActive,
+  }) {
+    final bool enabled = widget.enabled && !_isRecording;
+
+    IconData icon;
+    Color? activeColor;
+    if (toolsActive) {
+      icon = Platform.isIOS ? CupertinoIcons.wrench : Icons.build;
+      activeColor = context.jyotigptTheme.buttonPrimary;
+    } else {
+      icon = Platform.isIOS ? CupertinoIcons.add : Icons.add;
+      activeColor = null;
+    }
+
+    const double iconSize = IconSize.large;
+    const double buttonSize = TouchTarget.minimum;
+    final Brightness brightness = Theme.of(context).brightness;
+    final bool isActive = activeColor != null;
+
+    final Color iconColor = !enabled
+        ? context.jyotigptTheme.textPrimary.withValues(alpha: Alpha.disabled)
+        : (activeColor ??
+              context.jyotigptTheme.textPrimary.withValues(alpha: Alpha.strong));
+
+    final Color baseBackground = brightness == Brightness.dark
+        ? context.jyotigptTheme.surfaceContainerHighest.withValues(alpha: 0.7)
+        : context.jyotigptTheme.surfaceContainerHighest;
+    final Color backgroundColor = !enabled
+        ? baseBackground.withValues(alpha: Alpha.disabled)
+        : isActive
+        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.16)
+        : baseBackground;
+    final Color borderColor = isActive
+        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.6)
+        : context.jyotigptTheme.cardBorder.withValues(alpha: 0.45);
+    final BoxShadow buttonShadow = BoxShadow(
+      color: context.jyotigptTheme.cardShadow.withValues(
+        alpha: brightness == Brightness.dark ? 0.36 : 0.18,
+      ),
+      blurRadius: 18,
+      spreadRadius: -6,
+      offset: const Offset(0, 8),
+    );
+
+    return Tooltip(
+      message: tooltip,
+      child: Opacity(
+        opacity: enabled ? 1.0 : Alpha.disabled,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppBorderRadius.round),
+            onTap: enabled
+                ? () {
+                    HapticFeedback.selectionClick();
+                    _showOverflowSheet();
+                  }
+                : null,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 160),
+              curve: Curves.easeOutCubic,
+              width: buttonSize,
+              height: buttonSize,
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(AppBorderRadius.round),
+                border: Border.all(color: borderColor, width: BorderWidth.thin),
+                boxShadow: enabled ? <BoxShadow>[buttonShadow] : const [],
+              ),
+              child: Center(
+                child: Icon(icon, size: iconSize, color: iconColor),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMicButton(bool voiceAvailable) {
+    final bool enabledMic = widget.enabled && voiceAvailable;
+    return Tooltip(
+      message: AppLocalizations.of(context)!.voiceInput,
+      child: Opacity(
+        opacity: enabledMic ? Alpha.primary : Alpha.disabled,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppBorderRadius.circular),
+            onTap: enabledMic
+                ? () {
+                    HapticFeedback.selectionClick();
+                    _toggleVoice();
+                  }
+                : null,
+            child: SizedBox(
+              width: TouchTarget.minimum,
+              height: TouchTarget.minimum,
+              child: Icon(
+                Platform.isIOS ? CupertinoIcons.mic : Icons.mic,
+                size: IconSize.large,
+                color: _isRecording
+                    ? context.jyotigptTheme.buttonPrimary
+                    : (enabledMic
+                          ? context.jyotigptTheme.textPrimary.withValues(
+                              alpha: Alpha.strong,
+                            )
+                          : context.jyotigptTheme.textPrimary.withValues(
+                              alpha: Alpha.disabled,
+                            )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrimaryButton(
+    bool hasText,
+    bool isGenerating,
+    void Function() stopGeneration,
+    bool voiceAvailable,
+  ) {
+    const double buttonSize = TouchTarget.minimum;
+    const double radius = AppBorderRadius.round;
+
+    final enabled = !isGenerating && hasText && widget.enabled;
+
+    if (isGenerating) {
+      return Tooltip(
+        message: AppLocalizations.of(context)!.stopGenerating,
+        child: Material(
+          color: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius),
+            side: BorderSide(
+              color: context.jyotigptTheme.error,
+              width: BorderWidth.regular,
+            ),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(radius),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              stopGeneration();
+            },
+            child: Container(
+              width: buttonSize,
+              height: buttonSize,
+              decoration: BoxDecoration(
+                color: context.jyotigptTheme.error.withValues(
+                  alpha: Alpha.buttonPressed,
+                ),
+                borderRadius: BorderRadius.circular(radius),
+                boxShadow: JyotiGPTShadows.button(context),
+              ),
+              child: Center(
+                child: Icon(
+                  Platform.isIOS ? CupertinoIcons.stop_fill : Icons.stop,
+                  size: IconSize.large,
+                  color: context.jyotigptTheme.error,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (hasText) {
+      return Tooltip(
+        message: enabled
+            ? AppLocalizations.of(context)!.sendMessage
+            : AppLocalizations.of(context)!.send,
+        child: Opacity(
+          opacity: enabled ? Alpha.primary : Alpha.disabled,
+          child: IgnorePointer(
+            ignoring: !enabled,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(radius),
+                onTap: enabled
+                    ? () {
+                        PlatformUtils.lightHaptic();
+                        _sendMessage();
+                      }
+                    : null,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 160),
+                  curve: Curves.easeOutCubic,
+                  width: buttonSize,
+                  height: buttonSize,
+                  decoration: BoxDecoration(
+                    color: enabled
+                        ? context.jyotigptTheme.buttonPrimary
+                        : context.jyotigptTheme.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(radius),
+                    border: Border.all(
+                      color: enabled
+                          ? context.jyotigptTheme.buttonPrimary.withValues(
+                              alpha: 0.8,
+                            )
+                          : context.jyotigptTheme.cardBorder.withValues(
+                              alpha: 0.45,
+                            ),
+                      width: BorderWidth.thin,
+                    ),
+                    boxShadow: enabled
+                        ? <BoxShadow>[
+                            BoxShadow(
+                              color: context.jyotigptTheme.cardShadow.withValues(
+                                alpha:
+                                    Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? 0.36
+                                    : 0.18,
+                              ),
+                              blurRadius: 18,
+                              spreadRadius: -6,
+                              offset: const Offset(0, 8),
+                            ),
+                          ]
+                        : const [],
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Platform.isIOS
+                          ? CupertinoIcons.arrow_up
+                          : Icons.arrow_upward,
+                      size: IconSize.large,
+                      color: enabled
+                          ? context.jyotigptTheme.buttonPrimaryText
+                          : context.jyotigptTheme.textPrimary.withValues(
+                              alpha: Alpha.disabled,
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    final bool enabledVoiceCall = widget.enabled && widget.onVoiceCall != null;
+    return Tooltip(
+      message: 'Voice Call',
+      child: Opacity(
+        opacity: enabledVoiceCall ? Alpha.primary : Alpha.disabled,
+        child: IgnorePointer(
+          ignoring: !enabledVoiceCall,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(radius),
+              onTap: enabledVoiceCall
+                  ? () {
+                      PlatformUtils.lightHaptic();
+                      widget.onVoiceCall!();
+                    }
+                  : null,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 160),
+                curve: Curves.easeOutCubic,
+                width: buttonSize,
+                height: buttonSize,
+                decoration: BoxDecoration(
+                  color: enabledVoiceCall
+                      ? context.jyotigptTheme.buttonPrimary
+                      : context.jyotigptTheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(radius),
+                  border: Border.all(
+                    color: enabledVoiceCall
+                        ? context.jyotigptTheme.buttonPrimary.withValues(
+                            alpha: 0.8,
+                          )
+                        : context.jyotigptTheme.cardBorder.withValues(
+                            alpha: 0.45,
+                          ),
+                    width: BorderWidth.thin,
+                  ),
+                  boxShadow: enabledVoiceCall
+                      ? <BoxShadow>[
+                          BoxShadow(
+                            color: context.jyotigptTheme.cardShadow.withValues(
+                              alpha:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? 0.36
+                                  : 0.18,
+                            ),
+                            blurRadius: 18,
+                            spreadRadius: -6,
+                            offset: const Offset(0, 8),
+                          ),
+                        ]
+                      : const [],
+                ),
+                child: Center(
+                  child: Icon(
+                    Platform.isIOS ? CupertinoIcons.waveform : Icons.graphic_eq,
+                    size: IconSize.large,
+                    color: enabledVoiceCall
+                        ? context.jyotigptTheme.buttonPrimaryText
+                        : context.jyotigptTheme.textPrimary.withValues(
+                            alpha: Alpha.disabled,
+                          ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPillButton({
+    required IconData icon,
+    required String label,
+    required bool isActive,
+    VoidCallback? onTap,
+  }) {
+    final bool enabled = onTap != null;
+    final Brightness brightness = Theme.of(context).brightness;
+    final Color baseBackground = context.jyotigptTheme.cardBackground;
+    final Color background = isActive
+        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.16)
+        : baseBackground.withValues(
+            alpha: brightness == Brightness.dark ? 0.18 : 0.12,
+          );
+    final Color outline = isActive
+        ? context.jyotigptTheme.buttonPrimary.withValues(alpha: 0.8)
+        : context.jyotigptTheme.cardBorder.withValues(alpha: 0.6);
+    final Color contentColor = isActive
+        ? context.jyotigptTheme.buttonPrimary
+        : context.jyotigptTheme.textPrimary.withValues(
+            alpha: enabled ? Alpha.strong : Alpha.disabled,
+          );
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppBorderRadius.input),
+        onTap: onTap == null
+            ? null
+            : () {
+                HapticFeedback.selectionClick();
+                onTap();
+              },
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.sm,
+            vertical: Spacing.xs,
+          ),
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: BorderRadius.circular(AppBorderRadius.input),
+            border: Border.all(color: outline, width: BorderWidth.thin),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: IconSize.medium, color: contentColor),
+              const SizedBox(width: Spacing.xs),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.labelStyle.copyWith(color: contentColor),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showOverflowSheet() {
+    HapticFeedback.selectionClick();
+    final prevCanRequest = _focusNode.canRequestFocus;
+    final wasFocused = _focusNode.hasFocus;
+    _focusNode.canRequestFocus = false;
+    try {
+      FocusScope.of(context).unfocus();
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    } catch (_) {}
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (modalContext) => Consumer(
+        builder: (innerContext, modalRef, _) {
+          final l10n = AppLocalizations.of(innerContext)!;
+          final theme = innerContext.jyotigptTheme;
+
+          final selectedToolIds = modalRef.watch(selectedToolIdsProvider);
+          final toolsAsync = modalRef.watch(toolsListProvider);
+          final Widget toolsSection = toolsAsync.when(
+            data: (tools) {
+              if (tools.isEmpty) {
+                return _buildInfoCard('No tools available');
+              }
+              final tiles = tools.map((tool) {
+                final isSelected = selectedToolIds.contains(tool.id);
+                return _buildToolTile(
+                  tool: tool,
+                  selected: isSelected,
+                  onToggle: () {
+                    final current = List<String>.from(
+                      modalRef.read(selectedToolIdsProvider),
+                    );
+                    if (isSelected) {
+                      current.remove(tool.id);
+                    } else {
+                      current.add(tool.id);
+                    }
+                    modalRef
+                        .read(selectedToolIdsProvider.notifier)
+                        .set(current);
+                  },
+                );
+              }).toList();
+              return Column(children: _withVerticalSpacing(tiles, Spacing.xxs));
+            },
+            loading: () => Center(
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: BorderWidth.thin),
+              ),
+            ),
+            error: (error, stack) => _buildInfoCard('Failed to load tools'),
+          );
+
+          final bodyChildren = <Widget>[
+            const SheetHandle(),
+            const SizedBox(height: Spacing.sm),
+            _buildSectionLabel(l10n.tools),
+            toolsSection,
+          ];
+
+          final GlobalKey sheetContentKey = GlobalKey();
+          double? measuredContentHeight;
+
+          return StatefulBuilder(
+            builder: (context, setModalState) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                final ctx = sheetContentKey.currentContext;
+                if (ctx != null) {
+                  final renderObject = ctx.findRenderObject();
+                  if (renderObject is RenderBox) {
+                    final double h = renderObject.size.height;
+                    if (h > 0 && h != measuredContentHeight) {
+                      measuredContentHeight = h;
+                      setModalState(() {});
+                    }
+                  }
+                }
+              });
+
+              final media = MediaQuery.of(modalContext);
+              final double availableHeight =
+                  media.size.height - media.padding.top;
+
+              double computedMax = 0.9;
+              if (measuredContentHeight != null && availableHeight > 0) {
+                computedMax = (measuredContentHeight! / availableHeight).clamp(
+                  0.1,
+                  0.9,
+                );
+              }
+              final double computedMin = math.min(0.2, computedMax);
+              final double computedInitial = math.min(0.34, computedMax);
+
+              return Stack(
+                children: [
+                  Positioned.fill(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => Navigator.of(modalContext).maybePop(),
+                      child: const SizedBox.shrink(),
+                    ),
+                  ),
+                  DraggableScrollableSheet(
+                    expand: false,
+                    initialChildSize: computedInitial,
+                    minChildSize: computedMin,
+                    maxChildSize: computedMax,
+                    snap: true,
+                    snapSizes: [computedMax],
+                    builder: (sheetContext, scrollController) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: theme.surfaceBackground,
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(AppBorderRadius.bottomSheet),
+                          ),
+                          border: Border.all(
+                            color: theme.dividerColor,
+                            width: BorderWidth.thin,
+                          ),
+                          boxShadow: JyotiGPTShadows.modal(context),
+                        ),
+                        child: ModalSheetSafeArea(
+                          padding: const EdgeInsets.fromLTRB(
+                            Spacing.md,
+                            Spacing.xs,
+                            Spacing.md,
+                            Spacing.md,
+                          ),
+                          child: SingleChildScrollView(
+                            controller: scrollController,
+                            padding: EdgeInsets.zero,
+                            child: Column(
+                              key: sheetContentKey,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: bodyChildren,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    ).whenComplete(() {
+      if (mounted) {
+        _focusNode.canRequestFocus = prevCanRequest;
+        if (wasFocused && widget.enabled) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            _ensureFocusedIfEnabled();
+          });
+        }
+      }
+    });
+  }
+
+  List<Widget> _withVerticalSpacing(List<Widget> children, double gap) {
+    if (children.length <= 1) {
+      return List<Widget>.from(children);
+    }
+    final spaced = <Widget>[];
+    for (var i = 0; i < children.length; i++) {
+      spaced.add(children[i]);
+      if (i != children.length - 1) {
+        spaced.add(SizedBox(height: gap));
+      }
+    }
+    return spaced;
+  }
+
+  Widget _buildSectionLabel(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Spacing.xxs),
+      child: Text(
+        text,
+        style: AppTypography.labelStyle.copyWith(
+          color: context.jyotigptTheme.textSecondary.withValues(
+            alpha: Alpha.strong,
+          ),
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildToolTile({
+    required Tool tool,
+    required bool selected,
+    required VoidCallback onToggle,
+  }) {
+    final theme = context.jyotigptTheme;
+    final brightness = Theme.of(context).brightness;
+    final description = _toolDescriptionFor(tool);
+    final Color background = selected
+        ? theme.buttonPrimary.withValues(
+            alpha: brightness == Brightness.dark ? 0.28 : 0.16,
+          )
+        : theme.surfaceContainer.withValues(
+            alpha: brightness == Brightness.dark ? 0.32 : 0.12,
+          );
+    final Color borderColor = selected
+        ? theme.buttonPrimary.withValues(alpha: 0.7)
+        : theme.cardBorder.withValues(alpha: 0.55);
+
+    return Semantics(
+      button: true,
+      toggled: selected,
+      label: tool.name,
+      hint: description.isEmpty ? null : description,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppBorderRadius.input),
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onToggle();
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOutCubic,
+            margin: const EdgeInsets.symmetric(vertical: Spacing.xxs),
+            padding: const EdgeInsets.all(Spacing.sm),
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: BorderRadius.circular(AppBorderRadius.input),
+              border: Border.all(color: borderColor, width: BorderWidth.thin),
+              boxShadow: selected ? JyotiGPTShadows.low(context) : const [],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildToolGlyph(
+                  icon: _toolIconFor(tool),
+                  selected: selected,
+                  theme: theme,
+                ),
+                const SizedBox(width: Spacing.xs),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tool.name,
+                        style: AppTypography.bodySmallStyle.copyWith(
+                          color: theme.textPrimary,
+                          fontWeight: selected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (description.isNotEmpty) ...[
+                        const SizedBox(height: Spacing.xs),
+                        Text(
+                          description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.captionStyle.copyWith(
+                            color: theme.textSecondary.withValues(
+                              alpha: Alpha.strong,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(width: Spacing.xs),
+                _buildTogglePill(isOn: selected, theme: theme),
+              ],
+            ),
+          ),
+        ),
+      ),
