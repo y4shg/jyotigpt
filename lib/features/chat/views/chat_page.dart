@@ -1626,10 +1626,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                                     _handleMessageSend(text, selectedModel),
                                 onVoiceInput: null,
                                 onVoiceCall: _handleVoiceCall,
-                                onFileAttachment: _handleFileAttachment,
-                                onImageAttachment: _handleImageAttachment,
-                                onCameraCapture: () =>
-                                    _handleImageAttachment(fromCamera: true),
                               ),
                             ),
                           ),
