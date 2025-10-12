@@ -1,5 +1,7 @@
 # **🌟 JyotiGPT — The Brahma Kumaris AI Assistant**
 ![Hero Image of a beautiful river scene that say JyotiGPT.](/fastlane/metadata/en-US/images/hero.jpg)
+
+---
 **JyotiGPT** is a serene, intelligent, and spiritually inspired AI companion designed to bring the timeless teachings of the **Brahma Kumaris** into the digital era.  
  It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections — helping everyone reconnect with their inner light.
 
