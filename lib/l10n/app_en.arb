@@ -30,7 +30,7 @@
   "@pleaseCheckConnection": {"description": "Generic connectivity hint after an error."},
   "account": "Account",
   "@account": {"description": "Section header for account-related options."},
-  "supportJyotiGPT": "More",
+  "supportJyotiGPT": "Additional Settings",
   "@supportJyotiGPT": {
     "description": "Section header to list more settings."
   },
