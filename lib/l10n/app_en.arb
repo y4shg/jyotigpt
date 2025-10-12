@@ -30,29 +30,29 @@
   "@pleaseCheckConnection": {"description": "Generic connectivity hint after an error."},
   "account": "Account",
   "@account": {"description": "Section header for account-related options."},
-  "supportJyotiGPT": "Support JyotiGPT",
+  "supportJyotiGPT": "More",
   "@supportJyotiGPT": {
-    "description": "Section header inviting the user to financially support the project."
+    "description": "Section header to list more settings."
   },
-  "supportJyotiGPTSubtitle": "Keep JyotiGPT independent by funding ongoing development.",
+  "supportJyotiGPTSubtitle": "Additional Settings and information.",
   "@supportJyotiGPTSubtitle": {
-    "description": "Subtitle explaining why donations are helpful."
+    "description": "Subtitle explaining whats in the section."
   },
-  "githubSponsorsTitle": "GitHub Sponsors",
+  "githubSponsorsTitle": "JyotiGPT Account Settings",
   "@githubSponsorsTitle": {
-    "description": "Tile title linking to the GitHub Sponsors page."
+    "description": "Tile title linking to account settings"
   },
-  "githubSponsorsSubtitle": "Become a recurring sponsor to fund roadmap items.",
+  "githubSponsorsSubtitle": "Edit full account settings.",
   "@githubSponsorsSubtitle": {
-    "description": "Subtitle explaining the impact of recurring sponsorship."
+    "description": "Subtitle explaining account settings."
   },
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
+  "buyMeACoffeeTitle": "Github Repo",
   "@buyMeACoffeeTitle": {
-    "description": "Tile title linking to the Buy Me a Coffee page."
+    "description": "Tile title linking to the Github Repo"
   },
-  "buyMeACoffeeSubtitle": "Make a one-time donation to say thanks.",
+  "buyMeACoffeeSubtitle": "View open source code for this project.",
   "@buyMeACoffeeSubtitle": {
-    "description": "Subtitle encouraging one-time donations via Buy Me a Coffee."
+    "description": "Subtitle stating to view the open source code for the project."
   },
   "signOut": "Sign Out",
   "@signOut": {"description": "Button/title for signing out of the app."},

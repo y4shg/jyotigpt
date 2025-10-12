@@ -331,7 +331,9 @@ class AppCustomizationPage extends ConsumerWidget {
       data: (value) => value,
       orElse: () => const <Tool>[],
     );
-    final allowed = <String>{'web', 'image', ...tools.map((t) => t.id)};
+    
+    // Only allow tool IDs, no 'web' or 'image'
+    final allowed = <String>{...tools.map((t) => t.id)};
 
     final selected = selectedRaw
         .where((id) => allowed.contains(id))
@@ -418,25 +420,7 @@ class AppCustomizationPage extends ConsumerWidget {
               Wrap(
                 spacing: Spacing.sm,
                 runSpacing: Spacing.sm,
-                children: [
-                  JyotiGPTChip(
-                    label: AppLocalizations.of(context)!.web,
-                    icon: Platform.isIOS ? CupertinoIcons.search : Icons.search,
-                    isSelected: selected.contains('web'),
-                    onTap: (selectedCount < 2 || selected.contains('web'))
-                        ? () => toggle('web')
-                        : null,
-                  ),
-                  JyotiGPTChip(
-                    label: AppLocalizations.of(context)!.imageGen,
-                    icon: Platform.isIOS ? CupertinoIcons.photo : Icons.image,
-                    isSelected: selected.contains('image'),
-                    onTap: (selectedCount < 2 || selected.contains('image'))
-                        ? () => toggle('image')
-                        : null,
-                  ),
-                  ...buildToolChips(),
-                ],
+                children: buildToolChips(),
               ),
             ],
           ),

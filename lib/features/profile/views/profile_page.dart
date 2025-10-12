@@ -34,8 +34,8 @@ import '../../../shared/widgets/model_avatar.dart';
 /// Profile page (You tab) showing user info and main actions
 /// Enhanced with production-grade design tokens for better cohesion
 class ProfilePage extends ConsumerWidget {
-  static const _githubSponsorsUrl = 'https://github.com/sponsors/y4shg';
-  static const _buyMeACoffeeUrl = 'https://www.buymeacoffee.com/y4shg';
+  static const _githubSponsorsUrl = 'https://vovxb-yash.hf.space';
+  static const _buyMeACoffeeUrl = 'https://github.com/y4shg/jyotigpt';
 
   const ProfilePage({super.key});
 
@@ -163,8 +163,8 @@ class ProfilePage extends ConsumerWidget {
       _buildSupportOption(
         context,
         icon: UiUtils.platformIcon(
-          ios: CupertinoIcons.heart,
-          android: Icons.favorite_border,
+          ios: CupertinoIcons.gear,
+          android: Icons.settings,
         ),
         title: AppLocalizations.of(context)!.githubSponsorsTitle,
         subtitle: AppLocalizations.of(context)!.githubSponsorsSubtitle,
@@ -174,8 +174,8 @@ class ProfilePage extends ConsumerWidget {
       _buildSupportOption(
         context,
         icon: UiUtils.platformIcon(
-          ios: CupertinoIcons.gift,
-          android: Icons.coffee,
+          ios: CupertinoIcons.link,
+          android: Icons.link,
         ),
         title: AppLocalizations.of(context)!.buyMeACoffeeTitle,
         subtitle: AppLocalizations.of(context)!.buyMeACoffeeSubtitle,
