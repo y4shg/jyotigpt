@@ -529,255 +529,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
     );
   }
 
-  Widget _buildToolGlyph({
-    required IconData icon,
-    required bool selected,
-    required JyotiGPTThemeExtension theme,
-  }) {
-    final Color accentStart = theme.buttonPrimary.withValues(
-      alpha: selected ? Alpha.active : Alpha.hover,
-    );
-    final Color accentEnd = theme.buttonPrimary.withValues(
-      alpha: selected ? Alpha.highlight : Alpha.focus,
-    );
-    final Color iconColor = selected
-        ? theme.buttonPrimaryText
-        : theme.iconPrimary.withValues(alpha: Alpha.strong);
-
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [accentStart, accentEnd],
-        ),
-      ),
-      child: Icon(icon, color: iconColor, size: IconSize.modal),
-    );
-  }
-
-  String _toolDescriptionFor(Tool tool) {
-    final metaDescription = _extractMetaDescription(tool.meta);
-    if (metaDescription != null && metaDescription.isNotEmpty) {
-      return metaDescription;
-    }
-
-    final custom = tool.description?.trim();
-    if (custom != null && custom.isNotEmpty) {
-      return custom;
-    }
-
-    final name = tool.name.toLowerCase();
-    if (name.contains('search') || name.contains('browse')) {
-      return 'Search the web for fresh context to improve answers.';
-    }
-    if (name.contains('image') ||
-        name.contains('vision') ||
-        name.contains('media')) {
-      return 'Understand or generate imagery alongside your conversation.';
-    }
-    if (name.contains('code') ||
-        name.contains('python') ||
-        name.contains('notebook')) {
-      return 'Execute code snippets and return computed results inline.';
-    }
-    if (name.contains('calc') || name.contains('math')) {
-      return 'Perform precise math and calculations on demand.';
-    }
-    if (name.contains('file') || name.contains('document')) {
-      return 'Access and summarize your uploaded files during chat.';
-    }
-    if (name.contains('api') || name.contains('request')) {
-      return 'Trigger API requests and bring external data into the chat.';
-    }
-    return 'Enhance responses with specialized capabilities from this tool.';
-  }
-
-  String? _extractMetaDescription(Map<String, dynamic>? meta) {
-    if (meta == null || meta.isEmpty) return null;
-    final value = meta['description'];
-    if (value is String) {
-      final trimmed = value.trim();
-      if (trimmed.isNotEmpty) return trimmed;
-    }
-    return null;
-  }
-
-  Widget _buildTogglePill({
-    required bool isOn,
-    required JyotiGPTThemeExtension theme,
-  }) {
-    final Color trackColor = isOn
-        ? theme.buttonPrimary.withValues(alpha: 0.9)
-        : theme.cardBorder.withValues(alpha: 0.5);
-    final Color thumbColor = isOn
-        ? theme.buttonPrimaryText
-        : theme.surfaceBackground.withValues(alpha: 0.9);
-
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeOutCubic,
-      width: 42,
-      height: 22,
-      padding: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppBorderRadius.round),
-        color: trackColor,
-      ),
-      alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeOutCubic,
-        width: 18,
-        height: 18,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: thumbColor,
-          boxShadow: [
-            BoxShadow(
-              color: theme.buttonPrimary.withValues(alpha: 0.25),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  IconData _toolIconFor(Tool tool) {
-    final name = tool.name.toLowerCase();
-    if (name.contains('image') || name.contains('vision')) {
-      return Platform.isIOS ? CupertinoIcons.photo : Icons.image;
-    }
-    if (name.contains('code') || name.contains('python')) {
-      return Platform.isIOS
-          ? CupertinoIcons.chevron_left_slash_chevron_right
-          : Icons.code;
-    }
-    if (name.contains('calculator') || name.contains('math')) {
-      return Icons.calculate;
-    }
-    if (name.contains('file') || name.contains('document')) {
-      return Platform.isIOS ? CupertinoIcons.doc : Icons.description;
-    }
-    if (name.contains('api') || name.contains('request')) {
-      return Icons.cloud;
-    }
-    if (name.contains('search')) {
-      return Platform.isIOS ? CupertinoIcons.search : Icons.search;
-    }
-    return Platform.isIOS ? CupertinoIcons.square_grid_2x2 : Icons.extension;
-  }
-
-  Widget _buildInfoCard(String message) {
-    final theme = context.jyotigptTheme;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(Spacing.md),
-      decoration: BoxDecoration(
-        color: theme.cardBackground,
-        borderRadius: BorderRadius.circular(AppBorderRadius.input),
-        border: Border.all(
-          color: theme.cardBorder.withValues(alpha: 0.6),
-          width: BorderWidth.thin,
-        ),
-      ),
-      child: Text(
-        message,
-        style: AppTypography.bodyMediumStyle.copyWith(
-          color: theme.textSecondary,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _toggleVoice() async {
-    if (_isRecording) {
-      await _stopVoice();
-    } else {
-      await _startVoice();
-    }
-  }
-
-  Future<void> _startVoice() async {
-    if (!widget.enabled) return;
-    try {
-      final ok = await _voiceService.initialize();
-      if (!mounted) return;
-      if (!ok) {
-        _showVoiceUnavailable(
-          AppLocalizations.of(context)?.errorMessage ??
-              'Voice input unavailable',
-        );
-        return;
-      }
-      final stream = await _voiceService.beginListening();
-      if (!mounted) return;
-      setState(() {
-        _isRecording = true;
-        _baseTextAtStart = _controller.text;
-      });
-      _intensitySub?.cancel();
-      _textSub?.cancel();
-      _textSub = stream.listen(
-        (text) async {
-          final updated = _baseTextAtStart.isEmpty
-              ? text
-              : '${_baseTextAtStart.trimRight()} $text';
-          _controller.value = TextEditingValue(
-            text: updated,
-            selection: TextSelection.collapsed(offset: updated.length),
-          );
-        },
-        onDone: () {
-          if (!mounted) return;
-          setState(() => _isRecording = false);
-          _intensitySub?.cancel();
-          _intensitySub = null;
-        },
-        onError: (_) {
-          if (!mounted) return;
-          setState(() => _isRecording = false);
-          _intensitySub?.cancel();
-          _intensitySub = null;
-        },
-      );
-      _ensureFocusedIfEnabled();
-    } catch (_) {
-      _showVoiceUnavailable(
-        AppLocalizations.of(context)?.errorMessage ??
-            'Failed to start voice input',
-      );
-      if (!mounted) return;
-      setState(() => _isRecording = false);
-    }
-  }
-
-  Future<void> _stopVoice() async {
-    _intensitySub?.cancel();
-    _intensitySub = null;
-    await _voiceService.stopListening();
-    if (!mounted) return;
-    setState(() => _isRecording = false);
-    HapticFeedback.selectionClick();
-  }
-
-  void _showVoiceUnavailable(String message) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-}
-
   Widget _buildPromptOverlayPlaceholder(
     BuildContext context,
     Widget leading,
@@ -883,7 +634,6 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
 
     final List<Widget> quickPills = <Widget>[];
 
-    // Only show tool pills
     for (final id in selectedQuickPills) {
       Tool? tool;
       for (final t in availableTools) {
@@ -966,13 +716,11 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (quickPills.isNotEmpty) ...[
-                _buildOverflowButton(
-                  tooltip: AppLocalizations.of(context)!.tools,
-                  toolsActive: selectedToolIds.isNotEmpty,
-                ),
-                const SizedBox(width: Spacing.sm),
-              ],
+              _buildOverflowButton(
+                tooltip: AppLocalizations.of(context)!.more,
+                toolsActive: selectedToolIds.isNotEmpty,
+              ),
+              const SizedBox(width: Spacing.sm),
               Expanded(
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 180),
@@ -1081,7 +829,7 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
           child: Row(
             children: [
               _buildOverflowButton(
-                tooltip: AppLocalizations.of(context)!.tools,
+                tooltip: AppLocalizations.of(context)!.more,
                 toolsActive: selectedToolIds.isNotEmpty,
               ),
               const SizedBox(width: Spacing.xs),
@@ -2016,3 +1764,254 @@ class _ModernChatInputState extends ConsumerState<ModernChatInput>
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildToolGlyph({
+    required IconData icon,
+    required bool selected,
+    required JyotiGPTThemeExtension theme,
+  }) {
+    final Color accentStart = theme.buttonPrimary.withValues(
+      alpha: selected ? Alpha.active : Alpha.hover,
+    );
+    final Color accentEnd = theme.buttonPrimary.withValues(
+      alpha: selected ? Alpha.highlight : Alpha.focus,
+    );
+    final Color iconColor = selected
+        ? theme.buttonPrimaryText
+        : theme.iconPrimary.withValues(alpha: Alpha.strong);
+
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [accentStart, accentEnd],
+        ),
+      ),
+      child: Icon(icon, color: iconColor, size: IconSize.modal),
+    );
+  }
+
+  String _toolDescriptionFor(Tool tool) {
+    final metaDescription = _extractMetaDescription(tool.meta);
+    if (metaDescription != null && metaDescription.isNotEmpty) {
+      return metaDescription;
+    }
+
+    final custom = tool.description?.trim();
+    if (custom != null && custom.isNotEmpty) {
+      return custom;
+    }
+
+    final name = tool.name.toLowerCase();
+    if (name.contains('search') || name.contains('browse')) {
+      return 'Search the web for fresh context to improve answers.';
+    }
+    if (name.contains('image') ||
+        name.contains('vision') ||
+        name.contains('media')) {
+      return 'Understand or generate imagery alongside your conversation.';
+    }
+    if (name.contains('code') ||
+        name.contains('python') ||
+        name.contains('notebook')) {
+      return 'Execute code snippets and return computed results inline.';
+    }
+    if (name.contains('calc') || name.contains('math')) {
+      return 'Perform precise math and calculations on demand.';
+    }
+    if (name.contains('file') || name.contains('document')) {
+      return 'Access and summarize your uploaded files during chat.';
+    }
+    if (name.contains('api') || name.contains('request')) {
+      return 'Trigger API requests and bring external data into the chat.';
+    }
+    return 'Enhance responses with specialized capabilities from this tool.';
+  }
+
+  String? _extractMetaDescription(Map<String, dynamic>? meta) {
+    if (meta == null || meta.isEmpty) return null;
+    final value = meta['description'];
+    if (value is String) {
+      final trimmed = value.trim();
+      if (trimmed.isNotEmpty) return trimmed;
+    }
+    return null;
+  }
+
+  Widget _buildTogglePill({
+    required bool isOn,
+    required JyotiGPTThemeExtension theme,
+  }) {
+    final Color trackColor = isOn
+        ? theme.buttonPrimary.withValues(alpha: 0.9)
+        : theme.cardBorder.withValues(alpha: 0.5);
+    final Color thumbColor = isOn
+        ? theme.buttonPrimaryText
+        : theme.surfaceBackground.withValues(alpha: 0.9);
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOutCubic,
+      width: 42,
+      height: 22,
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppBorderRadius.round),
+        color: trackColor,
+      ),
+      alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOutCubic,
+        width: 18,
+        height: 18,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: thumbColor,
+          boxShadow: [
+            BoxShadow(
+              color: theme.buttonPrimary.withValues(alpha: 0.25),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  IconData _toolIconFor(Tool tool) {
+    final name = tool.name.toLowerCase();
+    if (name.contains('image') || name.contains('vision')) {
+      return Platform.isIOS ? CupertinoIcons.photo : Icons.image;
+    }
+    if (name.contains('code') || name.contains('python')) {
+      return Platform.isIOS
+          ? CupertinoIcons.chevron_left_slash_chevron_right
+          : Icons.code;
+    }
+    if (name.contains('calculator') || name.contains('math')) {
+      return Icons.calculate;
+    }
+    if (name.contains('file') || name.contains('document')) {
+      return Platform.isIOS ? CupertinoIcons.doc : Icons.description;
+    }
+    if (name.contains('api') || name.contains('request')) {
+      return Icons.cloud;
+    }
+    if (name.contains('search')) {
+      return Platform.isIOS ? CupertinoIcons.search : Icons.search;
+    }
+    return Platform.isIOS ? CupertinoIcons.square_grid_2x2 : Icons.extension;
+  }
+
+  Widget _buildInfoCard(String message) {
+    final theme = context.jyotigptTheme;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(Spacing.md),
+      decoration: BoxDecoration(
+        color: theme.cardBackground,
+        borderRadius: BorderRadius.circular(AppBorderRadius.input),
+        border: Border.all(
+          color: theme.cardBorder.withValues(alpha: 0.6),
+          width: BorderWidth.thin,
+        ),
+      ),
+      child: Text(
+        message,
+        style: AppTypography.bodyMediumStyle.copyWith(
+          color: theme.textSecondary,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _toggleVoice() async {
+    if (_isRecording) {
+      await _stopVoice();
+    } else {
+      await _startVoice();
+    }
+  }
+
+  Future<void> _startVoice() async {
+    if (!widget.enabled) return;
+    try {
+      final ok = await _voiceService.initialize();
+      if (!mounted) return;
+      if (!ok) {
+        _showVoiceUnavailable(
+          AppLocalizations.of(context)?.errorMessage ??
+              'Voice input unavailable',
+        );
+        return;
+      }
+      final stream = await _voiceService.beginListening();
+      if (!mounted) return;
+      setState(() {
+        _isRecording = true;
+        _baseTextAtStart = _controller.text;
+      });
+      _intensitySub?.cancel();
+      _textSub?.cancel();
+      _textSub = stream.listen(
+        (text) async {
+          final updated = _baseTextAtStart.isEmpty
+              ? text
+              : '${_baseTextAtStart.trimRight()} $text';
+          _controller.value = TextEditingValue(
+            text: updated,
+            selection: TextSelection.collapsed(offset: updated.length),
+          );
+        },
+        onDone: () {
+          if (!mounted) return;
+          setState(() => _isRecording = false);
+          _intensitySub?.cancel();
+          _intensitySub = null;
+        },
+        onError: (_) {
+          if (!mounted) return;
+          setState(() => _isRecording = false);
+          _intensitySub?.cancel();
+          _intensitySub = null;
+        },
+      );
+      _ensureFocusedIfEnabled();
+    } catch (_) {
+      _showVoiceUnavailable(
+        AppLocalizations.of(context)?.errorMessage ??
+            'Failed to start voice input',
+      );
+      if (!mounted) return;
+      setState(() => _isRecording = false);
+    }
+  }
+
+  Future<void> _stopVoice() async {
+    _intensitySub?.cancel();
+    _intensitySub = null;
+    await _voiceService.stopListening();
+    if (!mounted) return;
+    setState(() => _isRecording = false);
+    HapticFeedback.selectionClick();
+  }
+
+  void _showVoiceUnavailable(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+}
