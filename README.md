@@ -1,466 +1,152 @@
-JyotiGPT — README
+# **🌟 JyotiGPT — The Brahma Kumaris AI Assistant**
 
-Welcome to JyotiGPT — a next-generation AI assistant app aiming to empower users with intelligent, context-aware interactions. Whether you're using it for productivity, learning, accessibility, or creative exploration, JyotiGPT is built to assist you in a human-friendly way.
+**JyotiGPT** is a serene, intelligent, and spiritually inspired AI companion designed to bring the timeless teachings of the **Brahma Kumaris** into the digital era.  
+ It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections — helping everyone reconnect with their inner light.
 
-This README is designed to serve as a comprehensive guide — from what JyotiGPT is and why it matters, to how to install it, use it, and contribute to its development.
+---
 
-Table of Contents
+## **🕊️ Introduction**
 
-What is JyotiGPT?
+In an age of constant movement and information overload, **JyotiGPT** serves as a space for stillness and insight.  
+ It’s not just another AI assistant — it’s a spiritual guide, a meditation companion, and a source of positivity.
 
-Key Features
+Built with **Flutter** and **Dart**, JyotiGPT provides a smooth and calming experience across Android, iOS, and web platforms.  
+ It encourages users to pause, reflect, and rediscover peace through guided dialogues based on the **Brahma Kumaris’ Raja Yoga philosophy**.
 
-Use Cases & Target Audience
+---
 
-Architecture & Technology Stack
+## **🌼 Purpose**
 
-Getting Started
+The purpose of JyotiGPT is to **help people nurture their soul-conscious awareness** through conversation, reflection, and meditation.  
+ It offers wisdom in simple, compassionate language, connecting technology with timeless spirituality.
 
-Prerequisites
+JyotiGPT aims to:
 
-Installation / Setup
+* Encourage meditation and self-awareness in daily life.
 
-Running the App
+* Share authentic teachings from the **Brahma Kumaris** community.
 
-Usage & Interface
+* Provide a supportive, peaceful conversational experience.
 
-Configuration & Customization
+* Make divine knowledge accessible to all, regardless of location or background.
 
-Data Handling, Privacy & Ethics
+---
 
-Testing & Quality Assurance
+## **✨ Features**
 
-Deployment & Distribution
+* 🕉️ **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
 
-Roadmap & Future Enhancements
+* 🌅 **Daily Inspirations** – Start your day with affirmations and Murli-inspired insights.
 
-Contributing
+* 🧘 **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
 
-License & Acknowledgements
+* 🌸 **Virtue Reflections** – Explore virtues such as love, purity, and peace through gentle guidance.
 
-Contact & Support
+* 🌐 **Multilingual Support** – Available in English and Hindi, with more languages planned.
 
-What is JyotiGPT?
+* 🌙 **Calming Interface** – Simple and elegant UI built with Flutter for a soothing user experience.
 
-JyotiGPT is an AI conversational assistant application built around large language models (LLMs) and augmented with domain-specific capabilities (like document reading, translation, summarization, code completion, or accessibility enhancements). The name “Jyoti” suggests “light” or “illumination,” reflecting the goal of illuminating complex topics or guiding users through tasks.
+---
 
-If you’re curious how Jyoti is related to other “Jyoti / Jyoti AI / Jyoti for accessibility” apps — there is a known app “Jyoti – AI for Accessibility” on Google Play and the App Store (developed by TorchIt) for visually impaired users. 
-Google Play
-+1
+## **🧩 Installation**
 
-However, JyotiGPT is conceptualized as a broader AI assistant (not limited to accessibility), which may incorporate or extend accessibility features.
+Follow these steps to set up and run **JyotiGPT** locally using Flutter.
 
-Key Features
+### **Prerequisites**
 
-Here are some of JyotiGPT’s envisioned or implemented core features:
+* [Flutter SDK](https://flutter.dev/docs/get-started/install) (version 3.0 or higher)
 
-Feature	Description
-Natural Conversational AI	Engage in fluid, context-aware conversations leveraging LLM backends (e.g. OpenAI GPT, LLaMA, etc.).
-Contextual Memory	Remember past messages, allow follow-up questions, maintain conversation context across sessions.
-Document & File Understanding	Upload PDFs, images, or text files and ask questions, extract summaries, or translate.
-Code Assistance	Auto-complete, debug, explain code snippets for various programming languages.
-Multi-Modal Input / Output	Accept voice, images, or screenshots; respond via voice, text, or visual annotation.
-Accessibility Tools	(Optional) Features such as OCR, object recognition, color identification to help visually impaired users.
-Plugin / Extension Support	Extend the assistant with modular plugins (web search, databases, domain knowledge).
-Personalization & Profiles	Enable user-specific preferences, prompt templates, themes, and optional local models.
+* [Dart SDK](https://dart.dev/get-dart)
 
-These features are aspirational; depending on which version or release you have, some may be partial or in progress.
+* Android Studio or VS Code (with Flutter extensions)
 
-Use Cases & Target Audience
+* An emulator or connected device for testing
 
-Who can benefit from JyotiGPT?
+---
 
-Students & Learners — for homework help, explanations, summarization, coding assistance.
+### **Steps**
 
-Professionals — for drafting emails, generating reports, analyzing documents, debugging code.
+#### **1\. Clone the repository**
 
-Writers & Creators — for brainstorming ideas, writing drafts, editing, translation.
+`git clone https://github.com/yourusername/jyotigpt.git  
+cd jyotigpt`
 
-Developers & Engineers — as a helper tool in the development workflow.
+#### **2\. Get all dependencies**
 
-Individuals with Accessibility Needs — if the app includes accessibility features, it can assist visually impaired users (similarly to Jyoti AI for Accessibility) in reading, object detection, or navigation tasks.
+`flutter pub get`
 
-General Knowledge Seekers — for asking questions, exploring topics, or simply conversing.
+#### **3\. Run the app**
 
-Use Case Scenarios:
+`flutter run`
 
-You upload a research paper PDF and ask, “What are the three key contributions?”
+#### **4\. Build for release**
 
-You write a draft email, ask JyotiGPT to polish it.
+**For Android**
 
-You show a screenshot, and ask, “What does this chart indicate?”
+`flutter build apk --release`
 
-You ask follow-up questions without restating the context (e.g. “And what about in the year 2020?”).
+**For iOS**
 
-(With accessibility features) You scan your environment via camera and ask Jyoti “What objects are ahead?”
+`flutter build ios --release`
 
-Architecture & Technology Stack
+**For Web**
 
-Below is a high-level overview of the architecture and components typical in a modern AI assistant app like JyotiGPT:
+`flutter build web`
 
-[Client (Mobile / Web / Desktop)]
-      ↕ gRPC / REST / WebSocket
-[Backend Server / API Layer]
-      ↔ Plugin Modules / Services
-      ↔ LLM / Model Inference Engine
-      ↔ Storage / Memory / Logging
-[Optional Local Edge Model (on-device inference)]
+Build files will appear in the `/build` directory.
 
+---
 
-Typical Technology Stack:
+## **⚙️ Dependencies**
 
-Frontend / Client
+| Dependency | Purpose |
+| ----- | ----- |
+| **flutter** | Core Flutter SDK |
+| **http** | For API communication |
+| **provider** | State management |
+| **flutter\_tts** | Text-to-speech for meditation guidance |
+| **audioplayers** | Playing background meditation music |
+| **google\_fonts** | Custom spiritual typography |
+| **shared\_preferences** | Saving user settings and preferences |
+| **intl** | Date and time formatting for reflections |
 
-Mobile: React Native, SwiftUI, Kotlin, or Flutter
+All dependencies are listed in `pubspec.yaml`.
 
-Web / Desktop: React, Vue, Electron, or Tauri
+---
 
-Backend / API
+## **🧘 Troubleshooting**
 
-Python / FastAPI, Node.js / Express, or Go
+| Issue | Possible Cause | Solution |
+| ----- | ----- | ----- |
+| App fails to start | Missing Flutter SDK or path not set | Ensure Flutter is installed and added to PATH |
+| `flutter pub get` fails | Internet connectivity or outdated SDK | Run `flutter upgrade` then `flutter pub get` |
+| Build errors | Outdated dependencies | Run `flutter clean` and rebuild |
+| Text-to-speech not working | Permission or unsupported locale | Check device language settings |
+| Audio not playing | File not found or permission issue | Verify audio files in `assets/` folder |
 
-WebSocket or REST endpoints for chat and streaming
+---
 
-Model / AI Engine
+## **🙏 Contributors**
 
-OpenAI API, Anthropic, Cohere, or open-source models (e.g. GPT-4, LLaMA, Mistral)
+* **Project Lead:** \[Yash Ghule\]
 
-Tools like LangChain, prompt templating, caching, agent control
+Gratitude to the **Brahma Kumaris community** for their spiritual guidance, inspiration, and love that made this project possible.
 
-Database & Memory
+---
 
-Persistent store (PostgreSQL, SQLite)
+## **📜 License**
 
-Vector store (Pinecone, Weaviate, Milvus, or FAISS) for embedding-based retrieval
+View license.md
 
-File & Object Processing
+---
 
-OCR: Tesseract, PaddleOCR, or commercial API
+## **🌷 Closing Message**
 
-Image processing / object detection: OpenCV, YOLO, or TensorFlow / PyTorch models
+*You are a soul — a being of peace, love, and light.*  
+ Let every thought and action flow from this awareness.  
+ JyotiGPT is your gentle reminder that peace is not to be found outside —  
+ it already lives within you.\*
 
-Authentication & User Management
+✨ **Om Shanti.**
 
-JWT tokens, OAuth, or third-party identity providers
-
-Monitoring & Logging
-
-Observability tools, usage analytics, error reporting
-
-Deployment
-
-Containerization (Docker / Kubernetes), serverless, or edge deployment
-
-Getting Started
-Prerequisites
-
-Before you begin:
-
-A supported OS (macOS, Linux, or Windows)
-
-Node.js, Python, or whichever environment the client and server require
-
-API keys / model access credentials (e.g. OpenAI key)
-
-Git (for cloning repository)
-
-Sufficient compute / GPU resources if you plan on running models locally
-
-Installation / Setup
-
-Clone the repository
-
-git clone https://github.com/your-org/jyotigpt.git
-cd jyotigpt
-
-
-Setup backend
-
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env to add your API keys, database URI, etc.
-
-
-Setup frontend / client
-
-cd ../frontend
-npm install
-# or yarn install
-
-Running the App
-
-Run backend server
-
-cd backend
-uvicorn app.main:app --reload
-
-
-Run frontend
-
-cd frontend
-npm start
-
-
-Once both are running, open your browser at http://localhost:3000 (or your configured address) to interact with the JyotiGPT UI.
-
-Usage & Interface
-
-Here’s how users typically interact with JyotiGPT:
-
-Login / Signup
-
-Email/password, OAuth, or magic link.
-
-Optionally enable “anonymous / guest mode”.
-
-Start a Conversation
-
-Type or speak a prompt.
-
-Jyoti GPT responds in streaming mode (token-by-token), showing replies progressively.
-
-Upload / Attach Files
-
-Upload PDFs, images, slides.
-
-Jyoti can parse them and answer questions.
-
-Follow-up & Memory
-
-Ask follow-up queries referencing previous context.
-
-Option to “pin” context or reset memory.
-
-Settings & Preferences
-
-Toggle themes (light / dark)
-
-Choose model (fast vs. high-quality)
-
-Configure temperature, max tokens, etc.
-
-Enable / disable features (e.g. accessibility mode, plugins)
-
-Plugin / Extension Tools
-
-Use built-in tools like web search, translation, math solver, code execution.
-
-Invoke via slash commands or triggers (e.g. /search climate change).
-
-History & Bookmarks
-
-Save favorite conversations or responses
-
-Browse and revisit past sessions
-
-Configuration & Customization
-
-You can tailor JyotiGPT’s behavior via configuration files or UI settings:
-
-Prompt Templates & System Messages
-Define system and user prompt templates to adjust tone, style, persona.
-
-Plugin Management
-Enable or disable specific integrations (e.g. web search, PDF parsing, WolframAlpha).
-
-Memory Policies
-Set how long conversation memory is stored, how to prune history.
-
-Model Parameters
-Control temperature, max_tokens, top_p, frequency_penalty, etc.
-
-Appearance
-UI fonts, theme colors, layout (compact vs. spacious), accessibility fonts and sizes.
-
-Data Handling, Privacy & Ethics
-
-When building or using an AI assistant, it’s crucial to be transparent and ethical about data and privacy:
-
-User Data Storage
-
-Store user data in encrypted form
-
-Minimize retention; prune old conversations if not needed
-
-Allow users to delete their data
-
-Sensitive Content Filtering
-
-Implement moderation or filtering for harmful, offensive, or unsafe content
-
-Use safe-guard layers or content classifiers
-
-Third-Party APIs & Policies
-
-Comply with terms of service for LLM providers
-
-Ensure appropriate usage limits, logging, and secure key handling
-
-Local vs Remote Inference Trade-Offs
-
-Remote model calls require network transit; local models require compute
-
-Hybrid approaches can allow privacy-preserving on-device processing
-
-Accessibility & Inclusivity
-
-If your app includes accessibility features (like OCR, object detection, text-to-speech), follow standards (WCAG, ARIA)
-
-Always consider equitable access — e.g. offline modes, low-bandwidth fallback
-
-Disclaimer & Transparency
-
-Inform users when responses are AI-generated
-
-Provide disclaimers that the AI may hallucinate or be mistaken
-
-Let users flag or report incorrect content
-
-Testing & Quality Assurance
-
-To ensure reliability and correctness:
-
-Unit Tests
-For individual modules (e.g. prompt engineering, file parsing, I/O connectors)
-
-Integration Tests
-End-to-end flows (e.g. user uploads PDF → Jyoti answers correct summary)
-
-Regression Tests
-Existing questions / prompts should not break with new updates
-
-Human Evaluation & Feedback Loops
-Use user feedback to detect hallucinations or errors
-Optionally integrate logging and review of “bad responses”
-
-Load / Stress Testing
-If multiple users or high concurrency — test throughput, latency, and resource usage
-
-Security Testing
-Validate input sanitization, injection attacks, file upload abuse, key handling
-
-Deployment & Distribution
-
-Depending on your target platform:
-
-Mobile (iOS / Android)
-
-Use Apple App Store / Google Play Store
-
-CI/CD pipelines (Fastlane, GitHub Actions)
-
-Handle app review guidelines and data privacy requirements
-
-Web / Desktop
-
-Host frontend and backend (Vercel, Netlify, AWS, GCP, Azure)
-
-Use SSL / HTTPS
-
-Scale backend via container orchestration (Docker, Kubernetes)
-
-Edge or On-Device Inference
-
-Optionally bundle a small LLM or quantized model for offline use
-
-Use techniques like model distillation, quantization, or modular fallback
-
-Versioning & Rollouts
-
-Use semantic versioning (v1.0.0, v1.1.0 etc.)
-
-Feature flags or canary deployments for risky changes
-
-Roadmap & Future Enhancements
-
-Here are some ideas and proposed features for future versions:
-
-More domain-specific agents (legal, medical, finance)
-
-Domain adaptation / fine-tuning per user
-
-Plugin marketplace / ecosystem
-
-Improved voice / speech understanding
-
-Multi-lingual support & translation
-
-Visual reasoning (e.g. ask about charts, graphs)
-
-Collaborative / multi-user chat mode
-
-Real-time collaboration (chat + document editing)
-
-On-device quantized models for offline use
-
-Better user onboarding, tutorials & guided prompts
-
-You may want to maintain a public Roadmap.md or “Projects / Issues” board to track planned and in-progress features.
-
-Contributing
-
-We welcome contributions! Here’s how you can help:
-
-Fork the repository
-
-Create a feature branch: git checkout -b feature/some-new-thing
-
-Write code, tests, and documentation
-
-Commit with descriptive messages
-
-Open a Pull Request (PR) — describe what’s changed, link issue
-
-Code review & iteration
-
-Contribution Guidelines
-
-Respect code style / linting rules
-
-Write or update tests for new logic
-
-Document any new APIs, config options, or environment variables
-
-Be mindful of security, performance, and privacy implications
-
-If using external data or assets, ensure licensing is compliant
-
-You may also help by:
-
-Triage issues and bug reports
-
-Suggest new features or improvements
-
-Provide user feedback or usage case studies
-
-Help with localization and translations
-
-License & Acknowledgements
-
-License: Choose an open-source license (MIT, Apache 2.0, GPL, etc.) and include a LICENSE file.
-
-Acknowledgements:
-
-Thanks to open-source libraries and communities used (e.g. OpenAI, LangChain, OCR engines)
-
-Icons and images used (provide attribution if required)
-
-Testers, early users, and contributors
-
-Contact & Support
-
-If you have questions, feedback, or issues:
-
-Project Website / Home: [jyoti-gpt.example.com]
-
-Issue Tracker: open GitHub issues in the repository
-
-Email / Support: support@jyotigpt.com
-
-Community & Chat: Slack / Discord / Telegram (if available)
-
-Thank you for exploring JyotiGPT!
-We hope it becomes a reliable assistant and companion in your daily tasks and explorations.
+---
