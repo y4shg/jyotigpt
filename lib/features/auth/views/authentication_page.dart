@@ -166,8 +166,20 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
       return Scaffold(
         backgroundColor: context.jyotigptTheme.surfaceBackground,
         body: Center(
-          child: CircularProgressIndicator(
-            color: context.jyotigptTheme.buttonPrimary,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: context.jyotigptTheme.buttonPrimary,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(
+                AppLocalizations.of(context)!.loadingContent,
+                style: context.jyotigptTheme.bodyMedium?.copyWith(
+                  color: context.jyotigptTheme.textSecondary,
+                ),
+              ),
+            ],
           ),
         ),
       );
