@@ -469,17 +469,61 @@ class AppCustomizationPage extends ConsumerWidget {
   }
 
   String _resolveLanguageLabel(BuildContext context, String code) {
+    final l10n = AppLocalizations.of(context)!;
     switch (code) {
-      case 'en':
-        return AppLocalizations.of(context)!.english;
-      case 'de':
-        return AppLocalizations.of(context)!.deutsch;
-      case 'fr':
-        return AppLocalizations.of(context)!.francais;
-      case 'it':
-        return AppLocalizations.of(context)!.italiano;
-      default:
-        return AppLocalizations.of(context)!.system;
+      // Indian Languages (13)
+      case 'hi': return l10n.hindi;
+      case 'bn': return l10n.bengali;
+      case 'ta': return l10n.tamil;
+      case 'te': return l10n.telugu;
+      case 'mr': return l10n.marathi;
+      case 'gu': return l10n.gujarati;
+      case 'kn': return l10n.kannada;
+      case 'ml': return l10n.malayalam;
+      case 'pa': return l10n.punjabi;
+      case 'ur': return l10n.urdu;
+      case 'ne': return l10n.nepali;
+      case 'as': return l10n.assamese;
+      case 'or': return l10n.odia;
+      // European Languages (24)
+      case 'en': return l10n.english;
+      case 'es': return l10n.spanish;
+      case 'fr': return l10n.francais;
+      case 'de': return l10n.deutsch;
+      case 'it': return l10n.italiano;
+      case 'pt': return l10n.portuguese;
+      case 'nl': return l10n.dutch;
+      case 'pl': return l10n.polish;
+      case 'ru': return l10n.russian;
+      case 'uk': return l10n.ukrainian;
+      case 'sv': return l10n.swedish;
+      case 'da': return l10n.danish;
+      case 'no': return l10n.norwegian;
+      case 'fi': return l10n.finnish;
+      case 'cs': return l10n.czech;
+      case 'hu': return l10n.hungarian;
+      case 'ro': return l10n.romanian;
+      case 'el': return l10n.greek;
+      case 'sk': return l10n.slovak;
+      case 'sr': return l10n.serbian;
+      case 'hr': return l10n.croatian;
+      case 'bg': return l10n.bulgarian;
+      // Asia-Pacific / Middle East / Africa (11)
+      case 'zh-cn': return l10n.chineseSimplified;
+      case 'zh-tw': return l10n.chineseTraditional;
+      case 'ja': return l10n.japanese;
+      case 'ko': return l10n.korean;
+      case 'id': return l10n.indonesian;
+      case 'vi': return l10n.vietnamese;
+      case 'th': return l10n.thai;
+      case 'ar': return l10n.arabic;
+      case 'fa': return l10n.persian;
+      case 'he': return l10n.hebrew;
+      case 'sw': return l10n.swahili;
+      // Americas (2)
+      case 'es-MX': return l10n.spanishMexico;
+      case 'pt-BR': return l10n.portugueseBrazil;
+      default: return l10n.system;
     }
   }
 
@@ -505,6 +549,7 @@ class AppCustomizationPage extends ConsumerWidget {
   }
 
   Future<String?> _showLanguageSelector(BuildContext context, String current) {
+    final l10n = AppLocalizations.of(context)!;
     return showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -519,40 +564,76 @@ class AppCustomizationPage extends ConsumerWidget {
         ),
         child: SafeArea(
           top: false,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: ListView(
+            shrinkWrap: true,
             children: [
               const SizedBox(height: Spacing.sm),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.system),
-                trailing: current == 'system' ? const Icon(Icons.check) : null,
-                onTap: () => Navigator.pop(context, 'system'),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.english),
-                trailing: current == 'en' ? const Icon(Icons.check) : null,
-                onTap: () => Navigator.pop(context, 'en'),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.deutsch),
-                trailing: current == 'de' ? const Icon(Icons.check) : null,
-                onTap: () => Navigator.pop(context, 'de'),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.francais),
-                trailing: current == 'fr' ? const Icon(Icons.check) : null,
-                onTap: () => Navigator.pop(context, 'fr'),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.italiano),
-                trailing: current == 'it' ? const Icon(Icons.check) : null,
-                onTap: () => Navigator.pop(context, 'it'),
-              ),
+              _buildLanguageTile(context, current, 'system', l10n.system),
+              // Indian Languages
+              _buildLanguageTile(context, current, 'hi', l10n.hindi),
+              _buildLanguageTile(context, current, 'bn', l10n.bengali),
+              _buildLanguageTile(context, current, 'ta', l10n.tamil),
+              _buildLanguageTile(context, current, 'te', l10n.telugu),
+              _buildLanguageTile(context, current, 'mr', l10n.marathi),
+              _buildLanguageTile(context, current, 'gu', l10n.gujarati),
+              _buildLanguageTile(context, current, 'kn', l10n.kannada),
+              _buildLanguageTile(context, current, 'ml', l10n.malayalam),
+              _buildLanguageTile(context, current, 'pa', l10n.punjabi),
+              _buildLanguageTile(context, current, 'ur', l10n.urdu),
+              _buildLanguageTile(context, current, 'ne', l10n.nepali),
+              _buildLanguageTile(context, current, 'as', l10n.assamese),
+              _buildLanguageTile(context, current, 'or', l10n.odia),
+              // European Languages
+              _buildLanguageTile(context, current, 'en', l10n.english),
+              _buildLanguageTile(context, current, 'es', l10n.spanish),
+              _buildLanguageTile(context, current, 'fr', l10n.francais),
+              _buildLanguageTile(context, current, 'de', l10n.deutsch),
+              _buildLanguageTile(context, current, 'it', l10n.italiano),
+              _buildLanguageTile(context, current, 'pt', l10n.portuguese),
+              _buildLanguageTile(context, current, 'nl', l10n.dutch),
+              _buildLanguageTile(context, current, 'pl', l10n.polish),
+              _buildLanguageTile(context, current, 'ru', l10n.russian),
+              _buildLanguageTile(context, current, 'uk', l10n.ukrainian),
+              _buildLanguageTile(context, current, 'sv', l10n.swedish),
+              _buildLanguageTile(context, current, 'da', l10n.danish),
+              _buildLanguageTile(context, current, 'no', l10n.norwegian),
+              _buildLanguageTile(context, current, 'fi', l10n.finnish),
+              _buildLanguageTile(context, current, 'cs', l10n.czech),
+              _buildLanguageTile(context, current, 'hu', l10n.hungarian),
+              _buildLanguageTile(context, current, 'ro', l10n.romanian),
+              _buildLanguageTile(context, current, 'el', l10n.greek),
+              _buildLanguageTile(context, current, 'sk', l10n.slovak),
+              _buildLanguageTile(context, current, 'sr', l10n.serbian),
+              _buildLanguageTile(context, current, 'hr', l10n.croatian),
+              _buildLanguageTile(context, current, 'bg', l10n.bulgarian),
+              // Asia-Pacific / Middle East / Africa
+              _buildLanguageTile(context, current, 'zh-cn', l10n.chineseSimplified),
+              _buildLanguageTile(context, current, 'zh-tw', l10n.chineseTraditional),
+              _buildLanguageTile(context, current, 'ja', l10n.japanese),
+              _buildLanguageTile(context, current, 'ko', l10n.korean),
+              _buildLanguageTile(context, current, 'id', l10n.indonesian),
+              _buildLanguageTile(context, current, 'vi', l10n.vietnamese),
+              _buildLanguageTile(context, current, 'th', l10n.thai),
+              _buildLanguageTile(context, current, 'ar', l10n.arabic),
+              _buildLanguageTile(context, current, 'fa', l10n.persian),
+              _buildLanguageTile(context, current, 'he', l10n.hebrew),
+              _buildLanguageTile(context, current, 'sw', l10n.swahili),
+              // Americas
+              _buildLanguageTile(context, current, 'es-MX', l10n.spanishMexico),
+              _buildLanguageTile(context, current, 'pt-BR', l10n.portugueseBrazil),
               const SizedBox(height: Spacing.sm),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLanguageTile(BuildContext context, String current, String code, String label) {
+    return ListTile(
+      title: Text(label),
+      trailing: current == code ? const Icon(Icons.check) : null,
+      onTap: () => Navigator.pop(context, code),
     );
   }
 }
