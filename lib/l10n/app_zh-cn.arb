@@ -1,414 +1,414 @@
 {
   "@@locale": "zh_CN",
   "appTitle": "JyotiGPT",
-  "initializationFailed": "Initialization Failed.",
-  "retry": "Retry",
-  "back": "Back",
-  "you": "You",
-  "loadingProfile": "Loading profile...",
-  "unableToLoadProfile": "Unable to load profile",
-  "pleaseCheckConnection": "Please check your connection and try again",
-  "connectionIssueTitle": "Can't reach your server",
-  "connectionIssueSubtitle": "Reconnect to continue or sign out to choose a different server.",
-  "stillOfflineMessage": "We still can't reach the server. Double-check your connection and try again.",
-  "account": "Account",
-  "supportJyotiGPT": "Additional Settings",
-  "supportJyotiGPTSubtitle": "Additional Settings and information.",
-  "githubSponsorsTitle": "JyotiGPT Account Settings",
-  "githubSponsorsSubtitle": "Edit full account settings.",
-  "buyMeACoffeeTitle": "Github Repo",
-  "buyMeACoffeeSubtitle": "View open source code for this project.",
-  "signOut": "Sign Out",
-  "endYourSession": "End your session",
-  "defaultModel": "Default Model",
-  "autoSelect": "Auto-select",
-  "loadingModels": "Loading models...",
-  "failedToLoadModels": "Failed to load models",
-  "availableModels": "Available Models",
-  "noResults": "No results",
-  "searchModels": "Search models...",
-  "errorMessage": "Something went wrong. Please try again.",
-  "loginButton": "Login",
-  "menuItem": "Settings",
-  "dynamicContentWithPlaceholder": "Welcome, {name}!",
-  "itemsCount": "{count, plural, =0{No items} one{1 item} other{{count} items}}",
-  "closeButtonSemantic": "Close",
-  "loadingContent": "Loading content",
-  "noItems": "No items",
-  "noItemsToDisplay": "No items to display",
-  "loadMore": "Load More",
-  "workspace": "Workspace",
-  "recentFiles": "Recent Files",
-  "knowledgeBase": "Knowledge Base",
-  "noFilesYet": "No files yet",
-  "uploadDocsPrompt": "Upload documents to reference in your conversations with JyotiGPT",
-  "uploadFirstFile": "Upload your first file",
-  "attachments": "Attachments",
-  "knowledgeBaseEmpty": "Knowledge base is empty",
-  "createCollectionsPrompt": "Create collections of related documents for easy reference",
-  "chooseSourcePhoto": "Choose your source",
-  "takePhoto": "Take a photo",
-  "chooseFromGallery": "Choose from your photos",
-  "document": "Document",
-  "documentHint": "PDF, Word, or text file",
-  "uploadFileTitle": "Upload File",
-  "fileUploadComingSoon": "File upload for {type} is coming soon!",
-  "kbCreationComingSoon": "Knowledge base creation is coming soon!",
-  "backToServerSetup": "Back to server setup",
-  "connectedToServer": "Connected to Server",
-  "signIn": "Sign In",
-  "enterCredentials": "Enter your account details to sign in and start chatting with JyotiGPT.",
-  "credentials": "Credentials",
-  "apiKey": "API Key",
-  "usernameOrEmail": "Username or Email",
-  "password": "Password",
-  "signInWithApiKey": "Sign in with API Key",
-  "connectToServer": "Connect to Server",
-  "enterServerAddress": "Check server connection and connect to begin.",
-  "serverUrl": "Server URL",
+  "initializationFailed": "初始化失敗",
+  "retry": "重試",
+  "back": "返回",
+  "you": "您",
+  "loadingProfile": "正在載入個人資料...",
+  "unableToLoadProfile": "無法載入個人資料",
+  "pleaseCheckConnection": "請檢查您的連線並重試",
+  "connectionIssueTitle": "無法連線到您的伺服器",
+  "connectionIssueSubtitle": "請重新連線以繼續，或登出以選擇不同的伺服器。",
+  "stillOfflineMessage": "我們仍然無法連線到伺服器。請仔細檢查您的連線並重試。",
+  "account": "帳戶",
+  "supportJyotiGPT": "其他設定",
+  "supportJyotiGPTSubtitle": "其他設定和資訊。",
+  "githubSponsorsTitle": "JyotiGPT 帳戶設定",
+  "githubSponsorsSubtitle": "編輯完整的帳戶設定。",
+  "buyMeACoffeeTitle": "Github 儲存庫",
+  "buyMeACoffeeSubtitle": "檢視此專案的開源程式碼。",
+  "signOut": "登出",
+  "endYourSession": "結束您的工作階段",
+  "defaultModel": "預設模型",
+  "autoSelect": "自動選擇",
+  "loadingModels": "正在載入模型...",
+  "failedToLoadModels": "載入模型失敗",
+  "availableModels": "可用模型",
+  "noResults": "沒有結果",
+  "searchModels": "搜尋模型...",
+  "errorMessage": "發生錯誤。請再試一次。",
+  "loginButton": "登入",
+  "menuItem": "設定",
+  "dynamicContentWithPlaceholder": "歡迎，{name}！",
+  "itemsCount": "{count, plural, =0{沒有項目} one{1 個項目} other{{count} 個項目}}",
+  "closeButtonSemantic": "關閉",
+  "loadingContent": "正在載入內容",
+  "noItems": "沒有項目",
+  "noItemsToDisplay": "沒有可顯示的項目",
+  "loadMore": "載入更多",
+  "workspace": "工作區",
+  "recentFiles": "最近的檔案",
+  "knowledgeBase": "知識庫",
+  "noFilesYet": "暫無檔案",
+  "uploadDocsPrompt": "上傳文件以在您與 JyotiGPT 的對話中作為參考",
+  "uploadFirstFile": "上傳您的第一個檔案",
+  "attachments": "附件",
+  "knowledgeBaseEmpty": "知識庫是空的",
+  "createCollectionsPrompt": "建立相關文件的集合以便於參考",
+  "chooseSourcePhoto": "選擇您的來源",
+  "takePhoto": "拍照",
+  "chooseFromGallery": "從您的照片中選擇",
+  "document": "文件",
+  "documentHint": "PDF、Word 或文字檔案",
+  "uploadFileTitle": "上傳檔案",
+  "fileUploadComingSoon": "{type} 的檔案上傳功能即將推出！",
+  "kbCreationComingSoon": "知識庫建立功能即將推出！",
+  "backToServerSetup": "返回伺服器設定",
+  "connectedToServer": "已連線到伺服器",
+  "signIn": "登入",
+  "enterCredentials": "輸入您的帳戶詳細資料以登入並開始與 JyotiGPT 聊天。",
+  "credentials": "憑證",
+  "apiKey": "API 金鑰",
+  "usernameOrEmail": "使用者名稱或電子郵件",
+  "password": "密碼",
+  "signInWithApiKey": "使用 API 金鑰登入",
+  "connectToServer": "連線到伺服器",
+  "enterServerAddress": "檢查伺服器連線並連線以開始。",
+  "serverUrl": "伺服器 URL",
   "serverUrlHint": "https://your-server.com",
-  "enterServerUrlSemantic": "Enter your server URL or IP address",
-  "headerName": "Header Name",
-  "headerValue": "Header Value",
-  "headerValueHint": "api-key-123 or Bearer token",
-  "addHeader": "Add header",
-  "maximumHeadersReached": "Maximum headers reached",
-  "removeHeader": "Remove header",
-  "connecting": "Connecting...",
-  "connectToServerButton": "Connect to Server",
-  "demoModeActive": "Demo Mode Active",
-  "skipServerSetupTryDemo": "Skip server setup and try the demo",
-  "enterDemo": "Enter Demo",
-  "demoBadge": "Demo",
-  "serverNotOpenWebUI": "This does not appear to be an server.",
-  "serverUrlEmpty": "Server URL cannot be empty",
-  "invalidUrlFormat": "Invalid URL format. Please check your input.",
-  "onlyHttpHttps": "Only HTTP and HTTPS protocols are supported.",
-  "serverAddressRequired": "Server address is required (e.g., 192.168.1.10 or example.com).",
-  "portRange": "Port must be between 1 and 65535.",
-  "invalidIpFormat": "Invalid IP address format. Use format like 192.168.1.10.",
-  "couldNotConnectGeneric": "Couldn't connect. Double-check the address and try again.",
-  "weCouldntReachServer": "We couldn't reach the server. Check your connection and that the server is running.",
-  "connectionTimedOut": "Connection timed out. The server might be busy or blocked by a firewall.",
-  "useHttpOrHttpsOnly": "Use http:// or https:// only.",
-  "loginFailed": "Login failed",
-  "invalidCredentials": "Invalid username or password. Please try again.",
-  "serverRedirectingHttps": "The server is redirecting requests. Check your server's HTTPS configuration.",
-  "unableToConnectServer": "Unable to connect to server. Please check your connection.",
-  "requestTimedOut": "The request timed out. Please try again.",
-  "genericSignInFailed": "We couldn't sign you in. Check your credentials and server settings.",
-  "skip": "Skip",
-  "next": "Next",
-  "done": "Done",
-  "onboardStartTitle": "Hello, {username}",
-  "onboardStartSubtitle": "Choose a model to get started. Tap New Chat anytime.",
-  "onboardStartBullet1": "Tap the model name in the top bar to switch models",
-  "onboardStartBullet2": "Use New Chat to reset context",
-  "onboardAttachTitle": "Add context",
-  "onboardAttachSubtitle": "Ground replies with content from Workspace or photos.",
-  "onboardAttachBullet1": "Workspace: PDFs, docs, datasets",
-  "onboardAttachBullet2": "Photos: camera or library",
-  "onboardSpeakTitle": "Speak naturally",
-  "onboardSpeakSubtitle": "Tap the mic to dictate with live waveform feedback.",
-  "onboardSpeakBullet1": "Stop anytime; partial text is preserved",
-  "onboardSpeakBullet2": "Great for quick notes or long prompts",
-  "onboardQuickTitle": "Quick actions",
-  "onboardQuickSubtitle": "Open the menu to switch between Chats, Workspace, and Profile.",
-  "onboardQuickBullet1": "Tap the menu to access Chats, Workspace, Profile",
-  "onboardQuickBullet2": "Start New Chat or manage models from the top bar",
-  "addAttachment": "Add attachment",
-  "attachmentLabel": "Attachment",
-  "tools": "Tools",
-  "voiceInput": "Voice input",
-  "voice": "Voice",
-  "voiceStatusListening": "Listening…",
-  "voiceStatusRecording": "Recording…",
-  "voiceHoldToTalk": "Hold to talk",
-  "voiceAutoSend": "Auto-send",
-  "voiceTranscript": "Transcript",
-  "voicePromptSpeakNow": "Speak now…",
-  "voicePromptTapStart": "Tap Start to begin",
-  "voiceActionStop": "Stop",
-  "voiceActionStart": "Start",
-  "messageInputLabel": "Message input",
-  "messageInputHint": "Type your message",
-  "messageHintText": "Message...",
-  "stopGenerating": "Stop generating",
-  "send": "Send",
-  "codeCopiedToClipboard": "Code copied to clipboard.",
-  "sendMessage": "Send message",
-  "file": "File",
-  "photo": "Photo",
-  "camera": "Camera",
-  "apiUnavailable": "API service not available",
-  "unableToLoadImage": "Unable to load image",
-  "notAnImageFile": "Not an image file: {fileName}",
-  "failedToLoadImage": "Failed to load image: {error}",
-  "invalidDataUrl": "Invalid data URL format",
-  "failedToDecodeImage": "Failed to decode image",
-  "invalidImageFormat": "Invalid image format",
-  "emptyImageData": "Empty image data",
-  "featureRequiresInternet": "This feature requires an internet connection",
-  "messagesWillSendWhenOnline": "Messages will be sent when you're back online",
-  "confirm": "Confirm",
-  "cancel": "Cancel",
-  "ok": "OK",
-  "inputField": "Input field",
-  "captureDocumentOrImage": "Capture a document or image",
-  "checkConnection": "Check Connection",
-  "openSettings": "Open Settings",
-  "chooseDifferentFile": "Choose Different File",
-  "goBack": "Go Back",
-  "technicalDetails": "Technical Details",
-  "save": "Save",
-  "chooseModel": "Choose Model",
-  "reviewerMode": "REVIEWER MODE",
-  "selectLanguage": "Select Language",
-  "newFolder": "New Folder",
-  "folderName": "Folder name",
-  "newChat": "New Chat",
-  "more": "More",
-  "clear": "Clear",
-  "searchHint": "Search...",
-  "searchConversations": "Search conversations...",
-  "create": "Create",
-  "folderCreated": "Folder created",
-  "failedToCreateFolder": "Failed to create folder",
-  "movedChatToFolder": "Moved \"{title}\" to \"{folder}\"",
-  "failedToMoveChat": "Failed to move chat",
-  "failedToLoadChats": "Failed to load chats",
-  "failedToUpdatePin": "Failed to update pin",
-  "failedToDeleteChat": "Failed to delete chat",
-  "manage": "Manage",
-  "rename": "Rename",
-  "delete": "Delete",
-  "renameChat": "Rename Chat",
-  "enterChatName": "Enter chat name",
-  "failedToRenameChat": "Failed to rename chat",
-  "failedToUpdateArchive": "Failed to update archive",
-  "unarchive": "Unarchive",
-  "archive": "Archive",
-  "pin": "Pin",
-  "unpin": "Unpin",
-  "recent": "Recent",
-  "system": "System",
-  "hindi": "Hindi",
-  "bengali": "Bengali",
-  "tamil": "Tamil",
-  "telugu": "Telugu",
-  "marathi": "Marathi",
-  "gujarati": "Gujarati",
-  "kannada": "Kannada",
-  "malayalam": "Malayalam",
-  "punjabi": "Punjabi",
-  "urdu": "Urdu",
-  "nepali": "Nepali",
-  "assamese": "Assamese",
-  "odia": "Odia",
-  "english": "English",
-  "spanish": "Spanish",
-  "deutsch": "Deutsch",
-  "francais": "Français",
-  "italiano": "Italiano",
-  "portuguese": "Portuguese",
-  "dutch": "Dutch",
-  "polish": "Polish",
-  "russian": "Russian",
-  "ukrainian": "Ukrainian",
-  "swedish": "Swedish",
-  "danish": "Danish",
-  "norwegian": "Norwegian",
-  "finnish": "Finnish",
-  "czech": "Czech",
-  "hungarian": "Hungarian",
-  "romanian": "Romanian",
-  "greek": "Greek",
-  "slovak": "Slovak",
-  "serbian": "Serbian",
-  "croatian": "Croatian",
-  "bulgarian": "Bulgarian",
-  "chineseSimplified": "Chinese (Simplified)",
-  "chineseTraditional": "Chinese (Traditional)",
-  "japanese": "Japanese",
-  "korean": "Korean",
-  "indonesian": "Indonesian",
-  "vietnamese": "Vietnamese",
-  "thai": "Thai",
-  "arabic": "Arabic",
-  "persian": "Persian",
-  "hebrew": "Hebrew",
-  "swahili": "Swahili",
-  "spanishMexico": "Spanish (Mexico)",
-  "portugueseBrazil": "Portuguese (Brazil)",
-  "deleteMessagesTitle": "Delete Messages",
-  "deleteMessagesMessage": "Delete {count} messages?",
-  "routeNotFound": "Route not found: {routeName}",
-  "deleteChatTitle": "Delete Chat",
-  "deleteChatMessage": "This chat will be permanently deleted.",
-  "deleteFolderTitle": "Delete Folder",
-  "deleteFolderMessage": "This folder and its assignment references will be removed.",
-  "failedToDeleteFolder": "Failed to delete folder",
-  "aboutApp": "About App",
-  "aboutAppSubtitle": "JyotiGPT information and links",
-  "web": "Web",
-  "imageGen": "Image Gen",
-  "pinned": "Pinned",
-  "folders": "Folders",
-  "archived": "Archived",
-  "appLanguage": "App Language",
-  "darkMode": "Dark Mode",
-  "webSearch": "Web Search",
-  "webSearchDescription": "Search the web and cite sources in replies.",
-  "imageGeneration": "Image Generation",
-  "imageGenerationDescription": "Create images from your prompts.",
-  "copy": "Copy",
-  "ttsListen": "Listen",
-  "ttsStop": "Stop",
-  "edit": "Edit",
-  "regenerate": "Regenerate",
-  "noConversationsYet": "No conversations yet",
-  "usernameOrEmailHint": "Enter your username or email",
-  "passwordHint": "Enter your password",
-  "enterApiKey": "Enter your API key",
-  "signingIn": "Signing in...",
-  "advancedSettings": "Advanced Settings",
-  "customHeaders": "Custom Headers",
-  "customHeadersDescription": "Add custom HTTP headers for authentication, API keys, or special server requirements.",
-  "allowSelfSignedCertificates": "Trust self-signed certificates",
-  "allowSelfSignedCertificatesDescription": "Accept this server's TLS certificate even if it is self-signed. Enable only for servers you trust.",
-  "headerNameEmpty": "Header name cannot be empty",
-  "headerNameTooLong": "Header name too long (max 64 characters)",
-  "headerNameInvalidChars": "Invalid header name. Use only letters, numbers, and these symbols: !#$&-^_`|~",
-  "headerNameReserved": "Cannot override reserved header \"{key}\"",
-  "headerValueEmpty": "Header value cannot be empty",
-  "headerValueTooLong": "Header value too long (max 1024 characters)",
-  "headerValueInvalidChars": "Header value contains invalid characters. Use only printable ASCII.",
-  "headerValueUnsafe": "Header value appears to contain potentially unsafe content",
-  "headerAlreadyExists": "Header \"{key}\" already exists. Remove it first to update.",
-  "maxHeadersReachedDetail": "Maximum of 10 custom headers allowed. Remove some to add more.",
-  "editMessage": "Edit Message",
-  "noModelsAvailable": "No models available",
-  "followingSystem": "Following system: {theme}",
-  "themeDark": "Dark",
-  "themePalette": "Accent palette",
-  "themePaletteDescription": "Choose the accent colors used for buttons, cards, and chat bubbles.",
-  "themeLight": "Light",
-  "currentlyUsingDarkTheme": "Currently using Dark theme",
-  "currentlyUsingLightTheme": "Currently using Light theme",
-  "aboutJyotiGPT": "About JyotiGPT",
-  "versionLabel": "Version: {version} ({build})",
-  "githubRepository": "GitHub Repository",
-  "unableToLoadAppInfo": "Unable to load app info",
-  "thinking": "Thinking…",
-  "thoughts": "Thoughts",
-  "thoughtForDuration": "Thought for {duration}",
-  "appCustomization": "App Customization",
-  "appCustomizationSubtitle": "Personalize how names and UI display",
-  "quickActionsDescription": "Pick up to two shortcuts to pin near the composer",
-  "chatSettings": "Chat",
-  "sendOnEnter": "Send on Enter",
-  "sendOnEnterDescription": "Enter sends (soft keyboard). Cmd/Ctrl+Enter also available",
-  "display": "Display",
-  "realtime": "Realtime",
-  "transportMode": "Transport mode",
-  "transportModeDescription": "Choose how the app connects for realtime updates.",
-  "mode": "Mode",
-  "transportModeAuto": "Auto (Polling + WebSocket)",
-  "transportModeWs": "WebSocket only",
-  "transportModeAutoInfo": "More robust on restrictive networks. Upgrades to WebSocket when possible.",
-  "transportModeWsInfo": "Lower overhead, but may fail behind strict proxies/firewalls.",
+  "enterServerUrlSemantic": "輸入您的伺服器 URL 或 IP 位址",
+  "headerName": "標頭名稱",
+  "headerValue": "標頭值",
+  "headerValueHint": "api-key-123 或 Bearer token",
+  "addHeader": "新增標頭",
+  "maximumHeadersReached": "已達到標頭最大數量",
+  "removeHeader": "移除標頭",
+  "connecting": "正在連線...",
+  "connectToServerButton": "連線到伺服器",
+  "demoModeActive": "演示模式啟用中",
+  "skipServerSetupTryDemo": "跳過伺服器設定並試用演示模式",
+  "enterDemo": "進入演示",
+  "demoBadge": "演示",
+  "serverNotOpenWebUI": "這似乎不是一個伺服器。",
+  "serverUrlEmpty": "伺服器 URL 不能為空",
+  "invalidUrlFormat": "URL 格式無效。請檢查您的輸入。",
+  "onlyHttpHttps": "僅支援 HTTP 和 HTTPS 協議。",
+  "serverAddressRequired": "需要伺服器位址（例如，192.168.1.10 或 example.com）。",
+  "portRange": "埠號必須介於 1 到 65535 之間。",
+  "invalidIpFormat": "IP 位址格式無效。請使用 192.168.1.10 等格式。",
+  "couldNotConnectGeneric": "無法連線。請仔細檢查位址並重試。",
+  "weCouldntReachServer": "我們無法連線到伺服器。請檢查您的連線並確認伺服器正在運行。",
+  "connectionTimedOut": "連線逾時。伺服器可能繁忙或被防火牆阻擋。",
+  "useHttpOrHttpsOnly": "僅使用 http:// 或 https://。",
+  "loginFailed": "登入失敗",
+  "invalidCredentials": "使用者名稱或密碼無效。請再試一次。",
+  "serverRedirectingHttps": "伺服器正在重定向請求。請檢查您的伺服器 HTTPS 配置。",
+  "unableToConnectServer": "無法連線到伺服器。請檢查您的連線。",
+  "requestTimedOut": "請求逾時。請再試一次。",
+  "genericSignInFailed": "我們無法讓您登入。請檢查您的憑證和伺服器設定。",
+  "skip": "跳過",
+  "next": "下一步",
+  "done": "完成",
+  "onboardStartTitle": "您好，{username}",
+  "onboardStartSubtitle": "選擇一個模型開始使用。隨時點擊「新聊天」。",
+  "onboardStartBullet1": "點擊頂部欄的模型名稱切換模型",
+  "onboardStartBullet2": "使用「新聊天」來重設上下文",
+  "onboardAttachTitle": "新增上下文",
+  "onboardAttachSubtitle": "使用來自工作區或照片的內容作為回覆的基礎。",
+  "onboardAttachBullet1": "工作區：PDF、文件、資料集",
+  "onboardAttachBullet2": "照片：相機或圖庫",
+  "onboardSpeakTitle": "自然地說話",
+  "onboardSpeakSubtitle": "點擊麥克風，透過即時波形回饋進行語音輸入。",
+  "onboardSpeakBullet1": "隨時停止；部分文字會被保留",
+  "onboardSpeakBullet2": "非常適合快速筆記或長提示",
+  "onboardQuickTitle": "快速動作",
+  "onboardQuickSubtitle": "開啟選單以在「聊天」、「工作區」和「個人資料」之間切換。",
+  "onboardQuickBullet1": "點擊選單以存取「聊天」、「工作區」、「個人資料」",
+  "onboardQuickBullet2": "從頂部欄開始「新聊天」或管理模型",
+  "addAttachment": "新增附件",
+  "attachmentLabel": "附件",
+  "tools": "工具",
+  "voiceInput": "語音輸入",
+  "voice": "語音",
+  "voiceStatusListening": "正在聆聽...",
+  "voiceStatusRecording": "正在錄音...",
+  "voiceHoldToTalk": "按住說話",
+  "voiceAutoSend": "自動發送",
+  "voiceTranscript": "轉錄文字",
+  "voicePromptSpeakNow": "請說話...",
+  "voicePromptTapStart": "點擊開始以開始",
+  "voiceActionStop": "停止",
+  "voiceActionStart": "開始",
+  "messageInputLabel": "訊息輸入",
+  "messageInputHint": "輸入您的訊息",
+  "messageHintText": "訊息...",
+  "stopGenerating": "停止生成",
+  "send": "發送",
+  "codeCopiedToClipboard": "程式碼已複製到剪貼簿。",
+  "sendMessage": "發送訊息",
+  "file": "檔案",
+  "photo": "照片",
+  "camera": "相機",
+  "apiUnavailable": "API 服務不可用",
+  "unableToLoadImage": "無法載入圖片",
+  "notAnImageFile": "不是圖片檔案：{fileName}",
+  "failedToLoadImage": "載入圖片失敗：{error}",
+  "invalidDataUrl": "無效的資料 URL 格式",
+  "failedToDecodeImage": "解碼圖片失敗",
+  "invalidImageFormat": "無效的圖片格式",
+  "emptyImageData": "空的圖片資料",
+  "featureRequiresInternet": "此功能需要網際網路連線",
+  "messagesWillSendWhenOnline": "當您重新連線時，訊息將會發送",
+  "confirm": "確認",
+  "cancel": "取消",
+  "ok": "確定",
+  "inputField": "輸入欄位",
+  "captureDocumentOrImage": "拍攝文件或圖片",
+  "checkConnection": "檢查連線",
+  "openSettings": "開啟設定",
+  "chooseDifferentFile": "選擇不同的檔案",
+  "goBack": "返回",
+  "technicalDetails": "技術細節",
+  "save": "儲存",
+  "chooseModel": "選擇模型",
+  "reviewerMode": "審查員模式",
+  "selectLanguage": "選擇語言",
+  "newFolder": "新資料夾",
+  "folderName": "資料夾名稱",
+  "newChat": "新聊天",
+  "more": "更多",
+  "clear": "清除",
+  "searchHint": "搜尋...",
+  "searchConversations": "搜尋對話...",
+  "create": "建立",
+  "folderCreated": "資料夾已建立",
+  "failedToCreateFolder": "建立資料夾失敗",
+  "movedChatToFolder": "已將「{title}」移動到「{folder}」",
+  "failedToMoveChat": "移動聊天失敗",
+  "failedToLoadChats": "載入聊天失敗",
+  "failedToUpdatePin": "更新釘選失敗",
+  "failedToDeleteChat": "刪除聊天失敗",
+  "manage": "管理",
+  "rename": "重新命名",
+  "delete": "刪除",
+  "renameChat": "重新命名聊天",
+  "enterChatName": "輸入聊天名稱",
+  "failedToRenameChat": "重新命名聊天失敗",
+  "failedToUpdateArchive": "更新封存失敗",
+  "unarchive": "取消封存",
+  "archive": "封存",
+  "pin": "釘選",
+  "unpin": "取消釘選",
+  "recent": "最近",
+  "system": "系統",
+  "hindi": "印地語",
+  "bengali": "孟加拉語",
+  "tamil": "泰米爾語",
+  "telugu": "泰盧固語",
+  "marathi": "馬拉提語",
+  "gujarati": "古吉拉特語",
+  "kannada": "坎納達語",
+  "malayalam": "馬拉雅拉姆語",
+  "punjabi": "旁遮普語",
+  "urdu": "烏爾都語",
+  "nepali": "尼泊爾語",
+  "assamese": "阿薩姆語",
+  "odia": "奧里亞語",
+  "english": "英語",
+  "spanish": "西班牙語",
+  "deutsch": "德語",
+  "francais": "法語",
+  "italiano": "義大利語",
+  "portuguese": "葡萄牙語",
+  "dutch": "荷蘭語",
+  "polish": "波蘭語",
+  "russian": "俄語",
+  "ukrainian": "烏克蘭語",
+  "swedish": "瑞典語",
+  "danish": "丹麥語",
+  "norwegian": "挪威語",
+  "finnish": "芬蘭語",
+  "czech": "捷克語",
+  "hungarian": "匈牙利語",
+  "romanian": "羅馬尼亞語",
+  "greek": "希臘語",
+  "slovak": "斯洛伐克語",
+  "serbian": "塞爾維亞語",
+  "croatian": "克羅地亞語",
+  "bulgarian": "保加利亞語",
+  "chineseSimplified": "中文（簡體）",
+  "chineseTraditional": "中文（繁體）",
+  "japanese": "日語",
+  "korean": "韓語",
+  "indonesian": "印尼語",
+  "vietnamese": "越南語",
+  "thai": "泰語",
+  "arabic": "阿拉伯語",
+  "persian": "波斯語",
+  "hebrew": "希伯來語",
+  "swahili": "斯瓦希里語",
+  "spanishMexico": "西班牙語（墨西哥）",
+  "portugueseBrazil": "葡萄牙語（巴西）",
+  "deleteMessagesTitle": "刪除訊息",
+  "deleteMessagesMessage": "刪除 {count} 條訊息？",
+  "routeNotFound": "找不到路由：{routeName}",
+  "deleteChatTitle": "刪除聊天",
+  "deleteChatMessage": "此聊天將被永久刪除。",
+  "deleteFolderTitle": "刪除資料夾",
+  "deleteFolderMessage": "此資料夾及其分配參考將被移除。",
+  "failedToDeleteFolder": "刪除資料夾失敗",
+  "aboutApp": "關於應用程式",
+  "aboutAppSubtitle": "JyotiGPT 資訊和連結",
+  "web": "網路",
+  "imageGen": "圖片生成",
+  "pinned": "已釘選",
+  "folders": "資料夾",
+  "archived": "已封存",
+  "appLanguage": "應用程式語言",
+  "darkMode": "深色模式",
+  "webSearch": "網路搜尋",
+  "webSearchDescription": "搜尋網路並在回覆中引用來源。",
+  "imageGeneration": "圖片生成",
+  "imageGenerationDescription": "根據您的提示建立圖片。",
+  "copy": "複製",
+  "ttsListen": "聆聽",
+  "ttsStop": "停止",
+  "edit": "編輯",
+  "regenerate": "重新生成",
+  "noConversationsYet": "尚無對話",
+  "usernameOrEmailHint": "輸入您的使用者名稱或電子郵件",
+  "passwordHint": "輸入您的密碼",
+  "enterApiKey": "輸入您的 API 金鑰",
+  "signingIn": "正在登入...",
+  "advancedSettings": "進階設定",
+  "customHeaders": "自訂標頭",
+  "customHeadersDescription": "新增自訂 HTTP 標頭用於身份驗證、API 金鑰或特殊的伺服器要求。",
+  "allowSelfSignedCertificates": "信任自簽章憑證",
+  "allowSelfSignedCertificatesDescription": "接受此伺服器的 TLS 憑證，即使它是自簽章的。僅對您信任的伺服器啟用。",
+  "headerNameEmpty": "標頭名稱不能為空",
+  "headerNameTooLong": "標頭名稱太長（最多 64 個字元）",
+  "headerNameInvalidChars": "無效的標頭名稱。僅使用字母、數字和這些符號：!#$&-^_`|~",
+  "headerNameReserved": "無法覆蓋保留標頭「{key}」",
+  "headerValueEmpty": "標頭值不能為空",
+  "headerValueTooLong": "標頭值太長（最多 1024 個字元）",
+  "headerValueInvalidChars": "標頭值包含無效字元。僅使用可列印的 ASCII。",
+  "headerValueUnsafe": "標頭值似乎包含潛在不安全的內容",
+  "headerAlreadyExists": "標頭「{key}」已存在。請先移除它以進行更新。",
+  "maxHeadersReachedDetail": "最多允許 10 個自訂標頭。請移除一些以新增更多。",
+  "editMessage": "編輯訊息",
+  "noModelsAvailable": "沒有可用的模型",
+  "followingSystem": "遵循系統：{theme}",
+  "themeDark": "深色",
+  "themePalette": "強調色調色板",
+  "themePaletteDescription": "選擇用於按鈕、卡片和聊天氣泡的強調色。",
+  "themeLight": "淺色",
+  "currentlyUsingDarkTheme": "目前使用深色主題",
+  "currentlyUsingLightTheme": "目前使用淺色主題",
+  "aboutJyotiGPT": "關於 JyotiGPT",
+  "versionLabel": "版本：{version} ({build})",
+  "githubRepository": "GitHub 儲存庫",
+  "unableToLoadAppInfo": "無法載入應用程式資訊",
+  "thinking": "正在思考...",
+  "thoughts": "想法",
+  "thoughtForDuration": "思考了 {duration}",
+  "appCustomization": "應用程式自訂",
+  "appCustomizationSubtitle": "個性化名稱和 UI 的顯示方式",
+  "quickActionsDescription": "選擇最多兩個快捷方式釘選在撰寫器附近",
+  "chatSettings": "聊天",
+  "sendOnEnter": "按 Enter 鍵發送",
+  "sendOnEnterDescription": "按 Enter 鍵發送（軟鍵盤）。Cmd/Ctrl+Enter 也可用",
+  "display": "顯示",
+  "realtime": "即時",
+  "transportMode": "傳輸模式",
+  "transportModeDescription": "選擇應用程式連線以進行即時更新的方式。",
+  "mode": "模式",
+  "transportModeAuto": "自動（輪詢 + WebSocket）",
+  "transportModeWs": "僅 WebSocket",
+  "transportModeAutoInfo": "在限制性網路中更穩健。盡可能升級到 WebSocket。",
+  "transportModeWsInfo": "開銷較低，但可能在嚴格的代理/防火牆後失敗。",
   "@appTitle": {
-    "description": "Application name displayed in the app and OS UI."
+    "description": "應用程式名稱顯示在應用程式和作業系統 UI 中。"
   },
   "@initializationFailed": {
-    "description": "Shown if the app fails to initialize critical services."
+    "description": "如果應用程式無法初始化關鍵服務，則顯示。"
   },
   "@retry": {
-    "description": "Button label to try an action again."
+    "description": "重新嘗試操作的按鈕標籤。"
   },
   "@back": {
-    "description": "Back navigation label/tooltip."
+    "description": "返回導航標籤/工具提示。"
   },
   "@you": {
-    "description": "Profile tab title."
+    "description": "個人資料標籤標題。"
   },
   "@loadingProfile": {
-    "description": "Progress message while fetching profile data."
+    "description": "正在獲取個人資料時的進度訊息。"
   },
   "@unableToLoadProfile": {
-    "description": "Error title shown when profile request fails."
+    "description": "個人資料請求失敗時顯示的錯誤標題。"
   },
   "@connectionIssueTitle": {
-    "description": "Title shown when the configured server is unreachable"
+    "description": "配置的伺服器無法連線時顯示的標題"
   },
   "@connectionIssueSubtitle": {
-    "description": "Subtitle explaining available actions when the server cannot be reached"
+    "description": "當無法連線到伺服器時，解釋可用操作的副標題"
   },
   "@stillOfflineMessage": {
-    "description": "Status message after a retry when connectivity has not been restored"
+    "description": "在重試後連線尚未恢復時的狀態訊息"
   },
   "@pleaseCheckConnection": {
-    "description": "Generic connectivity hint after an error."
+    "description": "錯誤後的一般連線提示。"
   },
   "@account": {
-    "description": "Section header for account-related options."
+    "description": "與帳戶相關選項的部分標頭。"
   },
   "@supportJyotiGPT": {
-    "description": "Section header to list more settings."
+    "description": "列出更多設定的部分標頭。"
   },
   "@supportJyotiGPTSubtitle": {
-    "description": "Subtitle explaining whats in the section."
+    "description": "解釋該部分內容的副標題。"
   },
   "@githubSponsorsTitle": {
-    "description": "Tile title linking to account settings"
+    "description": "連結到帳戶設定的圖塊標題"
   },
   "@githubSponsorsSubtitle": {
-    "description": "Subtitle explaining account settings."
+    "description": "解釋帳戶設定的副標題。"
   },
   "@buyMeACoffeeTitle": {
-    "description": "Tile title linking to the Github Repo"
+    "description": "連結到 Github 儲存庫的圖塊標題"
   },
   "@buyMeACoffeeSubtitle": {
-    "description": "Subtitle stating to view the open source code for the project."
+    "description": "說明檢視專案開源程式碼的副標題。"
   },
   "@signOut": {
-    "description": "Button/title for signing out of the app."
+    "description": "用於登出應用程式的按鈕/標題。"
   },
   "@endYourSession": {
-    "description": "Subtitle explaining the sign-out action."
+    "description": "解釋登出操作的副標題。"
   },
   "@defaultModel": {
-    "description": "Label for choosing a default AI model."
+    "description": "選擇預設 AI 模型的標籤。"
   },
   "@autoSelect": {
-    "description": "Option to let the app pick a suitable model automatically."
+    "description": "讓應用程式自動選擇合適模型的選項。"
   },
   "@loadingModels": {
-    "description": "Progress message while fetching model list."
+    "description": "正在獲取模型清單時的進度訊息。"
   },
   "@failedToLoadModels": {
-    "description": "Error message shown when model list cannot be retrieved."
+    "description": "無法檢索模型清單時顯示的錯誤訊息。"
   },
   "@availableModels": {
-    "description": "Header above a list of models to select from."
+    "description": "要選擇的模型清單上方的標頭。"
   },
   "@noResults": {
-    "description": "Shown when a search returns no matches."
+    "description": "搜尋沒有返回任何匹配項時顯示。"
   },
   "@searchModels": {
-    "description": "Hint text for model search input."
+    "description": "模型搜尋輸入的提示文字。"
   },
   "@errorMessage": {
-    "description": "Generic error message for unexpected failures."
+    "description": "針對意外故障的一般錯誤訊息。"
   },
   "@loginButton": {
-    "description": "Button text for the login action."
+    "description": "登入操作的按鈕文字。"
   },
   "@menuItem": {
-    "description": "Generic settings menu item label."
+    "description": "一般設定選單項目的標籤。"
   },
   "@dynamicContentWithPlaceholder": {
-    "description": "Greeting message with a dynamic user name.",
+    "description": "帶有動態使用者名稱的問候訊息。",
     "placeholders": {
       "name": {
         "type": "String",
@@ -417,7 +417,7 @@
     }
   },
   "@itemsCount": {
-    "description": "Pluralized count of items.",
+    "description": "項目的複數計數。",
     "placeholders": {
       "count": {
         "type": "int",
@@ -426,64 +426,64 @@
     }
   },
   "@closeButtonSemantic": {
-    "description": "Accessible label for a generic Close button."
+    "description": "一般「關閉」按鈕的可訪問標籤。"
   },
   "@loadingContent": {
-    "description": "Shown while loading page content."
+    "description": "載入頁面內容時顯示。"
   },
   "@noItems": {
-    "description": "Placeholder text when a list is empty."
+    "description": "清單為空時的佔位符文字。"
   },
   "@noItemsToDisplay": {
-    "description": "Alternative empty-state description."
+    "description": "替代的空狀態描述。"
   },
   "@loadMore": {
-    "description": "Button label to load additional items in a paged list."
+    "description": "在分頁清單中載入更多項目的按鈕標籤。"
   },
   "@workspace": {
-    "description": "Section/tab label for documents and files."
+    "description": "文件和檔案的部分/標籤標籤。"
   },
   "@recentFiles": {
-    "description": "Header for recently accessed files."
+    "description": "最近存取檔案的標頭。"
   },
   "@knowledgeBase": {
-    "description": "Section for knowledge base content."
+    "description": "知識庫內容的部分。"
   },
   "@noFilesYet": {
-    "description": "Empty state when no files are present."
+    "description": "沒有檔案時的空狀態。"
   },
   "@uploadDocsPrompt": {
-    "description": "Prompt encouraging users to upload documents."
+    "description": "鼓勵使用者上傳文件的提示。"
   },
   "@uploadFirstFile": {
-    "description": "CTA to add the first file."
+    "description": "新增第一個檔案的 CTA。"
   },
   "@attachments": {
-    "description": "Header above list of attached files in compose area."
+    "description": "撰寫區域中附加檔案清單上方的標頭。"
   },
   "@knowledgeBaseEmpty": {
-    "description": "Empty state title for the knowledge base section."
+    "description": "知識庫部分的空狀態標題。"
   },
   "@createCollectionsPrompt": {
-    "description": "Prompt describing the benefit of creating collections."
+    "description": "描述建立集合的好處的提示。"
   },
   "@chooseSourcePhoto": {
-    "description": "Sheet title to pick camera or photo library."
+    "description": "選擇相機或照片庫的底部工作表標題。"
   },
   "@takePhoto": {
-    "description": "Action to open camera and capture a new photo."
+    "description": "開啟相機並拍攝新照片的動作。"
   },
   "@chooseFromGallery": {
-    "description": "Action to pick an existing photo from library."
+    "description": "從圖庫中選擇現有照片的動作。"
   },
   "@document": {
-    "description": "Generic document label used in UI."
+    "description": "UI 中使用的通用文件標籤。"
   },
   "@documentHint": {
-    "description": "Helper hint listing supported document types."
+    "description": "列出支援的文件類型的輔助提示。"
   },
   "@uploadFileTitle": {
-    "description": "Dialog/sheet title for file upload."
+    "description": "檔案上傳的對話框/工作表標題。"
   },
   "@fileUploadComingSoon": {
     "placeholders": {
@@ -492,151 +492,151 @@
         "example": "gallery"
       }
     },
-    "description": "Temporary message for upcoming upload feature by type"
+    "description": "按類型即將推出的上傳功能的臨時訊息"
   },
   "@kbCreationComingSoon": {
-    "description": "Temporary message indicating KB creation feature is not yet available."
+    "description": "指示 KB 建立功能尚未可用的臨時訊息。"
   },
   "@backToServerSetup": {
-    "description": "Button/back label to return to server configuration flow."
+    "description": "按鈕/返回標籤以返回伺服器配置流程。"
   },
   "@connectedToServer": {
-    "description": "Status label indicating a successful server connection."
+    "description": "指示伺服器連線成功的狀態標籤。"
   },
   "@signIn": {
-    "description": "Button/heading for sign-in flows."
+    "description": "登入流程的按鈕/標題。"
   },
   "@enterCredentials": {
-    "description": "Instructional text on the sign-in screen."
+    "description": "登入畫面上的說明文字。"
   },
   "@credentials": {
-    "description": "Header for credential input section."
+    "description": "憑證輸入部分的標頭。"
   },
   "@apiKey": {
-    "description": "Label for API key input field."
+    "description": "API 金鑰輸入欄位的標籤。"
   },
   "@usernameOrEmail": {
-    "description": "Label for username/email input field."
+    "description": "使用者名稱/電子郵件輸入欄位的標籤。"
   },
   "@password": {
-    "description": "Label for password input field."
+    "description": "密碼輸入欄位的標籤。"
   },
   "@signInWithApiKey": {
-    "description": "Alternative sign-in method using an API key."
+    "description": "使用 API 金鑰的替代登入方法。"
   },
   "@connectToServer": {
-    "description": "Call-to-action button for server connection."
+    "description": "伺服器連線的行動呼籲按鈕。"
   },
   "@enterServerAddress": {
-    "description": "Instruction telling user to check server connection"
+    "description": "指示使用者檢查伺服器連線的說明"
   },
   "@serverUrl": {
-    "description": "Label for server URL field."
+    "description": "伺服器 URL 欄位的標籤。"
   },
   "@serverUrlHint": {
-    "description": "Hint text showing example server URL format."
+    "description": "顯示範例伺服器 URL 格式的提示文字。"
   },
   "@enterServerUrlSemantic": {
-    "description": "Semantic/ARIA label instructing to enter server URL or IP."
+    "description": "語義/ARIA 標籤，指示輸入伺服器 URL 或 IP。"
   },
   "@headerName": {
-    "description": "Label for custom header key."
+    "description": "自訂標頭金鑰的標籤。"
   },
   "@headerValue": {
-    "description": "Label for custom header value."
+    "description": "自訂標頭值的標籤。"
   },
   "@headerValueHint": {
-    "description": "Hint text with example header values, including API key or Bearer token."
+    "description": "包含 API 金鑰或 Bearer token 等範例標頭值的提示文字。"
   },
   "@addHeader": {
-    "description": "Button to add a new custom header row."
+    "description": "新增自訂標頭列的按鈕。"
   },
   "@maximumHeadersReached": {
-    "description": "Warning when custom header limit is reached."
+    "description": "達到自訂標頭限制時的警告。"
   },
   "@removeHeader": {
-    "description": "Action to remove a custom header row."
+    "description": "移除自訂標頭列的動作。"
   },
   "@connecting": {
-    "description": "Status while attempting to connect to server."
+    "description": "嘗試連線到伺服器時的狀態。"
   },
   "@connectToServerButton": {
-    "description": "Primary action button to initiate server connection."
+    "description": "啟動伺服器連線的主要動作按鈕。"
   },
   "@demoModeActive": {
-    "description": "Banner/text indicating the app runs in demo mode."
+    "description": "指示應用程式在演示模式下運行的橫幅/文字。"
   },
   "@skipServerSetupTryDemo": {
-    "description": "CTA to bypass server configuration and enter demo mode."
+    "description": "繞過伺服器配置並進入演示模式的 CTA。"
   },
   "@enterDemo": {
-    "description": "Button to enter demo mode."
+    "description": "進入演示模式的按鈕。"
   },
   "@demoBadge": {
-    "description": "Small badge label for demo content."
+    "description": "用於演示內容的小徽章標籤。"
   },
   "@serverNotOpenWebUI": {
-    "description": "Validation error when the server does not resemble Open-WebUI."
+    "description": "當伺服器與 Open-WebUI 不相似時的驗證錯誤。"
   },
   "@serverUrlEmpty": {
-    "description": "Validation message for empty server URL."
+    "description": "空伺服器 URL 的驗證訊息。"
   },
   "@invalidUrlFormat": {
-    "description": "Validation message when URL format is incorrect."
+    "description": "URL 格式不正確時的驗證訊息。"
   },
   "@onlyHttpHttps": {
-    "description": "Validation note restricting protocols to HTTP/HTTPS."
+    "description": "將協議限制為 HTTP/HTTPS 的驗證說明。"
   },
   "@serverAddressRequired": {
-    "description": "Validation hint providing examples for server addresses."
+    "description": "提供伺服器位址範例的驗證提示。"
   },
   "@portRange": {
-    "description": "Validation message for allowed port range."
+    "description": "允許埠號範圍的驗證訊息。"
   },
   "@invalidIpFormat": {
-    "description": "Validation message for IP addresses with example."
+    "description": "帶有範例的 IP 位址驗證訊息。"
   },
   "@couldNotConnectGeneric": {
-    "description": "Generic failure when connecting to the server."
+    "description": "連線到伺服器時的一般故障。"
   },
   "@weCouldntReachServer": {
-    "description": "Connectivity error with hints to verify server status."
+    "description": "帶有提示以驗證伺服器狀態的連線錯誤。"
   },
   "@connectionTimedOut": {
-    "description": "Timeout error while connecting to server."
+    "description": "連線到伺服器時的逾時錯誤。"
   },
   "@useHttpOrHttpsOnly": {
-    "description": "Note instructing the user to include protocol in URL."
+    "description": "指示使用者在 URL 中包含協議的說明。"
   },
   "@loginFailed": {
-    "description": "Title for failed login attempts."
+    "description": "登入嘗試失敗的標題。"
   },
   "@invalidCredentials": {
-    "description": "Detailed message when authentication fails."
+    "description": "身份驗證失敗時的詳細訊息。"
   },
   "@serverRedirectingHttps": {
-    "description": "Warning about HTTP→HTTPS redirect issues."
+    "description": "有關 HTTP→HTTPS 重定向問題的警告。"
   },
   "@unableToConnectServer": {
-    "description": "Generic server connection failure message."
+    "description": "一般伺服器連線失敗訊息。"
   },
   "@requestTimedOut": {
-    "description": "Timeout while waiting for a server response."
+    "description": "等待伺服器回應時的逾時。"
   },
   "@genericSignInFailed": {
-    "description": "Fallback sign-in error when no specific cause is known."
+    "description": "當不知道特定原因時的後備登入錯誤。"
   },
   "@skip": {
-    "description": "Onboarding: skip current step."
+    "description": "新手入門：跳過當前步驟。"
   },
   "@next": {
-    "description": "Onboarding: go to the next step."
+    "description": "新手入門：轉到下一步。"
   },
   "@done": {
-    "description": "Onboarding: finish the flow."
+    "description": "新手入門：完成流程。"
   },
   "@onboardStartTitle": {
-    "description": "Onboarding card: start chatting title.",
+    "description": "新手入門卡片：開始聊天標題。",
     "placeholders": {
       "username": {
         "type": "String",
@@ -645,130 +645,130 @@
     }
   },
   "@onboardStartSubtitle": {
-    "description": "Onboarding card: brief guidance to begin a chat."
+    "description": "新手入門卡片：開始聊天的簡短指南。"
   },
   "@onboardStartBullet1": {
-    "description": "Bullet: how to switch models."
+    "description": "項目符號：如何切換模型。"
   },
   "@onboardStartBullet2": {
-    "description": "Bullet: how to reset context."
+    "description": "項目符號：如何重設上下文。"
   },
   "@onboardAttachTitle": {
-    "description": "Onboarding card: attach context title."
+    "description": "新手入門卡片：附加上下文標題。"
   },
   "@onboardAttachSubtitle": {
-    "description": "Onboarding card: why attaching context helps."
+    "description": "新手入門卡片：為什麼附加上下文有幫助。"
   },
   "@onboardAttachBullet1": {
-    "description": "Bullet: types of workspace files."
+    "description": "項目符號：工作區檔案的類型。"
   },
   "@onboardAttachBullet2": {
-    "description": "Bullet: photo sources supported."
+    "description": "項目符號：支援的照片來源。"
   },
   "@onboardSpeakTitle": {
-    "description": "Onboarding card: voice input title."
+    "description": "新手入門卡片：語音輸入標題。"
   },
   "@onboardSpeakSubtitle": {
-    "description": "Onboarding card: how voice input works."
+    "description": "新手入門卡片：語音輸入的工作原理。"
   },
   "@onboardSpeakBullet1": {
-    "description": "Bullet: stop dictation preserves text."
+    "description": "項目符號：停止聽寫會保留文字。"
   },
   "@onboardSpeakBullet2": {
-    "description": "Bullet: benefits of voice input."
+    "description": "項目符號：語音輸入的好處。"
   },
   "@onboardQuickTitle": {
-    "description": "Onboarding card: quick actions title."
+    "description": "新手入門卡片：快速動作標題。"
   },
   "@onboardQuickSubtitle": {
-    "description": "Onboarding card: how to use the app menu."
+    "description": "新手入門卡片：如何使用應用程式選單。"
   },
   "@onboardQuickBullet1": {
-    "description": "Bullet: menu access to sections."
+    "description": "項目符號：選單存取各個部分。"
   },
   "@onboardQuickBullet2": {
-    "description": "Bullet: actions available in the top bar."
+    "description": "項目符號：頂部欄中可用的動作。"
   },
   "@addAttachment": {
-    "description": "Button to add an attachment (file/photo)."
+    "description": "新增附件（檔案/照片）的按鈕。"
   },
   "@attachmentLabel": {
-    "description": "Label shown beside attachment chips in messages."
+    "description": "訊息中附件晶片旁邊顯示的標籤。"
   },
   "@tools": {
-    "description": "Header for a tools/actions section."
+    "description": "工具/動作部分的標頭。"
   },
   "@voiceInput": {
-    "description": "Label for voice input feature."
+    "description": "語音輸入功能的標籤。"
   },
   "@voice": {
-    "description": "Title for the voice input bottom sheet."
+    "description": "語音輸入底部工作表的標題。"
   },
   "@voiceStatusListening": {
-    "description": "Indicates the app is actively listening during voice input."
+    "description": "表示應用程式在語音輸入期間正在積極聆聽。"
   },
   "@voiceStatusRecording": {
-    "description": "Indicates the app is recording audio for speech recognition."
+    "description": "表示應用程式正在錄製音訊以進行語音識別。"
   },
   "@voiceHoldToTalk": {
-    "description": "Toggle label for hold-to-talk mode in voice input."
+    "description": "語音輸入中按住說話模式的切換標籤。"
   },
   "@voiceAutoSend": {
-    "description": "Toggle label for automatically sending the final transcript."
+    "description": "自動發送最終轉錄文字的切換標籤。"
   },
   "@voiceTranscript": {
-    "description": "Label above the transcribed voice input text."
+    "description": "轉錄語音輸入文字上方的標籤。"
   },
   "@voicePromptSpeakNow": {
-    "description": "Placeholder prompting the user to start speaking."
+    "description": "提示使用者開始說話的佔位符。"
   },
   "@voicePromptTapStart": {
-    "description": "Placeholder instructing the user to tap Start to begin recording."
+    "description": "指示使用者點擊「開始」以開始錄音的佔位符。"
   },
   "@voiceActionStop": {
-    "description": "Button label to stop voice recording."
+    "description": "停止語音錄音的按鈕標籤。"
   },
   "@voiceActionStart": {
-    "description": "Button label to start voice recording."
+    "description": "開始語音錄音的按鈕標籤。"
   },
   "@messageInputLabel": {
-    "description": "Accessibility label for the message input."
+    "description": "訊息輸入的可訪問性標籤。"
   },
   "@messageInputHint": {
-    "description": "Hint shown in the message input field."
+    "description": "訊息輸入欄位中顯示的提示。"
   },
   "@messageHintText": {
-    "description": "Short placeholder text in the message input."
+    "description": "訊息輸入中的簡短佔位符文字。"
   },
   "@stopGenerating": {
-    "description": "Action to stop the assistant's response generation."
+    "description": "停止助手回應生成的動作。"
   },
   "@send": {
-    "description": "Primary action to send a message."
+    "description": "發送訊息的主要動作。"
   },
   "@codeCopiedToClipboard": {
-    "description": "Snack bar message confirming code was copied."
+    "description": "確認程式碼已複製的快顯訊息。"
   },
   "@sendMessage": {
-    "description": "Semantic label for sending a message."
+    "description": "發送訊息的語義標籤。"
   },
   "@file": {
-    "description": "A file item or attachment type label."
+    "description": "檔案項目或附件類型標籤。"
   },
   "@photo": {
-    "description": "A photo item or attachment type label."
+    "description": "照片項目或附件類型標籤。"
   },
   "@camera": {
-    "description": "Camera source label."
+    "description": "相機來源標籤。"
   },
   "@apiUnavailable": {
-    "description": "Shown when backend API service is unavailable."
+    "description": "後端 API 服務不可用時顯示。"
   },
   "@unableToLoadImage": {
-    "description": "General failure to load an image."
+    "description": "載入圖片的一般故障。"
   },
   "@notAnImageFile": {
-    "description": "Error when a referenced file is not an image.",
+    "description": "引用檔案不是圖片時的錯誤。",
     "placeholders": {
       "fileName": {
         "type": "String",
@@ -777,7 +777,7 @@
     }
   },
   "@failedToLoadImage": {
-    "description": "Error including the underlying reason when image loading fails.",
+    "description": "圖片載入失敗時包含根本原因的錯誤。",
     "placeholders": {
       "error": {
         "type": "String",
@@ -786,97 +786,97 @@
     }
   },
   "@invalidDataUrl": {
-    "description": "Error for malformed data: URLs."
+    "description": "格式錯誤的 data: URLs 的錯誤。"
   },
   "@failedToDecodeImage": {
-    "description": "Error when decoding image bytes/base64."
+    "description": "解碼圖片位元組/base64 時的錯誤。"
   },
   "@invalidImageFormat": {
-    "description": "Error when image type/format is not supported."
+    "description": "圖片類型/格式不受支援時的錯誤。"
   },
   "@emptyImageData": {
-    "description": "Error when image data buffer is empty."
+    "description": "圖片資料緩衝區為空時的錯誤。"
   },
   "@featureRequiresInternet": {
-    "description": "Informational text explaining internet requirement."
+    "description": "解釋網路要求的信息文字。"
   },
   "@messagesWillSendWhenOnline": {
-    "description": "Queue behavior notice while offline."
+    "description": "離線時的佇列行為通知。"
   },
   "@confirm": {
-    "description": "Confirmation button label."
+    "description": "確認按鈕標籤。"
   },
   "@cancel": {
-    "description": "Cancel button label."
+    "description": "取消按鈕標籤。"
   },
   "@ok": {
-    "description": "Generic OK button label."
+    "description": "一般「確定」按鈕標籤。"
   },
   "@inputField": {
-    "description": "Accessibility label describing an input field."
+    "description": "描述輸入欄位的可訪問性標籤。"
   },
   "@captureDocumentOrImage": {
-    "description": "Action to capture a document or image using camera."
+    "description": "使用相機拍攝文件或圖片的動作。"
   },
   "@checkConnection": {
-    "description": "CTA to verify network connectivity."
+    "description": "驗證網路連線的 CTA。"
   },
   "@openSettings": {
-    "description": "CTA to open device or app settings."
+    "description": "開啟裝置或應用程式設定的 CTA。"
   },
   "@chooseDifferentFile": {
-    "description": "CTA to pick an alternative file."
+    "description": "選擇替代檔案的 CTA。"
   },
   "@goBack": {
-    "description": "CTA to navigate back."
+    "description": "導航返回的 CTA。"
   },
   "@technicalDetails": {
-    "description": "Expandable section label to show error details or logs."
+    "description": "可展開的部分標籤，用於顯示錯誤詳細資訊或日誌。"
   },
   "@save": {
-    "description": "Primary action to save changes."
+    "description": "儲存變更的主要動作。"
   },
   "@chooseModel": {
-    "description": "Button/label to choose a model."
+    "description": "選擇模型的按鈕/標籤。"
   },
   "@reviewerMode": {
-    "description": "Developer/reviewer mode indicator."
+    "description": "開發人員/審查員模式指示器。"
   },
   "@selectLanguage": {
-    "description": "Dialog title to pick application language."
+    "description": "選擇應用程式語言的對話框標題。"
   },
   "@newFolder": {
-    "description": "Action to create a new folder."
+    "description": "建立新資料夾的動作。"
   },
   "@folderName": {
-    "description": "Label for entering a folder's name."
+    "description": "輸入資料夾名稱的標籤。"
   },
   "@newChat": {
-    "description": "Action to start a new chat."
+    "description": "開始新聊天的動作。"
   },
   "@more": {
-    "description": "Opens additional actions or content."
+    "description": "開啟附加動作或內容。"
   },
   "@clear": {
-    "description": "Action to clear input or selection."
+    "description": "清除輸入或選擇的動作。"
   },
   "@searchHint": {
-    "description": "Generic search input hint."
+    "description": "一般搜尋輸入提示。"
   },
   "@searchConversations": {
-    "description": "Search input hint scoped to conversations."
+    "description": "限定在對話範圍內的搜尋輸入提示。"
   },
   "@create": {
-    "description": "Primary action to create a resource."
+    "description": "建立資源的主要動作。"
   },
   "@folderCreated": {
-    "description": "Toast/notice after successfully creating a folder."
+    "description": "成功建立資料夾後的快顯/通知。"
   },
   "@failedToCreateFolder": {
-    "description": "Error notice when folder creation fails."
+    "description": "資料夾建立失敗時的錯誤通知。"
   },
   "@movedChatToFolder": {
-    "description": "Toast indicating a chat titled {title} was moved to folder {folder}.",
+    "description": "快顯訊息，指示標題為 {title} 的聊天已移動到資料夾 {folder}。",
     "placeholders": {
       "title": {
         "type": "String"
@@ -887,205 +887,205 @@
     }
   },
   "@failedToMoveChat": {
-    "description": "Error notice when moving a chat fails."
+    "description": "移動聊天失敗時的錯誤通知。"
   },
   "@failedToLoadChats": {
-    "description": "Error notice when fetching chat list fails."
+    "description": "獲取聊天清單失敗時的錯誤通知。"
   },
   "@failedToUpdatePin": {
-    "description": "Error notice when updating pin star/flag fails."
+    "description": "更新釘選星/旗標失敗時的錯誤通知。"
   },
   "@failedToDeleteChat": {
-    "description": "Error notice when deleting a chat fails."
+    "description": "刪除聊天失敗時的錯誤通知。"
   },
   "@manage": {
-    "description": "Context action to manage an item."
+    "description": "管理項目的上下文動作。"
   },
   "@rename": {
-    "description": "Context action to rename an item."
+    "description": "重新命名項目的上下文動作。"
   },
   "@delete": {
-    "description": "Context action to delete an item."
+    "description": "刪除項目的上下文動作。"
   },
   "@renameChat": {
-    "description": "Dialog title to rename a chat."
+    "description": "重新命名聊天的對話框標題。"
   },
   "@enterChatName": {
-    "description": "Input hint/label for new chat name."
+    "description": "新聊天名稱的輸入提示/標籤。"
   },
   "@failedToRenameChat": {
-    "description": "Error notice when renaming chat fails."
+    "description": "重新命名聊天失敗時的錯誤通知。"
   },
   "@failedToUpdateArchive": {
-    "description": "Error notice when archiving/unarchiving fails."
+    "description": "封存/取消封存失敗時的錯誤通知。"
   },
   "@unarchive": {
-    "description": "Action to unarchive an item."
+    "description": "取消封存項目的動作。"
   },
   "@archive": {
-    "description": "Action to archive an item."
+    "description": "封存項目的動作。"
   },
   "@pin": {
-    "description": "Action to pin/star an item."
+    "description": "釘選/標記為重要項目的動作。"
   },
   "@unpin": {
-    "description": "Action to remove pin from an item."
+    "description": "取消釘選的動作。"
   },
   "@recent": {
-    "description": "List filter for recently used items."
+    "description": "標題，用於最近或未釘選的聊天。"
   },
   "@system": {
-    "description": "Option indicating the device/system default."
+    "description": "設定中表示遵循作業系統設定的選項。"
   },
   "@hindi": {
-    "description": "Language name: Hindi."
+    "description": "語言名稱：印地語"
   },
   "@bengali": {
-    "description": "Language name: Bengali."
+    "description": "語言名稱：孟加拉語"
   },
   "@tamil": {
-    "description": "Language name: Tamil."
+    "description": "語言名稱：泰米爾語"
   },
   "@telugu": {
-    "description": "Language name: Telugu."
+    "description": "語言名稱：泰盧固語"
   },
   "@marathi": {
-    "description": "Language name: Marathi."
+    "description": "語言名稱：馬拉提語"
   },
   "@gujarati": {
-    "description": "Language name: Gujarati."
+    "description": "語言名稱：古吉拉特語"
   },
   "@kannada": {
-    "description": "Language name: Kannada."
+    "description": "語言名稱：坎納達語"
   },
   "@malayalam": {
-    "description": "Language name: Malayalam."
+    "description": "語言名稱：馬拉雅拉姆語"
   },
   "@punjabi": {
-    "description": "Language name: Punjabi."
+    "description": "語言名稱：旁遮普語"
   },
   "@urdu": {
-    "description": "Language name: Urdu."
+    "description": "語言名稱：烏爾都語"
   },
   "@nepali": {
-    "description": "Language name: Nepali."
+    "description": "語言名稱：尼泊爾語"
   },
   "@assamese": {
-    "description": "Language name: Assamese."
+    "description": "語言名稱：阿薩姆語"
   },
   "@odia": {
-    "description": "Language name: Odia."
+    "description": "語言名稱：奧里亞語"
   },
   "@english": {
-    "description": "Language name: English."
+    "description": "語言名稱：英語"
   },
   "@spanish": {
-    "description": "Language name: Spanish."
+    "description": "語言名稱：西班牙語"
   },
   "@deutsch": {
-    "description": "Language name: German."
+    "description": "語言名稱：德語"
   },
   "@francais": {
-    "description": "Language name: French."
+    "description": "語言名稱：法語"
   },
   "@italiano": {
-    "description": "Language name: Italian."
+    "description": "語言名稱：義大利語"
   },
   "@portuguese": {
-    "description": "Language name: Portuguese."
+    "description": "語言名稱：葡萄牙語"
   },
   "@dutch": {
-    "description": "Language name: Dutch."
+    "description": "語言名稱：荷蘭語"
   },
   "@polish": {
-    "description": "Language name: Polish."
+    "description": "語言名稱：波蘭語"
   },
   "@russian": {
-    "description": "Language name: Russian."
+    "description": "語言名稱：俄語"
   },
   "@ukrainian": {
-    "description": "Language name: Ukrainian."
+    "description": "語言名稱：烏克蘭語"
   },
   "@swedish": {
-    "description": "Language name: Swedish."
+    "description": "語言名稱：瑞典語"
   },
   "@danish": {
-    "description": "Language name: Danish."
+    "description": "語言名稱：丹麥語"
   },
   "@norwegian": {
-    "description": "Language name: Norwegian."
+    "description": "語言名稱：挪威語"
   },
   "@finnish": {
-    "description": "Language name: Finnish."
+    "description": "語言名稱：芬蘭語"
   },
   "@czech": {
-    "description": "Language name: Czech."
+    "description": "語言名稱：捷克語"
   },
   "@hungarian": {
-    "description": "Language name: Hungarian."
+    "description": "語言名稱：匈牙利語"
   },
   "@romanian": {
-    "description": "Language name: Romanian."
+    "description": "語言名稱：羅馬尼亞語"
   },
   "@greek": {
-    "description": "Language name: Greek."
+    "description": "語言名稱：希臘語"
   },
   "@slovak": {
-    "description": "Language name: Slovak."
+    "description": "語言名稱：斯洛伐克語"
   },
   "@serbian": {
-    "description": "Language name: Serbian."
+    "description": "語言名稱：塞爾維亞語"
   },
   "@croatian": {
-    "description": "Language name: Croatian."
+    "description": "語言名稱：克羅地亞語"
   },
   "@bulgarian": {
-    "description": "Language name: Bulgarian."
+    "description": "語言名稱：保加利亞語"
   },
   "@chineseSimplified": {
-    "description": "Language name: Chinese (Simplified)."
+    "description": "語言名稱：中文（簡體）"
   },
   "@chineseTraditional": {
-    "description": "Language name: Chinese (Traditional)."
+    "description": "語言名稱：中文（繁體）"
   },
   "@japanese": {
-    "description": "Language name: Japanese."
+    "description": "語言名稱：日語"
   },
   "@korean": {
-    "description": "Language name: Korean."
+    "description": "語言名稱：韓語"
   },
   "@indonesian": {
-    "description": "Language name: Indonesian."
+    "description": "語言名稱：印尼語"
   },
   "@vietnamese": {
-    "description": "Language name: Vietnamese."
+    "description": "語言名稱：越南語"
   },
   "@thai": {
-    "description": "Language name: Thai."
+    "description": "語言名稱：泰語"
   },
   "@arabic": {
-    "description": "Language name: Arabic."
+    "description": "語言名稱：阿拉伯語"
   },
   "@persian": {
-    "description": "Language name: Persian."
+    "description": "語言名稱：波斯語"
   },
   "@hebrew": {
-    "description": "Language name: Hebrew."
+    "description": "語言名稱：希伯來語"
   },
   "@swahili": {
-    "description": "Language name: Swahili."
+    "description": "語言名稱：斯瓦希里語"
   },
   "@spanishMexico": {
-    "description": "Language name: Spanish (Mexico)."
+    "description": "語言名稱：西班牙語（墨西哥）"
   },
   "@portugueseBrazil": {
-    "description": "Language name: Portuguese (Brazil)."
+    "description": "語言名稱：葡萄牙語（巴西）"
   },
   "@deleteMessagesTitle": {
-    "description": "Dialog title asking to confirm deletion of messages."
+    "description": "刪除訊息確認標題。"
   },
   "@deleteMessagesMessage": {
-    "description": "Confirmation prompt asking to delete a number of messages.",
+    "description": "刪除多條訊息的確認訊息。",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1093,7 +1093,7 @@
     }
   },
   "@routeNotFound": {
-    "description": "Displayed when navigation fails to find a route name.",
+    "description": "無法導航到某個路由時的錯誤訊息。",
     "placeholders": {
       "routeName": {
         "type": "String"
@@ -1101,115 +1101,115 @@
     }
   },
   "@deleteChatTitle": {
-    "description": "Dialog title asking to confirm deletion of a chat."
+    "description": "刪除聊天確認標題。"
   },
   "@deleteChatMessage": {
-    "description": "Warning that deleting a chat cannot be undone."
+    "description": "刪除聊天的確認訊息。"
   },
   "@deleteFolderTitle": {
-    "description": "Dialog title asking to confirm deletion of a folder."
+    "description": "刪除資料夾確認標題。"
   },
   "@deleteFolderMessage": {
-    "description": "Warning that deleting a folder will remove it and its associations."
+    "description": "刪除資料夾的確認訊息。"
   },
   "@failedToDeleteFolder": {
-    "description": "Error notice when deleting a folder fails."
+    "description": "刪除資料夾失敗時的錯誤通知。"
   },
   "@aboutApp": {
-    "description": "Settings tile title to view app information."
+    "description": "關於應用程式螢幕的標題。"
   },
   "@aboutAppSubtitle": {
-    "description": "Subtitle/description for the About section."
+    "description": "關於應用程式螢幕的副標題。"
   },
   "@web": {
-    "description": "Tab/section label for web features."
+    "description": "網頁功能或網路搜尋功能的標籤。"
   },
   "@imageGen": {
-    "description": "Short label for image generation section/tab."
+    "description": "圖片生成功能的標籤。"
   },
   "@pinned": {
-    "description": "Filter/tab for pinned items."
+    "description": "已釘選聊天部分的標頭。"
   },
   "@folders": {
-    "description": "Tab listing chat folders."
+    "description": "資料夾部分的標頭。"
   },
   "@archived": {
-    "description": "Filter/tab for archived chats."
+    "description": "已封存聊天部分的標頭。"
   },
   "@appLanguage": {
-    "description": "Label for choosing the app's display language."
+    "description": "選擇應用程式語言的設定標題。"
   },
   "@darkMode": {
-    "description": "Label for toggling dark theme."
+    "description": "深色模式切換設定的標題。"
   },
   "@webSearch": {
-    "description": "Feature toggle/section for web search."
+    "description": "網頁搜尋功能的標題。"
   },
   "@webSearchDescription": {
-    "description": "Explains that responses can include citations from the web."
+    "description": "網頁搜尋功能的說明。"
   },
   "@imageGeneration": {
-    "description": "Feature toggle/section for image generation."
+    "description": "圖片生成功能的標題。"
   },
   "@imageGenerationDescription": {
-    "description": "Explains creating images via model prompts."
+    "description": "圖片生成功能的說明。"
   },
   "@copy": {
-    "description": "Action to copy text to clipboard."
+    "description": "複製內容的動作標籤。"
   },
   "@ttsListen": {
-    "description": "Action to play the assistant message using text to speech"
+    "description": "文字轉語音（TTS）的聆聽動作標籤。"
   },
   "@ttsStop": {
-    "description": "Action to stop text to speech playback"
+    "description": "文字轉語音（TTS）的停止動作標籤。"
   },
   "@edit": {
-    "description": "Action to edit an item/message."
+    "description": "編輯內容的動作標籤。"
   },
   "@regenerate": {
-    "description": "Action to request a new assistant response."
+    "description": "重新生成回應的動作標籤。"
   },
   "@noConversationsYet": {
-    "description": "Empty state when the user has no chats."
+    "description": "尚無對話時的空狀態訊息。"
   },
   "@usernameOrEmailHint": {
-    "description": "Hint text for username/email input."
+    "description": "使用者名稱或電子郵件輸入欄位的提示。"
   },
   "@passwordHint": {
-    "description": "Hint text for password input."
+    "description": "密碼輸入欄位的提示。"
   },
   "@enterApiKey": {
-    "description": "Hint text for API key input."
+    "description": "API 金鑰輸入欄位的提示。"
   },
   "@signingIn": {
-    "description": "Status message shown while signing in."
+    "description": "正在登入時的狀態訊息。"
   },
   "@advancedSettings": {
-    "description": "Section that contains additional/optional configuration."
+    "description": "進階設定部分的標題。"
   },
   "@customHeaders": {
-    "description": "Section title for adding custom HTTP headers."
+    "description": "自訂標頭設定的標題。"
   },
   "@customHeadersDescription": {
-    "description": "Helper text explaining use-cases for custom headers."
+    "description": "自訂標頭設定的說明。"
   },
   "@allowSelfSignedCertificates": {
-    "description": "Toggle label that allows trusting self-signed TLS certificates for the configured server."
+    "description": "允許自簽章憑證的切換開關標題。"
   },
   "@allowSelfSignedCertificatesDescription": {
-    "description": "Helper text clarifying the risks of enabling the self-signed certificate toggle."
+    "description": "允許自簽章憑證的切換開關說明。"
   },
   "@headerNameEmpty": {
-    "description": "Validation message for empty header name."
+    "description": "標頭名稱為空時的驗證錯誤。"
   },
   "@headerNameTooLong": {
-    "description": "Validation message for header name length."
+    "description": "標頭名稱超過最大長度時的驗證錯誤。"
   },
   "@headerNameInvalidChars": {
-    "description": "Validation message for invalid characters in header name."
+    "description": "標頭名稱包含無效字元時的驗證錯誤。"
   },
   "@headerNameReserved": {
-    "description": "Error when attempting to override a reserved HTTP header {key}.",
+    "description": "嘗試覆蓋保留標頭時的驗證錯誤。",
     "placeholders": {
       "key": {
         "type": "String"
@@ -1217,19 +1217,19 @@
     }
   },
   "@headerValueEmpty": {
-    "description": "Validation message for empty header value."
+    "description": "標頭值為空時的驗證錯誤。"
   },
   "@headerValueTooLong": {
-    "description": "Validation message for header value length."
+    "description": "標頭值超過最大長度時的驗證錯誤。"
   },
   "@headerValueInvalidChars": {
-    "description": "Validation message for invalid characters in header value."
+    "description": "標頭值包含無效字元時的驗證錯誤。"
   },
   "@headerValueUnsafe": {
-    "description": "Security warning for suspicious header values."
+    "description": "標頭值包含潛在不安全內容時的驗證警告。"
   },
   "@headerAlreadyExists": {
-    "description": "Error when a custom header with key {key} already exists.",
+    "description": "嘗試新增已存在的標頭時的驗證錯誤。",
     "placeholders": {
       "key": {
         "type": "String"
@@ -1237,16 +1237,16 @@
     }
   },
   "@maxHeadersReachedDetail": {
-    "description": "Explains the upper limit of custom headers."
+    "description": "達到最大標頭數量時的詳細訊息。"
   },
   "@editMessage": {
-    "description": "Action to edit a previously sent message."
+    "description": "編輯訊息功能的標題。"
   },
   "@noModelsAvailable": {
-    "description": "Shown when model list is empty or failed to load."
+    "description": "伺服器上沒有可用模型時的訊息。"
   },
   "@followingSystem": {
-    "description": "Indicates the app is following the system theme (\"Dark\"/\"Light\").",
+    "description": "應用程式正在遵循系統主題設定時的標籤。",
     "placeholders": {
       "theme": {
         "type": "String"
@@ -1254,28 +1254,28 @@
     }
   },
   "@themeDark": {
-    "description": "Theme label for dark appearance."
+    "description": "深色主題選項的名稱。"
   },
   "@themePalette": {
-    "description": "Title for selecting the app color palette."
+    "description": "選擇強調色調色板的設定標題。"
   },
   "@themePaletteDescription": {
-    "description": "Helper text explaining palette selection."
+    "description": "選擇強調色調色板的設定說明。"
   },
   "@themeLight": {
-    "description": "Theme label for light appearance."
+    "description": "淺色主題選項的名稱。"
   },
   "@currentlyUsingDarkTheme": {
-    "description": "Status text indicating dark theme is active."
+    "description": "指示目前使用深色主題的狀態訊息。"
   },
   "@currentlyUsingLightTheme": {
-    "description": "Status text indicating light theme is active."
+    "description": "指示目前使用淺色主題的狀態訊息。"
   },
   "@aboutJyotiGPT": {
-    "description": "Dialog title for app information."
+    "description": "關於 JyotiGPT 應用程式的標題。"
   },
   "@versionLabel": {
-    "description": "Displays version and build number in the About dialog.",
+    "description": "顯示應用程式版本和建構號的標籤。",
     "placeholders": {
       "version": {
         "type": "String"
@@ -1286,69 +1286,68 @@
     }
   },
   "@githubRepository": {
-    "description": "Link label pointing to the app repository."
+    "description": "GitHub 儲存庫連結的標籤。"
   },
   "@unableToLoadAppInfo": {
-    "description": "Error text when package info cannot be retrieved."
+    "description": "無法載入應用程式資訊時的錯誤訊息。"
   },
   "@thinking": {
-    "description": "Label shown while the assistant is reasoning."
+    "description": "AI 正在生成回應時的狀態訊息。"
   },
   "@thoughts": {
-    "description": "Section title for showing reasoning content."
+    "description": "用於顯示 AI 內部思考過程的標頭。"
   },
   "@thoughtForDuration": {
-    "description": "Shows how long the assistant thought before replying.",
+    "description": "顯示 AI 思考時間的標籤。",
     "placeholders": {
       "duration": {
-        "type": "String",
-        "example": "3s"
+        "type": "String"
       }
     }
   },
   "@appCustomization": {
-    "description": "Title of the customization settings page."
+    "description": "應用程式自訂設定的標題。"
   },
   "@appCustomizationSubtitle": {
-    "description": "Subtitle shown under App Customization tile and page header."
+    "description": "應用程式自訂設定的副標題。"
   },
   "@quickActionsDescription": {
-    "description": "Helper text explaining quick action pill selection in customization."
+    "description": "快速動作設定的說明。"
   },
   "@chatSettings": {
-    "description": "Section header for chat-related customization options."
+    "description": "聊天設定部分的標題。"
   },
   "@sendOnEnter": {
-    "description": "Toggle title for sending messages when pressing Enter."
+    "description": "「按 Enter 鍵發送」設定的標題。"
   },
   "@sendOnEnterDescription": {
-    "description": "Explanation of how the Send on Enter toggle behaves."
+    "description": "「按 Enter 鍵發送」設定的說明。"
   },
   "@display": {
-    "description": "Section header for visual and layout related settings."
+    "description": "顯示設定部分的標題。"
   },
   "@realtime": {
-    "description": "Section header for realtime/transport settings."
+    "description": "即時功能設定的標題。"
   },
   "@transportMode": {
-    "description": "Title for selecting the networking transport used for realtime."
+    "description": "傳輸模式設定的標題。"
   },
   "@transportModeDescription": {
-    "description": "Helper text explaining the transport setting."
+    "description": "傳輸模式設定的說明。"
   },
   "@mode": {
-    "description": "Form field label for transport mode dropdown."
+    "description": "模式選擇的標籤。"
   },
   "@transportModeAuto": {
-    "description": "Dropdown option label for automatic transport selection."
+    "description": "自動傳輸模式選項的名稱。"
   },
   "@transportModeWs": {
-    "description": "Dropdown option label for WebSocket-only transport."
+    "description": "僅 WebSocket 傳輸模式選項的名稱。"
   },
   "@transportModeAutoInfo": {
-    "description": "Footnote text for the Auto transport mode."
+    "description": "自動傳輸模式選項的資訊/說明。"
   },
   "@transportModeWsInfo": {
-    "description": "Footnote text for the WebSocket-only transport mode."
+    "description": "僅 WebSocket 傳輸模式選項的資訊/說明。"
   }
 }
