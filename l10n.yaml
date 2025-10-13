@@ -48,7 +48,6 @@ preferred-supported-locales:
   - bg        # Bulgarian
 
   # 🌏 Asia-Pacific / Middle East / Africa
-  - zh        # Chinese (Simplified)
   - zh-CN     # Chinese (China)
   - zh-TW     # Chinese (Taiwan)
   - ja        # Japanese
