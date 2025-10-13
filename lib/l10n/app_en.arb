@@ -2,7 +2,7 @@
   "@@locale": "en",
   "appTitle": "JyotiGPT",
   "@appTitle": {"description": "Application name displayed in the app and OS UI."},
-  "initializationFailed": "Initialization Failed",
+  "initializationFailed": "Initialization Failed.",
   "@initializationFailed": {"description": "Shown if the app fails to initialize critical services."},
   "retry": "Retry",
   "@retry": {"description": "Button label to try an action again."},

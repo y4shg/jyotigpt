@@ -7,12 +7,12 @@ preferred-supported-locales:
   # 🌎 Base / Western Languages
   - en        # English
   - es        # Spanish
-  - es-MX     # Spanish (Mexico)
+  - es_MX     # Spanish (Mexico)
   - fr        # French
   - de        # German
   - it        # Italian
   - pt        # Portuguese
-  - pt-BR     # Portuguese (Brazil)
+  - pt_BR     # Portuguese (Brazil)
   - nl        # Dutch
 
   # 🇮🇳 Indian Languages
@@ -48,8 +48,8 @@ preferred-supported-locales:
   - bg        # Bulgarian
 
   # 🌏 Asia-Pacific / Middle East / Africa
-  - zh-CN     # Chinese (China)
-  - zh-TW     # Chinese (Taiwan)
+  - zh_CN     # Chinese (China)
+  - zh_TW     # Chinese (Taiwan)
   - ja        # Japanese
   - ko        # Korean
   - id        # Indonesian
