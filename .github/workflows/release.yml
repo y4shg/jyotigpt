@@ -30,7 +30,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      # 4️⃣ Generate Code (Freezed, JSON serializable, etc.)
+      # 4️⃣ Run Code Generators (if used)
       - name: Run Build Runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
@@ -49,19 +49,19 @@ jobs:
           echo "Using version $VERSION_NAME"
 
       ###################################
-      # ANDROID BUILD
+      # ✅ ANDROID BUILD (UNIVERSAL APK)
       ###################################
-      - name: Build Android (Release APK)
-        run: flutter build apk --release --build-name "$VERSION_NAME"
+      - name: Build Android (Universal Release)
+        run: flutter build apk --release --split-per-abi=false --build-name "$VERSION_NAME"
 
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: jyotigpt-android-release
+          name: jyotigpt-android-universal
           path: build/app/outputs/flutter-apk/app-release.apk
 
       ###################################
-      # IOS BUILD (UNSIGNED / TROLLSTORE)
+      # ✅ iOS BUILD (UNSIGNED / TROLLSTORE)
       ###################################
       - name: Build iOS (Unsigned)
         run: flutter build ios --release --no-codesign --build-name "$VERSION_NAME"
@@ -69,7 +69,7 @@ jobs:
       - name: Package Unsigned IPA
         run: |
           cd build/ios/iphoneos
-          mkdir Payload
+          mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r app.ipa Payload
         shell: bash
@@ -81,7 +81,7 @@ jobs:
           path: build/ios/iphoneos/app.ipa
 
       ###################################
-      # RELEASE UPLOAD
+      # ✅ GITHUB RELEASE
       ###################################
       - name: Upload to GitHub Release
         if: github.event_name == 'push'
