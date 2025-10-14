@@ -30,7 +30,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      # 4️⃣ Run Code Generators (if used)
+      # 4️⃣ Generate Code (Freezed, JSON serializable, etc.)
       - name: Run Build Runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
@@ -49,19 +49,24 @@ jobs:
           echo "Using version $VERSION_NAME"
 
       ###################################
-      # ✅ ANDROID BUILD (UNIVERSAL APK)
+      # ✅ ANDROID BUILD
       ###################################
-      - name: Build Android (Universal Release)
-        run: flutter build apk --release --split-per-abi=false --build-name "$VERSION_NAME"
+      - name: Build Android (Release APKs)
+        run: flutter build apk --release --build-name "$VERSION_NAME"
 
-      - name: Upload Android Artifact
+      # 🔍 List generated APKs for debugging
+      - name: List Generated APKs
+        run: ls -lh build/app/outputs/flutter-apk/
+
+      # ✅ Upload all APK variants (arm64, v7a, x86_64, etc.)
+      - name: Upload Android Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: jyotigpt-android-universal
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: jyotigpt-android-apks
+          path: build/app/outputs/flutter-apk/*.apk
 
       ###################################
-      # ✅ iOS BUILD (UNSIGNED / TROLLSTORE)
+      # ✅ IOS BUILD (UNSIGNED / TROLLSTORE)
       ###################################
       - name: Build iOS (Unsigned)
         run: flutter build ios --release --no-codesign --build-name "$VERSION_NAME"
@@ -81,14 +86,14 @@ jobs:
           path: build/ios/iphoneos/app.ipa
 
       ###################################
-      # ✅ GITHUB RELEASE
+      # ✅ GITHUB RELEASE (UPLOADS ALL)
       ###################################
       - name: Upload to GitHub Release
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/flutter-apk/*.apk
             build/ios/iphoneos/app.ipa
           tag: ${{ env.RELEASE_TAG }}
           token: ${{ secrets.GITHUB_TOKEN }}
