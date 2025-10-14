@@ -1,13 +1,10 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing release tag to update (e.g. v1.2.3)'
+        description: 'Release tag (e.g. v1.2.3)'
         required: true
         type: string
       remove_old_assets:
@@ -50,11 +47,7 @@ jobs:
         id: meta
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            RELEASE_TAG="${{ inputs.tag }}"
-          else
-            RELEASE_TAG="${{ github.ref_name }}"
-          fi
+          RELEASE_TAG="${{ inputs.tag }}"
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
           # Derive VERSION_NAME (strip leading v)
           VERSION_NAME="${RELEASE_TAG#v}"
@@ -65,16 +58,11 @@ jobs:
           CURRENT_BUILD=$(echo "$CURRENT_VERSION_LINE" | awk -F'+' '{print $2}')
           if [[ -z "$CURRENT_BUILD" ]]; then CURRENT_BUILD=1; fi
 
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            # Rebuild mode: compute a unique, monotonic build number without committing
-            # Use CI run number offset to avoid conflicts across multiple rebuilds
-            BASE_BUILD=$CURRENT_BUILD
-            RUN_NUM=${GITHUB_RUN_NUMBER:-1}
-            BUILD_NUMBER=$((BASE_BUILD + RUN_NUM))
-          else
-            # Tag build: honor the build number committed in pubspec, default to CURRENT_BUILD
-            BUILD_NUMBER="$CURRENT_BUILD"
-          fi
+          # Compute a unique, monotonic build number without committing
+          # Use CI run number offset to avoid conflicts across multiple rebuilds
+          BASE_BUILD=$CURRENT_BUILD
+          RUN_NUM=${GITHUB_RUN_NUMBER:-1}
+          BUILD_NUMBER=$((BASE_BUILD + RUN_NUM))
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "Using tag=$RELEASE_TAG version=$VERSION_NAME build=$BUILD_NUMBER"
 
@@ -89,7 +77,7 @@ jobs:
         working-directory: android
       
       - name: Build APK
-        run: flutter build apk --split-per-abi --release --build-name "$VERSION_NAME" --build-number "$BUILD_NUMBER"
+        run: flutter build apk --release --build-name "$VERSION_NAME" --build-number "$BUILD_NUMBER"
 
       - name: Build appBundle
         run: flutter build appbundle --release --build-name "$VERSION_NAME" --build-number "$BUILD_NUMBER"
@@ -99,56 +87,8 @@ jobs:
         with:
           name: Releases
           path: |
-            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-            build/app/outputs/flutter-apk/app-x86_64-release.apk
+            build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
-
-      - name: Generate Release Notes
-        id: release_notes
-        run: |
-          # Get the previous tag
-          PREVIOUS_TAG=$(git tag --sort=-version:refname | head -2 | tail -1)
-          
-          # If no previous tag exists, use the first commit
-          if [ -z "$PREVIOUS_TAG" ]; then
-            PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
-          fi
-          
-          # Generate commit messages since the previous tag
-          echo "## What's Changed" > release_notes.md
-          echo "" >> release_notes.md
-          git log --pretty=format:"- %s (%h)" $PREVIOUS_TAG..${{ github.ref_name }} >> release_notes.md
-          
-          # Set the release notes as output
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat release_notes.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-        if: github.event_name == 'push'
-
-      - name: Create or Update Release (tag push)
-        if: github.event_name == 'push'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk,build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk,build/app/outputs/flutter-apk/app-x86_64-release.apk,build/app/outputs/bundle/release/app-release.aab"
-          tag: ${{ env.RELEASE_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
-          generateReleaseNotes: true
-          allowUpdates: true
-          makeLatest: true
-
-      - name: Update Existing Release (manual rebuild)
-        if: github.event_name == 'workflow_dispatch'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/flutter-apk/app-arm64-v8a-release.apk,build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk,build/app/outputs/flutter-apk/app-x86_64-release.apk,build/app/outputs/bundle/release/app-release.aab"
-          tag: ${{ env.RELEASE_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          removeArtifacts: ${{ inputs.remove_old_assets }}
-          makeLatest: true
-          omitBodyDuringUpdate: true
 
   build-ios:
     name: Build iOS
@@ -176,11 +116,7 @@ jobs:
         id: meta
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            RELEASE_TAG="${{ inputs.tag }}"
-          else
-            RELEASE_TAG="${{ github.ref_name }}"
-          fi
+          RELEASE_TAG="${{ inputs.tag }}"
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
           # Derive VERSION_NAME (strip leading v)
           VERSION_NAME="${RELEASE_TAG#v}"
@@ -191,16 +127,11 @@ jobs:
           CURRENT_BUILD=$(echo "$CURRENT_VERSION_LINE" | awk -F'+' '{print $2}')
           if [[ -z "$CURRENT_BUILD" ]]; then CURRENT_BUILD=1; fi
 
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            # Rebuild mode: compute a unique, monotonic build number without committing
-            # Use CI run number offset to avoid conflicts across multiple rebuilds
-            BASE_BUILD=$CURRENT_BUILD
-            RUN_NUM=${GITHUB_RUN_NUMBER:-1}
-            BUILD_NUMBER=$((BASE_BUILD + RUN_NUM))
-          else
-            # Tag build: honor the build number committed in pubspec, default to CURRENT_BUILD
-            BUILD_NUMBER="$CURRENT_BUILD"
-          fi
+          # Compute a unique, monotonic build number without committing
+          # Use CI run number offset to avoid conflicts across multiple rebuilds
+          BASE_BUILD=$CURRENT_BUILD
+          RUN_NUM=${GITHUB_RUN_NUMBER:-1}
+          BUILD_NUMBER=$((BASE_BUILD + RUN_NUM))
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "Using tag=$RELEASE_TAG version=$VERSION_NAME build=$BUILD_NUMBER"
 
@@ -240,27 +171,3 @@ jobs:
           path: |
             build/ios/ipa/*.ipa
             build/ios/ipa/*.sha256
-
-        #9 Update Release (tag push)
-      - name: Update Release with IPA (tag push)
-        if: github.event_name == 'push'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/ios/ipa/*.ipa,build/ios/ipa/*.sha256"
-          tag: ${{ env.RELEASE_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          makeLatest: true
-
-        #10 Update Release (manual rebuild)
-      - name: Update Release with IPA (manual rebuild)
-        if: github.event_name == 'workflow_dispatch'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/ios/ipa/*.ipa,build/ios/ipa/*.sha256"
-          tag: ${{ env.RELEASE_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          removeArtifacts: ${{ inputs.remove_old_assets }}
-          makeLatest: true
-          omitBodyDuringUpdate: true

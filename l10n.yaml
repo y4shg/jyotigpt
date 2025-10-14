@@ -4,11 +4,58 @@ output-localization-file: app_localizations.dart
 output-class: AppLocalizations
 output-dir: lib/l10n
 preferred-supported-locales:
-  - en
-  - de
-  - fr
-  - it
-  - zh
-  - ru
-  - nl
-  - es
+  # 🌎 Base / Western Languages
+  - en        # English
+  - es        # Spanish
+  - es_MX     # Spanish (Mexico)
+  - fr        # French
+  - de        # German
+  - it        # Italian
+  - pt        # Portuguese
+  - pt_BR     # Portuguese (Brazil)
+  - nl        # Dutch
+
+  # 🇮🇳 Indian Languages
+  - hi        # Hindi
+  - bn        # Bengali
+  - ta        # Tamil
+  - te        # Telugu
+  - mr        # Marathi
+  - gu        # Gujarati
+  - kn        # Kannada
+  - ml        # Malayalam
+  - pa        # Punjabi
+  - ur        # Urdu
+  - ne        # Nepali
+  - as        # Assamese
+  - or        # Odia
+
+  # 🇪🇺 European Languages
+  - pl        # Polish
+  - ru        # Russian
+  - uk        # Ukrainian
+  - sv        # Swedish
+  - da        # Danish
+  - no        # Norwegian
+  - fi        # Finnish
+  - cs        # Czech
+  - hu        # Hungarian
+  - ro        # Romanian
+  - el        # Greek
+  - sk        # Slovak
+  - sr        # Serbian
+  - hr        # Croatian
+  - bg        # Bulgarian
+
+  # 🌏 Asia-Pacific / Middle East / Africa
+  - zh_CN     # Chinese (China)
+  - zh_TW     # Chinese (Taiwan)
+  - ja        # Japanese
+  - ko        # Korean
+  - id        # Indonesian
+  - vi        # Vietnamese
+  - th        # Thai
+  - ar        # Arabic
+  - fa        # Persian
+  - he        # Hebrew
+  - sw        # Swahili

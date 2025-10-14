@@ -4,30 +4,21 @@
   "initializationFailed": "Inizializzazione non riuscita",
   "retry": "Riprova",
   "back": "Indietro",
-  "you": "Tu",
+  "you": "Voi",
   "loadingProfile": "Caricamento profilo...",
   "unableToLoadProfile": "Impossibile caricare il profilo",
   "pleaseCheckConnection": "Controlla la connessione e riprova",
-  "connectionIssueTitle": "Impossibile raggiungere il server",
-  "@connectionIssueTitle": {
-    "description": "Titolo mostrato quando il server configurato non è raggiungibile"
-  },
-  "connectionIssueSubtitle": "Riconnettiti per continuare oppure esci per scegliere un server diverso.",
-  "@connectionIssueSubtitle": {
-    "description": "Sottotitolo che spiega le azioni disponibili quando il server non è raggiungibile"
-  },
-  "stillOfflineMessage": "Non riusciamo ancora a raggiungere il server. Controlla la connessione e riprova.",
-  "@stillOfflineMessage": {
-    "description": "Messaggio di stato dopo un tentativo di riconnessione senza successo"
-  },
+  "connectionIssueTitle": "Impossibile raggiungere il tuo server",
+  "connectionIssueSubtitle": "Riconnettiti per continuare o disconnettiti per scegliere un server diverso.",
+  "stillOfflineMessage": "Non riusciamo ancora a raggiungere il server. Ricontrolla la connessione e riprova.",
   "account": "Account",
-  "supportJyotiGPT": "Sostieni JyotiGPT",
-  "supportJyotiGPTSubtitle": "Mantieni JyotiGPT indipendente finanziando lo sviluppo continuo.",
-  "githubSponsorsTitle": "GitHub Sponsors",
-  "githubSponsorsSubtitle": "Diventa sponsor ricorrente per supportare la roadmap.",
-  "buyMeACoffeeTitle": "Buy Me a Coffee",
-  "buyMeACoffeeSubtitle": "Fai una donazione una tantum per dire grazie.",
-  "signOut": "Esci",
+  "supportJyotiGPT": "Impostazioni aggiuntive",
+  "supportJyotiGPTSubtitle": "Impostazioni e informazioni aggiuntive.",
+  "githubSponsorsTitle": "Impostazioni dell'account JyotiGPT",
+  "githubSponsorsSubtitle": "Modifica le impostazioni complete dell'account.",
+  "buyMeACoffeeTitle": "Deposito Github",
+  "buyMeACoffeeSubtitle": "Visualizza il codice open source per questo progetto.",
+  "signOut": "Disconnessione",
   "endYourSession": "Termina la sessione",
   "defaultModel": "Modello predefinito",
   "autoSelect": "Selezione automatica",
@@ -36,289 +27,1328 @@
   "availableModels": "Modelli disponibili",
   "noResults": "Nessun risultato",
   "searchModels": "Cerca modelli...",
-  "errorMessage": "Qualcosa è andato storto. Riprova.",
-  "loginButton": "Accedi",
+  "errorMessage": "Qualcosa è andato storto. Per favore riprova.",
+  "loginButton": "Login",
   "menuItem": "Impostazioni",
-  "dynamicContentWithPlaceholder": "Benvenuto, {name}!",
-  "itemsCount": "{count, plural, =0{Nessun elemento} one{1 elemento} other{{count} elementi}}",
-  "closeButtonSemantic": "Chiudi",
+  "dynamicContentWithPlaceholder": "Welcome, {name}!",
+  "itemsCount": "{count, plural, =0{No items} one{1 item} other{{count} items}}",
+  "closeButtonSemantic": "Vicino",
   "loadingContent": "Caricamento contenuto",
-  "noItems": "Nessun elemento",
+  "noItems": "Nessun articolo",
   "noItemsToDisplay": "Nessun elemento da visualizzare",
   "loadMore": "Carica altro",
   "workspace": "Spazio di lavoro",
   "recentFiles": "File recenti",
   "knowledgeBase": "Base di conoscenza",
-  "noFilesYet": "Ancora nessun file",
-  "uploadDocsPrompt": "Carica documenti da usare nelle conversazioni con JyotiGPT",
+  "noFilesYet": "Nessun file ancora",
+  "uploadDocsPrompt": "Carica documenti a cui fare riferimento nelle tue conversazioni con JyotiGPT",
   "uploadFirstFile": "Carica il tuo primo file",
   "attachments": "Allegati",
   "knowledgeBaseEmpty": "La base di conoscenza è vuota",
-  "createCollectionsPrompt": "Crea raccolte di documenti correlati per un rapido riferimento",
-  "chooseSourcePhoto": "Scegli origine",
+  "createCollectionsPrompt": "Crea raccolte di documenti correlati per una facile consultazione",
+  "chooseSourcePhoto": "Scegli la tua fonte",
   "takePhoto": "Scatta una foto",
-  "chooseFromGallery": "Scegli dalle foto",
+  "chooseFromGallery": "Scegli tra le tue foto",
   "document": "Documento",
-  "documentHint": "File PDF, Word o di testo",
+  "documentHint": "PDF, Word o file di testo",
   "uploadFileTitle": "Carica file",
-  "fileUploadComingSoon": "Il caricamento file per {type} arriverà presto!",
-  "kbCreationComingSoon": "La creazione della base di conoscenza arriverà presto!",
-  "backToServerSetup": "Torna alla configurazione del server",
+  "fileUploadComingSoon": "File upload for {type} is coming soon!",
+  "kbCreationComingSoon": "La creazione della base di conoscenza sarà presto disponibile!",
+  "backToServerSetup": "Torniamo alla configurazione del server",
   "connectedToServer": "Connesso al server",
-  "signIn": "Accedi",
-  "enterCredentials": "Inserisci le credenziali per accedere alle conversazioni IA",
+  "signIn": "Registrazione",
+  "enterCredentials": "Inserisci i dettagli del tuo account per accedere e iniziare a chattare con JyotiGPT.",
   "credentials": "Credenziali",
   "apiKey": "Chiave API",
-  "usernameOrEmail": "Username o e‑mail",
+  "usernameOrEmail": "Nome utente o e-mail",
   "password": "Password",
-  "signInWithApiKey": "Accedi con chiave API",
+  "signInWithApiKey": "Accedi con la chiave API",
   "connectToServer": "Connetti al server",
-  "enterServerAddress": "Inserisci l'indirizzo del server Open-WebUI per iniziare",
+  "enterServerAddress": "Controlla la connessione al server e connettiti per iniziare.",
   "serverUrl": "URL del server",
   "serverUrlHint": "https://tuo-server.com",
-  "enterServerUrlSemantic": "Inserisci l'URL o l'indirizzo IP del server",
-  "headerName": "Nome header",
-  "headerValue": "Valore header",
-  "headerValueHint": "api-key-123 o token Bearer",
-  "addHeader": "Aggiungi header",
-  "maximumHeadersReached": "Numero massimo raggiunto",
-  "removeHeader": "Rimuovi header",
-  "connecting": "Connessione in corso...",
+  "enterServerUrlSemantic": "Inserisci l'URL del tuo server o l'indirizzo IP",
+  "headerName": "Nome dell'intestazione",
+  "headerValue": "Valore dell'intestazione",
+  "headerValueHint": "api-key-123 o token portatore",
+  "addHeader": "Aggiungi intestazione",
+  "maximumHeadersReached": "È stato raggiunto il numero massimo di intestazioni",
+  "removeHeader": "Rimuovi intestazione",
+  "connecting": "Collegamento...",
   "connectToServerButton": "Connetti al server",
   "demoModeActive": "Modalità demo attiva",
-  "skipServerSetupTryDemo": "Salta configurazione server e prova la demo",
-  "enterDemo": "Entra in demo",
-  "demoBadge": "Demo",
-  "serverNotOpenWebUI": "Questo non sembra un server Open-WebUI.",
+  "skipServerSetupTryDemo": "Salta la configurazione del server e prova la demo",
+  "enterDemo": "Inserisci la dimostrazione",
+  "demoBadge": "Dimostrazione",
+  "serverNotOpenWebUI": "Questo non sembra essere un server.",
   "serverUrlEmpty": "L'URL del server non può essere vuoto",
-  "invalidUrlFormat": "Formato URL non valido. Controlla l'input.",
+  "invalidUrlFormat": "Formato URL non valido. Per favore controlla il tuo input.",
   "onlyHttpHttps": "Sono supportati solo i protocolli HTTP e HTTPS.",
-  "serverAddressRequired": "Indirizzo server richiesto (es. 192.168.1.10 o example.com).",
-  "portRange": "La porta deve essere tra 1 e 65535.",
-  "invalidIpFormat": "Formato IP non valido. Esempio: 192.168.1.10.",
-  "couldNotConnectGeneric": "Impossibile connettersi. Verifica l'indirizzo e riprova.",
-  "weCouldntReachServer": "Impossibile raggiungere il server. Verifica connessione e stato del server.",
-  "connectionTimedOut": "Tempo scaduto. Il server potrebbe essere occupato o bloccato.",
-  "useHttpOrHttpsOnly": "Usa solo http:// o https://.",
+  "serverAddressRequired": "L'indirizzo del server è obbligatorio (ad esempio, 192.168.1.10 o example.com).",
+  "portRange": "La porta deve essere compresa tra 1 e 65535.",
+  "invalidIpFormat": "Formato dell'indirizzo IP non valido. Utilizza il formato come 192.168.1.10.",
+  "couldNotConnectGeneric": "Impossibile connettersi. Ricontrolla l'indirizzo e riprova.",
+  "weCouldntReachServer": "Non siamo riusciti a raggiungere il server. Controlla la tua connessione e che il server sia in esecuzione.",
+  "connectionTimedOut": "Connessione scaduta. Il server potrebbe essere occupato o bloccato da un firewall.",
+  "useHttpOrHttpsOnly": "Utilizzare solo http:// o https://.",
   "loginFailed": "Accesso non riuscito",
-  "invalidCredentials": "Nome utente o password non validi. Riprova.",
-  "serverRedirectingHttps": "Il server sta reindirizzando. Controlla la configurazione HTTPS.",
-  "unableToConnectServer": "Impossibile connettersi al server. Controlla la connessione.",
-  "requestTimedOut": "Richiesta scaduta. Riprova.",
-  "genericSignInFailed": "Impossibile accedere. Controlla credenziali e server.",
-  "skip": "Salta",
-  "next": "Avanti",
+  "invalidCredentials": "Nome utente o password non validi. Per favore riprova.",
+  "serverRedirectingHttps": "Il server sta reindirizzando le richieste. Controlla la configurazione HTTPS del tuo server.",
+  "unableToConnectServer": "Impossibile connettersi al server. Per favore controlla la tua connessione.",
+  "requestTimedOut": "La richiesta è scaduta. Per favore riprova.",
+  "genericSignInFailed": "Non siamo riusciti a farti accedere. Controlla le tue credenziali e le impostazioni del server.",
+  "skip": "Saltare",
+  "next": "Prossimo",
   "done": "Fatto",
-  "onboardStartTitle": "Ciao, {username}",
+  "onboardStartTitle": "Hello, {username}",
   "onboardStartSubtitle": "Scegli un modello per iniziare. Tocca Nuova chat in qualsiasi momento.",
-  "onboardStartBullet1": "Tocca il nome del modello in alto per cambiare",
-  "onboardStartBullet2": "Usa Nuova chat per azzerare il contesto",
+  "onboardStartBullet1": "Tocca il nome del modello nella barra in alto per cambiare modello",
+  "onboardStartBullet2": "Utilizza Nuova chat per reimpostare il contesto",
   "onboardAttachTitle": "Aggiungi contesto",
-  "onboardAttachSubtitle": "Collega le risposte a Workspace o alle foto.",
-  "onboardAttachBullet1": "Workspace: PDF, documenti, dataset",
+  "onboardAttachSubtitle": "Risposte via terra con contenuti di Workspace o foto.",
+  "onboardAttachBullet1": "Area di lavoro: PDF, documenti, set di dati",
   "onboardAttachBullet2": "Foto: fotocamera o libreria",
   "onboardSpeakTitle": "Parla in modo naturale",
-  "onboardSpeakSubtitle": "Tocca il microfono per dettare con feedback visivo.",
-  "onboardSpeakBullet1": "Interrompi in qualsiasi momento; il testo parziale viene mantenuto",
-  "onboardSpeakBullet2": "Ottimo per note rapide o prompt lunghi",
+  "onboardSpeakSubtitle": "Tocca il microfono per dettare con il feedback della forma d'onda in tempo reale.",
+  "onboardSpeakBullet1": "Fermati in qualsiasi momento; il testo parziale viene conservato",
+  "onboardSpeakBullet2": "Ottimo per appunti rapidi o istruzioni lunghe",
   "onboardQuickTitle": "Azioni rapide",
-  "onboardQuickSubtitle": "Apri il menu per passare tra Chat, Workspace e Profilo.",
-  "onboardQuickBullet1": "Tocca il menu per accedere a Chat, Workspace, Profilo",
-  "onboardQuickBullet2": "Avvia Nuova chat o gestisci i modelli dalla barra"
-  ,
+  "onboardQuickSubtitle": "Apri il menu per passare tra Chat, Area di lavoro e Profilo.",
+  "onboardQuickBullet1": "Tocca il menu per accedere a Chat, Area di lavoro, Profilo",
+  "onboardQuickBullet2": "Avvia una nuova chat o gestisci i modelli dalla barra in alto",
   "addAttachment": "Aggiungi allegato",
   "attachmentLabel": "Allegato",
-  "tools": "Strumenti",
-  "voiceInput": "Input vocale",
+  "tools": "Utensili",
+  "voiceInput": "Ingresso vocale",
   "voice": "Voce",
-  "voiceStatusListening": "In ascolto…",
+  "voiceStatusListening": "Ascolto…",
   "voiceStatusRecording": "Registrazione…",
-  "voiceHoldToTalk": "Tieni premuto per parlare",
+  "voiceHoldToTalk": "Aspetta a parlare",
   "voiceAutoSend": "Invio automatico",
   "voiceTranscript": "Trascrizione",
-  "voicePromptSpeakNow": "Parla ora…",
-  "voicePromptTapStart": "Tocca \"Avvia\" per iniziare",
-  "voiceActionStop": "Stop",
-  "voiceActionStart": "Avvia",
-  "messageInputLabel": "Input messaggio",
-  "messageInputHint": "Scrivi il tuo messaggio",
+  "voicePromptSpeakNow": "Parla adesso…",
+  "voicePromptTapStart": "Tocca Avvia per iniziare",
+  "voiceActionStop": "Fermare",
+  "voiceActionStart": "Inizio",
+  "messageInputLabel": "Inserimento del messaggio",
+  "messageInputHint": "Digita il tuo messaggio",
   "messageHintText": "Messaggio...",
-  "stopGenerating": "Interrompi generazione",
+  "stopGenerating": "Smetti di generare",
+  "send": "Inviare",
   "codeCopiedToClipboard": "Codice copiato negli appunti.",
-  "send": "Invia",
   "sendMessage": "Invia messaggio",
   "file": "File",
   "photo": "Foto",
-  "camera": "Fotocamera",
+  "camera": "Telecamera",
   "apiUnavailable": "Servizio API non disponibile",
   "unableToLoadImage": "Impossibile caricare l'immagine",
-  "notAnImageFile": "Non è un file immagine: {fileName}",
-  "failedToLoadImage": "Impossibile caricare l'immagine: {error}",
-  "invalidDataUrl": "Formato data URL non valido",
+  "notAnImageFile": "Not an image file: {fileName}",
+  "failedToLoadImage": "Failed to load image: {error}",
+  "invalidDataUrl": "Formato URL dati non valido",
   "failedToDecodeImage": "Impossibile decodificare l'immagine",
   "invalidImageFormat": "Formato immagine non valido",
-  "emptyImageData": "Dati immagine vuoti"
-  ,
-  "featureRequiresInternet": "Questa funzione richiede una connessione Internet",
-  "messagesWillSendWhenOnline": "I messaggi verranno inviati quando tornerai online",
-  "confirm": "Conferma",
-  "cancel": "Annulla"
-  ,
+  "emptyImageData": "Dati immagine vuoti",
+  "featureRequiresInternet": "Questa funzionalità richiede una connessione Internet",
+  "messagesWillSendWhenOnline": "I messaggi verranno inviati quando sarai di nuovo online",
+  "confirm": "Confermare",
+  "cancel": "Cancellare",
   "ok": "OK",
-  "inputField": "Campo di input",
-  "captureDocumentOrImage": "Acquisisci un documento o un'immagine",
-  "checkConnection": "Controlla connessione",
-  "openSettings": "Apri impostazioni",
-  "chooseDifferentFile": "Scegli un altro file",
-  "goBack": "Indietro",
+  "inputField": "Campo di immissione",
+  "captureDocumentOrImage": "Cattura un documento o un'immagine",
+  "checkConnection": "Controlla la connessione",
+  "openSettings": "Apri Impostazioni",
+  "chooseDifferentFile": "Scegli file diverso",
+  "goBack": "Torna indietro",
   "technicalDetails": "Dettagli tecnici",
   "save": "Salva",
   "chooseModel": "Scegli modello",
-  "reviewerMode": "REVIEWER MODE",
+  "reviewerMode": "MODALITÀ REVISORE",
   "selectLanguage": "Seleziona lingua",
   "newFolder": "Nuova cartella",
-  "folderName": "Nome cartella",
-  "newChat": "Nuova chat",
-  "more": "Altro",
-  "clear": "Pulisci",
-  "searchHint": "Cerca...",
+  "folderName": "Nome della cartella",
+  "newChat": "Nuova chiacchierata",
+  "more": "Di più",
+  "clear": "Chiaro",
+  "searchHint": "Ricerca...",
   "searchConversations": "Cerca conversazioni...",
-  "create": "Crea",
+  "create": "Creare",
   "folderCreated": "Cartella creata",
   "failedToCreateFolder": "Impossibile creare la cartella",
-  "movedChatToFolder": "\"{title}\" spostata in \"{folder}\"",
-  "@movedChatToFolder": {
-    "placeholders": {
-      "title": {"type": "String"},
-      "folder": {"type": "String"}
-    }
-  },
+  "movedChatToFolder": "Moved \"{title}\" to \"{folder}\"",
   "failedToMoveChat": "Impossibile spostare la chat",
   "failedToLoadChats": "Impossibile caricare le chat",
   "failedToUpdatePin": "Impossibile aggiornare il pin",
   "failedToDeleteChat": "Impossibile eliminare la chat",
-  "manage": "Gestisci",
-  "rename": "Rinomina",
-  "delete": "Elimina",
+  "manage": "Maneggio",
+  "rename": "Rinominare",
+  "delete": "Eliminare",
   "renameChat": "Rinomina chat",
-  "enterChatName": "Inserisci nome chat",
+  "enterChatName": "Inserisci il nome della chat",
   "failedToRenameChat": "Impossibile rinominare la chat",
   "failedToUpdateArchive": "Impossibile aggiornare l'archivio",
-  "unarchive": "Ripristina",
-  "archive": "Archivia",
-  "pin": "Fissa",
+  "unarchive": "Annulla l'archiviazione",
+  "archive": "Archivio",
+  "pin": "Spillo",
   "unpin": "Sblocca",
-  "recent": "Recenti",
+  "recent": "Recente",
   "system": "Sistema",
+  "hindi": "hindi",
+  "bengali": "bengalese",
+  "tamil": "Tamil",
+  "telugu": "Telugu",
+  "marathi": "Marathi",
+  "gujarati": "Gujarati",
+  "kannada": "Kannada",
+  "malayalam": "Malayalam",
+  "punjabi": "Punjabi",
+  "urdu": "Urdu",
+  "nepali": "nepalese",
+  "assamese": "Assamese",
+  "odia": "Odia",
   "english": "Inglese",
+  "spanish": "spagnolo",
   "deutsch": "Tedesco",
   "francais": "Francese",
   "italiano": "Italiano",
+  "portuguese": "portoghese",
+  "dutch": "Olandese",
+  "polish": "Polacco",
+  "russian": "russo",
+  "ukrainian": "ucraino",
+  "swedish": "svedese",
+  "danish": "danese",
+  "norwegian": "norvegese",
+  "finnish": "finlandese",
+  "czech": "ceco",
+  "hungarian": "ungherese",
+  "romanian": "rumeno",
+  "greek": "greco",
+  "slovak": "slovacco",
+  "serbian": "serbo",
+  "croatian": "croato",
+  "bulgarian": "bulgaro",
+  "chineseSimplified": "Cinese (semplificato)",
+  "chineseTraditional": "Cinese (tradizionale)",
+  "japanese": "giapponese",
+  "korean": "coreano",
+  "indonesian": "indonesiano",
+  "vietnamese": "vietnamita",
+  "thai": "tailandese",
+  "arabic": "arabo",
+  "persian": "persiano",
+  "hebrew": "ebraico",
+  "swahili": "Swahili",
+  "spanishMexico": "Spagnolo (Messico)",
+  "portugueseBrazil": "Portoghese (Brasile)",
   "deleteMessagesTitle": "Elimina messaggi",
-  "deleteMessagesMessage": "Eliminare {count} messaggi?",
-  "@deleteMessagesMessage": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "routeNotFound": "Percorso non trovato: {routeName}",
-  "@routeNotFound": {
-    "placeholders": {
-      "routeName": {"type": "String"}
-    }
-  },
+  "deleteMessagesMessage": "Delete {count} messages?",
+  "routeNotFound": "Route not found: {routeName}",
   "deleteChatTitle": "Elimina chat",
   "deleteChatMessage": "Questa chat verrà eliminata definitivamente.",
   "deleteFolderTitle": "Elimina cartella",
-  "deleteFolderMessage": "Questa cartella e le sue associazioni verranno rimosse.",
+  "deleteFolderMessage": "Questa cartella e i relativi riferimenti di assegnazione verranno rimossi.",
   "failedToDeleteFolder": "Impossibile eliminare la cartella",
-  "aboutApp": "Informazioni sull’app",
-  "aboutAppSubtitle": "Informazioni e link di JyotiGPT",
-  "web": "Web",
-  "imageGen": "Gen. immagini",
-  "pinned": "Fissati",
+  "aboutApp": "Informazioni sull'app",
+  "aboutAppSubtitle": "Informazioni e collegamenti JyotiGPT",
+  "web": "Rete",
+  "imageGen": "Gen. immagine",
+  "pinned": "Appuntato",
   "folders": "Cartelle",
-  "archived": "Archiviati",
-  "appLanguage": "Lingua app",
-  "darkMode": "Modalità scura",
-  "webSearch": "Ricerca Web",
-  "webSearchDescription": "Cerca sul web e cita le fonti.",
-  "imageGeneration": "Generazione immagini",
-  "imageGenerationDescription": "Crea immagini dai tuoi prompt.",
+  "archived": "Archiviato",
+  "appLanguage": "Lingua dell'app",
+  "darkMode": "Modalità oscura",
+  "webSearch": "Ricerca sul Web",
+  "webSearchDescription": "Cerca sul web e cita le fonti nelle risposte.",
+  "imageGeneration": "Generazione di immagini",
+  "imageGenerationDescription": "Crea immagini dalle tue istruzioni.",
   "copy": "Copia",
-  "ttsListen": "Ascolta",
-  "ttsStop": "Interrompi",
-  "edit": "Modifica",
-  "regenerate": "Rigenera",
-  "noConversationsYet": "Ancora nessuna conversazione"
-  ,
-  "usernameOrEmailHint": "Inserisci il tuo username o e‑mail",
-  "passwordHint": "Inserisci la password",
+  "ttsListen": "Ascoltare",
+  "ttsStop": "Fermare",
+  "edit": "Modificare",
+  "regenerate": "Rigenerare",
+  "noConversationsYet": "Nessuna conversazione ancora",
+  "usernameOrEmailHint": "Inserisci il tuo nome utente o la tua email",
+  "passwordHint": "Inserisci la tua password",
   "enterApiKey": "Inserisci la tua chiave API",
-  "signingIn": "Accesso in corso...",
+  "signingIn": "Accesso...",
   "advancedSettings": "Impostazioni avanzate",
-  "customHeaders": "Header personalizzati",
-  "customHeadersDescription": "Aggiungi header HTTP personalizzati per autenticazione, chiavi API o requisiti speciali del server.",
+  "customHeaders": "Intestazioni personalizzate",
+  "customHeadersDescription": "Aggiungi intestazioni HTTP personalizzate per autenticazione, chiavi API o requisiti server speciali.",
   "allowSelfSignedCertificates": "Considera attendibili i certificati autofirmati",
-  "@allowSelfSignedCertificates": {
-    "description": "Etichetta dell'interruttore che consente i certificati TLS autofirmati per il server configurato."
-  },
-  "allowSelfSignedCertificatesDescription": "Accetta il certificato TLS di questo server anche se è autofirmato. Attiva questa opzione solo per server di cui ti fidi.",
-  "@allowSelfSignedCertificatesDescription": {
-    "description": "Testo di supporto che chiarisce i rischi dell'attivazione dell'opzione per certificati autofirmati."
-  },
-  "headerNameEmpty": "Il nome header non può essere vuoto",
-  "headerNameTooLong": "Nome header troppo lungo (max 64 caratteri)",
-  "headerNameInvalidChars": "Nome header non valido. Usa solo lettere, numeri e questi simboli: !#$&-^_`|~",
-  "headerNameReserved": "Impossibile sovrascrivere l'header riservato \"{key}\"",
-  "@headerNameReserved": {"placeholders": {"key": {"type": "String"}}},
-  "headerValueEmpty": "Il valore dell'header non può essere vuoto",
-  "headerValueTooLong": "Valore header troppo lungo (max 1024 caratteri)",
-  "headerValueInvalidChars": "Il valore dell'header contiene caratteri non validi. Usa solo ASCII stampabile.",
-  "headerValueUnsafe": "Il valore dell'header sembra contenere contenuti potenzialmente non sicuri",
-  "headerAlreadyExists": "L'header \"{key}\" esiste già. Rimuovilo prima per aggiornarlo.",
-  "@headerAlreadyExists": {"placeholders": {"key": {"type": "String"}}},
-  "maxHeadersReachedDetail": "Massimo 10 header personalizzati consentiti. Rimuovine alcuni per aggiungerne altri."
-  ,
-  "editMessage": "Modifica messaggio"
-  ,
+  "allowSelfSignedCertificatesDescription": "Accetta il certificato TLS di questo server anche se è autofirmato. Abilita solo per i server di cui ti fidi.",
+  "headerNameEmpty": "Il nome dell'intestazione non può essere vuoto",
+  "headerNameTooLong": "Nome dell'intestazione troppo lungo (max 64 caratteri)",
+  "headerNameInvalidChars": "Nome dell'intestazione non valido. Utilizza solo lettere, numeri e questi simboli: !#$&-^_`|~",
+  "headerNameReserved": "Cannot override reserved header \"{key}\"",
+  "headerValueEmpty": "Il valore dell'intestazione non può essere vuoto",
+  "headerValueTooLong": "Valore dell'intestazione troppo lungo (max 1024 caratteri)",
+  "headerValueInvalidChars": "Il valore dell'intestazione contiene caratteri non validi. Utilizzare solo ASCII stampabile.",
+  "headerValueUnsafe": "Il valore dell'intestazione sembra contenere contenuti potenzialmente non sicuri",
+  "headerAlreadyExists": "Header \"{key}\" already exists. Remove it first to update.",
+  "maxHeadersReachedDetail": "Sono consentite un massimo di 10 intestazioni personalizzate. Rimuovi alcuni per aggiungerne altri.",
+  "editMessage": "Modifica messaggio",
   "noModelsAvailable": "Nessun modello disponibile",
-  "followingSystem": "Segue il sistema: {theme}",
-  "@followingSystem": {"placeholders": {"theme": {"type": "String"}}},
-  "themeDark": "Scuro",
-  "themePalette": "Palette di colori",
-  "@themePalette": {"description": "Titolo per scegliere la palette di colori dell'app."},
-  "themePaletteDescription": "Scegli i colori di accento usati per pulsanti, schede e bolle di chat.",
-  "@themePaletteDescription": {"description": "Testo di supporto che spiega la scelta della palette."},
-  "themeLight": "Chiaro",
-  "currentlyUsingDarkTheme": "Attualmente tema scuro",
-  "currentlyUsingLightTheme": "Attualmente tema chiaro",
+  "followingSystem": "Following system: {theme}",
+  "themeDark": "Buio",
+  "themePalette": "Tavolozza degli accenti",
+  "themePaletteDescription": "Scegli i colori principali utilizzati per pulsanti, schede e fumetti di chat.",
+  "themeLight": "Leggero",
+  "currentlyUsingDarkTheme": "Attualmente utilizzo il tema Scuro",
+  "currentlyUsingLightTheme": "Attualmente utilizzo il tema Luce",
   "aboutJyotiGPT": "Informazioni su JyotiGPT",
-  "versionLabel": "Versione: {version} ({build})",
-  "@versionLabel": {"placeholders": {"version": {"type": "String"}, "build": {"type": "String"}}},
+  "versionLabel": "Version: {version} ({build})",
   "githubRepository": "Repository GitHub",
-  "unableToLoadAppInfo": "Impossibile caricare le informazioni dell'app",
-  "thinking": "Sta pensando…",
+  "unableToLoadAppInfo": "Impossibile caricare le informazioni sull'app",
+  "thinking": "Pensiero…",
   "thoughts": "Pensieri",
-  "thoughtForDuration": "Ha pensato per {duration}",
-  "@thoughtForDuration": {
-    "description": "Mostra per quanto tempo ha pensato l'assistente.",
-    "placeholders": {"duration": {"type": "String", "example": "3 s"}}
-  }
-  ,
-  "appCustomization": "Personalizzazione app",
-  "appCustomizationSubtitle": "Personalizza la visualizzazione dei nomi e dell'UI",
-  "quickActionsDescription": "Scegli fino a due scorciatoie da fissare vicino al campo di input",
-  "chatSettings": "Chat",
-  "sendOnEnter": "Invia con Invio",
-  "sendOnEnterDescription": "Invio invia (tastiera software). Cmd/Ctrl+Invio disponibile",
-  "display": "Schermo",
-  "realtime": "Tempo reale",
+  "thoughtForDuration": "Thought for {duration}",
+  "appCustomization": "Personalizzazione dell'app",
+  "appCustomizationSubtitle": "Personalizza la modalità di visualizzazione dei nomi e dell'interfaccia utente",
+  "quickActionsDescription": "Scegli fino a due scorciatoie da appuntare vicino al compositore",
+  "chatSettings": "Chiacchierata",
+  "sendOnEnter": "Invia su Invio",
+  "sendOnEnterDescription": "Immettere le mandate (tastiera virtuale). Disponibile anche Comando/Ctrl+Invio",
+  "display": "Display",
+  "realtime": "In tempo reale",
   "transportMode": "Modalità di trasporto",
-  "transportModeDescription": "Scegli come l'app si connette per gli aggiornamenti in tempo reale.",
+  "transportModeDescription": "Scegli come si connette l'app per gli aggiornamenti in tempo reale.",
   "mode": "Modalità",
-  "transportModeAuto": "Auto (Polling + WebSocket)",
+  "transportModeAuto": "Automatico (Polling + WebSocket)",
   "transportModeWs": "Solo WebSocket",
-  "transportModeAutoInfo": "Più robusto nelle reti restrittive. Passa a WebSocket quando possibile.",
-  "transportModeWsInfo": "Minore overhead, ma può fallire dietro proxy/firewall restrittivi."
+  "transportModeAutoInfo": "Più robusto su reti restrittive. Aggiorna a WebSocket quando possibile.",
+  "transportModeWsInfo": "Minori spese generali, ma potrebbero fallire dietro proxy/firewall rigidi.",
+  "@appTitle": {
+    "description": "Application name displayed in the app and OS UI."
+  },
+  "@initializationFailed": {
+    "description": "Shown if the app fails to initialize critical services."
+  },
+  "@retry": {
+    "description": "Button label to try an action again."
+  },
+  "@back": {
+    "description": "Back navigation label/tooltip."
+  },
+  "@you": {
+    "description": "Profile tab title."
+  },
+  "@loadingProfile": {
+    "description": "Progress message while fetching profile data."
+  },
+  "@unableToLoadProfile": {
+    "description": "Error title shown when profile request fails."
+  },
+  "@connectionIssueTitle": {
+    "description": "Title shown when the configured server is unreachable"
+  },
+  "@connectionIssueSubtitle": {
+    "description": "Subtitle explaining available actions when the server cannot be reached"
+  },
+  "@stillOfflineMessage": {
+    "description": "Status message after a retry when connectivity has not been restored"
+  },
+  "@pleaseCheckConnection": {
+    "description": "Generic connectivity hint after an error."
+  },
+  "@account": {
+    "description": "Section header for account-related options."
+  },
+  "@supportJyotiGPT": {
+    "description": "Section header to list more settings."
+  },
+  "@supportJyotiGPTSubtitle": {
+    "description": "Subtitle explaining whats in the section."
+  },
+  "@githubSponsorsTitle": {
+    "description": "Tile title linking to account settings"
+  },
+  "@githubSponsorsSubtitle": {
+    "description": "Subtitle explaining account settings."
+  },
+  "@buyMeACoffeeTitle": {
+    "description": "Tile title linking to the Github Repo"
+  },
+  "@buyMeACoffeeSubtitle": {
+    "description": "Subtitle stating to view the open source code for the project."
+  },
+  "@signOut": {
+    "description": "Button/title for signing out of the app."
+  },
+  "@endYourSession": {
+    "description": "Subtitle explaining the sign-out action."
+  },
+  "@defaultModel": {
+    "description": "Label for choosing a default AI model."
+  },
+  "@autoSelect": {
+    "description": "Option to let the app pick a suitable model automatically."
+  },
+  "@loadingModels": {
+    "description": "Progress message while fetching model list."
+  },
+  "@failedToLoadModels": {
+    "description": "Error message shown when model list cannot be retrieved."
+  },
+  "@availableModels": {
+    "description": "Header above a list of models to select from."
+  },
+  "@noResults": {
+    "description": "Shown when a search returns no matches."
+  },
+  "@searchModels": {
+    "description": "Hint text for model search input."
+  },
+  "@errorMessage": {
+    "description": "Generic error message for unexpected failures."
+  },
+  "@loginButton": {
+    "description": "Button text for the login action."
+  },
+  "@menuItem": {
+    "description": "Generic settings menu item label."
+  },
+  "@dynamicContentWithPlaceholder": {
+    "description": "Greeting message with a dynamic user name.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Alex"
+      }
+    }
+  },
+  "@itemsCount": {
+    "description": "Pluralized count of items.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "@closeButtonSemantic": {
+    "description": "Accessible label for a generic Close button."
+  },
+  "@loadingContent": {
+    "description": "Shown while loading page content."
+  },
+  "@noItems": {
+    "description": "Placeholder text when a list is empty."
+  },
+  "@noItemsToDisplay": {
+    "description": "Alternative empty-state description."
+  },
+  "@loadMore": {
+    "description": "Button label to load additional items in a paged list."
+  },
+  "@workspace": {
+    "description": "Section/tab label for documents and files."
+  },
+  "@recentFiles": {
+    "description": "Header for recently accessed files."
+  },
+  "@knowledgeBase": {
+    "description": "Section for knowledge base content."
+  },
+  "@noFilesYet": {
+    "description": "Empty state when no files are present."
+  },
+  "@uploadDocsPrompt": {
+    "description": "Prompt encouraging users to upload documents."
+  },
+  "@uploadFirstFile": {
+    "description": "CTA to add the first file."
+  },
+  "@attachments": {
+    "description": "Header above list of attached files in compose area."
+  },
+  "@knowledgeBaseEmpty": {
+    "description": "Empty state title for the knowledge base section."
+  },
+  "@createCollectionsPrompt": {
+    "description": "Prompt describing the benefit of creating collections."
+  },
+  "@chooseSourcePhoto": {
+    "description": "Sheet title to pick camera or photo library."
+  },
+  "@takePhoto": {
+    "description": "Action to open camera and capture a new photo."
+  },
+  "@chooseFromGallery": {
+    "description": "Action to pick an existing photo from library."
+  },
+  "@document": {
+    "description": "Generic document label used in UI."
+  },
+  "@documentHint": {
+    "description": "Helper hint listing supported document types."
+  },
+  "@uploadFileTitle": {
+    "description": "Dialog/sheet title for file upload."
+  },
+  "@fileUploadComingSoon": {
+    "placeholders": {
+      "type": {
+        "type": "String",
+        "example": "gallery"
+      }
+    },
+    "description": "Temporary message for upcoming upload feature by type"
+  },
+  "@kbCreationComingSoon": {
+    "description": "Temporary message indicating KB creation feature is not yet available."
+  },
+  "@backToServerSetup": {
+    "description": "Button/back label to return to server configuration flow."
+  },
+  "@connectedToServer": {
+    "description": "Status label indicating a successful server connection."
+  },
+  "@signIn": {
+    "description": "Button/heading for sign-in flows."
+  },
+  "@enterCredentials": {
+    "description": "Instructional text on the sign-in screen."
+  },
+  "@credentials": {
+    "description": "Header for credential input section."
+  },
+  "@apiKey": {
+    "description": "Label for API key input field."
+  },
+  "@usernameOrEmail": {
+    "description": "Label for username/email input field."
+  },
+  "@password": {
+    "description": "Label for password input field."
+  },
+  "@signInWithApiKey": {
+    "description": "Alternative sign-in method using an API key."
+  },
+  "@connectToServer": {
+    "description": "Call-to-action button for server connection."
+  },
+  "@enterServerAddress": {
+    "description": "Instruction telling user to check server connection"
+  },
+  "@serverUrl": {
+    "description": "Label for server URL field."
+  },
+  "@serverUrlHint": {
+    "description": "Hint text showing example server URL format."
+  },
+  "@enterServerUrlSemantic": {
+    "description": "Semantic/ARIA label instructing to enter server URL or IP."
+  },
+  "@headerName": {
+    "description": "Label for custom header key."
+  },
+  "@headerValue": {
+    "description": "Label for custom header value."
+  },
+  "@headerValueHint": {
+    "description": "Hint text with example header values, including API key or Bearer token."
+  },
+  "@addHeader": {
+    "description": "Button to add a new custom header row."
+  },
+  "@maximumHeadersReached": {
+    "description": "Warning when custom header limit is reached."
+  },
+  "@removeHeader": {
+    "description": "Action to remove a custom header row."
+  },
+  "@connecting": {
+    "description": "Status while attempting to connect to server."
+  },
+  "@connectToServerButton": {
+    "description": "Primary action button to initiate server connection."
+  },
+  "@demoModeActive": {
+    "description": "Banner/text indicating the app runs in demo mode."
+  },
+  "@skipServerSetupTryDemo": {
+    "description": "CTA to bypass server configuration and enter demo mode."
+  },
+  "@enterDemo": {
+    "description": "Button to enter demo mode."
+  },
+  "@demoBadge": {
+    "description": "Small badge label for demo content."
+  },
+  "@serverNotOpenWebUI": {
+    "description": "Validation error when the server does not resemble Open-WebUI."
+  },
+  "@serverUrlEmpty": {
+    "description": "Validation message for empty server URL."
+  },
+  "@invalidUrlFormat": {
+    "description": "Validation message when URL format is incorrect."
+  },
+  "@onlyHttpHttps": {
+    "description": "Validation note restricting protocols to HTTP/HTTPS."
+  },
+  "@serverAddressRequired": {
+    "description": "Validation hint providing examples for server addresses."
+  },
+  "@portRange": {
+    "description": "Validation message for allowed port range."
+  },
+  "@invalidIpFormat": {
+    "description": "Validation message for IP addresses with example."
+  },
+  "@couldNotConnectGeneric": {
+    "description": "Generic failure when connecting to the server."
+  },
+  "@weCouldntReachServer": {
+    "description": "Connectivity error with hints to verify server status."
+  },
+  "@connectionTimedOut": {
+    "description": "Timeout error while connecting to server."
+  },
+  "@useHttpOrHttpsOnly": {
+    "description": "Note instructing the user to include protocol in URL."
+  },
+  "@loginFailed": {
+    "description": "Title for failed login attempts."
+  },
+  "@invalidCredentials": {
+    "description": "Detailed message when authentication fails."
+  },
+  "@serverRedirectingHttps": {
+    "description": "Warning about HTTP→HTTPS redirect issues."
+  },
+  "@unableToConnectServer": {
+    "description": "Generic server connection failure message."
+  },
+  "@requestTimedOut": {
+    "description": "Timeout while waiting for a server response."
+  },
+  "@genericSignInFailed": {
+    "description": "Fallback sign-in error when no specific cause is known."
+  },
+  "@skip": {
+    "description": "Onboarding: skip current step."
+  },
+  "@next": {
+    "description": "Onboarding: go to the next step."
+  },
+  "@done": {
+    "description": "Onboarding: finish the flow."
+  },
+  "@onboardStartTitle": {
+    "description": "Onboarding card: start chatting title.",
+    "placeholders": {
+      "username": {
+        "type": "String",
+        "example": "Alex"
+      }
+    }
+  },
+  "@onboardStartSubtitle": {
+    "description": "Onboarding card: brief guidance to begin a chat."
+  },
+  "@onboardStartBullet1": {
+    "description": "Bullet: how to switch models."
+  },
+  "@onboardStartBullet2": {
+    "description": "Bullet: how to reset context."
+  },
+  "@onboardAttachTitle": {
+    "description": "Onboarding card: attach context title."
+  },
+  "@onboardAttachSubtitle": {
+    "description": "Onboarding card: why attaching context helps."
+  },
+  "@onboardAttachBullet1": {
+    "description": "Bullet: types of workspace files."
+  },
+  "@onboardAttachBullet2": {
+    "description": "Bullet: photo sources supported."
+  },
+  "@onboardSpeakTitle": {
+    "description": "Onboarding card: voice input title."
+  },
+  "@onboardSpeakSubtitle": {
+    "description": "Onboarding card: how voice input works."
+  },
+  "@onboardSpeakBullet1": {
+    "description": "Bullet: stop dictation preserves text."
+  },
+  "@onboardSpeakBullet2": {
+    "description": "Bullet: benefits of voice input."
+  },
+  "@onboardQuickTitle": {
+    "description": "Onboarding card: quick actions title."
+  },
+  "@onboardQuickSubtitle": {
+    "description": "Onboarding card: how to use the app menu."
+  },
+  "@onboardQuickBullet1": {
+    "description": "Bullet: menu access to sections."
+  },
+  "@onboardQuickBullet2": {
+    "description": "Bullet: actions available in the top bar."
+  },
+  "@addAttachment": {
+    "description": "Button to add an attachment (file/photo)."
+  },
+  "@attachmentLabel": {
+    "description": "Label shown beside attachment chips in messages."
+  },
+  "@tools": {
+    "description": "Header for a tools/actions section."
+  },
+  "@voiceInput": {
+    "description": "Label for voice input feature."
+  },
+  "@voice": {
+    "description": "Title for the voice input bottom sheet."
+  },
+  "@voiceStatusListening": {
+    "description": "Indicates the app is actively listening during voice input."
+  },
+  "@voiceStatusRecording": {
+    "description": "Indicates the app is recording audio for speech recognition."
+  },
+  "@voiceHoldToTalk": {
+    "description": "Toggle label for hold-to-talk mode in voice input."
+  },
+  "@voiceAutoSend": {
+    "description": "Toggle label for automatically sending the final transcript."
+  },
+  "@voiceTranscript": {
+    "description": "Label above the transcribed voice input text."
+  },
+  "@voicePromptSpeakNow": {
+    "description": "Placeholder prompting the user to start speaking."
+  },
+  "@voicePromptTapStart": {
+    "description": "Placeholder instructing the user to tap Start to begin recording."
+  },
+  "@voiceActionStop": {
+    "description": "Button label to stop voice recording."
+  },
+  "@voiceActionStart": {
+    "description": "Button label to start voice recording."
+  },
+  "@messageInputLabel": {
+    "description": "Accessibility label for the message input."
+  },
+  "@messageInputHint": {
+    "description": "Hint shown in the message input field."
+  },
+  "@messageHintText": {
+    "description": "Short placeholder text in the message input."
+  },
+  "@stopGenerating": {
+    "description": "Action to stop the assistant's response generation."
+  },
+  "@send": {
+    "description": "Primary action to send a message."
+  },
+  "@codeCopiedToClipboard": {
+    "description": "Snack bar message confirming code was copied."
+  },
+  "@sendMessage": {
+    "description": "Semantic label for sending a message."
+  },
+  "@file": {
+    "description": "A file item or attachment type label."
+  },
+  "@photo": {
+    "description": "A photo item or attachment type label."
+  },
+  "@camera": {
+    "description": "Camera source label."
+  },
+  "@apiUnavailable": {
+    "description": "Shown when backend API service is unavailable."
+  },
+  "@unableToLoadImage": {
+    "description": "General failure to load an image."
+  },
+  "@notAnImageFile": {
+    "description": "Error when a referenced file is not an image.",
+    "placeholders": {
+      "fileName": {
+        "type": "String",
+        "example": "image.txt"
+      }
+    }
+  },
+  "@failedToLoadImage": {
+    "description": "Error including the underlying reason when image loading fails.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Network error"
+      }
+    }
+  },
+  "@invalidDataUrl": {
+    "description": "Error for malformed data: URLs."
+  },
+  "@failedToDecodeImage": {
+    "description": "Error when decoding image bytes/base64."
+  },
+  "@invalidImageFormat": {
+    "description": "Error when image type/format is not supported."
+  },
+  "@emptyImageData": {
+    "description": "Error when image data buffer is empty."
+  },
+  "@featureRequiresInternet": {
+    "description": "Informational text explaining internet requirement."
+  },
+  "@messagesWillSendWhenOnline": {
+    "description": "Queue behavior notice while offline."
+  },
+  "@confirm": {
+    "description": "Confirmation button label."
+  },
+  "@cancel": {
+    "description": "Cancel button label."
+  },
+  "@ok": {
+    "description": "Generic OK button label."
+  },
+  "@inputField": {
+    "description": "Accessibility label describing an input field."
+  },
+  "@captureDocumentOrImage": {
+    "description": "Action to capture a document or image using camera."
+  },
+  "@checkConnection": {
+    "description": "CTA to verify network connectivity."
+  },
+  "@openSettings": {
+    "description": "CTA to open device or app settings."
+  },
+  "@chooseDifferentFile": {
+    "description": "CTA to pick an alternative file."
+  },
+  "@goBack": {
+    "description": "CTA to navigate back."
+  },
+  "@technicalDetails": {
+    "description": "Expandable section label to show error details or logs."
+  },
+  "@save": {
+    "description": "Primary action to save changes."
+  },
+  "@chooseModel": {
+    "description": "Button/label to choose a model."
+  },
+  "@reviewerMode": {
+    "description": "Developer/reviewer mode indicator."
+  },
+  "@selectLanguage": {
+    "description": "Dialog title to pick application language."
+  },
+  "@newFolder": {
+    "description": "Action to create a new folder."
+  },
+  "@folderName": {
+    "description": "Label for entering a folder's name."
+  },
+  "@newChat": {
+    "description": "Action to start a new chat."
+  },
+  "@more": {
+    "description": "Opens additional actions or content."
+  },
+  "@clear": {
+    "description": "Action to clear input or selection."
+  },
+  "@searchHint": {
+    "description": "Generic search input hint."
+  },
+  "@searchConversations": {
+    "description": "Search input hint scoped to conversations."
+  },
+  "@create": {
+    "description": "Primary action to create a resource."
+  },
+  "@folderCreated": {
+    "description": "Toast/notice after successfully creating a folder."
+  },
+  "@failedToCreateFolder": {
+    "description": "Error notice when folder creation fails."
+  },
+  "@movedChatToFolder": {
+    "description": "Toast indicating a chat titled {title} was moved to folder {folder}.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedToMoveChat": {
+    "description": "Error notice when moving a chat fails."
+  },
+  "@failedToLoadChats": {
+    "description": "Error notice when fetching chat list fails."
+  },
+  "@failedToUpdatePin": {
+    "description": "Error notice when updating pin star/flag fails."
+  },
+  "@failedToDeleteChat": {
+    "description": "Error notice when deleting a chat fails."
+  },
+  "@manage": {
+    "description": "Context action to manage an item."
+  },
+  "@rename": {
+    "description": "Context action to rename an item."
+  },
+  "@delete": {
+    "description": "Context action to delete an item."
+  },
+  "@renameChat": {
+    "description": "Dialog title to rename a chat."
+  },
+  "@enterChatName": {
+    "description": "Input hint/label for new chat name."
+  },
+  "@failedToRenameChat": {
+    "description": "Error notice when renaming chat fails."
+  },
+  "@failedToUpdateArchive": {
+    "description": "Error notice when archiving/unarchiving fails."
+  },
+  "@unarchive": {
+    "description": "Action to unarchive an item."
+  },
+  "@archive": {
+    "description": "Action to archive an item."
+  },
+  "@pin": {
+    "description": "Action to pin/star an item."
+  },
+  "@unpin": {
+    "description": "Action to remove pin from an item."
+  },
+  "@recent": {
+    "description": "List filter for recently used items."
+  },
+  "@system": {
+    "description": "Option indicating the device/system default."
+  },
+  "@hindi": {
+    "description": "Language name: Hindi."
+  },
+  "@bengali": {
+    "description": "Language name: Bengali."
+  },
+  "@tamil": {
+    "description": "Language name: Tamil."
+  },
+  "@telugu": {
+    "description": "Language name: Telugu."
+  },
+  "@marathi": {
+    "description": "Language name: Marathi."
+  },
+  "@gujarati": {
+    "description": "Language name: Gujarati."
+  },
+  "@kannada": {
+    "description": "Language name: Kannada."
+  },
+  "@malayalam": {
+    "description": "Language name: Malayalam."
+  },
+  "@punjabi": {
+    "description": "Language name: Punjabi."
+  },
+  "@urdu": {
+    "description": "Language name: Urdu."
+  },
+  "@nepali": {
+    "description": "Language name: Nepali."
+  },
+  "@assamese": {
+    "description": "Language name: Assamese."
+  },
+  "@odia": {
+    "description": "Language name: Odia."
+  },
+  "@english": {
+    "description": "Language name: English."
+  },
+  "@spanish": {
+    "description": "Language name: Spanish."
+  },
+  "@deutsch": {
+    "description": "Language name: German."
+  },
+  "@francais": {
+    "description": "Language name: French."
+  },
+  "@italiano": {
+    "description": "Language name: Italian."
+  },
+  "@portuguese": {
+    "description": "Language name: Portuguese."
+  },
+  "@dutch": {
+    "description": "Language name: Dutch."
+  },
+  "@polish": {
+    "description": "Language name: Polish."
+  },
+  "@russian": {
+    "description": "Language name: Russian."
+  },
+  "@ukrainian": {
+    "description": "Language name: Ukrainian."
+  },
+  "@swedish": {
+    "description": "Language name: Swedish."
+  },
+  "@danish": {
+    "description": "Language name: Danish."
+  },
+  "@norwegian": {
+    "description": "Language name: Norwegian."
+  },
+  "@finnish": {
+    "description": "Language name: Finnish."
+  },
+  "@czech": {
+    "description": "Language name: Czech."
+  },
+  "@hungarian": {
+    "description": "Language name: Hungarian."
+  },
+  "@romanian": {
+    "description": "Language name: Romanian."
+  },
+  "@greek": {
+    "description": "Language name: Greek."
+  },
+  "@slovak": {
+    "description": "Language name: Slovak."
+  },
+  "@serbian": {
+    "description": "Language name: Serbian."
+  },
+  "@croatian": {
+    "description": "Language name: Croatian."
+  },
+  "@bulgarian": {
+    "description": "Language name: Bulgarian."
+  },
+  "@chineseSimplified": {
+    "description": "Language name: Chinese (Simplified)."
+  },
+  "@chineseTraditional": {
+    "description": "Language name: Chinese (Traditional)."
+  },
+  "@japanese": {
+    "description": "Language name: Japanese."
+  },
+  "@korean": {
+    "description": "Language name: Korean."
+  },
+  "@indonesian": {
+    "description": "Language name: Indonesian."
+  },
+  "@vietnamese": {
+    "description": "Language name: Vietnamese."
+  },
+  "@thai": {
+    "description": "Language name: Thai."
+  },
+  "@arabic": {
+    "description": "Language name: Arabic."
+  },
+  "@persian": {
+    "description": "Language name: Persian."
+  },
+  "@hebrew": {
+    "description": "Language name: Hebrew."
+  },
+  "@swahili": {
+    "description": "Language name: Swahili."
+  },
+  "@spanishMexico": {
+    "description": "Language name: Spanish (Mexico)."
+  },
+  "@portugueseBrazil": {
+    "description": "Language name: Portuguese (Brazil)."
+  },
+  "@deleteMessagesTitle": {
+    "description": "Dialog title asking to confirm deletion of messages."
+  },
+  "@deleteMessagesMessage": {
+    "description": "Confirmation prompt asking to delete a number of messages.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeNotFound": {
+    "description": "Displayed when navigation fails to find a route name.",
+    "placeholders": {
+      "routeName": {
+        "type": "String"
+      }
+    }
+  },
+  "@deleteChatTitle": {
+    "description": "Dialog title asking to confirm deletion of a chat."
+  },
+  "@deleteChatMessage": {
+    "description": "Warning that deleting a chat cannot be undone."
+  },
+  "@deleteFolderTitle": {
+    "description": "Dialog title asking to confirm deletion of a folder."
+  },
+  "@deleteFolderMessage": {
+    "description": "Warning that deleting a folder will remove it and its associations."
+  },
+  "@failedToDeleteFolder": {
+    "description": "Error notice when deleting a folder fails."
+  },
+  "@aboutApp": {
+    "description": "Settings tile title to view app information."
+  },
+  "@aboutAppSubtitle": {
+    "description": "Subtitle/description for the About section."
+  },
+  "@web": {
+    "description": "Tab/section label for web features."
+  },
+  "@imageGen": {
+    "description": "Short label for image generation section/tab."
+  },
+  "@pinned": {
+    "description": "Filter/tab for pinned items."
+  },
+  "@folders": {
+    "description": "Tab listing chat folders."
+  },
+  "@archived": {
+    "description": "Filter/tab for archived chats."
+  },
+  "@appLanguage": {
+    "description": "Label for choosing the app's display language."
+  },
+  "@darkMode": {
+    "description": "Label for toggling dark theme."
+  },
+  "@webSearch": {
+    "description": "Feature toggle/section for web search."
+  },
+  "@webSearchDescription": {
+    "description": "Explains that responses can include citations from the web."
+  },
+  "@imageGeneration": {
+    "description": "Feature toggle/section for image generation."
+  },
+  "@imageGenerationDescription": {
+    "description": "Explains creating images via model prompts."
+  },
+  "@copy": {
+    "description": "Action to copy text to clipboard."
+  },
+  "@ttsListen": {
+    "description": "Action to play the assistant message using text to speech"
+  },
+  "@ttsStop": {
+    "description": "Action to stop text to speech playback"
+  },
+  "@edit": {
+    "description": "Action to edit an item/message."
+  },
+  "@regenerate": {
+    "description": "Action to request a new assistant response."
+  },
+  "@noConversationsYet": {
+    "description": "Empty state when the user has no chats."
+  },
+  "@usernameOrEmailHint": {
+    "description": "Hint text for username/email input."
+  },
+  "@passwordHint": {
+    "description": "Hint text for password input."
+  },
+  "@enterApiKey": {
+    "description": "Hint text for API key input."
+  },
+  "@signingIn": {
+    "description": "Status message shown while signing in."
+  },
+  "@advancedSettings": {
+    "description": "Section that contains additional/optional configuration."
+  },
+  "@customHeaders": {
+    "description": "Section title for adding custom HTTP headers."
+  },
+  "@customHeadersDescription": {
+    "description": "Helper text explaining use-cases for custom headers."
+  },
+  "@allowSelfSignedCertificates": {
+    "description": "Toggle label that allows trusting self-signed TLS certificates for the configured server."
+  },
+  "@allowSelfSignedCertificatesDescription": {
+    "description": "Helper text clarifying the risks of enabling the self-signed certificate toggle."
+  },
+  "@headerNameEmpty": {
+    "description": "Validation message for empty header name."
+  },
+  "@headerNameTooLong": {
+    "description": "Validation message for header name length."
+  },
+  "@headerNameInvalidChars": {
+    "description": "Validation message for invalid characters in header name."
+  },
+  "@headerNameReserved": {
+    "description": "Error when attempting to override a reserved HTTP header {key}.",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "@headerValueEmpty": {
+    "description": "Validation message for empty header value."
+  },
+  "@headerValueTooLong": {
+    "description": "Validation message for header value length."
+  },
+  "@headerValueInvalidChars": {
+    "description": "Validation message for invalid characters in header value."
+  },
+  "@headerValueUnsafe": {
+    "description": "Security warning for suspicious header values."
+  },
+  "@headerAlreadyExists": {
+    "description": "Error when a custom header with key {key} already exists.",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "@maxHeadersReachedDetail": {
+    "description": "Explains the upper limit of custom headers."
+  },
+  "@editMessage": {
+    "description": "Action to edit a previously sent message."
+  },
+  "@noModelsAvailable": {
+    "description": "Shown when model list is empty or failed to load."
+  },
+  "@followingSystem": {
+    "description": "Indicates the app is following the system theme (\"Dark\"/\"Light\").",
+    "placeholders": {
+      "theme": {
+        "type": "String"
+      }
+    }
+  },
+  "@themeDark": {
+    "description": "Theme label for dark appearance."
+  },
+  "@themePalette": {
+    "description": "Title for selecting the app color palette."
+  },
+  "@themePaletteDescription": {
+    "description": "Helper text explaining palette selection."
+  },
+  "@themeLight": {
+    "description": "Theme label for light appearance."
+  },
+  "@currentlyUsingDarkTheme": {
+    "description": "Status text indicating dark theme is active."
+  },
+  "@currentlyUsingLightTheme": {
+    "description": "Status text indicating light theme is active."
+  },
+  "@aboutJyotiGPT": {
+    "description": "Dialog title for app information."
+  },
+  "@versionLabel": {
+    "description": "Displays version and build number in the About dialog.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "@githubRepository": {
+    "description": "Link label pointing to the app repository."
+  },
+  "@unableToLoadAppInfo": {
+    "description": "Error text when package info cannot be retrieved."
+  },
+  "@thinking": {
+    "description": "Label shown while the assistant is reasoning."
+  },
+  "@thoughts": {
+    "description": "Section title for showing reasoning content."
+  },
+  "@thoughtForDuration": {
+    "description": "Shows how long the assistant thought before replying.",
+    "placeholders": {
+      "duration": {
+        "type": "String",
+        "example": "3s"
+      }
+    }
+  },
+  "@appCustomization": {
+    "description": "Title of the customization settings page."
+  },
+  "@appCustomizationSubtitle": {
+    "description": "Subtitle shown under App Customization tile and page header."
+  },
+  "@quickActionsDescription": {
+    "description": "Helper text explaining quick action pill selection in customization."
+  },
+  "@chatSettings": {
+    "description": "Section header for chat-related customization options."
+  },
+  "@sendOnEnter": {
+    "description": "Toggle title for sending messages when pressing Enter."
+  },
+  "@sendOnEnterDescription": {
+    "description": "Explanation of how the Send on Enter toggle behaves."
+  },
+  "@display": {
+    "description": "Section header for visual and layout related settings."
+  },
+  "@realtime": {
+    "description": "Section header for realtime/transport settings."
+  },
+  "@transportMode": {
+    "description": "Title for selecting the networking transport used for realtime."
+  },
+  "@transportModeDescription": {
+    "description": "Helper text explaining the transport setting."
+  },
+  "@mode": {
+    "description": "Form field label for transport mode dropdown."
+  },
+  "@transportModeAuto": {
+    "description": "Dropdown option label for automatic transport selection."
+  },
+  "@transportModeWs": {
+    "description": "Dropdown option label for WebSocket-only transport."
+  },
+  "@transportModeAutoInfo": {
+    "description": "Footnote text for the Auto transport mode."
+  },
+  "@transportModeWsInfo": {
+    "description": "Footnote text for the WebSocket-only transport mode."
+  }
 }

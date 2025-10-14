@@ -35,11 +35,43 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
   bool _obscurePassword = true;
   String? _loginError;
   bool _isSigningIn = false;
+  ServerConfig? _serverConfig;
+  bool _isLoadingConfig = true;
 
   @override
   void initState() {
     super.initState();
+    _initializeServerConfig();
     _loadSavedCredentials();
+  }
+
+  Future<void> _initializeServerConfig() async {
+    setState(() => _isLoadingConfig = true);
+    
+    try {
+      // Use provided config or fetch active server
+      final config = widget.serverConfig ?? 
+                     await ref.read(activeServerProvider.future);
+      
+      if (config == null) {
+        // No server configured, redirect back
+        if (mounted) {
+          DebugLogger.auth('No server config found, redirecting to server connection');
+          context.go(Routes.serverConnection);
+        }
+        return;
+      }
+      
+      setState(() {
+        _serverConfig = config;
+        _isLoadingConfig = false;
+      });
+    } catch (e) {
+      DebugLogger.auth('Error loading server config: $e');
+      if (mounted) {
+        context.go(Routes.serverConnection);
+      }
+    }
   }
 
   Future<void> _loadSavedCredentials() async {
@@ -124,14 +156,34 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
           'Authentication successful, initializing background resources',
         );
 
-        // Model selection and onboarding will be handled by the chat page
-        // to avoid widget disposal issues
-
         DebugLogger.auth('Navigating to chat page');
-        // Navigate directly to chat page on successful authentication
         context.go(Routes.chat);
       }
     });
+
+    // Show loading while fetching config
+    if (_isLoadingConfig) {
+      return Scaffold(
+        backgroundColor: context.jyotigptTheme.surfaceBackground,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: context.jyotigptTheme.buttonPrimary,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(
+                AppLocalizations.of(context)!.loadingContent,
+                style: context.jyotigptTheme.bodyMedium?.copyWith(
+                  color: context.jyotigptTheme.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return ErrorBoundary(
       child: Scaffold(

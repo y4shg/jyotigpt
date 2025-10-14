@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh",
+  "@@locale": "zh_CN",
   "appTitle": "JyotiGPT",
   "initializationFailed": "初始化失敗",
   "retry": "重試",

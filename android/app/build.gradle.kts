@@ -20,11 +20,11 @@ android {
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
-    applicationId = "app.y4shg.jyotigpt"
-    minSdk = flutter.minSdkVersion
-    targetSdk = flutter.targetSdkVersion
-    versionCode = flutter.versionCode
-    versionName = flutter.versionName
+        applicationId = "app.y4shg.jyotigpt"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     compileOptions {
@@ -41,7 +41,16 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+        // Only create release signing config if all required properties exist
+        if (keystorePropertiesFile.exists() && 
+            keystoreProperties.containsKey("storeFile") &&
+            keystoreProperties.containsKey("storePassword") &&
+            keystoreProperties.containsKey("keyAlias") &&
+            keystoreProperties.containsKey("keyPassword") &&
+            keystoreProperties["storeFile"] != null &&
+            keystoreProperties["storePassword"] != null &&
+            keystoreProperties["keyAlias"] != null &&
+            keystoreProperties["keyPassword"] != null) {
             create("release") {
                 storeFile = file(keystoreProperties["storeFile"] as String)
                 storePassword = keystoreProperties["storePassword"] as String
@@ -53,8 +62,11 @@ android {
 
     buildTypes {
         getByName("release") {
-            if (keystorePropertiesFile.exists()) {
-                signingConfig = signingConfigs.getByName("release")
+            // Only use signing config if it was created
+            if (keystorePropertiesFile.exists() && 
+                keystoreProperties.containsKey("storeFile") &&
+                keystoreProperties["storeFile"] != null) {
+                signingConfig = signingConfigs.findByName("release")
             }
             isMinifyEnabled = true
             isShrinkResources = true
