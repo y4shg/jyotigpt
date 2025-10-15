@@ -181,12 +181,13 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
             Padding(
               padding: const EdgeInsets.all(Spacing.lg),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Privacy Policy',
-                    style: context.jyotigptTheme.headingMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Text(
+                      'Privacy Policy',
+                      style: context.jyotigptTheme.headingMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   IconButton(
@@ -591,7 +592,7 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
     return GestureDetector(
       onTap: _showPrivacyPolicy,
       child: Text(
-        AppLocalizations.of(context)!.privacyPolicy,
+        'Privacy Policy',
         textAlign: TextAlign.center,
         style: context.jyotigptTheme.bodySmall?.copyWith(
           color: context.jyotigptTheme.buttonPrimary,
