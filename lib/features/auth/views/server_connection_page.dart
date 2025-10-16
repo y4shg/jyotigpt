@@ -152,74 +152,6 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
     ref.invalidate(activeServerProvider);
   }
 
-  void _showPrivacyPolicy() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.85,
-        decoration: BoxDecoration(
-          color: context.jyotigptTheme.surfaceBackground,
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(AppBorderRadius.large),
-          ),
-        ),
-        child: Column(
-          children: [
-            // Handle bar
-            Container(
-              margin: const EdgeInsets.only(top: Spacing.md),
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: context.jyotigptTheme.dividerColor,
-                borderRadius: BorderRadius.circular(AppBorderRadius.round),
-              ),
-            ),
-            // Header
-            Padding(
-              padding: const EdgeInsets.all(Spacing.lg),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Privacy Policy',
-                      style: context.jyotigptTheme.headingMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Platform.isIOS ? CupertinoIcons.xmark : Icons.close,
-                      color: context.jyotigptTheme.textSecondary,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(height: 1),
-            // Content
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(Spacing.lg),
-                child: Text(
-                  'All your data is stored locally on your device. We do not collect, store, or transmit any personal information to external servers. When you connect to a server, your conversations and data are transmitted directly to that server. We act only as a client application and do not intercept or store this data. This app connects to Open-WebUI compatible servers. The privacy practices of those servers are governed by their own privacy policies. We do not collect any analytics or usage data. Your usage of the app remains completely private. You have full control over your data. You can delete all local data at any time through the app settings.',
-                  style: context.jyotigptTheme.bodyMedium?.copyWith(
-                    color: context.jyotigptTheme.textSecondary,
-                    height: 1.6,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     _urlController.dispose();
@@ -323,13 +255,14 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
                               const SizedBox(height: Spacing.xl),
                             ],
 
+                            // Privacy Policy Text
+                            _buildPrivacyPolicyText(),
+
+                            const SizedBox(height: Spacing.xl),
+
                             // Server connection status (only show if checking or error)
                             if (_isChecking || _connectionError != null)
                               _buildServerStatus(),
-
-                            // Privacy Policy Link
-                            const SizedBox(height: Spacing.lg),
-                            _buildPrivacyPolicyLink(),
                           ],
                         ),
                       ),
@@ -588,17 +521,25 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
     );
   }
 
-  Widget _buildPrivacyPolicyLink() {
-    return GestureDetector(
-      onTap: _showPrivacyPolicy,
-      child: Text(
-        'Privacy Policy',
-        textAlign: TextAlign.center,
-        style: context.jyotigptTheme.bodySmall?.copyWith(
-          color: context.jyotigptTheme.buttonPrimary,
-          decoration: TextDecoration.underline,
+  Widget _buildPrivacyPolicyText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Privacy Policy',
+          style: context.jyotigptTheme.headingMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
+        const SizedBox(height: Spacing.md),
+        Text(
+          'All your data is stored locally on your device. We do not collect, store, or transmit any personal information to external servers. When you connect to a server, your conversations and data are transmitted directly to that server. We act only as a client application and do not intercept or store this data. This app connects to Open-WebUI compatible servers. The privacy practices of those servers are governed by their own privacy policies. We do not collect any analytics or usage data. Your usage of the app remains completely private. You have full control over your data. You can delete all local data at any time through the app settings.',
+          style: context.jyotigptTheme.bodyMedium?.copyWith(
+            color: context.jyotigptTheme.textSecondary,
+            height: 1.6,
+          ),
+        ),
+      ],
     );
   }
 
