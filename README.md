@@ -71,7 +71,7 @@ Follow these steps to set up and run **JyotiGPT** locally using Flutter.
 
 #### **1\. Clone the repository**
 
-`git clone https://github.com/yourusername/jyotigpt.git  
+`git clone https://github.com/y4shg/jyotigpt.git  
 cd jyotigpt`
 
 #### **2\. Get all dependencies**
@@ -131,9 +131,7 @@ All dependencies are listed in `pubspec.yaml`.
 
 ## **🙏 Contributors**
 
-* **Project Lead:** \[Yash Ghule\]
-
-Gratitude to the **Brahma Kumaris community** for their spiritual guidance, inspiration, and love that made this project possible.
+* **Project Lead:** Yash Ghule
 
 ---
 
@@ -142,8 +140,6 @@ Gratitude to the **Brahma Kumaris community** for their spiritual guidance, insp
 View license.md
 
 ---
-
-## **🌷 Closing Message**
 
 *You are a soul — a being of peace, love, and light.*  
  Let every thought and action flow from this awareness.  
