@@ -525,15 +525,10 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Privacy Policy',
-          style: context.jyotigptTheme.headingMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
         const SizedBox(height: Spacing.md),
         Text(
           'All your data is stored locally on your device. We do not collect, store, or transmit any personal information to external servers. When you connect to a server, your conversations and data are transmitted directly to that server. We act only as a client application and do not intercept or store this data. This app connects to Open-WebUI compatible servers. The privacy practices of those servers are governed by their own privacy policies. We do not collect any analytics or usage data. Your usage of the app remains completely private. You have full control over your data. You can delete all local data at any time through the app settings.',
+          textAlign: TextAlign.center,
           style: context.jyotigptTheme.bodyMedium?.copyWith(
             color: context.jyotigptTheme.textSecondary,
             height: 1.6,
