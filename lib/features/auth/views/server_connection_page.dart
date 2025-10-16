@@ -255,8 +255,14 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
                               const SizedBox(height: Spacing.xl),
                             ],
 
-                            // Server connection status
-                            _buildServerStatus(),
+                            // Privacy Policy Text
+                            _buildPrivacyPolicyText(),
+
+                            const SizedBox(height: Spacing.xl),
+
+                            // Server connection status (only show if checking or error)
+                            if (_isChecking || _connectionError != null)
+                              _buildServerStatus(),
                           ],
                         ),
                       ),
@@ -435,8 +441,6 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
           // Connection status
           if (_isChecking)
             _buildCheckingStatus()
-          else if (_isConnected)
-            _buildConnectedStatus()
           else if (_connectionError != null)
             _buildErrorStatus(),
         ],
@@ -460,30 +464,6 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
           AppLocalizations.of(context)!.connecting,
           style: context.jyotigptTheme.bodyMedium?.copyWith(
             color: context.jyotigptTheme.textSecondary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildConnectedStatus() {
-    return Row(
-      children: [
-        Icon(
-          Platform.isIOS
-              ? CupertinoIcons.checkmark_circle_fill
-              : Icons.check_circle,
-          color: context.jyotigptTheme.success,
-          size: IconSize.medium,
-        ),
-        const SizedBox(width: Spacing.md),
-        Expanded(
-          child: Text(
-            AppLocalizations.of(context)!.connectedToServer,
-            style: context.jyotigptTheme.bodyMedium?.copyWith(
-              color: context.jyotigptTheme.success,
-              fontWeight: FontWeight.w600,
-            ),
           ),
         ),
       ],
@@ -536,6 +516,28 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
           onPressed: _checkServerConnection,
           isSecondary: true,
           isFullWidth: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPrivacyPolicyText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Privacy Policy',
+          style: context.jyotigptTheme.headingMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: Spacing.md),
+        Text(
+          'All your data is stored locally on your device. We do not collect, store, or transmit any personal information to external servers. When you connect to a server, your conversations and data are transmitted directly to that server. We act only as a client application and do not intercept or store this data. This app connects to Open-WebUI compatible servers. The privacy practices of those servers are governed by their own privacy policies. We do not collect any analytics or usage data. Your usage of the app remains completely private. You have full control over your data. You can delete all local data at any time through the app settings.',
+          style: context.jyotigptTheme.bodyMedium?.copyWith(
+            color: context.jyotigptTheme.textSecondary,
+            height: 1.6,
+          ),
         ),
       ],
     );
