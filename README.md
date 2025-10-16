@@ -1,5 +1,7 @@
 # **🌟 JyotiGPT — The Brahma Kumaris AI Assistant**
 [![Release](https://github.com/y4shg/jyotigpt/actions/workflows/android.yml/badge.svg)](https://github.com/y4shg/jyotigpt/actions/workflows/android.yml)
+![Static Badge](https://img.shields.io/badge/Built_with_Flutter-blue?style=flat&logo=flutter&logoSize=auto&color=%232596be)
+
 ![Hero Image of a beautiful river scene that say JyotiGPT.](/fastlane/metadata/en-US/images/hero.jpg)
 
 ---
