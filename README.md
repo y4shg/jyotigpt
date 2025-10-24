@@ -6,14 +6,14 @@
 
 ---
 **JyotiGPT** is a serene, intelligent, and spiritually inspired AI companion designed to bring the timeless teachings of the **Brahma Kumaris** into the digital era.  
- It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections — helping everyone reconnect with their inner light.
+ It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections, helping everyone reconnect with their inner light.
 
 ---
 
 ## **🕊️ Introduction**
 
 In an age of constant movement and information overload, **JyotiGPT** serves as a space for stillness and insight.  
- It’s not just another AI assistant — it’s a spiritual guide, a meditation companion, and a source of positivity.
+ It’s not just another AI assistant, it’s a spiritual guide, a meditation companion, and a source of positivity.
 
 Built with **Flutter** and **Dart**, JyotiGPT provides a smooth and calming experience across Android, iOS, and web platforms.  
  It encourages users to pause, reflect, and rediscover peace through guided dialogues based on the **Brahma Kumaris’ Raja Yoga philosophy**.
