@@ -148,11 +148,6 @@ View license.md
 
 ---
 
-*You are a soul — a being of peace, love, and light.*  
- Let every thought and action flow from this awareness.  
- JyotiGPT is your gentle reminder that peace is not to be found outside —  
- it already lives within you.
-
 ✨ **Om Shanti.**
 
 ---
