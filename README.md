@@ -46,7 +46,7 @@ JyotiGPT aims to:
 
 *  **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
 
-*  **Daily Inspirations** – Start your day with affirmations and Murli-inspired insights.
+*  **Daily Inspirations** – Start your day with affirmations and Spiritual insights.
 
 *  **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
 
