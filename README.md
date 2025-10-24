@@ -39,17 +39,17 @@ JyotiGPT aims to:
 
 ## **✨ Features**
 
-* 🕉️ **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
+*  **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
 
-* 🌅 **Daily Inspirations** – Start your day with affirmations and Murli-inspired insights.
+*  **Daily Inspirations** – Start your day with affirmations and Murli-inspired insights.
 
-* 🧘 **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
+*  **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
 
-* 🌸 **Virtue Reflections** – Explore virtues such as love, purity, and peace through gentle guidance.
+*  **Virtue Reflections** – Explore virtues such as love, purity, and peace through gentle guidance.
 
-* 🌐 **Multilingual Support** – Available in English and Hindi, with more languages planned.
+*  **Multilingual Support** – Available in English and Hindi, with more languages planned.
 
-* 🌙 **Calming Interface** – Simple and elegant UI built with Flutter for a soothing user experience.
+*  **Calming Interface** – Simple and elegant UI built with Flutter for a soothing user experience.
 
 ---
 
@@ -131,9 +131,9 @@ All dependencies are listed in `pubspec.yaml`.
 
 ---
 
-## **🙏 Contributors**
+## **🙏 Owner**
 
-* **Project Lead:** Yash Ghule
+* Yash Ghule
 
 ---
 
