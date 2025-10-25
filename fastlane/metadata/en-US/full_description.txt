@@ -1,4 +1,4 @@
-JyotiGPT is an open-source, native mobile client for Open‑WebUI. Connect to your own server to chat with AI models, manage conversations, and take your self‑hosted AI with you—securely and on the go.
+JyotiGPT is an open-source, native mobile client for JyotiGPT. Connect to your own server to chat with AI models, manage conversations, and take your self‑hosted AI with you—securely and on the go.
 
 Features
 - Real-time streaming chat
