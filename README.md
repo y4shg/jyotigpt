@@ -1,17 +1,24 @@
 # **🌟 JyotiGPT — The Brahma Kumaris AI Assistant**
-[![iOS and Android Release](https://github.com/y4shg/jyotigpt/actions/workflows/release.yml/badge.svg)](https://github.com/y4shg/jyotigpt/actions/workflows/release.yml)
+[![Release](https://img.shields.io/github/actions/workflow/status/y4shg/jyotigpt/android.yml?label=RELEASE&style=for-the-badge&color=3DDC84)](https://github.com/y4shg/jyotigpt/actions/workflows/android.yml)
+![Static Badge](https://img.shields.io/badge/Built_with_Flutter-blue?style=for-the-badge&logo=flutter&logoSize=auto&color=%232596be)
+![Static Badge](https://img.shields.io/badge/iOS%3A-%2015%2B-red?style=for-the-badge&logo=apple)
+![Static Badge](https://img.shields.io/badge/Android%3A-%208%2B%20-green?style=for-the-badge&logo=android)
+![Static Badge](https://img.shields.io/badge/Version%3A%20v0.9.3-yellow?style=for-the-badge)
+
+
+
 ![Hero Image of a beautiful river scene that say JyotiGPT.](/fastlane/metadata/en-US/images/hero.jpg)
 
 ---
 **JyotiGPT** is a serene, intelligent, and spiritually inspired AI companion designed to bring the timeless teachings of the **Brahma Kumaris** into the digital era.  
- It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections — helping everyone reconnect with their inner light.
+ It blends artificial intelligence with spiritual wisdom, offering users peaceful guidance, meditation assistance, and uplifting reflections, helping everyone reconnect with their inner light.
 
 ---
 
 ## **🕊️ Introduction**
 
 In an age of constant movement and information overload, **JyotiGPT** serves as a space for stillness and insight.  
- It’s not just another AI assistant — it’s a spiritual guide, a meditation companion, and a source of positivity.
+ It’s not just another AI assistant, it’s a spiritual guide, a meditation companion, and a source of positivity.
 
 Built with **Flutter** and **Dart**, JyotiGPT provides a smooth and calming experience across Android, iOS, and web platforms.  
  It encourages users to pause, reflect, and rediscover peace through guided dialogues based on the **Brahma Kumaris’ Raja Yoga philosophy**.
@@ -37,17 +44,17 @@ JyotiGPT aims to:
 
 ## **✨ Features**
 
-* 🕉️ **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
+*  **Spiritual Conversations** – Engage with JyotiGPT to explore topics like karma, soul consciousness, and self-mastery.
 
-* 🌅 **Daily Inspirations** – Start your day with affirmations and Murli-inspired insights.
+*  **Daily Inspirations** – Start your day with affirmations and Spiritual insights.
 
-* 🧘 **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
+*  **Guided Meditations** – Enjoy text-based and audio-assisted meditation sessions for peace and clarity.
 
-* 🌸 **Virtue Reflections** – Explore virtues such as love, purity, and peace through gentle guidance.
+*  **Virtue Reflections** – Explore virtues such as love, purity, and peace through gentle guidance.
 
-* 🌐 **Multilingual Support** – Available in English and Hindi, with more languages planned.
+*  **Multilingual Support** – Available in English and Hindi, with more languages planned.
 
-* 🌙 **Calming Interface** – Simple and elegant UI built with Flutter for a soothing user experience.
+*  **Calming Interface** – Simple and elegant UI built with Flutter for a soothing user experience.
 
 ---
 
@@ -71,7 +78,7 @@ Follow these steps to set up and run **JyotiGPT** locally using Flutter.
 
 #### **1\. Clone the repository**
 
-`git clone https://github.com/yourusername/jyotigpt.git  
+`git clone https://github.com/y4shg/jyotigpt.git  
 cd jyotigpt`
 
 #### **2\. Get all dependencies**
@@ -129,11 +136,9 @@ All dependencies are listed in `pubspec.yaml`.
 
 ---
 
-## **🙏 Contributors**
+## **🙏 Owner**
 
-* **Project Lead:** \[Yash Ghule\]
-
-Gratitude to the **Brahma Kumaris community** for their spiritual guidance, inspiration, and love that made this project possible.
+* Yash Ghule
 
 ---
 
@@ -142,13 +147,6 @@ Gratitude to the **Brahma Kumaris community** for their spiritual guidance, insp
 View license.md
 
 ---
-
-## **🌷 Closing Message**
-
-*You are a soul — a being of peace, love, and light.*  
- Let every thought and action flow from this awareness.  
- JyotiGPT is your gentle reminder that peace is not to be found outside —  
- it already lives within you.\*
 
 ✨ **Om Shanti.**
 

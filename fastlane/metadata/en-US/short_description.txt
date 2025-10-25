@@ -1,2 +1,2 @@
-Native mobile client for Open‑WebUI. Chat with your self‑hosted AI.
+Native mobile client for JyotiGPT. Chat with your self‑hosted AI.
 

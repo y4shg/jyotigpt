@@ -1,13 +1,13 @@
 ### Todo
 
 - [ ] Change arb text
-- [ ] Remove server connection page
-  - [ ] Fix issues with navigation after connection page
 
 ### In Progress
 
-- [ ] Add Privacy Policy
+- [ ] Remove server connection page
+  - [ ] Fix issues with navigation after connection page
 
 ### Done ✓
 
 - [x] Localizations (0.9.1)
+- [x] Add Privacy Policy (0.9.3)

@@ -62,9 +62,9 @@ class AppColorPalettes {
     label: 'Inner Fire',
     description: 'Radiant reds symbolizing the spark of divine intelligence.',
     light: AppPaletteTone(
-      primary: Color(0xFFFF3131),
-      secondary: Color(0xFFFF5252),
-      accent: Color(0xFFFFA3A3),
+      primary: Color(0xFFE32626),
+      secondary: Color(0xFFFF4747),
+      accent: Color(0xFFFF8C8C),
     ),
     dark: AppPaletteTone(
       primary: Color(0xFFFF4C4C),
