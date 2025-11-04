@@ -9,8 +9,8 @@ import 'dart:io';
 ///   AppLocalizations.of(context)!.someKey. Unused keys are WARNINGS by default.
 ///
 /// Exit codes:
-///   0 = success (no hard errors; warnings may be printed)
-///   1 = validation errors (duplicates, missing keys, placeholder mismatches)
+///   0 = success (no hard errors; warnings may be printed.)
+///   1 = validation errors (duplicates, missing keys, placeholder mismatches.)
 Future<void> main(List<String> args) async {
   final basePath = 'lib/l10n/app_en.arb';
   final dir = Directory('lib/l10n');
