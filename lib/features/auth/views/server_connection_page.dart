@@ -219,24 +219,11 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
           children: [
             // Background image
             Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      const Color(0xFF6B46C1),
-                      const Color(0xFF4C1D95),
-                    ],
-                  ),
-                ),
-                child: Opacity(
-                  opacity: 0.3,
-                  child: Image.asset(
-                    'assets/images/background.png',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(),
-                  ),
+              child: Image.asset(
+                'assets/images/background.png',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -473,7 +460,7 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
         // Title and description
         Text(
           AppLocalizations.of(context)!.connectToServer,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
           style: context.jyotigptTheme.headingLarge?.copyWith(
             fontWeight: FontWeight.w600,
             height: 1.3,
@@ -483,7 +470,7 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
         const SizedBox(height: Spacing.sm),
         Text(
           AppLocalizations.of(context)!.enterServerAddress,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
           style: context.jyotigptTheme.bodyMedium?.copyWith(
             color: Colors.white.withValues(alpha: 0.9),
             height: 1.4,
