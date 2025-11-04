@@ -96,6 +96,7 @@ flutter:
     - assets/icons/
     - assets/icons/icon.png
     - assets/mermaid.min.js
+    - assets/images/
 
 flutter_native_splash:
   # Splash background matches the light theme; `color_dark` handles dark mode.
