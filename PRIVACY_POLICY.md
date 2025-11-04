@@ -2,7 +2,7 @@
 
 Effective date: 2025-10-11
 
-JyotiGPT is an open‑source mobile client for Open‑WebUI. This app acts as a client to a server you choose and configure. This policy describes how the app itself handles data on your device. Your configured server may collect, process, and store data under its own policies; please review your server's privacy terms separately.
+JyotiGPT is an open‑source mobile client for jyotigpt. This app acts as a client to a server you choose and configure. This policy describes how the app itself handles data on your device. Your configured server may collect, process, and store data under its own policies; please review your server's privacy terms separately.
 
 ## Information We Collect
 - Device-stored data: minimal settings and preferences (e.g., theme, UI options) saved locally on your device.
