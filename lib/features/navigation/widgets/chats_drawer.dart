@@ -1512,7 +1512,7 @@ class _ChatsDrawerState extends ConsumerState<ChatsDrawer> {
                     visualDensity: VisualDensity.compact,
                     icon: Icon(
                       Platform.isIOS
-                          ? CupertinoIcons.settings
+                          ? CupertinoIcons.gear_solid
                           : Icons.settings_rounded,
                       color: theme.iconSecondary,
                       size: IconSize.medium,
