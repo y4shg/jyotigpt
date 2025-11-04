@@ -55,85 +55,99 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   String? redirect(BuildContext context, GoRouterState state) {
-    final location = state.uri.path.isEmpty ? Routes.splash : state.uri.path;
-    final reviewerMode = ref.read(reviewerModeProvider);
-    final activeServerAsync = ref.read(activeServerProvider);
+    try {
+      final location = state.uri.path.isEmpty ? Routes.splash : state.uri.path;
+      final reviewerMode = ref.read(reviewerModeProvider);
+      final activeServerAsync = ref.read(activeServerProvider);
 
-    if (reviewerMode) {
-      // Stay on whatever route if already in chat; otherwise go to chat
-      if (location == Routes.chat) return null;
-      return Routes.chat;
-    }
+      if (reviewerMode) {
+        // Stay on whatever route if already in chat; otherwise go to chat
+        if (location == Routes.chat) return null;
+        return Routes.chat;
+      }
 
-    if (activeServerAsync.isLoading) {
-      // Avoid redirect loops: do not override explicit auth routes while loading
-      if (_isAuthLocation(location)) return null;
-      // Keep splash during server loading otherwise
-      return location == Routes.splash ? null : Routes.splash;
-    }
-
-    if (activeServerAsync.hasError) {
-      return location == Routes.connectionIssue ? null : Routes.connectionIssue;
-    }
-
-    final activeServer = activeServerAsync.asData?.value;
-    final hasActiveServer = activeServer != null;
-    if (!hasActiveServer) {
-      // Allow auth-related routes while no server configured
-      if (_isAuthLocation(location)) return null;
-      return Routes.serverConnection;
-    }
-
-    final authState = ref.read(authNavigationStateProvider);
-    final connectivityService = ref.read(connectivityServiceProvider);
-
-    // Allow staying on server connection page
-    if (location == Routes.serverConnection) {
-      // If authenticated but on server connection page, go to chat
-      // Otherwise stay on server connection page (for back navigation)
-      return authState == AuthNavigationState.authenticated
-          ? Routes.chat
-          : null;
-    }
-
-    // Check connectivity status to determine if we should show connection issue
-    final connectivity = ref.read(connectivityStatusProvider);
-
-    // Only show connection issue page if:
-    // 1. Not in reviewer mode
-    // 2. Connectivity is explicitly offline
-    // 3. Auth is authenticated (don't interrupt auth flow)
-    final shouldShowConnectionIssue =
-        !reviewerMode &&
-        connectivity == ConnectivityStatus.offline &&
-        authState == AuthNavigationState.authenticated &&
-        connectivityService.isAppForeground &&
-        !connectivityService.isOfflineSuppressed;
-
-    if (shouldShowConnectionIssue) {
-      return location == Routes.connectionIssue ? null : Routes.connectionIssue;
-    }
-
-    switch (authState) {
-      case AuthNavigationState.loading:
-        // Keep user on auth routes while loading to prevent bounce
+      if (activeServerAsync.isLoading) {
+        // Avoid redirect loops: do not override explicit auth routes while loading
         if (_isAuthLocation(location)) return null;
-        // Otherwise keep splash during session establishment
+        // Keep splash during server loading otherwise
         return location == Routes.splash ? null : Routes.splash;
-      case AuthNavigationState.needsLogin:
-        if (location == Routes.connectionIssue) return null;
-        return null;
-      case AuthNavigationState.error:
-        if (location == Routes.connectionIssue) return null;
-        return null;
-      case AuthNavigationState.authenticated:
-        // Avoid unnecessary redirects if already on a non-auth route
-        if (_isAuthLocation(location) ||
-            location == Routes.splash ||
-            location == Routes.connectionIssue) {
-          return Routes.chat;
-        }
-        return null;
+      }
+
+      if (activeServerAsync.hasError) {
+        return location == Routes.connectionIssue ? null : Routes.connectionIssue;
+      }
+
+      final activeServer = activeServerAsync.asData?.value;
+      final hasActiveServer = activeServer != null;
+      if (!hasActiveServer) {
+        // Allow auth-related routes while no server configured
+        if (_isAuthLocation(location)) return null;
+        return Routes.serverConnection;
+      }
+
+      final authState = ref.read(authNavigationStateProvider);
+      final connectivityService = ref.read(connectivityServiceProvider);
+
+      // Allow staying on server connection page
+      if (location == Routes.serverConnection) {
+        // If authenticated but on server connection page, go to chat
+        // Otherwise stay on server connection page (for back navigation)
+        return authState == AuthNavigationState.authenticated
+            ? Routes.chat
+            : null;
+      }
+
+      // Check connectivity status to determine if we should show connection issue
+      final connectivity = ref.read(connectivityStatusProvider);
+
+      // Only show connection issue page if:
+      // 1. Not in reviewer mode
+      // 2. Connectivity is explicitly offline
+      // 3. Auth is authenticated (don't interrupt auth flow)
+      final shouldShowConnectionIssue =
+          !reviewerMode &&
+          connectivity == ConnectivityStatus.offline &&
+          authState == AuthNavigationState.authenticated &&
+          connectivityService.isAppForeground &&
+          !connectivityService.isOfflineSuppressed;
+
+      if (shouldShowConnectionIssue) {
+        return location == Routes.connectionIssue ? null : Routes.connectionIssue;
+      }
+
+      switch (authState) {
+        case AuthNavigationState.loading:
+          // Keep user on auth routes while loading to prevent bounce
+          if (_isAuthLocation(location)) return null;
+          // Otherwise keep splash during session establishment
+          return location == Routes.splash ? null : Routes.splash;
+        case AuthNavigationState.needsLogin:
+          // Allow staying on connection issue page
+          if (location == Routes.connectionIssue) return null;
+          // Allow staying on any auth location
+          if (_isAuthLocation(location)) return null;
+          // Redirect to login if not on an auth page
+          return Routes.login;
+        case AuthNavigationState.error:
+          // Allow staying on connection issue page
+          if (location == Routes.connectionIssue) return null;
+          // Allow staying on any auth location
+          if (_isAuthLocation(location)) return null;
+          // Redirect to server connection for error state
+          return Routes.serverConnection;
+        case AuthNavigationState.authenticated:
+          // Avoid unnecessary redirects if already on a non-auth route
+          if (_isAuthLocation(location) ||
+              location == Routes.splash ||
+              location == Routes.connectionIssue) {
+            return Routes.chat;
+          }
+          return null;
+      }
+    } catch (e, stackTrace) {
+      DebugLogger.error('Router redirect error: $e\n$stackTrace');
+      // Safe fallback to splash on any error
+      return Routes.splash;
     }
   }
 
@@ -218,6 +232,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     redirect: notifier.redirect,
     routes: routes,
     observers: [NavigationLoggingObserver()],
+    // Disable state restoration to prevent conflicts on app restart
+    restorationScopeId: null,
     errorBuilder: (context, state) {
       final l10n = AppLocalizations.of(context);
       final message =
