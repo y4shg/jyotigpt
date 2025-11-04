@@ -7,7 +7,7 @@ running Flutter applications for various platforms, including desktop, web, and
 mobile platforms.
 
 ## Interaction Guidelines
-* **User Persona:** Assume the user is familiar with programming concepts but
+* **User Persona:** Assume the user is not familiar with programming concepts and
   may be new to Dart.
 * **Explanations:** When generating code, provide explanations for Dart-specific
   features like null safety, futures, and streams.
