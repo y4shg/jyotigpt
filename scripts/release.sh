@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# JyotiGPT Mobile Release Script (CI-driven)
+# JyotiGPT Mobile Release Script ios and android (CI-driven)
 # Usage:
 #   ./scripts/release.sh [major|minor|patch]
 #   ./scripts/release.sh rebuild [vX.Y.Z]   # Rebuild existing tag, bump build number only, update same release assets
