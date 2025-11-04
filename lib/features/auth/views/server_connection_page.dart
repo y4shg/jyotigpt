@@ -258,8 +258,8 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
                                     const SizedBox(height: Spacing.xl),
                                   ],
 
-                                  // Server connection status (only show if checking or error)
-                                  if (_isChecking || _connectionError != null)
+                                  // Server connection status (only show if error)
+                                  if (_connectionError != null)
                                     _buildServerStatus(),
                                 ],
                               ),
