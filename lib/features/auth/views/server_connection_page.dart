@@ -164,7 +164,7 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
         body: Stack(
           children: [
             Positioned.fill(
-              child: Image.asset('assets/images/background.png', fit: BoxFit.cover),
+              child: Image.asset('assets/images/background.jpg', fit: BoxFit.cover),
             ),
             Positioned.fill(
               child: Container(color: Colors.black.withOpacity(0.3)),
@@ -174,6 +174,7 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.pagePadding, vertical: Spacing.lg),
                 child: Column(
                   children: [
+                    // 🔹 Restored original two-step progress indicator
                     _buildHeader(),
                     const Spacer(),
                     Align(
@@ -215,7 +216,32 @@ class _ServerConnectionPageState extends ConsumerState<ServerConnectionPage> {
   }
 
   Widget _buildHeader() {
-    return const SizedBox(height: 4, child: LinearProgressIndicator());
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 24,
+              height: 4,
+              decoration: BoxDecoration(
+                color: context.jyotigptTheme.buttonPrimary,
+                borderRadius: BorderRadius.circular(AppBorderRadius.round),
+              ),
+            ),
+            const SizedBox(width: Spacing.xs),
+            Container(
+              width: 24,
+              height: 4,
+              decoration: BoxDecoration(
+                color: context.jyotigptTheme.dividerColor.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(AppBorderRadius.round),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildNextButton() {
