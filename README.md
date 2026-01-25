@@ -1,12 +1,12 @@
 # JyotiGPT 👋
 
-![GitHub stars](https://img.shields.io/github/stars/y4shg/jyotigpt-web?style=social)
-![GitHub forks](https://img.shields.io/github/forks/y4shg/jyotigpt-web?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/y4shg/jyotigpt-web?style=social)
-![GitHub repo size](https://img.shields.io/github/repo-size/y4shg/jyotigpt-web)
-![GitHub language count](https://img.shields.io/github/languages/count/y4shg/jyotigpt-web)
-![GitHub top language](https://img.shields.io/github/languages/top/y4shg/jyotigpt-web)
-![GitHub last commit](https://img.shields.io/github/last-commit/y4shg/jyotigpt-web?color=red)
+![GitHub stars](https://img.shields.io/github/stars/y4shg/jyotigpt?style=social)
+![GitHub forks](https://img.shields.io/github/forks/y4shg/jyotigpt?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/y4shg/jyotigpt?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/y4shg/jyotigpt)
+![GitHub language count](https://img.shields.io/github/languages/count/y4shg/jyotigpt)
+![GitHub top language](https://img.shields.io/github/languages/top/y4shg/jyotigpt)
+![GitHub last commit](https://img.shields.io/github/last-commit/y4shg/jyotigpt?color=red)
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Follama-jyotigpt%2Follama-wbui&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)
 [![Discord](https://img.shields.io/badge/Discord-JyotiGPT-blue?logo=discord&logoColor=white)](https://discord.gg/5rJgQTnV4s)
 [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tjbck)
@@ -104,7 +104,7 @@ This will start the JyotiGPT server, which you can access at [http://localhost:8
 - **If Ollama is on your computer**, use this command:
 
   ```bash
-  docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:main
+  docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
   ```
 
 - **If Ollama is on a Different Server**, use this command:
@@ -112,13 +112,13 @@ This will start the JyotiGPT server, which you can access at [http://localhost:8
   To connect to Ollama on another server, change the `OLLAMA_BASE_URL` to the server's URL:
 
   ```bash
-  docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:main
+  docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
   ```
 
 - **To run JyotiGPT with Nvidia GPU support**, use this command:
 
   ```bash
-  docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:cuda
+  docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:cuda
   ```
 
 ### Installation for OpenAI API Usage Only
@@ -126,7 +126,7 @@ This will start the JyotiGPT server, which you can access at [http://localhost:8
 - **If you're only using OpenAI API**, use this command:
 
   ```bash
-  docker run -d -p 3000:8080 -e OPENAI_API_KEY=your_secret_key -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:main
+  docker run -d -p 3000:8080 -e OPENAI_API_KEY=your_secret_key -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
   ```
 
 ### Installing JyotiGPT with Bundled Ollama Support
@@ -137,14 +137,14 @@ This installation method uses a single container image that bundles JyotiGPT wit
   Utilize GPU resources by running the following command:
 
   ```bash
-  docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:ollama
+  docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:ollama
   ```
 
 - **For CPU Only**:
   If you're not using a GPU, use this command instead:
 
   ```bash
-  docker run -d -p 3000:8080 -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:ollama
+  docker run -d -p 3000:8080 -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:ollama
   ```
 
 Both commands facilitate a built-in, hassle-free installation of both JyotiGPT and Ollama, ensuring that you can get everything up and running swiftly.
@@ -166,7 +166,7 @@ If you're experiencing connection issues, it’s often due to the JYOTIGPT docke
 **Example Docker Command**:
 
 ```bash
-docker run -d --network=host -v jyotigpt:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt-web:main
+docker run -d --network=host -v jyotigpt:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
 ```
 
 ### Keeping Your Docker Installation Up-to-Date
@@ -189,7 +189,7 @@ Check our Updating Guide available in our [JyotiGPT Documentation](https://jyoti
 If you want to try out the latest bleeding-edge features and are okay with occasional instability, you can use the `:dev` tag like this:
 
 ```bash
-docker run -d -p 3000:8080 -v jyotigpt:/app/backend/data --name jyotigpt --add-host=host.docker.internal:host-gateway --restart always ghcr.io/y4shg/jyotigpt-web:dev
+docker run -d -p 3000:8080 -v jyotigpt:/app/backend/data --name jyotigpt --add-host=host.docker.internal:host-gateway --restart always ghcr.io/y4shg/jyotigpt:dev
 ```
 
 ### Offline Mode
@@ -215,11 +215,11 @@ If you have any questions, suggestions, or need assistance, please open an issue
 
 ## Star History
 
-<a href="https://star-history.com/#y4shg/jyotigpt-web&Date">
+<a href="https://star-history.com/#y4shg/jyotigpt&Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt-web&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt-web&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=y4shg/jyotigpt-web&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date" />
   </picture>
 </a>
 

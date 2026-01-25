@@ -136,7 +136,7 @@
 									</Tooltip>
 
 									<a
-										href="https://github.com/y4shg/jyotigpt-web/releases/tag/v{version.latest}"
+										href="https://github.com/y4shg/jyotigpt/releases/tag/v{version.latest}"
 										target="_blank"
 									>
 										{updateAvailable === null
@@ -206,10 +206,10 @@
 									/>
 								</a>
 
-								<a href="https://github.com/y4shg/jyotigpt-web" target="_blank">
+								<a href="https://github.com/y4shg/jyotigpt" target="_blank">
 									<img
 										alt="Github Repo"
-										src="https://img.shields.io/github/stars/y4shg/jyotigpt-web?style=social&label=Star us on Github"
+										src="https://img.shields.io/github/stars/y4shg/jyotigpt?style=social&label=Star us on Github"
 									/>
 								</a>
 							</div>

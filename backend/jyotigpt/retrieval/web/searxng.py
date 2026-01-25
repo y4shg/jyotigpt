@@ -67,7 +67,7 @@ def search_searxng(
     response = requests.get(
         query_url,
         headers={
-            "User-Agent": "JyotiGPT (https://github.com/y4shg/jyotigpt-web) RAG Bot",
+            "User-Agent": "JyotiGPT (https://github.com/y4shg/jyotigpt) RAG Bot",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate",
             "Accept-Language": "en-US,en;q=0.5",

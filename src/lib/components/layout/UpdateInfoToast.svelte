@@ -21,7 +21,7 @@
 			LATEST_VERSION: version.latest
 		})}
 
-		<a href="https://github.com/y4shg/jyotigpt-web/releases" target="_blank" class="underline">
+		<a href="https://github.com/y4shg/jyotigpt/releases" target="_blank" class="underline">
 			{$i18n.t('Update for the latest features and improvements.')}</a
 		>
 	</div>

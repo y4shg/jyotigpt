@@ -1,5 +1,5 @@
 [project]
-name = "jyotigpt-web"
+name = "jyotigpt"
 description = "JyotiGPT Web"
 authors = [
     { name = "Yash Ghule", email = "y.ghule77@gmail.com" }
