@@ -145,7 +145,7 @@ classifiers = [
 ]
 
 [project.scripts]
-jyotigpt = "open_webui:app"
+jyotigpt = "jyotigpt:app"
 
 [build-system]
 requires = ["hatchling"]
@@ -177,7 +177,7 @@ exclude = [
     "webui.db",
     "chroma.sqlite3",
 ]
-force-include = { "CHANGELOG.md" = "open_webui/CHANGELOG.md", build = "open_webui/frontend" }
+force-include = { "CHANGELOG.md" = "jyotigpt/CHANGELOG.md", build = "jyotigpt/frontend" }
 
 [tool.codespell]
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
