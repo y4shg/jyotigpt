@@ -61,7 +61,7 @@
 	onMount(() => {
 		window.addEventListener('message', async (event) => {
 			if (
-				!['https://jyotigpt.com', 'https://www.jyotigpt.com', 'http://localhost:9999'].includes(
+				!['https://jyotigpt.us.to', 'https://www.jyotigpt.us.to', 'http://localhost:9999'].includes(
 					event.origin
 				)
 			)

@@ -136,7 +136,7 @@
 									</Tooltip>
 
 									<a
-										href="https://github.com/jyotigpt/jyotigpt/releases/tag/v{version.latest}"
+										href="https://github.com/y4shg/jyotigpt-web/releases/tag/v{version.latest}"
 										target="_blank"
 									>
 										{updateAvailable === null
@@ -183,7 +183,7 @@
 
 							<a
 								class="flex-shrink-0 text-xs font-medium underline"
-								href="https://docs.jyotigpt.com/"
+								href="https://jyotigpt.us.to/"
 								target="_blank"
 							>
 								{$i18n.t('Documentation')}
@@ -206,10 +206,10 @@
 									/>
 								</a>
 
-								<a href="https://github.com/jyotigpt/jyotigpt" target="_blank">
+								<a href="https://github.com/y4shg/jyotigpt-web" target="_blank">
 									<img
 										alt="Github Repo"
-										src="https://img.shields.io/github/stars/jyotigpt/jyotigpt?style=social&label=Star us on Github"
+										src="https://img.shields.io/github/stars/y4shg/jyotigpt-web?style=social&label=Star us on Github"
 									/>
 								</a>
 							</div>
@@ -225,7 +225,7 @@
 
 								{#if $config?.license_metadata}
 									<a
-										href="https://docs.jyotigpt.com/enterprise"
+										href="https://jyotigpt.us.to/enterprise"
 										target="_blank"
 										class="text-gray-500 mt-0.5"
 									>
@@ -250,7 +250,7 @@
 								{:else}
 									<a
 										class=" text-xs hover:underline"
-										href="https://docs.jyotigpt.com/enterprise"
+										href="https://jyotigpt.us.to/enterprise"
 										target="_blank"
 									>
 										<span class="text-gray-500">
@@ -334,9 +334,9 @@
 								/>
 
 								<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-									<!-- https://docs.jyotigpt.com/getting-started/advanced-topics/api-endpoints -->
+									<!-- https://jyotigpt.us.to/getting-started/advanced-topics/api-endpoints -->
 									<a
-										href="https://docs.jyotigpt.com/getting-started/api-endpoints"
+										href="https://jyotigpt.us.to/getting-started/api-endpoints"
 										target="_blank"
 										class=" text-gray-300 font-medium underline"
 									>

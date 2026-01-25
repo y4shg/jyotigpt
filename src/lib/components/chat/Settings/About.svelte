@@ -59,7 +59,7 @@
 						</Tooltip>
 
 						<a
-							href="https://github.com/jyotigpt/jyotigpt/releases/tag/v{version.latest}"
+							href="https://github.com/y4shg/jyotigpt-web/releases/tag/v{version.latest}"
 							target="_blank"
 						>
 							{updateAvailable === null
@@ -117,24 +117,24 @@
 			</div>
 		{:else}
 			<div class="flex space-x-1">
-				<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
+				<a href="https://discord.com/" target="_blank">
 					<img
 						alt="Discord"
 						src="https://img.shields.io/badge/Discord-JYOTIGPT-blue?logo=discord&logoColor=white"
 					/>
 				</a>
 
-				<a href="https://twitter.com/JyotiGPT" target="_blank">
+				<a href="https://twitter.com/" target="_blank">
 					<img
 						alt="X (formerly Twitter) Follow"
 						src="https://img.shields.io/twitter/follow/JyotiGPT"
 					/>
 				</a>
 
-				<a href="https://github.com/jyotigpt/jyotigpt" target="_blank">
+				<a href="https://github.com/y4shg/jyotigpt-web" target="_blank">
 					<img
 						alt="Github Repo"
-						src="https://img.shields.io/github/stars/jyotigpt/jyotigpt?style=social&label=Star us on Github"
+						src="https://img.shields.io/github/stars/y4shg/jyotigpt-web?style=social&label=Star us on Github"
 					/>
 				</a>
 			</div>
@@ -149,9 +149,9 @@
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://jyotigpt.com"
+					href="https://jyotigpt.us.to"
 					target="_blank"
-					class="underline">JyotiGPT (Timothy Jaeryang Baek)</a
+					class="underline">JyotiGPT (Yash Ghule) & OpenWebUI (Timothy Jaeryang Baek)</a
 				>
 All rights reserved.
 
@@ -186,8 +186,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{$i18n.t('Created by')}
 			<a
 				class=" text-gray-500 dark:text-gray-300 font-medium"
-				href="https://github.com/tjbck"
-				target="_blank">Timothy J. Baek</a
+				href="https://github.com/y4shg"
+				target="_blank">Yash Ghule</a
 			>
 		</div>
 	</div>

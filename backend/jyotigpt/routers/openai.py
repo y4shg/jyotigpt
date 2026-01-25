@@ -218,7 +218,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
                     "Authorization": f"Bearer {request.app.state.config.OPENAI_API_KEYS[idx]}",
                     **(
                         {
-                            "HTTP-Referer": "https://jyotigpt.com/",
+                            "HTTP-Referer": "https://jyotigpt.us.to/",
                             "X-Title": "JyotiGPT",
                         }
                         if "openrouter.ai" in url
@@ -710,7 +710,7 @@ async def generate_chat_completion(
                 "Content-Type": "application/json",
                 **(
                     {
-                        "HTTP-Referer": "https://jyotigpt.com/",
+                        "HTTP-Referer": "https://jyotigpt.us.to/",
                         "X-Title": "JyotiGPT",
                     }
                     if "openrouter.ai" in url

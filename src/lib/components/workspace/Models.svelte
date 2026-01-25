@@ -89,7 +89,7 @@
 	const shareModelHandler = async (model) => {
 		toast.success($i18n.t('Redirecting you to JyotiGPT Community'));
 
-		const url = 'https://jyotigpt.com';
+		const url = 'https://jyotigpt.us.to';
 
 		const tab = await window.open(`${url}/models/create`, '_blank');
 
@@ -513,7 +513,7 @@
 
 			<a
 				class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
-				href="https://jyotigpt.com/#jyotigpt-community"
+				href="https://jyotigpt.us.to/#jyotigpt-community"
 				target="_blank"
 			>
 				<div class=" self-center">

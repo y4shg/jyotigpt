@@ -109,7 +109,7 @@ JYOTIGPT_NAME = os.environ.get("JYOTIGPT_NAME", "JyotiGPT")
 if JYOTIGPT_NAME != "JyotiGPT":
     JYOTIGPT_NAME += " (JyotiGPT)"
 
-JYOTIGPT_FAVICON_URL = "https://jyotigpt.com/favicon.png"
+JYOTIGPT_FAVICON_URL = "https://jyotigpt.us.to/favicon.png"
 
 TRUSTED_SIGNATURE_KEY = os.environ.get("TRUSTED_SIGNATURE_KEY", "")
 

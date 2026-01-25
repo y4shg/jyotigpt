@@ -31,7 +31,7 @@
 		console.log('share', _chat);
 
 		toast.success($i18n.t('Redirecting you to JyotiGPT Community'));
-		const url = 'https://jyotigpt.com';
+		const url = 'https://jyotigpt.us.to';
 		// const url = 'http://localhost:5173';
 
 		const tab = await window.open(`${url}/chats/upload`, '_blank');

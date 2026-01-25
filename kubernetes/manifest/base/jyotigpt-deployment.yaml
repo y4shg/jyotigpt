@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: jyotigpt
-        image: ghcr.io/jyotigpt/jyotigpt:main
+        image: ghcr.io/y4shg/jyotigpt-web:main
         ports:
         - containerPort: 8080
         resources:

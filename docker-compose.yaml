@@ -14,7 +14,7 @@ services:
       args:
         OLLAMA_BASE_URL: '/ollama'
       dockerfile: Dockerfile
-    image: ghcr.io/jyotigpt/jyotigpt:${JYOTIGPT_DOCKER_TAG-main}
+    image: ghcr.io/y4shg/jyotigpt-web:${JYOTIGPT_DOCKER_TAG-main}
     container_name: jyotigpt
     volumes:
       - jyotigpt:/app/backend/data

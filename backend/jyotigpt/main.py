@@ -420,7 +420,7 @@ print(
 
 v{VERSION} - building the best open-source AI user interface.
 {f"Commit: {JYOTIGPT_BUILD_HASH}" if JYOTIGPT_BUILD_HASH != "dev-build" else ""}
-https://github.com/jyotigpt/jyotigpt
+https://github.com/y4shg/jyotigpt-web
 """
 )
 
@@ -1384,7 +1384,7 @@ async def get_app_latest_release_version(user=Depends(get_verified_user)):
         timeout = aiohttp.ClientTimeout(total=1)
         async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
             async with session.get(
-                "https://api.github.com/repos/jyotigpt/jyotigpt/releases/latest"
+                "https://api.github.com/repos/y4shg/jyotigpt-web/releases/latest"
             ) as response:
                 response.raise_for_status()
                 data = await response.json()
