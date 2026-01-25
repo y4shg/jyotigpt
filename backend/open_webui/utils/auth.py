@@ -74,7 +74,7 @@ def get_license_data(app, key):
     if key:
         try:
             res = requests.post(
-                "https://api.openwebui.com/api/v1/license/",
+                "https://api.jyotigpt.com/api/v1/license/",
                 json={"key": key, "version": "1"},
                 timeout=5,
             )

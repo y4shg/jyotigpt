@@ -280,7 +280,7 @@
 				'aboutus',
 				'softwareinfo',
 				'timothyjaeryangbaek',
-				'openwebui',
+				'jyotigpt',
 				'release',
 				'updates',
 				'updateinfo',

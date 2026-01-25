@@ -73,17 +73,17 @@ if WEBSOCKET_MANAGER == "redis":
         WEBSOCKET_SENTINEL_HOSTS, WEBSOCKET_SENTINEL_PORT
     )
     SESSION_POOL = RedisDict(
-        "open-webui:session_pool",
+        "jyotigpt:session_pool",
         redis_url=WEBSOCKET_REDIS_URL,
         redis_sentinels=redis_sentinels,
     )
     USER_POOL = RedisDict(
-        "open-webui:user_pool",
+        "jyotigpt:user_pool",
         redis_url=WEBSOCKET_REDIS_URL,
         redis_sentinels=redis_sentinels,
     )
     USAGE_POOL = RedisDict(
-        "open-webui:usage_pool",
+        "jyotigpt:usage_pool",
         redis_url=WEBSOCKET_REDIS_URL,
         redis_sentinels=redis_sentinels,
     )
