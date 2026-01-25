@@ -2,7 +2,7 @@ import json
 import logging
 
 import requests
-from jyotigpt.config import WEBUI_FAVICON_URL
+from jyotigpt.config import JYOTIGPT_FAVICON_URL
 from jyotigpt.env import SRC_LOG_LEVELS, VERSION
 
 log = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ def post_webhook(name: str, url: str, message: str, event_data: dict) -> bool:
                     {
                         "activityTitle": message,
                         "activitySubtitle": f"{name} ({VERSION}) - {action}",
-                        "activityImage": WEBUI_FAVICON_URL,
+                        "activityImage": JYOTIGPT_FAVICON_URL,
                         "facts": facts,
                         "markdown": True,
                     }

@@ -37,9 +37,9 @@ from jyotigpt.config import (
 )
 from jyotigpt.constants import ERROR_MESSAGES, WEBHOOK_MESSAGES
 from jyotigpt.env import (
-    WEBUI_NAME,
-    WEBUI_AUTH_COOKIE_SAME_SITE,
-    WEBUI_AUTH_COOKIE_SECURE,
+    JYOTIGPT_NAME,
+    JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+    JYOTIGPT_AUTH_COOKIE_SECURE,
 )
 from jyotigpt.utils.misc import parse_duration
 from jyotigpt.utils.auth import get_password_hash, create_token
@@ -389,7 +389,7 @@ class OAuthManager:
 
                 if auth_manager_config.WEBHOOK_URL:
                     post_webhook(
-                        WEBUI_NAME,
+                        JYOTIGPT_NAME,
                         auth_manager_config.WEBHOOK_URL,
                         WEBHOOK_MESSAGES.USER_SIGNUP(user.name),
                         {
@@ -420,8 +420,8 @@ class OAuthManager:
             key="token",
             value=jwt_token,
             httponly=True,  # Ensures the cookie is not accessible via JavaScript
-            samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
-            secure=WEBUI_AUTH_COOKIE_SECURE,
+            samesite=JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+            secure=JYOTIGPT_AUTH_COOKIE_SECURE,
         )
 
         if ENABLE_OAUTH_SIGNUP.value:
@@ -430,8 +430,8 @@ class OAuthManager:
                 key="oauth_id_token",
                 value=oauth_id_token,
                 httponly=True,
-                samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
-                secure=WEBUI_AUTH_COOKIE_SECURE,
+                samesite=JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+                secure=JYOTIGPT_AUTH_COOKIE_SECURE,
             )
         # Redirect back to the frontend with the JWT token
         redirect_url = f"{request.base_url}auth#token={jwt_token}"

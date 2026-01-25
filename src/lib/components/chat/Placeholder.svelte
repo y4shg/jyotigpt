@@ -9,7 +9,7 @@
 
 	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
 	import { sanitizeResponseContent, extractCurlyBraceWords } from '$lib/utils';
-	import { WEBUI_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$lib/constants';
 
 	import Suggestions from './Suggestions.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
@@ -125,7 +125,7 @@
 										src={model?.info?.meta?.profile_image_url ??
 											($i18n.language === 'dg-DG'
 												? `/doge.png`
-												: `${WEBUI_BASE_URL}/static/favicon.png`)}
+												: `${JYOTIGPT_BASE_URL}/static/favicon.png`)}
 										class=" size-9 @sm:size-10 rounded-full border-[1px] border-gray-100 dark:border-none"
 										alt="logo"
 										draggable="false"

@@ -24,9 +24,9 @@ from jyotigpt.env import (
     FRONTEND_BUILD_DIR,
     OFFLINE_MODE,
     JYOTIGPT_DIR,
-    WEBUI_AUTH,
-    WEBUI_FAVICON_URL,
-    WEBUI_NAME,
+    JYOTIGPT_AUTH,
+    JYOTIGPT_FAVICON_URL,
+    JYOTIGPT_NAME,
     log,
 )
 from jyotigpt.internal.db import Base, get_db
@@ -305,7 +305,7 @@ class AppConfig:
 
 
 ####################################
-# WEBUI_AUTH (Required for security)
+# JYOTIGPT_AUTH (Required for security)
 ####################################
 
 ENABLE_API_KEY = PersistentConfig(
@@ -698,7 +698,7 @@ if CUSTOM_NAME:
         data = r.json()
         if r.ok:
             if "logo" in data:
-                WEBUI_FAVICON_URL = url = (
+                JYOTIGPT_FAVICON_URL = url = (
                     f"https://api.jyotigpt.com{data['logo']}"
                     if data["logo"][0] == "/"
                     else data["logo"]
@@ -723,7 +723,7 @@ if CUSTOM_NAME:
                         r.raw.decode_content = True
                         shutil.copyfileobj(r.raw, f)
 
-            WEBUI_NAME = data["name"]
+            JYOTIGPT_NAME = data["name"]
     except Exception as e:
         log.exception(e)
         pass
@@ -916,12 +916,12 @@ TOOL_SERVER_CONNECTIONS = PersistentConfig(
 )
 
 ####################################
-# WEBUI
+# JYOTIGPT
 ####################################
 
 
-WEBUI_URL = PersistentConfig(
-    "WEBUI_URL", "webui.url", os.environ.get("WEBUI_URL", "http://localhost:3000")
+JYOTIGPT_URL = PersistentConfig(
+    "JYOTIGPT_URL", "jyotigpt.url", os.environ.get("JYOTIGPT_URL", "http://localhost:3000")
 )
 
 
@@ -930,7 +930,7 @@ ENABLE_SIGNUP = PersistentConfig(
     "ui.enable_signup",
     (
         False
-        if not WEBUI_AUTH
+        if not JYOTIGPT_AUTH
         else os.environ.get("ENABLE_SIGNUP", "True").lower() == "true"
     ),
 )
@@ -1249,13 +1249,13 @@ class BannerModel(BaseModel):
 
 
 try:
-    banners = json.loads(os.environ.get("WEBUI_BANNERS", "[]"))
+    banners = json.loads(os.environ.get("JYOTIGPT_BANNERS", "[]"))
     banners = [BannerModel(**banner) for banner in banners]
 except Exception as e:
-    log.exception(f"Error loading WEBUI_BANNERS: {e}")
+    log.exception(f"Error loading JYOTIGPT_BANNERS: {e}")
     banners = []
 
-WEBUI_BANNERS = PersistentConfig("WEBUI_BANNERS", "ui.banners", banners)
+JYOTIGPT_BANNERS = PersistentConfig("JYOTIGPT_BANNERS", "ui.banners", banners)
 
 
 SHOW_ADMIN_DETAILS = PersistentConfig(

@@ -17,7 +17,7 @@ from jyotigpt.models.users import Users
 
 from jyotigpt.constants import ERROR_MESSAGES
 from jyotigpt.env import (
-    WEBUI_SECRET_KEY,
+    JYOTIGPT_SECRET_KEY,
     TRUSTED_SIGNATURE_KEY,
     STATIC_DIR,
     SRC_LOG_LEVELS,
@@ -33,7 +33,7 @@ logging.getLogger("passlib").setLevel(logging.ERROR)
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["OAUTH"])
 
-SESSION_SECRET = WEBUI_SECRET_KEY
+SESSION_SECRET = JYOTIGPT_SECRET_KEY
 ALGORITHM = "HS256"
 
 ##############
@@ -88,7 +88,7 @@ def get_license_data(app, key):
                     elif k == "count":
                         setattr(app.state, "USER_COUNT", v)
                     elif k == "name":
-                        setattr(app.state, "WEBUI_NAME", v)
+                        setattr(app.state, "JYOTIGPT_NAME", v)
                     elif k == "metadata":
                         setattr(app.state, "LICENSE_METADATA", v)
                 return True

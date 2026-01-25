@@ -9,4 +9,4 @@ Pipfile
 !/data
 /data/*
 /JYOTIGPT/data/*
-.webui_secret_key
+.JYOTIGPT_secret_key

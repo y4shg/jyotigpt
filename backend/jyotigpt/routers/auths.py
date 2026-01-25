@@ -22,11 +22,11 @@ from jyotigpt.models.users import Users
 
 from jyotigpt.constants import ERROR_MESSAGES, WEBHOOK_MESSAGES
 from jyotigpt.env import (
-    WEBUI_AUTH,
-    WEBUI_AUTH_TRUSTED_EMAIL_HEADER,
-    WEBUI_AUTH_TRUSTED_NAME_HEADER,
-    WEBUI_AUTH_COOKIE_SAME_SITE,
-    WEBUI_AUTH_COOKIE_SECURE,
+    JYOTIGPT_AUTH,
+    JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER,
+    JYOTIGPT_AUTH_TRUSTED_NAME_HEADER,
+    JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+    JYOTIGPT_AUTH_COOKIE_SECURE,
     SRC_LOG_LEVELS,
 )
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -94,8 +94,8 @@ async def get_session_user(
         value=token,
         expires=datetime_expires_at,
         httponly=True,  # Ensures the cookie is not accessible via JavaScript
-        samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
-        secure=WEBUI_AUTH_COOKIE_SECURE,
+        samesite=JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+        secure=JYOTIGPT_AUTH_COOKIE_SECURE,
     )
 
     user_permissions = get_permissions(
@@ -146,7 +146,7 @@ async def update_profile(
 async def update_password(
     form_data: UpdatePasswordForm, session_user=Depends(get_current_user)
 ):
-    if WEBUI_AUTH_TRUSTED_EMAIL_HEADER:
+    if JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER:
         raise HTTPException(400, detail=ERROR_MESSAGES.ACTION_PROHIBITED)
     if session_user:
         user = Auths.authenticate_user(session_user.email, form_data.password)
@@ -332,15 +332,15 @@ async def ldap_auth(request: Request, response: Response, form_data: LdapForm):
 
 @router.post("/signin", response_model=SessionUserResponse)
 async def signin(request: Request, response: Response, form_data: SigninForm):
-    if WEBUI_AUTH_TRUSTED_EMAIL_HEADER:
-        if WEBUI_AUTH_TRUSTED_EMAIL_HEADER not in request.headers:
+    if JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER:
+        if JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER not in request.headers:
             raise HTTPException(400, detail=ERROR_MESSAGES.INVALID_TRUSTED_HEADER)
 
-        trusted_email = request.headers[WEBUI_AUTH_TRUSTED_EMAIL_HEADER].lower()
+        trusted_email = request.headers[JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER].lower()
         trusted_name = trusted_email
-        if WEBUI_AUTH_TRUSTED_NAME_HEADER:
+        if JYOTIGPT_AUTH_TRUSTED_NAME_HEADER:
             trusted_name = request.headers.get(
-                WEBUI_AUTH_TRUSTED_NAME_HEADER, trusted_email
+                JYOTIGPT_AUTH_TRUSTED_NAME_HEADER, trusted_email
             )
         if not Users.get_user_by_email(trusted_email.lower()):
             await signup(
@@ -351,7 +351,7 @@ async def signin(request: Request, response: Response, form_data: SigninForm):
                 ),
             )
         user = Auths.authenticate_user_by_trusted_header(trusted_email)
-    elif WEBUI_AUTH == False:
+    elif JYOTIGPT_AUTH == False:
         admin_email = "admin@localhost"
         admin_password = "admin"
 
@@ -395,8 +395,8 @@ async def signin(request: Request, response: Response, form_data: SigninForm):
             value=token,
             expires=datetime_expires_at,
             httponly=True,  # Ensures the cookie is not accessible via JavaScript
-            samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
-            secure=WEBUI_AUTH_COOKIE_SECURE,
+            samesite=JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+            secure=JYOTIGPT_AUTH_COOKIE_SECURE,
         )
 
         user_permissions = get_permissions(
@@ -426,7 +426,7 @@ async def signin(request: Request, response: Response, form_data: SigninForm):
 @router.post("/signup", response_model=SessionUserResponse)
 async def signup(request: Request, response: Response, form_data: SignupForm):
 
-    if WEBUI_AUTH:
+    if JYOTIGPT_AUTH:
         if (
             not request.app.state.config.ENABLE_SIGNUP
             or not request.app.state.config.ENABLE_LOGIN_FORM
@@ -497,13 +497,13 @@ async def signup(request: Request, response: Response, form_data: SignupForm):
                 value=token,
                 expires=datetime_expires_at,
                 httponly=True,  # Ensures the cookie is not accessible via JavaScript
-                samesite=WEBUI_AUTH_COOKIE_SAME_SITE,
-                secure=WEBUI_AUTH_COOKIE_SECURE,
+                samesite=JYOTIGPT_AUTH_COOKIE_SAME_SITE,
+                secure=JYOTIGPT_AUTH_COOKIE_SECURE,
             )
 
             if request.app.state.config.WEBHOOK_URL:
                 post_webhook(
-                    request.app.state.WEBUI_NAME,
+                    request.app.state.JYOTIGPT_NAME,
                     request.app.state.config.WEBHOOK_URL,
                     WEBHOOK_MESSAGES.USER_SIGNUP(user.name),
                     {
@@ -654,7 +654,7 @@ async def get_admin_details(request: Request, user=Depends(get_current_user)):
 async def get_admin_config(request: Request, user=Depends(get_admin_user)):
     return {
         "SHOW_ADMIN_DETAILS": request.app.state.config.SHOW_ADMIN_DETAILS,
-        "WEBUI_URL": request.app.state.config.WEBUI_URL,
+        "JYOTIGPT_URL": request.app.state.config.JYOTIGPT_URL,
         "ENABLE_SIGNUP": request.app.state.config.ENABLE_SIGNUP,
         "ENABLE_API_KEY": request.app.state.config.ENABLE_API_KEY,
         "ENABLE_API_KEY_ENDPOINT_RESTRICTIONS": request.app.state.config.ENABLE_API_KEY_ENDPOINT_RESTRICTIONS,
@@ -670,7 +670,7 @@ async def get_admin_config(request: Request, user=Depends(get_admin_user)):
 
 class AdminConfig(BaseModel):
     SHOW_ADMIN_DETAILS: bool
-    WEBUI_URL: str
+    JYOTIGPT_URL: str
     ENABLE_SIGNUP: bool
     ENABLE_API_KEY: bool
     ENABLE_API_KEY_ENDPOINT_RESTRICTIONS: bool
@@ -688,7 +688,7 @@ async def update_admin_config(
     request: Request, form_data: AdminConfig, user=Depends(get_admin_user)
 ):
     request.app.state.config.SHOW_ADMIN_DETAILS = form_data.SHOW_ADMIN_DETAILS
-    request.app.state.config.WEBUI_URL = form_data.WEBUI_URL
+    request.app.state.config.JYOTIGPT_URL = form_data.JYOTIGPT_URL
     request.app.state.config.ENABLE_SIGNUP = form_data.ENABLE_SIGNUP
 
     request.app.state.config.ENABLE_API_KEY = form_data.ENABLE_API_KEY
@@ -719,7 +719,7 @@ async def update_admin_config(
 
     return {
         "SHOW_ADMIN_DETAILS": request.app.state.config.SHOW_ADMIN_DETAILS,
-        "WEBUI_URL": request.app.state.config.WEBUI_URL,
+        "JYOTIGPT_URL": request.app.state.config.JYOTIGPT_URL,
         "ENABLE_SIGNUP": request.app.state.config.ENABLE_SIGNUP,
         "ENABLE_API_KEY": request.app.state.config.ENABLE_API_KEY,
         "ENABLE_API_KEY_ENDPOINT_RESTRICTIONS": request.app.state.config.ENABLE_API_KEY_ENDPOINT_RESTRICTIONS,

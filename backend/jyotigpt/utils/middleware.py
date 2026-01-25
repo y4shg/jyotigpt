@@ -1137,14 +1137,14 @@ async def process_chat_response(
                         webhook_url = Users.get_user_webhook_url_by_id(user.id)
                         if webhook_url:
                             post_webhook(
-                                request.app.state.WEBUI_NAME,
+                                request.app.state.JYOTIGPT_NAME,
                                 webhook_url,
-                                f"{title} - {request.app.state.config.WEBUI_URL}/c/{metadata['chat_id']}\n\n{content}",
+                                f"{title} - {request.app.state.config.JYOTIGPT_URL}/c/{metadata['chat_id']}\n\n{content}",
                                 {
                                     "action": "chat",
                                     "message": content,
                                     "title": title,
-                                    "url": f"{request.app.state.config.WEBUI_URL}/c/{metadata['chat_id']}",
+                                    "url": f"{request.app.state.config.JYOTIGPT_URL}/c/{metadata['chat_id']}",
                                 },
                             )
 
@@ -2219,14 +2219,14 @@ async def process_chat_response(
                     webhook_url = Users.get_user_webhook_url_by_id(user.id)
                     if webhook_url:
                         post_webhook(
-                            request.app.state.WEBUI_NAME,
+                            request.app.state.JYOTIGPT_NAME,
                             webhook_url,
-                            f"{title} - {request.app.state.config.WEBUI_URL}/c/{metadata['chat_id']}\n\n{content}",
+                            f"{title} - {request.app.state.config.JYOTIGPT_URL}/c/{metadata['chat_id']}\n\n{content}",
                             {
                                 "action": "chat",
                                 "message": content,
                                 "title": title,
-                                "url": f"{request.app.state.config.WEBUI_URL}/c/{metadata['chat_id']}",
+                                "url": f"{request.app.state.config.JYOTIGPT_URL}/c/{metadata['chat_id']}",
                             },
                         )
 

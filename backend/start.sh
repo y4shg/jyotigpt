@@ -14,21 +14,21 @@ if [[ "${WEB_LOADER_ENGINE,,}" == "playwright" ]]; then
     python -c "import nltk; nltk.download('punkt_tab')"
 fi
 
-KEY_FILE=.webui_secret_key
+KEY_FILE=.JYOTIGPT_secret_key
 
 PORT="${PORT:-8080}"
 HOST="${HOST:-0.0.0.0}"
-if test "$WEBUI_SECRET_KEY $WEBUI_JWT_SECRET_KEY" = " "; then
-  echo "Loading WEBUI_SECRET_KEY from file, not provided as an environment variable."
+if test "$JYOTIGPT_SECRET_KEY $JYOTIGPT_JWT_SECRET_KEY" = " "; then
+  echo "Loading JYOTIGPT_SECRET_KEY from file, not provided as an environment variable."
 
   if ! [ -e "$KEY_FILE" ]; then
-    echo "Generating WEBUI_SECRET_KEY"
-    # Generate a random value to use as a WEBUI_SECRET_KEY in case the user didn't provide one.
+    echo "Generating JYOTIGPT_SECRET_KEY"
+    # Generate a random value to use as a JYOTIGPT_SECRET_KEY in case the user didn't provide one.
     echo $(head -c 12 /dev/random | base64) > "$KEY_FILE"
   fi
 
-  echo "Loading WEBUI_SECRET_KEY from $KEY_FILE"
-  WEBUI_SECRET_KEY=$(cat "$KEY_FILE")
+  echo "Loading JYOTIGPT_SECRET_KEY from $KEY_FILE"
+  JYOTIGPT_SECRET_KEY=$(cat "$KEY_FILE")
 fi
 
 if [[ "${USE_OLLAMA_DOCKER,,}" == "true" ]]; then
@@ -46,9 +46,9 @@ if [ -n "$SPACE_ID" ]; then
   echo "Configuring for HuggingFace Space deployment"
   if [ -n "$ADMIN_USER_EMAIL" ] && [ -n "$ADMIN_USER_PASSWORD" ]; then
     echo "Admin user configured, creating"
-    WEBUI_SECRET_KEY="$WEBUI_SECRET_KEY" uvicorn jyotigpt.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' &
-    webui_pid=$!
-    echo "Waiting for webui to start..."
+    JYOTIGPT_SECRET_KEY="$JYOTIGPT_SECRET_KEY" uvicorn jyotigpt.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' &
+    JYOTIGPT_pid=$!
+    echo "Waiting for jyotigpt to start..."
     while ! curl -s http://localhost:8080/health > /dev/null; do
       sleep 1
     done
@@ -58,11 +58,11 @@ if [ -n "$SPACE_ID" ]; then
       -H "accept: application/json" \
       -H "Content-Type: application/json" \
       -d "{ \"email\": \"${ADMIN_USER_EMAIL}\", \"password\": \"${ADMIN_USER_PASSWORD}\", \"name\": \"Admin\" }"
-    echo "Shutting down webui..."
-    kill $webui_pid
+    echo "Shutting down jyotigpt..."
+    kill $JYOTIGPT_pid
   fi
 
-  export WEBUI_URL=${SPACE_HOST}
+  export JYOTIGPT_URL=${SPACE_HOST}
 fi
 
-WEBUI_SECRET_KEY="$WEBUI_SECRET_KEY" exec uvicorn jyotigpt.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' --workers "${UVICORN_WORKERS:-1}"
+JYOTIGPT_SECRET_KEY="$JYOTIGPT_SECRET_KEY" exec uvicorn jyotigpt.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' --workers "${UVICORN_WORKERS:-1}"

@@ -169,12 +169,12 @@ sources = ["backend"]
 exclude = [
     ".dockerignore",
     ".gitignore",
-    ".webui_secret_key",
+    ".JYOTIGPT_secret_key",
     "dev.sh",
     "requirements.txt",
     "start.sh",
     "start_windows.bat",
-    "webui.db",
+    "jyotigpt.db",
     "chroma.sqlite3",
 ]
 force-include = { "CHANGELOG.md" = "jyotigpt/CHANGELOG.md", build = "jyotigpt/frontend" }

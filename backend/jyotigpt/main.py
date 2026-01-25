@@ -248,10 +248,10 @@ from jyotigpt.config import (
     ENABLE_GOOGLE_DRIVE_INTEGRATION,
     ENABLE_ONEDRIVE_INTEGRATION,
     UPLOAD_DIR,
-    # WebUI
-    WEBUI_AUTH,
-    WEBUI_NAME,
-    WEBUI_BANNERS,
+    # JYOTIGPT
+    JYOTIGPT_AUTH,
+    JYOTIGPT_NAME,
+    JYOTIGPT_BANNERS,
     WEBHOOK_URL,
     ADMIN_EMAIL,
     SHOW_ADMIN_DETAILS,
@@ -273,7 +273,7 @@ from jyotigpt.config import (
     DEFAULT_ARENA_MODEL,
     MODEL_ORDER_LIST,
     EVALUATION_ARENA_MODELS,
-    # WebUI (OAuth)
+    # JYOTIGPT (OAuth)
     ENABLE_OAUTH_ROLE_MANAGEMENT,
     OAUTH_ROLES_CLAIM,
     OAUTH_EMAIL_CLAIM,
@@ -281,7 +281,7 @@ from jyotigpt.config import (
     OAUTH_USERNAME_CLAIM,
     OAUTH_ALLOWED_ROLES,
     OAUTH_ADMIN_ROLES,
-    # WebUI (LDAP)
+    # JYOTIGPT (LDAP)
     ENABLE_LDAP,
     LDAP_SERVER_LABEL,
     LDAP_SERVER_HOST,
@@ -303,7 +303,7 @@ from jyotigpt.config import (
     CORS_ALLOW_ORIGIN,
     DEFAULT_LOCALE,
     OAUTH_PROVIDERS,
-    WEBUI_URL,
+    JYOTIGPT_URL,
     # Admin
     ENABLE_ADMIN_CHAT_ACCESS,
     ENABLE_ADMIN_EXPORT,
@@ -337,12 +337,12 @@ from jyotigpt.env import (
     SAFE_MODE,
     SRC_LOG_LEVELS,
     VERSION,
-    WEBUI_BUILD_HASH,
-    WEBUI_SECRET_KEY,
-    WEBUI_SESSION_COOKIE_SAME_SITE,
-    WEBUI_SESSION_COOKIE_SECURE,
-    WEBUI_AUTH_TRUSTED_EMAIL_HEADER,
-    WEBUI_AUTH_TRUSTED_NAME_HEADER,
+    JYOTIGPT_BUILD_HASH,
+    JYOTIGPT_SECRET_KEY,
+    JYOTIGPT_SESSION_COOKIE_SAME_SITE,
+    JYOTIGPT_SESSION_COOKIE_SECURE,
+    JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER,
+    JYOTIGPT_AUTH_TRUSTED_NAME_HEADER,
     ENABLE_WEBSOCKET_SUPPORT,
     BYPASS_MODEL_ACCESS_CONTROL,
     RESET_CONFIG_ON_START,
@@ -419,7 +419,7 @@ print(
 
 
 v{VERSION} - building the best open-source AI user interface.
-{f"Commit: {WEBUI_BUILD_HASH}" if WEBUI_BUILD_HASH != "dev-build" else ""}
+{f"Commit: {JYOTIGPT_BUILD_HASH}" if JYOTIGPT_BUILD_HASH != "dev-build" else ""}
 https://github.com/jyotigpt/jyotigpt
 """
 )
@@ -453,7 +453,7 @@ app.state.config = AppConfig(
     redis_sentinels=get_sentinels_from_env(REDIS_SENTINEL_HOSTS, REDIS_SENTINEL_PORT),
 )
 
-app.state.WEBUI_NAME = WEBUI_NAME
+app.state.JYOTIGPT_NAME = JYOTIGPT_NAME
 app.state.LICENSE_METADATA = None
 
 
@@ -514,11 +514,11 @@ app.state.config.ENABLE_DIRECT_CONNECTIONS = ENABLE_DIRECT_CONNECTIONS
 
 ########################################
 #
-# WEBUI
+# JYOTIGPT
 #
 ########################################
 
-app.state.config.WEBUI_URL = WEBUI_URL
+app.state.config.JYOTIGPT_URL = JYOTIGPT_URL
 app.state.config.ENABLE_SIGNUP = ENABLE_SIGNUP
 app.state.config.ENABLE_LOGIN_FORM = ENABLE_LOGIN_FORM
 
@@ -540,7 +540,7 @@ app.state.config.DEFAULT_USER_ROLE = DEFAULT_USER_ROLE
 
 app.state.config.USER_PERMISSIONS = USER_PERMISSIONS
 app.state.config.WEBHOOK_URL = WEBHOOK_URL
-app.state.config.BANNERS = WEBUI_BANNERS
+app.state.config.BANNERS = JYOTIGPT_BANNERS
 app.state.config.MODEL_ORDER_LIST = MODEL_ORDER_LIST
 
 
@@ -576,8 +576,8 @@ app.state.config.LDAP_CA_CERT_FILE = LDAP_CA_CERT_FILE
 app.state.config.LDAP_CIPHERS = LDAP_CIPHERS
 
 
-app.state.AUTH_TRUSTED_EMAIL_HEADER = WEBUI_AUTH_TRUSTED_EMAIL_HEADER
-app.state.AUTH_TRUSTED_NAME_HEADER = WEBUI_AUTH_TRUSTED_NAME_HEADER
+app.state.AUTH_TRUSTED_EMAIL_HEADER = JYOTIGPT_AUTH_TRUSTED_EMAIL_HEADER
+app.state.AUTH_TRUSTED_NAME_HEADER = JYOTIGPT_AUTH_TRUSTED_NAME_HEADER
 app.state.EXTERNAL_PWA_MANIFEST_URL = EXTERNAL_PWA_MANIFEST_URL
 
 app.state.USER_COUNT = None
@@ -855,7 +855,7 @@ app.state.config.AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH = (
 
 ########################################
 #
-# WEBUI
+# JYOTIGPT
 #
 ########################################
 
@@ -1264,7 +1264,7 @@ async def get_app_config(request: Request):
     return {
         **({"onboarding": True} if onboarding else {}),
         "status": True,
-        "name": app.state.WEBUI_NAME,
+        "name": app.state.JYOTIGPT_NAME,
         "version": VERSION,
         "default_locale": str(DEFAULT_LOCALE),
         "oauth": {
@@ -1274,7 +1274,7 @@ async def get_app_config(request: Request):
             }
         },
         "features": {
-            "auth": WEBUI_AUTH,
+            "auth": JYOTIGPT_AUTH,
             "auth_trusted_header": bool(app.state.AUTH_TRUSTED_EMAIL_HEADER),
             "enable_ldap": app.state.config.ENABLE_LDAP,
             "enable_api_key": app.state.config.ENABLE_API_KEY,
@@ -1409,10 +1409,10 @@ async def get_app_changelog():
 if len(OAUTH_PROVIDERS) > 0:
     app.add_middleware(
         SessionMiddleware,
-        secret_key=WEBUI_SECRET_KEY,
+        secret_key=JYOTIGPT_SECRET_KEY,
         session_cookie="oui-session",
-        same_site=WEBUI_SESSION_COOKIE_SAME_SITE,
-        https_only=WEBUI_SESSION_COOKIE_SECURE,
+        same_site=JYOTIGPT_SESSION_COOKIE_SAME_SITE,
+        https_only=JYOTIGPT_SESSION_COOKIE_SECURE,
     )
 
 
@@ -1438,8 +1438,8 @@ async def get_manifest_json():
         return requests.get(app.state.EXTERNAL_PWA_MANIFEST_URL).json()
     else:
         return {
-            "name": app.state.WEBUI_NAME,
-            "short_name": app.state.WEBUI_NAME,
+            "name": app.state.JYOTIGPT_NAME,
+            "short_name": app.state.JYOTIGPT_NAME,
             "description": "JyotiGPT is an open, extensible, user-friendly interface for AI that adapts to your workflow.",
             "start_url": "/",
             "display": "standalone",
@@ -1466,12 +1466,12 @@ async def get_manifest_json():
 async def get_opensearch_xml():
     xml_content = rf"""
     <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-    <ShortName>{app.state.WEBUI_NAME}</ShortName>
-    <Description>Search {app.state.WEBUI_NAME}</Description>
+    <ShortName>{app.state.JYOTIGPT_NAME}</ShortName>
+    <Description>Search {app.state.JYOTIGPT_NAME}</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image width="16" height="16" type="image/x-icon">{app.state.config.WEBUI_URL}/static/favicon.png</Image>
-    <Url type="text/html" method="get" template="{app.state.config.WEBUI_URL}/?q={"{searchTerms}"}"/>
-    <moz:SearchForm>{app.state.config.WEBUI_URL}</moz:SearchForm>
+    <Image width="16" height="16" type="image/x-icon">{app.state.config.JYOTIGPT_URL}/static/favicon.png</Image>
+    <Url type="text/html" method="get" template="{app.state.config.JYOTIGPT_URL}/?q={"{searchTerms}"}"/>
+    <moz:SearchForm>{app.state.config.JYOTIGPT_URL}</moz:SearchForm>
     </OpenSearchDescription>
     """
     return Response(content=xml_content, media_type="application/xml")

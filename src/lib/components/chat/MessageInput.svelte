@@ -32,7 +32,7 @@
 	import { generateAutoCompletion } from '$lib/apis';
 	import { deleteFileById } from '$lib/apis/files';
 
-	import { WEBUI_BASE_URL, WEBUI_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL, JYOTIGPT_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
 
 	import InputMenu from './MessageInput/InputMenu.svelte';
 	import VoiceRecording from './MessageInput/VoiceRecording.svelte';
@@ -210,7 +210,7 @@
 				fileItem.id = uploadedFile.id;
 				fileItem.collection_name =
 					uploadedFile?.meta?.collection_name || uploadedFile?.collection_name;
-				fileItem.url = `${WEBUI_API_BASE_URL}/files/${uploadedFile.id}`;
+				fileItem.url = `${JYOTIGPT_API_BASE_URL}/files/${uploadedFile.id}`;
 
 				files = files;
 			} else {
@@ -410,7 +410,7 @@
 												?.profile_image_url ??
 												($i18n.language === 'dg-DG'
 													? `/doge.png`
-													: `${WEBUI_BASE_URL}/static/favicon.png`)}
+													: `${JYOTIGPT_BASE_URL}/static/favicon.png`)}
 										/>
 										<div class="translate-y-[0.5px]">
 											Talking to <span class=" font-medium">{atSelectedModel.name}</span>

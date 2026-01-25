@@ -2,7 +2,7 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { WEBUI_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$lib/constants';
 
 	import Marquee from './common/Marquee.svelte';
 	import SlideShow from './common/SlideShow.svelte';
@@ -46,7 +46,7 @@
 					<img
 						id="logo"
 						crossorigin="anonymous"
-						src="{WEBUI_BASE_URL}/static/favicon.png"
+						src="{JYOTIGPT_BASE_URL}/static/favicon.png"
 						class=" w-6 rounded-full"
 						alt="logo"
 					/>

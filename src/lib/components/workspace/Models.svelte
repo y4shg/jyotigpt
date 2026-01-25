@@ -11,7 +11,7 @@
 	import { goto } from '$app/navigation';
 	const i18n = getContext('i18n');
 
-	import { WEBUI_NAME, config, mobile, models as _models, settings, user } from '$lib/stores';
+	import { JYOTIGPT_NAME, config, mobile, models as _models, settings, user } from '$lib/stores';
 	import {
 		createNewModel,
 		deleteModelById,
@@ -196,7 +196,7 @@
 
 <svelte:head>
 	<title>
-		{$i18n.t('Models')} | {$WEBUI_NAME}
+		{$i18n.t('Models')} | {$JYOTIGPT_NAME}
 	</title>
 </svelte:head>
 

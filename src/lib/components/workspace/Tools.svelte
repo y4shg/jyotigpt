@@ -4,7 +4,7 @@
 	const { saveAs } = fileSaver;
 
 	import { onMount, getContext } from 'svelte';
-	import { WEBUI_NAME, config, prompts, tools as _tools, user } from '$lib/stores';
+	import { JYOTIGPT_NAME, config, prompts, tools as _tools, user } from '$lib/stores';
 	import { createNewPrompt, deletePromptByCommand, getPrompts } from '$lib/apis/prompts';
 
 	import { goto } from '$app/navigation';
@@ -164,7 +164,7 @@
 
 <svelte:head>
 	<title>
-		{$i18n.t('Tools')} | {$WEBUI_NAME}
+		{$i18n.t('Tools')} | {$JYOTIGPT_NAME}
 	</title>
 </svelte:head>
 

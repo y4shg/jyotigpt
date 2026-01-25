@@ -43,7 +43,7 @@
 <div class="flex w-full gap-2 items-center">
 	<Tooltip
 		className="w-full relative"
-		content={$i18n.t(`WebUI will make requests to "{{url}}"`, {
+		content={$i18n.t(`JYOTIGPT will make requests to "{{url}}"`, {
 			url: `${connection?.url}/${connection?.path ?? 'openapi.json'}`
 		})}
 		placement="top-start"

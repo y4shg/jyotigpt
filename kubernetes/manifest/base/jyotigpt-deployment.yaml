@@ -30,9 +30,9 @@ spec:
           value: "http://ollama-service.jyotigpt.svc.cluster.local:11434"
         tty: true
         volumeMounts:
-        - name: webui-volume
+        - name: jyotigpt-volume
           mountPath: /app/backend/data
       volumes:
-      - name: webui-volume
+      - name: jyotigpt-volume
         persistentVolumeClaim:
           claimName: jyotigpt-pvc          

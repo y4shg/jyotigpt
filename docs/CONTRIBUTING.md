@@ -48,7 +48,7 @@ We welcome pull requests. Before submitting one, please:
 
 ### 📚 Documentation & Tutorials
 
-Help us make JyotiGPT more accessible by improving documentation, writing tutorials, or creating guides on setting up and optimizing the web UI.
+Help us make JyotiGPT more accessible by improving documentation, writing tutorials, or creating guides on setting up and optimizing the JYOTIGPT.
 
 ### 🌐 Translations and Internationalization
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { WEBUI_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$lib/constants';
 	import { marked } from 'marked';
 
 	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
@@ -55,7 +55,7 @@
 								src={model?.info?.meta?.profile_image_url ??
 									($i18n.language === 'dg-DG'
 										? `/doge.png`
-										: `${WEBUI_BASE_URL}/static/favicon.png`)}
+										: `${JYOTIGPT_BASE_URL}/static/favicon.png`)}
 								class=" size-[2.7rem] rounded-full border-[1px] border-gray-100 dark:border-none"
 								alt="logo"
 								draggable="false"

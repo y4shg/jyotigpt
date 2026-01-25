@@ -1,6 +1,6 @@
 {
   "name": "JyotiGPT",
-  "short_name": "WebUI",
+  "short_name": "JyotiGPT",
   "icons": [
     {
       "src": "/static/web-app-manifest-192x192.png",

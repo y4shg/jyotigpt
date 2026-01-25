@@ -7,7 +7,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/jyotigpt/jyotigpt)
 ![GitHub top language](https://img.shields.io/github/languages/top/jyotigpt/jyotigpt)
 ![GitHub last commit](https://img.shields.io/github/last-commit/jyotigpt/jyotigpt?color=red)
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Follama-webui%2Follama-wbui&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Follama-jyotigpt%2Follama-wbui&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)
 [![Discord](https://img.shields.io/badge/Discord-JyotiGPT-blue?logo=discord&logoColor=white)](https://discord.gg/5rJgQTnV4s)
 [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tjbck)
 
@@ -38,7 +38,7 @@ For more information, be sure to check out our [JyotiGPT Documentation](https://
 
 - 🎤📹 **Hands-Free Voice/Video Call**: Experience seamless communication with integrated hands-free voice and video call features, allowing for a more dynamic and interactive chat environment.
 
-- 🛠️ **Model Builder**: Easily create Ollama models via the Web UI. Create and add custom characters/agents, customize chat elements, and import models effortlessly through [JyotiGPT Community](https://jyotigpt.com/) integration.
+- 🛠️ **Model Builder**: Easily create Ollama models via the JYOTIGPT. Create and add custom characters/agents, customize chat elements, and import models effortlessly through [JyotiGPT Community](https://jyotigpt.com/) integration.
 
 - 🐍 **Native Python Function Calling Tool**: Enhance your LLMs with built-in code editor support in the tools workspace. Bring Your Own Function (BYOF) by simply adding your pure Python functions, enabling seamless integration with LLMs.
 
@@ -161,7 +161,7 @@ Encountering connection issues? Our [JyotiGPT Documentation](https://docs.jyotig
 
 #### JyotiGPT: Server Connection Error
 
-If you're experiencing connection issues, it’s often due to the WebUI docker container not being able to reach the Ollama server at 127.0.0.1:11434 (host.docker.internal:11434) inside the container . Use the `--network=host` flag in your docker command to resolve this. Note that the port changes from 3000 to 8080, resulting in the link: `http://localhost:8080`.
+If you're experiencing connection issues, it’s often due to the JYOTIGPT docker container not being able to reach the Ollama server at 127.0.0.1:11434 (host.docker.internal:11434) inside the container . Use the `--network=host` flag in your docker command to resolve this. Note that the port changes from 3000 to 8080, resulting in the link: `http://localhost:8080`.
 
 **Example Docker Command**:
 

@@ -2,7 +2,7 @@ resources:
   - jyotigpt.yaml
   - ollama-service.yaml
   - ollama-statefulset.yaml
-  - webui-deployment.yaml
-  - webui-service.yaml
-  - webui-ingress.yaml
-  - webui-pvc.yaml
+  - jyotigpt-deployment.yaml
+  - jyotigpt-service.yaml
+  - jyotigpt-ingress.yaml
+  - jyotigpt-pvc.yaml

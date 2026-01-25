@@ -122,7 +122,7 @@ async def download_db(user=Depends(get_admin_user)):
     return FileResponse(
         engine.url.database,
         media_type="application/octet-stream",
-        filename="webui.db",
+        filename="jyotigpt.db",
     )
 
 

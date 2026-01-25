@@ -1,5 +1,5 @@
 from test.util.abstract_integration_test import AbstractPostgresTest
-from test.util.mock_user import mock_webui_user
+from test.util.mock_user import mock_JYOTIGPT_user
 
 
 class TestModels(AbstractPostgresTest):
@@ -12,12 +12,12 @@ class TestModels(AbstractPostgresTest):
         cls.models = Model
 
     def test_models(self):
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.get(self.create_url("/"))
         assert response.status_code == 200
         assert len(response.json()) == 0
 
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.post(
                 self.create_url("/add"),
                 json={
@@ -35,12 +35,12 @@ class TestModels(AbstractPostgresTest):
             )
         assert response.status_code == 200
 
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.get(self.create_url("/"))
         assert response.status_code == 200
         assert len(response.json()) == 1
 
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.get(
                 self.create_url(query_params={"id": "my-model"})
             )
@@ -49,13 +49,13 @@ class TestModels(AbstractPostgresTest):
         assert data["id"] == "my-model"
         assert data["name"] == "Hello World"
 
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.delete(
                 self.create_url("/delete?id=my-model")
             )
         assert response.status_code == 200
 
-        with mock_webui_user(id="2"):
+        with mock_JYOTIGPT_user(id="2"):
             response = self.fast_api_client.get(self.create_url("/"))
         assert response.status_code == 200
         assert len(response.json()) == 0

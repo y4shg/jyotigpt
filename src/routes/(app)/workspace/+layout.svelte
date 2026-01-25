@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, getContext } from 'svelte';
 	import {
-		WEBUI_NAME,
+		JYOTIGPT_NAME,
 		showSidebar,
 		functions,
 		user,
@@ -45,7 +45,7 @@
 
 <svelte:head>
 	<title>
-		{$i18n.t('Workspace')} | {$WEBUI_NAME}
+		{$i18n.t('Workspace')} | {$JYOTIGPT_NAME}
 	</title>
 </svelte:head>
 
