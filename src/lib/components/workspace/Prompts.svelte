@@ -327,7 +327,7 @@
 
 			<a
 				class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
-				href="https://jyotigpt.us.to/#jyotigpt-community"
+				href="https://jyotigpt.us.to/"
 				target="_blank"
 			>
 				<div class=" self-center">

@@ -225,7 +225,7 @@
 
 								{#if $config?.license_metadata}
 									<a
-										href="https://jyotigpt.us.to/enterprise"
+										href="https://jyotigpt.us.to/"
 										target="_blank"
 										class="text-gray-500 mt-0.5"
 									>
@@ -250,7 +250,7 @@
 								{:else}
 									<a
 										class=" text-xs hover:underline"
-										href="https://jyotigpt.us.to/enterprise"
+										href="https://jyotigpt.us.to/"
 										target="_blank"
 									>
 										<span class="text-gray-500">
@@ -334,9 +334,9 @@
 								/>
 
 								<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-									<!-- https://jyotigpt.us.to/getting-started/advanced-topics/api-endpoints -->
+									<!-- https://jyotigpt.us.to/ -->
 									<a
-										href="https://jyotigpt.us.to/getting-started/api-endpoints"
+										href="https://jyotigpt.us.to/"
 										target="_blank"
 										class=" text-gray-300 font-medium underline"
 									>
