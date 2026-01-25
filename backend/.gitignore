@@ -9,4 +9,4 @@ Pipfile
 !/data
 /data/*
 /JYOTIGPT/data/*
-.JYOTIGPT_secret_key
+.jyotigpt_secret_key

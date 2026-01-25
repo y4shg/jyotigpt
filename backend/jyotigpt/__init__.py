@@ -10,7 +10,7 @@ from typing_extensions import Annotated
 
 app = typer.Typer()
 
-KEY_FILE = Path.cwd() / ".JYOTIGPT_secret_key"
+KEY_FILE = Path.cwd() / ".jyotigpt_secret_key"
 
 
 def version_callback(value: bool):

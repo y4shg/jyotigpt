@@ -169,7 +169,7 @@ sources = ["backend"]
 exclude = [
     ".dockerignore",
     ".gitignore",
-    ".JYOTIGPT_secret_key",
+    ".jyotigpt_secret_key",
     "dev.sh",
     "requirements.txt",
     "start.sh",

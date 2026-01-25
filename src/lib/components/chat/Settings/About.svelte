@@ -151,7 +151,7 @@
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
 					href="https://jyotigpt.us.to"
 					target="_blank"
-					class="underline">JyotiGPT (Yash Ghule) & OpenWebUI (Timothy Jaeryang Baek)</a
+					class="underline">JyotiGPT (Yash Ghule) & Open WebUI (Timothy Jaeryang Baek)</a
 				>
 All rights reserved.
 

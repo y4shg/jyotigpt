@@ -17,7 +17,7 @@ IF /I "%WEB_LOADER_ENGINE%" == "playwright" (
     python -c "import nltk; nltk.download('punkt_tab')"
 )
 
-SET "KEY_FILE=.JYOTIGPT_secret_key"
+SET "KEY_FILE=.jyotigpt_secret_key"
 IF "%PORT%"=="" SET PORT=8080
 IF "%HOST%"=="" SET HOST=0.0.0.0
 SET "JYOTIGPT_SECRET_KEY=%JYOTIGPT_SECRET_KEY%"

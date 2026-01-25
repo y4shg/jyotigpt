@@ -14,7 +14,7 @@ if [[ "${WEB_LOADER_ENGINE,,}" == "playwright" ]]; then
     python -c "import nltk; nltk.download('punkt_tab')"
 fi
 
-KEY_FILE=.JYOTIGPT_secret_key
+KEY_FILE=.jyotigpt_secret_key
 
 PORT="${PORT:-8080}"
 HOST="${HOST:-0.0.0.0}"
