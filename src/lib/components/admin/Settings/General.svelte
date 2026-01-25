@@ -195,7 +195,7 @@
 								<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
 									<img
 										alt="Discord"
-										src="https://img.shields.io/badge/Discord-Open_WebUI-blue?logo=discord&logoColor=white"
+										src="https://img.shields.io/badge/Discord-JYOTIGPT-blue?logo=discord&logoColor=white"
 									/>
 								</a>
 

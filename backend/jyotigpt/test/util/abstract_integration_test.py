@@ -92,7 +92,7 @@ class AbstractPostgresTest(AbstractIntegrationTest):
             db = None
             while retries > 0:
                 try:
-                    from jyotigpt.config import OPEN_WEBUI_DIR
+                    from jyotigpt.config import JYOTIGPT_DIR
 
                     db = create_engine(database_url, pool_pre_ping=True)
                     db = db.connect()

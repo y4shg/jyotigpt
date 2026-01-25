@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT interně používá faster-whisper.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Verze JyotiGPT (v{{OPEN_WEBUI_VERSION}}) je nižší než požadovaná verze (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Verze JyotiGPT (v{{JYOTIGPT_VERSION}}) je nižší než požadovaná verze (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI je výzkumná organizace zaměřená na umělou inteligenci, která je známá vývojem pokročilých jazykových modelů, jako je například GPT. Tyto modely se využívají v různých aplikacích, včetně konverzačních agentů a jazykových nástrojů.",
 	"OpenAI API": "OpenAI API je rozhraní aplikačního programování, které umožňuje vývojářům integrovat pokročilé jazykové modely do svých aplikací.",
 	"OpenAI API Config": "Konfigurace API OpenAI",

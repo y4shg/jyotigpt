@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "",
 	"JyotiGPT uses faster-whisper internally.": "تستخدم واجهة WebUI أداة faster-whisper داخليًا.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "تستخدم WebUI نموذج SpeechT5 وتضمينات صوتية من CMU Arctic.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "إصدار WebUI الحالي (v{{OPEN_WEBUI_VERSION}}) أقل من الإصدار المطلوب (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "إصدار WebUI الحالي (v{{JYOTIGPT_VERSION}}) أقل من الإصدار المطلوب (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "OpenAI API إعدادات",

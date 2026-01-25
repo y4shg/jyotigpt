@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "Is féidir le WebUI Oscailte uirlisí a úsáid a sholáthraíonn aon fhreastalaí OpenAPI.",
 	"JyotiGPT uses faster-whisper internally.": "Úsáideann JyotiGPT cogar níos tapúla go hinmheánach.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "Úsáideann JyotiGPT úsáidí SpeechT5 agus CMU leabaithe cainteoir Artach.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Tá leagan WebUI oscailte (v{{OPEN_WEBUI_VERSION}}) níos ísle ná an leagan riachtanach (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Tá leagan WebUI oscailte (v{{JYOTIGPT_VERSION}}) níos ísle ná an leagan riachtanach (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "API OpenAI",
 	"OpenAI API Config": "Cumraíocht API OpenAI",

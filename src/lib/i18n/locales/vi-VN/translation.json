@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT sử dụng faster-whisper bên trong.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "JyotiGPT sử dụng SpeechT5 và các embedding giọng nói CMU Arctic.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Phiên bản JyotiGPT (v{{OPEN_WEBUI_VERSION}}) hiện thấp hơn phiên bản bắt buộc (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Phiên bản JyotiGPT (v{{JYOTIGPT_VERSION}}) hiện thấp hơn phiên bản bắt buộc (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "API OpenAI",
 	"OpenAI API Config": "Cấu hình API OpenAI",

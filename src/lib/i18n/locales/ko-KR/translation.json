@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT는 내부적으로 패스트 위스퍼를 사용합니다.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "JyotiGPT는 SpeechT5와 CMU Arctic 스피커 임베딩을 사용합니다.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "열린 WebUI 버젼(v{{OPEN_WEBUI_VERSION}})은 최소 버젼 (v{{REQUIRED_VERSION}})보다 낮습니다",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "열린 WebUI 버젼(v{{JYOTIGPT_VERSION}})은 최소 버젼 (v{{REQUIRED_VERSION}})보다 낮습니다",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "OpenAI API 설정",

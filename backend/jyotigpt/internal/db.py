@@ -5,7 +5,7 @@ from typing import Any, Optional
 
 from jyotigpt.internal.wrappers import register_connection
 from jyotigpt.env import (
-    OPEN_WEBUI_DIR,
+    JYOTIGPT_DIR,
     DATABASE_URL,
     DATABASE_SCHEMA,
     SRC_LOG_LEVELS,
@@ -55,7 +55,7 @@ def handle_peewee_migration(DATABASE_URL):
     try:
         # Replace the postgresql:// with postgres:// to handle the peewee migration
         db = register_connection(DATABASE_URL.replace("postgresql://", "postgres://"))
-        migrate_dir = OPEN_WEBUI_DIR / "internal" / "migrations"
+        migrate_dir = JYOTIGPT_DIR / "internal" / "migrations"
         router = Router(db, logger=log, migrate_dir=migrate_dir)
         router.run()
         db.close()

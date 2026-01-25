@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "Az JyotiGPT bármely OpenAPI szerver által biztosított eszközöket használhat.",
 	"JyotiGPT uses faster-whisper internally.": "Az JyotiGPT belsőleg a faster-whispert használja.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "Az JyotiGPT a SpeechT5-öt és a CMU Arctic hangszóró beágyazásokat használja.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Az JyotiGPT verzió (v{{OPEN_WEBUI_VERSION}}) alacsonyabb, mint a szükséges verzió (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Az JyotiGPT verzió (v{{JYOTIGPT_VERSION}}) alacsonyabb, mint a szükséges verzió (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "OpenAI API konfiguráció",

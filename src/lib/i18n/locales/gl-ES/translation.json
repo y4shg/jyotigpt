@@ -757,7 +757,7 @@
 	"Open new chat": "Abrir novo chat",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT usa faster-whisper internamente.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "JyotiGPT usa SpeechT5 y embeddings de locutores CMU Arctic.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Aversión de JyotiGPT (v{{OPEN_WEBUI_VERSION}}) es inferior a aversión requerida (v{{REQUIRED_VERSION}})",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "Aversión de JyotiGPT (v{{JYOTIGPT_VERSION}}) es inferior a aversión requerida (v{{REQUIRED_VERSION}})",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "Configuración de OpenAI API",

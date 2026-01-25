@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "JyotiGPT می‌تواند از ابزارهای ارائه شده توسط هر سرور OpenAPI استفاده کند.",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT به صورت داخلی از faster-whisper استفاده می‌کند.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "JyotiGPT از SpeechT5 و جاسازی‌های گوینده CMU Arctic استفاده می‌کند.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "نسخه JyotiGPT (v{{OPEN_WEBUI_VERSION}}) پایین‌تر از نسخه مورد نیاز (v{{REQUIRED_VERSION}}) است",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "نسخه JyotiGPT (v{{JYOTIGPT_VERSION}}) پایین‌تر از نسخه مورد نیاز (v{{REQUIRED_VERSION}}) است",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "OpenAI API تنظیمات",

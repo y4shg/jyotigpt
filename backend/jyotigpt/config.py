@@ -23,7 +23,7 @@ from jyotigpt.env import (
     REDIS_SENTINEL_PORT,
     FRONTEND_BUILD_DIR,
     OFFLINE_MODE,
-    OPEN_WEBUI_DIR,
+    JYOTIGPT_DIR,
     WEBUI_AUTH,
     WEBUI_FAVICON_URL,
     WEBUI_NAME,
@@ -53,10 +53,10 @@ def run_migrations():
         from alembic import command
         from alembic.config import Config
 
-        alembic_cfg = Config(OPEN_WEBUI_DIR / "alembic.ini")
+        alembic_cfg = Config(JYOTIGPT_DIR / "alembic.ini")
 
         # Set the script location dynamically
-        migrations_path = OPEN_WEBUI_DIR / "migrations"
+        migrations_path = JYOTIGPT_DIR / "migrations"
         alembic_cfg.set_main_option("script_location", str(migrations_path))
 
         command.upgrade(alembic_cfg, "head")
@@ -648,7 +648,7 @@ load_oauth_providers()
 # Static DIR
 ####################################
 
-STATIC_DIR = Path(os.getenv("STATIC_DIR", OPEN_WEBUI_DIR / "static")).resolve()
+STATIC_DIR = Path(os.getenv("STATIC_DIR", JYOTIGPT_DIR / "static")).resolve()
 
 for file_path in (FRONTEND_BUILD_DIR / "static").glob("**/*"):
     if file_path.is_file():
@@ -1715,7 +1715,7 @@ ELASTICSEARCH_PASSWORD = os.environ.get("ELASTICSEARCH_PASSWORD", None)
 ELASTICSEARCH_CLOUD_ID = os.environ.get("ELASTICSEARCH_CLOUD_ID", None)
 SSL_ASSERT_FINGERPRINT = os.environ.get("SSL_ASSERT_FINGERPRINT", None)
 ELASTICSEARCH_INDEX_PREFIX = os.environ.get(
-    "ELASTICSEARCH_INDEX_PREFIX", "open_webui_collections"
+    "ELASTICSEARCH_INDEX_PREFIX", "jyotigpt_collections"
 )
 # Pgvector
 PGVECTOR_DB_URL = os.environ.get("PGVECTOR_DB_URL", DATABASE_URL)

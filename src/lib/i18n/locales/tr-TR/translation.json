@@ -815,7 +815,7 @@
 	"JyotiGPT can use tools provided by any OpenAPI server.": "",
 	"JyotiGPT uses faster-whisper internally.": "JyotiGPT, dahili olarak daha hızlı-fısıltı kullanır.",
 	"JyotiGPT uses SpeechT5 and CMU Arctic speaker embeddings.": "JyotiGPT, SpeechT5 ve CMU Arctic konuşmacı gömme kullanır.",
-	"JyotiGPT version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "JyotiGPT sürümü (v{{OPEN_WEBUI_VERSION}}) gerekli sürümden (v{{REQUIRED_VERSION}}) düşük",
+	"JyotiGPT version (v{{JYOTIGPT_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}})": "JyotiGPT sürümü (v{{JYOTIGPT_VERSION}}) gerekli sürümden (v{{REQUIRED_VERSION}}) düşük",
 	"OpenAI": "OpenAI",
 	"OpenAI API": "OpenAI API",
 	"OpenAI API Config": "OpenAI API Konfigürasyonu",
