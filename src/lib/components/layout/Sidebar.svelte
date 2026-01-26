@@ -58,9 +58,11 @@
 	import ChannelItem from './Sidebar/ChannelItem.svelte';
 	import PencilSquare from '../icons/PencilSquare.svelte';
 	import Home from '../icons/Home.svelte';
+	import { slide } from 'svelte/transition';
 
 	const BREAKPOINT = 768;
 
+	let scrollTop = 0;
 	let navElement;
 	let search = '';
 
@@ -71,6 +73,8 @@
 	let showPinnedChat = true;
 
 	let showCreateChannel = false;
+	let showChannels = false;
+	let showFolders = false;
 
 	// Pagination variables
 	let chatListLoading = false;
@@ -158,6 +162,7 @@
 		if (res) {
 			newFolderId = res.id;
 			await initFolders();
+			showFolders = true;
 		}
 	};
 
@@ -350,6 +355,26 @@
 		selectedChatId = null;
 	};
 
+	const newChatHandler = async () => {
+		selectedChatId = null;
+		const newChatButton = document.getElementById('new-chat-button');
+		setTimeout(() => {
+			newChatButton?.click();
+			if ($mobile) {
+				showSidebar.set(false);
+			}
+		}, 0);
+	};
+
+	const itemClickHandler = async () => {
+		selectedChatId = null;
+		chatId.set('');
+
+		if ($mobile) {
+			showSidebar.set(false);
+		}
+	};
+
 	onMount(async () => {
 		showPinnedChat = localStorage?.showPinnedChat ? localStorage.showPinnedChat === 'true' : true;
 
@@ -449,6 +474,7 @@
 			$socket.emit('join-channels', { auth: { token: $user?.token } });
 			await initChannels();
 			showCreateChannel = false;
+			showChannels = true;
 		}
 	}}
 />
@@ -466,6 +492,15 @@
 	/>
 {/if}
 
+<button
+	id="sidebar-new-chat-button"
+	class="hidden"
+	on:click={() => {
+		goto('/');
+		newChatHandler();
+	}}
+/>
+
 <div
 	bind:this={navElement}
 	id="sidebar"
@@ -475,6 +510,7 @@
 		? `ml-[4.5rem] md:ml-0 `
 		: 'transition-width duration-200 ease-in-out'}  shrink-0 bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-200 text-sm fixed z-50 top-0 left-0 overflow-x-hidden
         "
+	transition:slide={{ duration: 250, axis: 'x' }}
 	data-state={$showSidebar}
 >
 	<div
@@ -482,153 +518,153 @@
 			? ''
 			: 'invisible'}"
 	>
-		<div class="px-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400">
-			<button
-				class=" cursor-pointer p-[7px] flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-				on:click={() => {
-					showSidebar.set(!$showSidebar);
-				}}
-			>
-				<div class=" m-auto self-center">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						class="size-5"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-						/>
-					</svg>
-				</div>
-			</button>
-
+		<div
+			class="sidebar px-2 pt-2 pb-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-3"
+		>
 			<a
-				id="sidebar-new-chat-button"
-				class="flex justify-between items-center flex-1 rounded-lg px-2 py-1 h-full text-right hover:bg-gray-100 dark:hover:bg-gray-900 transition no-drag-region"
+				class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition no-drag-region"
 				href="/"
 				draggable="false"
 				on:click={async () => {
-					selectedChatId = null;
 					await goto('/');
-					const newChatButton = document.getElementById('new-chat-button');
-					setTimeout(() => {
-						newChatButton?.click();
-						if ($mobile) {
-							showSidebar.set(false);
-						}
-					}, 0);
+					newChatHandler();
 				}}
 			>
-				<div class="flex items-center">
-					<div class="self-center mx-1.5">
-						<img
-							crossorigin="anonymous"
-							src="{JYOTIGPT_BASE_URL}/static/favicon.png"
-							class=" size-5 -translate-x-1.5 rounded-full"
-							alt="logo"
-						/>
-					</div>
-					<div class=" self-center font-medium text-sm text-gray-850 dark:text-white font-primary">
-						{$i18n.t('New Chat')}
-					</div>
-				</div>
+				<img
+					crossorigin="anonymous"
+					src="{JYOTIGPT_BASE_URL}/static/favicon.png"
+					class="sidebar-new-chat-icon size-6 rounded-full"
+					alt="logo"
+				/>
+			</a>
 
-				<div>
-					<PencilSquare className=" size-5" strokeWidth="2" />
+			<a href="/" class="flex flex-1 px-1.5" on:click={newChatHandler}>
+				<div
+					id="sidebar-webui-name"
+					class=" self-center font-medium text-gray-850 dark:text-white font-primary"
+				>
+					{$i18n.t('New Chat')}
 				</div>
 			</a>
-		</div>
 
-		<!-- {#if $user?.role === 'admin'}
-			<div class="px-1.5 flex justify-center text-gray-800 dark:text-gray-200">
-				<a
-					class="grow flex items-center space-x-3 rounded-lg px-2 py-[7px] hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-					href="/home"
+			<Tooltip
+				content={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}
+				placement="bottom"
+			>
+				<button
+					class="flex rounded-xl size-8.5 justify-center items-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition"
 					on:click={() => {
-						selectedChatId = null;
-						chatId.set('');
-
-						if ($mobile) {
-							showSidebar.set(false);
-						}
+						showSidebar.set(!$showSidebar);
 					}}
-					draggable="false"
+					aria-label={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}
 				>
-					<div class="self-center">
-						<Home strokeWidth="2" className="size-[1.1rem]" />
-					</div>
-
-					<div class="flex self-center translate-y-[0.5px]">
-						<div class=" self-center font-medium text-sm font-primary">{$i18n.t('Home')}</div>
-					</div>
-				</a>
-			</div>
-		{/if} -->
-
-		{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools}
-			<div class="px-1.5 flex justify-center text-gray-800 dark:text-gray-200">
-				<a
-					class="grow flex items-center space-x-3 rounded-lg px-2 py-[7px] hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-					href="/workspace"
-					on:click={() => {
-						selectedChatId = null;
-						chatId.set('');
-
-						if ($mobile) {
-							showSidebar.set(false);
-						}
-					}}
-					draggable="false"
-				>
-					<div class="self-center">
+					<div class=" self-center">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke-width="2"
 							stroke="currentColor"
-							class="size-[1.1rem]"
+							class="size-5"
 						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
+								d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
 							/>
 						</svg>
 					</div>
+				</button>
+			</Tooltip>
 
-					<div class="flex self-center translate-y-[0.5px]">
-						<div class=" self-center font-medium text-sm font-primary">{$i18n.t('Workspace')}</div>
-					</div>
-				</a>
-			</div>
-		{/if}
-
-		<div class="relative {$temporaryChatEnabled ? 'opacity-20' : ''}">
-			{#if $temporaryChatEnabled}
-				<div class="absolute z-40 w-full h-full flex justify-center"></div>
-			{/if}
-
-			<SearchInput
-				bind:value={search}
-				on:input={searchDebounceHandler}
-				placeholder={$i18n.t('Search')}
-				showClearButton={true}
-			/>
+			<div
+				class="{scrollTop > 0
+					? 'visible'
+					: 'invisible'} sidebar-bg-gradient-to-b bg-linear-to-b from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mb-6"
+			></div>
 		</div>
 
 		<div
-			class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden {$temporaryChatEnabled
-				? 'opacity-20'
-				: ''}"
+			class="relative flex flex-col flex-1 overflow-y-auto scrollbar-hidden pt-3 pb-3"
+			on:scroll={(e) => {
+				if (e.target.scrollTop === 0) {
+					scrollTop = 0;
+				} else {
+					scrollTop = e.target.scrollTop;
+				}
+			}}
 		>
+			<div class="pb-1.5">
+				<!-- New Chat Button -->
+				<div class="px-2 flex justify-center text-gray-800 dark:text-gray-200">
+					<a
+						id="sidebar-new-chat-button-main"
+						class="group grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
+						href="/"
+						draggable="false"
+						on:click={newChatHandler}
+						aria-label={$i18n.t('New Chat')}
+					>
+						<div class="self-center">
+							<PencilSquare className=" size-4.5" strokeWidth="2" />
+						</div>
+
+						<div class="flex flex-1 self-center translate-y-[0.5px]">
+							<div class=" self-center text-sm font-primary">{$i18n.t('New Chat')}</div>
+						</div>
+					</a>
+				</div>
+
+				<!-- Search Input -->
+				<div class="px-2">
+					<SearchInput
+						bind:value={search}
+						on:input={searchDebounceHandler}
+						placeholder={$i18n.t('Search')}
+						showClearButton={true}
+					/>
+				</div>
+
+				<!-- Workspace Button -->
+				{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools}
+					<div class="px-2 flex justify-center text-gray-800 dark:text-gray-200">
+						<a
+							id="sidebar-workspace-button"
+							class="grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+							href="/workspace"
+							on:click={itemClickHandler}
+							draggable="false"
+							aria-label={$i18n.t('Workspace')}
+						>
+							<div class="self-center">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									class="size-4.5"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
+									/>
+								</svg>
+							</div>
+
+							<div class="flex self-center translate-y-[0.5px]">
+								<div class=" self-center text-sm font-primary">{$i18n.t('Workspace')}</div>
+							</div>
+						</a>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Channels Section -->
 			{#if $config?.features?.enable_channels && ($user?.role === 'admin' || $channels.length > 0) && !search}
 				<Folder
+					bind:open={showChannels}
 					className="px-2 mt-0.5"
 					name={$i18n.t('Channels')}
 					dragAndDrop={false}
@@ -654,14 +690,58 @@
 				</Folder>
 			{/if}
 
+			<!-- Folders Section -->
+			{#if folders && !search}
+				<Folder
+					bind:open={showFolders}
+					className="px-2 mt-0.5"
+					name={$i18n.t('Folders')}
+					onAdd={() => {
+						createFolder();
+					}}
+					onAddLabel={$i18n.t('New Folder')}
+					on:drop={async (e) => {
+						const { type, id, item } = e.detail;
+
+						if (type === 'folder') {
+							if (folders[id].parent_id === null) {
+								return;
+							}
+
+							const res = await updateFolderParentIdById(localStorage.token, id, null).catch(
+								(error) => {
+									toast.error(`${error}`);
+									return null;
+								}
+							);
+
+							if (res) {
+								await initFolders();
+							}
+						}
+					}}
+				>
+					<Folders
+						{folders}
+						on:import={(e) => {
+							const { folderId, items } = e.detail;
+							importChatHandler(items, false, folderId);
+						}}
+						on:update={async (e) => {
+							initChatList();
+						}}
+						on:change={async () => {
+							initChatList();
+						}}
+					/>
+				</Folder>
+			{/if}
+
+			<!-- Chats Section -->
 			<Folder
 				collapsible={!search}
 				className="px-2 mt-0.5"
 				name={$i18n.t('Chats')}
-				onAdd={() => {
-					createFolder();
-				}}
-				onAddLabel={$i18n.t('New Folder')}
 				on:import={(e) => {
 					importChatHandler(e.detail);
 				}}
@@ -791,22 +871,6 @@
 					</div>
 				{/if}
 
-				{#if !search && folders}
-					<Folders
-						{folders}
-						on:import={(e) => {
-							const { folderId, items } = e.detail;
-							importChatHandler(items, false, folderId);
-						}}
-						on:update={async (e) => {
-							initChatList();
-						}}
-						on:change={async () => {
-							initChatList();
-						}}
-					/>
-				{/if}
-
 				<div class=" flex-1 flex flex-col overflow-y-auto scrollbar-hidden">
 					<div class="pt-1.5">
 						{#if $chats}
@@ -889,7 +953,10 @@
 			</Folder>
 		</div>
 
-		<div class="px-2">
+		<div class="px-2 pt-1.5 pb-2 sticky bottom-0 z-10 -mt-3 sidebar">
+			<div
+				class=" sidebar-bg-gradient-to-t bg-linear-to-t from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mt-6"
+			></div>
 			<div class="flex flex-col font-primary">
 				{#if $user !== undefined && $user !== null}
 					<UserMenu

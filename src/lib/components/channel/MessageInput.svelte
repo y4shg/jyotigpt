@@ -522,7 +522,7 @@
 									<Tooltip content={$i18n.t('Record voice')}>
 										<button
 											id="voice-input-button"
-											class=" text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 transition rounded-full p-1.5 mr-0.5 self-center"
+											class=" text-white bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 transition rounded-full p-1.5 mr-0.5 self-center"
 											type="button"
 											on:click={async () => {
 												try {
@@ -570,7 +570,7 @@
 											<button
 												id="send-message-button"
 												class="{content !== '' || files.length !== 0
-													? 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100 '
+													? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-white dark:hover:bg-red-700 '
 													: 'text-white bg-gray-200 dark:text-gray-900 dark:bg-gray-700 disabled'} transition rounded-full p-1.5 self-center"
 												type="submit"
 												disabled={content === '' && files.length === 0}
