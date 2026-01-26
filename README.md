@@ -1,228 +1,234 @@
-# JyotiGPT 👋
-
 ![GitHub stars](https://img.shields.io/github/stars/y4shg/jyotigpt?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/y4shg/jyotigpt?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/y4shg/jyotigpt?style=social)
-![GitHub repo size](https://img.shields.io/github/repo-size/y4shg/jyotigpt)
-![GitHub language count](https://img.shields.io/github/languages/count/y4shg/jyotigpt)
-![GitHub top language](https://img.shields.io/github/languages/top/y4shg/jyotigpt)
-![GitHub last commit](https://img.shields.io/github/last-commit/y4shg/jyotigpt?color=red)
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Follama-jyotigpt%2Follama-wbui&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)
-[![Discord](https://img.shields.io/badge/Discord-JyotiGPT-blue?logo=discord&logoColor=white)](https://discord.gg/5rJgQTnV4s)
-[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tjbck)
 
-**JyotiGPT is an [extensible](https://jyotigpt.us.to/features/plugin/), feature-rich, and user-friendly self-hosted AI platform designed to operate entirely offline.** It supports various LLM runners like **Ollama** and **OpenAI-compatible APIs**, with **built-in inference engine** for RAG, making it a **powerful AI deployment solution**.
+![Offline First](https://img.shields.io/badge/Offline--First-Yes-79C83D)
+![Privacy](https://img.shields.io/badge/Data-Local%20Only-4CAF50)
+![Purpose](https://img.shields.io/badge/Purpose-Meditation%20AI-8E44AD)
+![License](https://img.shields.io/github/license/y4shg/jyotigpt)
 
-![JyotiGPT Demo](./demo.gif)
+---
 
-> [!TIP]  
-> **Looking for an [Enterprise Plan](https://jyotigpt.us.to/enterprise)?** – **[Speak with Our Sales Team Today!](mailto:sales@jyotigpt.us.to)**
->
-> Get **enhanced capabilities**, including **custom theming and branding**, **Service Level Agreement (SLA) support**, **Long-Term Support (LTS) versions**, and **more!**
+# 🌸 JyotiGPT
 
-For more information, be sure to check out our [JyotiGPT Documentation](https://jyotigpt.us.to/).
+**JyotiGPT is a meditation-focused AI designed to support inner clarity, calm thinking, and conscious self-reflection.**
 
-## Key Features of JyotiGPT ⭐
+It combines **guided reflective dialogue** with a **fully local, offline AI system**, allowing users to practice meditation and self-inquiry without cloud dependence, distractions, or data sharing.
 
-- 🚀 **Effortless Setup**: Install seamlessly using Docker or Kubernetes (kubectl, kustomize or helm) for a hassle-free experience with support for both `:ollama` and `:cuda` tagged images.
+---
 
-- 🤝 **Ollama/OpenAI API Integration**: Effortlessly integrate OpenAI-compatible APIs for versatile conversations alongside Ollama models. Customize the OpenAI API URL to link with **LMStudio, GroqCloud, Mistral, OpenRouter, and more**.
+## 🧘 What JyotiGPT Is
 
-- 🛡️ **Granular Permissions and User Groups**: By allowing administrators to create detailed user roles and permissions, we ensure a secure user environment. This granularity not only enhances security but also allows for customized user experiences, fostering a sense of ownership and responsibility amongst users.
+JyotiGPT is an AI companion for:
 
-- 📱 **Responsive Design**: Enjoy a seamless experience across Desktop PC, Laptop, and Mobile devices.
+* 🌿 Meditation support
+* 🌿 Inner dialogue and self-reflection
+* 🌿 Conscious, value-aligned thinking
+* 🌿 Quiet, intentional interaction with AI
 
-- 📱 **Progressive Web App (PWA) for Mobile**: Enjoy a native app-like experience on your mobile device with our PWA, providing offline access on localhost and a seamless user interface.
+Rather than encouraging fast answers or endless conversation, JyotiGPT is designed to **slow the interaction**, helping users pause, observe, and return to awareness.
 
-- ✒️🔢 **Full Markdown and LaTeX Support**: Elevate your LLM experience with comprehensive Markdown and LaTeX capabilities for enriched interaction.
+---
 
-- 🎤📹 **Hands-Free Voice/Video Call**: Experience seamless communication with integrated hands-free voice and video call features, allowing for a more dynamic and interactive chat environment.
+## 🌼 How JyotiGPT Helps
 
-- 🛠️ **Model Builder**: Easily create Ollama models via the JYOTIGPT. Create and add custom characters/agents, customize chat elements, and import models effortlessly through [JyotiGPT Community](https://jyotigpt.us.to/) integration.
+### 🧠 Guided Reflection
 
-- 🐍 **Native Python Function Calling Tool**: Enhance your LLMs with built-in code editor support in the tools workspace. Bring Your Own Function (BYOF) by simply adding your pure Python functions, enabling seamless integration with LLMs.
+JyotiGPT gently guides users to look at their thoughts and feelings without judgment, offering prompts that encourage awareness rather than reaction.
 
-- 📚 **Local RAG Integration**: Dive into the future of chat interactions with groundbreaking Retrieval Augmented Generation (RAG) support. This feature seamlessly integrates document interactions into your chat experience. You can load documents directly into the chat or add files to your document library, effortlessly accessing them using the `#` command before a query.
+### 🌬️ Meditation Preparation & Integration
 
-- 🔍 **Web Search for RAG**: Perform web searches using providers like `SearXNG`, `Google PSE`, `Brave Search`, `serpstack`, `serper`, `Serply`, `DuckDuckGo`, `TavilySearch`, `SearchApi` and `Bing` and inject the results directly into your chat experience.
+JyotiGPT can help:
 
-- 🌐 **Web Browsing Capability**: Seamlessly integrate websites into your chat experience using the `#` command followed by a URL. This feature allows you to incorporate web content directly into your conversations, enhancing the richness and depth of your interactions.
+* Set the mental state before meditation
+* Ground attention with simple focus cues
+* Reflect after meditation to integrate clarity
 
-- 🎨 **Image Generation Integration**: Seamlessly incorporate image generation capabilities using options such as AUTOMATIC1111 API or ComfyUI (local), and OpenAI's DALL-E (external), enriching your chat experience with dynamic visual content.
+### 💬 Conscious Conversation
 
-- ⚙️ **Many Models Conversations**: Effortlessly engage with various models simultaneously, harnessing their unique strengths for optimal responses. Enhance your experience by leveraging a diverse set of models in parallel.
+Conversations are designed to be:
 
-- 🔐 **Role-Based Access Control (RBAC)**: Ensure secure access with restricted permissions; only authorized individuals can access your Ollama, and exclusive model creation/pulling rights are reserved for administrators.
+* Calm
+* Non-reactive
+* Supportive, not directive
 
-- 🌐🌍 **Multilingual Support**: Experience JyotiGPT in your preferred language with our internationalization (i18n) support. Join us in expanding our supported languages! We're actively seeking contributors!
+The goal is **inner stability**, not stimulation.
 
-- 🧩 **Pipelines, JyotiGPT Plugin Support**: Seamlessly integrate custom logic and Python libraries into JyotiGPT using [Pipelines Plugin Framework](https://github.com/jyotigpt/pipelines). Launch your Pipelines instance, set the OpenAI URL to the Pipelines URL, and explore endless possibilities. [Examples](https://github.com/jyotigpt/pipelines/tree/main/examples) include **Function Calling**, User **Rate Limiting** to control access, **Usage Monitoring** with tools like Langfuse, **Live Translation with LibreTranslate** for multilingual support, **Toxic Message Filtering** and much more.
+### 🌱 Support Without Dependency
 
-- 🌟 **Continuous Updates**: We are committed to improving JyotiGPT with regular updates, fixes, and new features.
+JyotiGPT does not position itself as a teacher, authority, or replacement for personal effort.
+It is a **tool to support self-realization**, not to replace it.
 
-Want to learn more about JyotiGPT's features? Check out our [JyotiGPT documentation](https://jyotigpt.us.to/features) for a comprehensive overview!
+---
 
-## 🔗 Also Check Out JyotiGPT Community!
+## ✨ What Makes JyotiGPT Different
 
-Don't forget to explore our sibling project, [JyotiGPT Community](https://jyotigpt.us.to/), where you can discover, download, and explore customized Modelfiles. JyotiGPT Community offers a wide range of exciting possibilities for enhancing your chat interactions with JyotiGPT! 🚀
+* 🚫 Not entertainment-focused
+* 🚫 Not cloud-dependent
+* 🚫 Not data-harvesting
+* 🚫 Not emotionally manipulative
 
-## How to Install 🚀
+Instead, JyotiGPT prioritizes:
 
-### Installation via Python pip 🐍
+* 🕊️ Simplicity
+* 🔐 Privacy
+* 🧘 Stillness
+* 🌍 Ethical, local AI use
 
-JyotiGPT can be installed using pip, the Python package installer. Before proceeding, ensure you're using **Python 3.11** to avoid compatibility issues.
+---
 
-1. **Install JyotiGPT**:
-   Open your terminal and run the following command to install JyotiGPT:
+## ⚙️ The Technology Behind JyotiGPT
 
-   ```bash
-   pip install jyotigpt
-   ```
+While JyotiGPT is meditation-oriented in purpose, it is built on a **powerful and flexible AI platform**.
 
-2. **Running JyotiGPT**:
-   After installation, you can start JyotiGPT by executing:
+### 🔧 Core Technical Features
 
-   ```bash
-   jyotigpt serve
-   ```
+* 🖥️ **Offline-First & Self-Hosted**
 
-This will start the JyotiGPT server, which you can access at [http://localhost:8080](http://localhost:8080)
+  * Runs entirely on your own hardware
+  * No mandatory internet connection
+  * Full data ownership
 
-### Quick Start with Docker 🐳
+* 🤖 **LLM Support**
 
-> [!NOTE]  
-> Please note that for certain Docker environments, additional configurations might be needed. If you encounter any connection issues, our detailed guide on [JyotiGPT Documentation](https://jyotigpt.us.to/) is ready to assist you.
+  * Ollama (local models)
+  * OpenAI-compatible APIs (optional)
 
-> [!WARNING]
-> When using Docker to install JyotiGPT, make sure to include the `-v jyotigpt:/app/backend/data` in your Docker command. This step is crucial as it ensures your database is properly mounted and prevents any loss of data.
+* 📚 **Local RAG (Retrieval-Augmented Generation)**
 
-> [!TIP]  
-> If you wish to utilize JyotiGPT with Ollama included or CUDA acceleration, we recommend utilizing our official images tagged with either `:cuda` or `:ollama`. To enable CUDA, you must install the [Nvidia CUDA container toolkit](https://docs.nvidia.com/dgx/nvidia-container-runtime-upgrade/) on your Linux/WSL system.
+  * Load local documents (notes, study material, Murli text, PDFs)
+  * Ask questions directly against your own files
 
-### Installation with Default Configuration
+* 👥 **Multi-User Support with RBAC**
 
-- **If Ollama is on your computer**, use this command:
+  * Role-based access control
+  * Suitable for centers, families, or shared systems
 
-  ```bash
-  docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
-  ```
+* 🧩 **Extensible by Design**
 
-- **If Ollama is on a Different Server**, use this command:
+  * Plugin & pipeline support
+  * Python function calling
+  * Custom meditation flows or logic
 
-  To connect to Ollama on another server, change the `OLLAMA_BASE_URL` to the server's URL:
+* 📱 **Responsive Web UI + PWA**
 
-  ```bash
-  docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
-  ```
+  * Works on desktop, tablet, and mobile
+  * Installable as a Progressive Web App
 
-- **To run JyotiGPT with Nvidia GPU support**, use this command:
+---
 
-  ```bash
-  docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:cuda
-  ```
+## 🚀 Getting Started
 
-### Installation for OpenAI API Usage Only
+### 🐍 Install with Python (Simple & Native)
 
-- **If you're only using OpenAI API**, use this command:
-
-  ```bash
-  docker run -d -p 3000:8080 -e OPENAI_API_KEY=your_secret_key -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
-  ```
-
-### Installing JyotiGPT with Bundled Ollama Support
-
-This installation method uses a single container image that bundles JyotiGPT with Ollama, allowing for a streamlined setup via a single command. Choose the appropriate command based on your hardware setup:
-
-- **With GPU Support**:
-  Utilize GPU resources by running the following command:
-
-  ```bash
-  docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:ollama
-  ```
-
-- **For CPU Only**:
-  If you're not using a GPU, use this command instead:
-
-  ```bash
-  docker run -d -p 3000:8080 -v ollama:/root/.ollama -v jyotigpt:/app/backend/data --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:ollama
-  ```
-
-Both commands facilitate a built-in, hassle-free installation of both JyotiGPT and Ollama, ensuring that you can get everything up and running swiftly.
-
-After installation, you can access JyotiGPT at [http://localhost:3000](http://localhost:3000). Enjoy! 😄
-
-### Other Installation Methods
-
-We offer various installation alternatives, including non-Docker native installation methods, Docker Compose, Kustomize, and Helm. Visit our [JyotiGPT Documentation](https://jyotigpt.us.to/getting-started/) or join our [Discord community](https://discord.gg/5rJgQTnV4s) for comprehensive guidance.
-
-### Troubleshooting
-
-Encountering connection issues? Our [JyotiGPT Documentation](https://jyotigpt.us.to/troubleshooting/) has got you covered. For further assistance and to join our vibrant community, visit the [JyotiGPT Discord](https://discord.gg/5rJgQTnV4s).
-
-#### JyotiGPT: Server Connection Error
-
-If you're experiencing connection issues, it’s often due to the JYOTIGPT docker container not being able to reach the Ollama server at 127.0.0.1:11434 (host.docker.internal:11434) inside the container . Use the `--network=host` flag in your docker command to resolve this. Note that the port changes from 3000 to 8080, resulting in the link: `http://localhost:8080`.
-
-**Example Docker Command**:
+> **Requires Python 3.11**
 
 ```bash
-docker run -d --network=host -v jyotigpt:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name jyotigpt --restart always ghcr.io/y4shg/jyotigpt:main
+pip install jyotigpt
+jyotigpt serve
 ```
 
-### Keeping Your Docker Installation Up-to-Date
+Access JyotiGPT at:
+👉 [http://localhost:8080](http://localhost:8080)
 
-In case you want to update your local Docker installation to the latest version, you can do it with [Watchtower](https://containrrr.dev/watchtower/):
+---
+
+### 🐳 Install with Docker (Recommended)
+
+#### Basic Installation
 
 ```bash
-docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --run-once jyotigpt
+docker run -d -p 3000:8080 \
+  -v jyotigpt:/app/backend/data \
+  --name jyotigpt \
+  --restart always \
+  ghcr.io/y4shg/jyotigpt:main
 ```
 
-In the last part of the command, replace `jyotigpt` with your container name if it is different.
-
-Check our Updating Guide available in our [JyotiGPT Documentation](https://jyotigpt.us.to/getting-started/updating).
-
-### Using the Dev Branch 🌙
-
-> [!WARNING]
-> The `:dev` branch contains the latest unstable features and changes. Use it at your own risk as it may have bugs or incomplete features.
-
-If you want to try out the latest bleeding-edge features and are okay with occasional instability, you can use the `:dev` tag like this:
+#### With NVIDIA GPU
 
 ```bash
-docker run -d -p 3000:8080 -v jyotigpt:/app/backend/data --name jyotigpt --add-host=host.docker.internal:host-gateway --restart always ghcr.io/y4shg/jyotigpt:dev
+docker run -d -p 3000:8080 \
+  --gpus all \
+  -v jyotigpt:/app/backend/data \
+  --name jyotigpt \
+  --restart always \
+  ghcr.io/y4shg/jyotigpt:cuda
 ```
 
-### Offline Mode
+#### Bundled with Ollama (All-in-One)
 
-If you are running JyotiGPT in an offline environment, you can set the `HF_HUB_OFFLINE` environment variable to `1` to prevent attempts to download models from the internet.
+```bash
+docker run -d -p 3000:8080 \
+  -v ollama:/root/.ollama \
+  -v jyotigpt:/app/backend/data \
+  --name jyotigpt \
+  --restart always \
+  ghcr.io/y4shg/jyotigpt:ollama
+```
+
+Access at:
+👉 [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🌙 Offline & Quiet Mode
+
+For fully offline environments:
 
 ```bash
 export HF_HUB_OFFLINE=1
 ```
 
-## What's Next? 🌟
-
-Discover upcoming features on our roadmap in the [JyotiGPT Documentation](https://jyotigpt.us.to/roadmap/).
-
-## License 📜
-
-This project is licensed under the [BSD-3-Clause License](LICENSE) - see the [LICENSE](LICENSE) file for details. 📄
-
-## Support 💬
-
-If you have any questions, suggestions, or need assistance, please open an issue or join our
-[JyotiGPT Discord community](https://discord.gg/5rJgQTnV4s) to connect with us! 🤝
-
-## Star History
-
-<a href="https://star-history.com/#y4shg/jyotigpt&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=y4shg/jyotigpt&type=Date" />
-  </picture>
-</a>
+This prevents JyotiGPT from attempting any external downloads.
 
 ---
 
-Created by [Timothy Jaeryang Baek](https://github.com/tjbck) - Let's make JyotiGPT even more amazing together! 💪
+## 🧭 Intended Use
+
+JyotiGPT is suitable for:
+
+* Daily meditation support
+* Quiet self-reflection
+* Study and contemplation
+* Brahma Kumaris centers
+* Personal offline AI systems
+* Ethical, intentional AI use
+
+---
+
+## ⚠️ Important Note
+
+JyotiGPT is **not**:
+
+* A therapist
+* A guru
+* A medical or psychological authority
+
+It does not diagnose, prescribe, or replace professional guidance.
+
+---
+
+## 📜 License
+
+Released under the **BSD-3-Clause License**.
+You are free to use, modify, and distribute JyotiGPT responsibly.
+
+---
+
+## 🌸 Attribution
+
+**JyotiGPT**
+Made by **Yash**
+
+*A conscious approach to artificial intelligence.*
+
+---
+
+If you want next, I can:
+
+* add a **“Daily Meditation Flow using JyotiGPT”** section
+* tune language to be **even more BK-institutional**
+* or split this into **README + philosophy doc**
+
+Just say 🌼
