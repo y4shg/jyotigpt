@@ -224,11 +224,3 @@ Made by **Yash**
 *A conscious approach to artificial intelligence.*
 
 ---
-
-If you want next, I can:
-
-* add a **“Daily Meditation Flow using JyotiGPT”** section
-* tune language to be **even more BK-institutional**
-* or split this into **README + philosophy doc**
-
-Just say 🌼
