@@ -21,7 +21,7 @@
 		socket,
 		config,
 		isApp,
-		WEBUI_NAME
+		JYOTIGPT_NAME
 	} from '$lib/stores';
 	import { onMount, getContext, tick, onDestroy } from 'svelte';
 
@@ -541,10 +541,10 @@
 
 			<a href="/" class="flex flex-1 px-1.5" on:click={newChatHandler}>
 				<div
-					id="sidebar-webui-name"
+					id="sidebar-jyotigpt-name"
 					class=" self-center font-medium text-sm text-gray-850 dark:text-white font-primary"
 				>
-					{$WEBUI_NAME}
+					{$JYOTIGPT_NAME}
 				</div>
 			</a>
 
