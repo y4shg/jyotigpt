@@ -45,7 +45,7 @@
 	import Image from '../common/Image.svelte';
 
 	import XMark from '../icons/XMark.svelte';
-	import Headphone from '../icons/Headphone.svelte';
+	import Audio from '../icons/Audio.svelte';
 	import GlobeAlt from '../icons/GlobeAlt.svelte';
 	import PhotoSolid from '../icons/PhotoSolid.svelte';
 	import Photo from '../icons/Photo.svelte';
@@ -1320,7 +1320,7 @@
 														}}
 														aria-label="Call"
 													>
-														<Headphone className="size-5" />
+														<Audio className="size-5" />
 													</button>
 												</Tooltip>
 											</div>

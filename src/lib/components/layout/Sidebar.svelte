@@ -20,7 +20,8 @@
 		channels,
 		socket,
 		config,
-		isApp
+		isApp,
+		WEBUI_NAME
 	} from '$lib/stores';
 	import { onMount, getContext, tick, onDestroy } from 'svelte';
 
@@ -519,7 +520,7 @@
 			: 'invisible'}"
 	>
 		<div
-			class="sidebar px-2 pt-2 pb-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-3"
+			class="sidebar px-[0.5625rem] pt-2 pb-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-3"
 		>
 			<a
 				class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition no-drag-region"
@@ -541,9 +542,9 @@
 			<a href="/" class="flex flex-1 px-1.5" on:click={newChatHandler}>
 				<div
 					id="sidebar-webui-name"
-					class=" self-center font-medium text-gray-850 dark:text-white font-primary"
+					class=" self-center font-medium text-sm text-gray-850 dark:text-white font-primary"
 				>
-					{$i18n.t('New Chat')}
+					{$WEBUI_NAME}
 				</div>
 			</a>
 
@@ -596,7 +597,7 @@
 		>
 			<div class="pb-1.5">
 				<!-- New Chat Button -->
-				<div class="px-2 flex justify-center text-gray-800 dark:text-gray-200">
+				<div class="px-[0.4375rem] flex justify-center text-gray-800 dark:text-gray-200">
 					<a
 						id="sidebar-new-chat-button-main"
 						class="group grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
@@ -616,7 +617,10 @@
 				</div>
 
 				<!-- Search Input -->
-				<div class="px-2">
+				<div class="px-[0.4375rem] relative {$temporaryChatEnabled ? 'opacity-20' : ''}">
+					{#if $temporaryChatEnabled}
+						<div class="absolute z-40 w-full h-full flex justify-center"></div>
+					{/if}
 					<SearchInput
 						bind:value={search}
 						on:input={searchDebounceHandler}
@@ -627,7 +631,7 @@
 
 				<!-- Workspace Button -->
 				{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools}
-					<div class="px-2 flex justify-center text-gray-800 dark:text-gray-200">
+					<div class="px-[0.4375rem] flex justify-center text-gray-800 dark:text-gray-200">
 						<a
 							id="sidebar-workspace-button"
 							class="grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
@@ -953,7 +957,7 @@
 			</Folder>
 		</div>
 
-		<div class="px-2 pt-1.5 pb-2 sticky bottom-0 z-10 -mt-3 sidebar">
+		<div class="px-1.5 pt-1.5 pb-2 sticky bottom-0 z-10 -mt-3 sidebar">
 			<div
 				class=" sidebar-bg-gradient-to-t bg-linear-to-t from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mt-6"
 			></div>
@@ -967,21 +971,19 @@
 							}
 						}}
 					>
-						<button
-							class=" flex items-center rounded-xl py-2.5 px-2.5 w-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
-							on:click={() => {
-								showDropdown = !showDropdown;
-							}}
+						<div
+							class=" flex items-center rounded-2xl py-2 px-1.5 w-full hover:bg-gray-100/50 dark:hover:bg-gray-900/50 transition"
 						>
 							<div class=" self-center mr-3">
 								<img
 									src={$user?.profile_image_url}
-									class=" max-w-[30px] object-cover rounded-full"
-									alt="User profile"
+									class=" size-7 object-cover rounded-full"
+									alt={$i18n.t('Open User Profile Menu')}
+									aria-label={$i18n.t('Open User Profile Menu')}
 								/>
 							</div>
 							<div class=" self-center font-medium">{$user?.name}</div>
-						</button>
+						</div>
 					</UserMenu>
 				{/if}
 			</div>
