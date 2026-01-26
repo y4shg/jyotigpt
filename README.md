@@ -11,6 +11,8 @@
 
 # 🌸 JyotiGPT
 
+<img width="1365" height="643" alt="image" src="https://github.com/user-attachments/assets/b1938211-f37d-41bf-8008-18a9929f41e7" />
+
 **JyotiGPT is a meditation-focused AI designed to support inner clarity, calm thinking, and conscious self-reflection.**
 
 It combines **guided reflective dialogue** with a **fully local, offline AI system**, allowing users to practice meditation and self-inquiry without cloud dependence, distractions, or data sharing.
