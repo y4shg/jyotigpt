@@ -21,7 +21,7 @@
 	import Menu from './Navbar/Menu.svelte';
 	import { page } from '$app/stores';
 	import UserMenu from './Sidebar/UserMenu.svelte';
-	import MenuLines from '../icons/MenuLines.svelte';
+	import SidebarIcon from '../icons/SidebarIcon.svelte';
 	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
 	import Map from '../icons/Map.svelte';
 	import { stringify } from 'postcss';
@@ -65,7 +65,7 @@
 					aria-label="Toggle Sidebar"
 				>
 					<div class=" m-auto self-center">
-						<MenuLines />
+						<SidebarIcon />
 					</div>
 				</button>
 			</div>

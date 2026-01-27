@@ -14,7 +14,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	import MenuLines from '$lib/components/icons/MenuLines.svelte';
+	import SidebarIcon from '$lib/components/icons/SidebarIcon.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -67,7 +67,7 @@
 						aria-label="Toggle Sidebar"
 					>
 						<div class=" m-auto self-center">
-							<MenuLines />
+							<SidebarIcon />
 						</div>
 					</button>
 				</div>

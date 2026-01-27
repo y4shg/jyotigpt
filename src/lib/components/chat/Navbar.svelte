@@ -24,7 +24,7 @@
 	import Tooltip from '../common/Tooltip.svelte';
 	import Menu from '$lib/components/layout/Navbar/Menu.svelte';
 	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
-	import MenuLines from '../icons/MenuLines.svelte';
+	import SidebarIcon from '../icons/SidebarIcon.svelte';
 	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
 
 	import PencilSquare from '../icons/PencilSquare.svelte';
@@ -69,7 +69,7 @@
 						aria-label="Toggle Sidebar"
 					>
 						<div class=" m-auto self-center">
-							<MenuLines />
+							<SidebarIcon />
 						</div>
 					</button>
 				</div>

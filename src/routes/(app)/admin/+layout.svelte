@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 
 	import { JYOTIGPT_NAME, showSidebar, user } from '$lib/stores';
-	import MenuLines from '$lib/components/icons/MenuLines.svelte';
+	import SidebarIcon from '$lib/components/icons/SidebarIcon.svelte';
 	import { page } from '$app/stores';
 
 	const i18n = getContext('i18n');
@@ -42,7 +42,7 @@
 						aria-label="Toggle Sidebar"
 					>
 						<div class=" m-auto self-center">
-							<MenuLines />
+							<SidebarIcon />
 						</div>
 					</button>
 				</div>

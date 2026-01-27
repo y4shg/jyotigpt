@@ -8,7 +8,7 @@
 	import { page } from '$app/stores';
 
 	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
-	import MenuLines from '../icons/MenuLines.svelte';
+	import SidebarIcon from '../icons/SidebarIcon.svelte';
 	import PencilSquare from '../icons/PencilSquare.svelte';
 
 	const i18n = getContext('i18n');
@@ -37,7 +37,7 @@
 					aria-label="Toggle Sidebar"
 				>
 					<div class=" m-auto self-center">
-						<MenuLines />
+						<SidebarIcon />
 					</div>
 				</button>
 			</div>
