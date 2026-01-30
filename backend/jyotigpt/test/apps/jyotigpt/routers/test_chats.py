@@ -1,7 +1,7 @@
 import uuid
 
 from test.util.abstract_integration_test import AbstractPostgresTest
-from test.util.mock_user import mock_JYOTIGPT_user
+from test.util.mock_user import mock_jyotigpt_user
 
 
 class TestChats(AbstractPostgresTest):
@@ -30,7 +30,7 @@ class TestChats(AbstractPostgresTest):
         )
 
     def test_get_session_user_chat_list(self):
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url("/"))
         assert response.status_code == 200
         first_chat = response.json()[0]
@@ -40,13 +40,13 @@ class TestChats(AbstractPostgresTest):
         assert first_chat["updated_at"] is not None
 
     def test_delete_all_user_chats(self):
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.delete(self.create_url("/"))
         assert response.status_code == 200
         assert len(self.chats.get_chats()) == 0
 
     def test_get_user_chat_list_by_user_id(self):
-        with mock_JYOTIGPT_user(id="3"):
+        with mock_jyotigpt_user(id="3"):
             response = self.fast_api_client.get(self.create_url("/list/user/2"))
         assert response.status_code == 200
         first_chat = response.json()[0]
@@ -56,7 +56,7 @@ class TestChats(AbstractPostgresTest):
         assert first_chat["updated_at"] is not None
 
     def test_create_new_chat(self):
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.post(
                 self.create_url("/new"),
                 json={
@@ -91,7 +91,7 @@ class TestChats(AbstractPostgresTest):
         from jyotigpt.internal.db import Session
 
         Session.commit()
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url("/all/archived"))
         assert response.status_code == 200
         first_chat = response.json()[0]
@@ -101,7 +101,7 @@ class TestChats(AbstractPostgresTest):
         assert first_chat["updated_at"] is not None
 
     def test_get_all_user_chats_in_db(self):
-        with mock_JYOTIGPT_user(id="4"):
+        with mock_jyotigpt_user(id="4"):
             response = self.fast_api_client.get(self.create_url("/all/db"))
         assert response.status_code == 200
         assert len(response.json()) == 1
@@ -110,7 +110,7 @@ class TestChats(AbstractPostgresTest):
         self.test_get_user_archived_chats()
 
     def test_archive_all_chats(self):
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.post(self.create_url("/archive/all"))
         assert response.status_code == 200
         assert len(self.chats.get_archived_chats_by_user_id("2")) == 1
@@ -118,7 +118,7 @@ class TestChats(AbstractPostgresTest):
     def test_get_shared_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
         self.chats.update_chat_share_id_by_id(chat_id, chat_id)
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url(f"/share/{chat_id}"))
         assert response.status_code == 200
         data = response.json()
@@ -135,7 +135,7 @@ class TestChats(AbstractPostgresTest):
 
     def test_get_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url(f"/{chat_id}"))
         assert response.status_code == 200
         data = response.json()
@@ -152,7 +152,7 @@ class TestChats(AbstractPostgresTest):
 
     def test_update_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.post(
                 self.create_url(f"/{chat_id}"),
                 json={
@@ -180,14 +180,14 @@ class TestChats(AbstractPostgresTest):
 
     def test_delete_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.delete(self.create_url(f"/{chat_id}"))
         assert response.status_code == 200
         assert response.json() is True
 
     def test_clone_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url(f"/{chat_id}/clone"))
 
         assert response.status_code == 200
@@ -208,7 +208,7 @@ class TestChats(AbstractPostgresTest):
 
     def test_archive_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.get(self.create_url(f"/{chat_id}/archive"))
         assert response.status_code == 200
 
@@ -217,7 +217,7 @@ class TestChats(AbstractPostgresTest):
 
     def test_share_chat_by_id(self):
         chat_id = self.chats.get_chats()[0].id
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.post(self.create_url(f"/{chat_id}/share"))
         assert response.status_code == 200
 
@@ -228,7 +228,7 @@ class TestChats(AbstractPostgresTest):
         chat_id = self.chats.get_chats()[0].id
         share_id = str(uuid.uuid4())
         self.chats.update_chat_share_id_by_id(chat_id, share_id)
-        with mock_JYOTIGPT_user(id="2"):
+        with mock_jyotigpt_user(id="2"):
             response = self.fast_api_client.delete(self.create_url(f"/{chat_id}/share"))
         assert response.status_code
 

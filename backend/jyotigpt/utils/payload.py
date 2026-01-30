@@ -15,7 +15,7 @@ def apply_model_system_prompt_to_body(
     if not system:
         return form_data
 
-    # Metadata (JYOTIGPT Usage)
+    # Metadata (JyotiGPT Usage)
     if metadata:
         variables = metadata.get("variables", {})
         if variables:

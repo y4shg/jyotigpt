@@ -22,12 +22,12 @@
 			<div class="m-auto pb-44 flex flex-col justify-center">
 				<div class="max-w-md">
 					<div class="text-center text-2xl font-medium z-50">
-						{$i18n.t('{{JYOTIGPTName}} Backend Required', { JYOTIGPTName: $JYOTIGPT_NAME })}
+						{$i18n.t('{{JyotiGPTName}} Backend Required', { JyotiGPTName: $JYOTIGPT_NAME })}
 					</div>
 
 					<div class=" mt-4 text-center text-sm w-full">
 						{$i18n.t(
-							"Oops! You're using an unsupported method (frontend only). Please serve the JYOTIGPT from the backend."
+							"Oops! You're using an unsupported method (frontend only). Please serve the JyotiGPT from the backend."
 						)}
 
 						<br class=" " />
