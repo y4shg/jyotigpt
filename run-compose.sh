@@ -89,7 +89,7 @@ usage() {
     echo "  $0 --enable-gpu[count=1] --enable-api[port=12345] --jyotigpt[port=3000] --data[folder=./ollama-data]"
     echo "  $0 --enable-gpu[count=1] --enable-api[port=12345] --jyotigpt[port=3000] --data[folder=./ollama-data] --build"
     echo ""
-    echo "This script configures and runs a docker-compose setup with optional GPU support, API exposure, and JYOTIGPT configuration."
+    echo "This script configures and runs a docker-compose setup with optional GPU support, API exposure, and JyotiGPT configuration."
     echo "About the gpu to use, the script automatically detects it using the "lspci" command."
     echo "In this case the gpu detected is: $(get_gpu_driver)"
 }
@@ -97,7 +97,7 @@ usage() {
 # Default values
 gpu_count=1
 api_port=11435
-JYOTIGPT_port=3000
+jyotigpt_port=3000
 headless=false
 build_image=false
 kill_compose=false
@@ -125,7 +125,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --jyotigpt*)
             value=$(extract_value "$key")
-            JYOTIGPT_port=${value:-3000}
+            jyotigpt_port=${value:-3000}
             ;;
         --data*)
             value=$(extract_value "$key")
@@ -190,8 +190,8 @@ else
     if [[ $enable_playwright == true ]]; then
         DEFAULT_COMPOSE_COMMAND+=" -f docker-compose.playwright.yaml"
     fi
-    if [[ -n $JYOTIGPT_port ]]; then
-        export jyotigpt_PORT=$JYOTIGPT_port # Set jyotigpt_PORT environment variable
+    if [[ -n $jyotigpt_port ]]; then
+        export JYOTIGPT_PORT=$jyotigpt_port # Set JYOTIGPT_PORT environment variable
     fi
     DEFAULT_COMPOSE_COMMAND+=" up -d"
     DEFAULT_COMPOSE_COMMAND+=" --remove-orphans"
@@ -208,7 +208,7 @@ echo -e "   ${GREEN}${BOLD}GPU Driver:${NC} ${OLLAMA_GPU_DRIVER:-Not Enabled}"
 echo -e "   ${GREEN}${BOLD}GPU Count:${NC} ${OLLAMA_GPU_COUNT:-Not Enabled}"
 echo -e "   ${GREEN}${BOLD}WebAPI Port:${NC} ${OLLAMA_WEBAPI_PORT:-Not Enabled}"
 echo -e "   ${GREEN}${BOLD}Data Folder:${NC} ${data_dir:-Using ollama volume}"
-echo -e "   ${GREEN}${BOLD}JYOTIGPT Port:${NC} $JYOTIGPT_port"
+echo -e "   ${GREEN}${BOLD}JyotiGPT Port:${NC} $jyotigpt_port"
 echo -e "   ${GREEN}${BOLD}Playwright:${NC} ${enable_playwright:-false}"
 echo
 

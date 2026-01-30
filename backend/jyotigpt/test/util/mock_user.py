@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 
 @contextmanager
-def mock_JYOTIGPT_user(**kwargs):
+def mock_jyotigpt_user(**kwargs):
     from jyotigpt.routers.jyotigpt import app
 
     with mock_user(app, **kwargs):

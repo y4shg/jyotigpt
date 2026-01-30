@@ -43,4 +43,4 @@ IF "%JYOTIGPT_SECRET_KEY%%JYOTIGPT_JWT_SECRET_KEY%" == " " (
 SET "JYOTIGPT_SECRET_KEY=%JYOTIGPT_SECRET_KEY%"
 IF "%UVICORN_WORKERS%"=="" SET UVICORN_WORKERS=1
 uvicorn JYOTIGPT.main:app --host "%HOST%" --port "%PORT%" --forwarded-allow-ips '*' --workers %UVICORN_WORKERS% --ws auto
-:: For ssl user uvicorn JYOTIGPT.main:app --host "%HOST%" --port "%PORT%" --forwarded-allow-ips '*' --ssl-keyfile "key.pem" --ssl-certfile "cert.pem" --ws auto
+:: For ssl user uvicorn jyotigpt.main:app --host "%HOST%" --port "%PORT%" --forwarded-allow-ips '*' --ssl-keyfile "key.pem" --ssl-certfile "cert.pem" --ws auto
