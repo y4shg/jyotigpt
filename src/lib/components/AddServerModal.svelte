@@ -239,7 +239,7 @@
 						</div>
 
 						<div class="text-xs text-gray-500 mt-1">
-							{$i18n.t(`JYOTIGPT will make requests to "{{url}}"`, {
+							{$i18n.t(`JyotiGPT will make requests to "{{url}}"`, {
 								url: `${url}/${path}`
 							})}
 						</div>

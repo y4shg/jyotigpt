@@ -192,7 +192,7 @@ async def get_channel_messages(
 ############################
 
 
-async def send_notification(name, JYOTIGPT_url, channel, message, active_user_ids):
+async def send_notification(name, jyotigpt_url, channel, message, active_user_ids):
     users = get_users_with_access("read", channel.access_control)
 
     for user in users:
@@ -208,12 +208,12 @@ async def send_notification(name, JYOTIGPT_url, channel, message, active_user_id
                     post_webhook(
                         name,
                         webhook_url,
-                        f"#{channel.name} - {JYOTIGPT_url}/channels/{channel.id}\n\n{message.content}",
+                        f"#{channel.name} - {jyotigpt_url}/channels/{channel.id}\n\n{message.content}",
                         {
                             "action": "channel",
                             "message": message.content,
                             "title": channel.name,
-                            "url": f"{JYOTIGPT_url}/channels/{channel.id}",
+                            "url": f"{jyotigpt_url}/channels/{channel.id}",
                         },
                     )
 
@@ -304,7 +304,7 @@ async def post_new_message(
             background_tasks.add_task(
                 send_notification,
                 request.app.state.JYOTIGPT_NAME,
-                request.app.state.config.JYOTIGPT_URL,
+                request.app.state.config.jyotigpt_url,
                 channel,
                 message,
                 active_user_ids,

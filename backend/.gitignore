@@ -8,5 +8,5 @@ _test
 Pipfile
 !/data
 /data/*
-/JYOTIGPT/data/*
+/jyotigpt/data/*
 .jyotigpt_secret_key

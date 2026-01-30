@@ -258,7 +258,7 @@ if FROM_INIT_PY:
 if os.path.exists(f"{DATA_DIR}/ollama.db"):
     # Rename the file
     os.rename(f"{DATA_DIR}/ollama.db", f"{DATA_DIR}/jyotigpt.db")
-    log.info("Database migrated from Ollama-JYOTIGPT successfully.")
+    log.info("Database migrated from Ollama-JyotiGPT successfully.")
 else:
     pass
 
