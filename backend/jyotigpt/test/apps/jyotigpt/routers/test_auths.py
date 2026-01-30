@@ -1,5 +1,5 @@
 from test.util.abstract_integration_test import AbstractPostgresTest
-from test.util.mock_user import mock_JYOTIGPT_user
+from test.util.mock_user import mock_jyotigpt_user
 
 
 class TestAuths(AbstractPostgresTest):
@@ -14,7 +14,7 @@ class TestAuths(AbstractPostgresTest):
         cls.auths = Auths
 
     def test_get_session_user(self):
-        with mock_JYOTIGPT_user():
+        with mock_jyotigpt_user():
             response = self.fast_api_client.get(self.create_url(""))
         assert response.status_code == 200
         assert response.json() == {
@@ -36,7 +36,7 @@ class TestAuths(AbstractPostgresTest):
             role="user",
         )
 
-        with mock_JYOTIGPT_user(id=user.id):
+        with mock_jyotigpt_user(id=user.id):
             response = self.fast_api_client.post(
                 self.create_url("/update/profile"),
                 json={"name": "John Doe 2", "profile_image_url": "/user2.png"},
@@ -57,7 +57,7 @@ class TestAuths(AbstractPostgresTest):
             role="user",
         )
 
-        with mock_JYOTIGPT_user(id=user.id):
+        with mock_jyotigpt_user(id=user.id):
             response = self.fast_api_client.post(
                 self.create_url("/update/password"),
                 json={"password": "old_password", "new_password": "new_password"},
@@ -117,7 +117,7 @@ class TestAuths(AbstractPostgresTest):
         assert data["token_type"] == "Bearer"
 
     def test_add_user(self):
-        with mock_JYOTIGPT_user():
+        with mock_jyotigpt_user():
             response = self.fast_api_client.post(
                 self.create_url("/add"),
                 json={
@@ -145,7 +145,7 @@ class TestAuths(AbstractPostgresTest):
             profile_image_url="/user.png",
             role="admin",
         )
-        with mock_JYOTIGPT_user():
+        with mock_jyotigpt_user():
             response = self.fast_api_client.get(self.create_url("/admin/details"))
 
         assert response.status_code == 200
@@ -162,7 +162,7 @@ class TestAuths(AbstractPostgresTest):
             profile_image_url="/user.png",
             role="admin",
         )
-        with mock_JYOTIGPT_user(id=user.id):
+        with mock_jyotigpt_user(id=user.id):
             response = self.fast_api_client.post(self.create_url("/api_key"))
         assert response.status_code == 200
         data = response.json()
@@ -178,7 +178,7 @@ class TestAuths(AbstractPostgresTest):
             role="admin",
         )
         self.users.update_user_api_key_by_id(user.id, "abc")
-        with mock_JYOTIGPT_user(id=user.id):
+        with mock_jyotigpt_user(id=user.id):
             response = self.fast_api_client.delete(self.create_url("/api_key"))
         assert response.status_code == 200
         assert response.json() == True
@@ -194,7 +194,7 @@ class TestAuths(AbstractPostgresTest):
             role="admin",
         )
         self.users.update_user_api_key_by_id(user.id, "abc")
-        with mock_JYOTIGPT_user(id=user.id):
+        with mock_jyotigpt_user(id=user.id):
             response = self.fast_api_client.get(self.create_url("/api_key"))
         assert response.status_code == 200
         assert response.json() == {"api_key": "abc"}

@@ -47,7 +47,7 @@ if [ -n "$SPACE_ID" ]; then
   if [ -n "$ADMIN_USER_EMAIL" ] && [ -n "$ADMIN_USER_PASSWORD" ]; then
     echo "Admin user configured, creating"
     JYOTIGPT_SECRET_KEY="$JYOTIGPT_SECRET_KEY" uvicorn jyotigpt.main:app --host "$HOST" --port "$PORT" --forwarded-allow-ips '*' &
-    JYOTIGPT_pid=$!
+    jyotigpt_pid=$!
     echo "Waiting for jyotigpt to start..."
     while ! curl -s http://localhost:8080/health > /dev/null; do
       sleep 1
@@ -59,7 +59,7 @@ if [ -n "$SPACE_ID" ]; then
       -H "Content-Type: application/json" \
       -d "{ \"email\": \"${ADMIN_USER_EMAIL}\", \"password\": \"${ADMIN_USER_PASSWORD}\", \"name\": \"Admin\" }"
     echo "Shutting down jyotigpt..."
-    kill $JYOTIGPT_pid
+    kill $jyotigpt_pid
   fi
 
   export JYOTIGPT_URL=${SPACE_HOST}
