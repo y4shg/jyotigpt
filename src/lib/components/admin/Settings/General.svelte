@@ -192,20 +192,6 @@
 
 						<div class="mt-1">
 							<div class="flex space-x-1">
-								<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
-									<img
-										alt="Discord"
-										src="https://img.shields.io/badge/Discord-JyotiGPT-blue?logo=discord&logoColor=white"
-									/>
-								</a>
-
-								<a href="https://twitter.com/JyotiGPT" target="_blank">
-									<img
-										alt="X (formerly Twitter) Follow"
-										src="https://img.shields.io/twitter/follow/JyotiGPT"
-									/>
-								</a>
-
 								<a href="https://github.com/y4shg/jyotigpt" target="_blank">
 									<img
 										alt="Github Repo"
