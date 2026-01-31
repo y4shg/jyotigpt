@@ -101,7 +101,7 @@
 					<div class=" text-xs text-gray-600 dark:text-gray-300 mb-2">
 						<a
 							class="underline"
-							href="https://github.com/jyotigpt/openapi-servers"
+							href="https://swagger.io/docs/specification/v3_0/about/"
 							target="_blank">{$i18n.t('Learn more about OpenAPI tool servers.')}</a
 						>
 					</div>

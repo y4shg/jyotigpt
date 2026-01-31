@@ -117,20 +117,6 @@
 			</div>
 		{:else}
 			<div class="flex space-x-1">
-				<a href="https://discord.com/" target="_blank">
-					<img
-						alt="Discord"
-						src="https://img.shields.io/badge/Discord-JYOTIGPT-blue?logo=discord&logoColor=white"
-					/>
-				</a>
-
-				<a href="https://twitter.com/" target="_blank">
-					<img
-						alt="X (formerly Twitter) Follow"
-						src="https://img.shields.io/twitter/follow/JyotiGPT"
-					/>
-				</a>
-
 				<a href="https://github.com/y4shg/jyotigpt" target="_blank">
 					<img
 						alt="Github Repo"
@@ -149,7 +135,7 @@
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://jyotigpt.us.to"
+					href="https://github.com/y4shg/jyotigpt/blob/main/LICENSE"
 					target="_blank"
 					class="underline">JyotiGPT (Yash Ghule) & Open WebUI (Timothy Jaeryang Baek)</a
 				>
