@@ -196,10 +196,10 @@
 			>
 				{#if pinned}
 					<BookmarkSlash strokeWidth="2" />
-					<div class="flex items-center">{$i18n.t('Unpin')}</div>
+					<div class="flex items-center font-normal">{$i18n.t('Unpin')}</div>
 				{:else}
 					<Bookmark strokeWidth="2" />
-					<div class="flex items-center">{$i18n.t('Pin')}</div>
+					<div class="flex items-center font-normal">{$i18n.t('Pin')}</div>
 				{/if}
 			</DropdownMenu.Item>
 
@@ -210,7 +210,7 @@
 				}}
 			>
 				<Pencil strokeWidth="2" />
-				<div class="flex items-center">{$i18n.t('Rename')}</div>
+				<div class="flex items-center font-normal">{$i18n.t('Rename')}</div>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
@@ -220,7 +220,7 @@
 				}}
 			>
 				<DocumentDuplicate strokeWidth="2" />
-				<div class="flex items-center">{$i18n.t('Clone')}</div>
+				<div class="flex items-center font-normal">{$i18n.t('Clone')}</div>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
@@ -230,7 +230,7 @@
 				}}
 			>
 				<ArchiveBox strokeWidth="2" />
-				<div class="flex items-center">{$i18n.t('Archive')}</div>
+				<div class="flex items-center font-normal">{$i18n.t('Archive')}</div>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
@@ -240,7 +240,7 @@
 				}}
 			>
 				<Share />
-				<div class="flex items-center">{$i18n.t('Share')}</div>
+				<div class="flex items-center font-normal">{$i18n.t('Share')}</div>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Sub>
@@ -249,7 +249,7 @@
 				>
 					<Download strokeWidth="2" />
 
-					<div class="flex items-center">{$i18n.t('Download')}</div>
+					<div class="flex items-center font-normal">{$i18n.t('Download')}</div>
 				</DropdownMenu.SubTrigger>
 				<DropdownMenu.SubContent
 					class="w-full rounded-xl px-1 py-1.5 z-50 bg-white dark:bg-gray-850 dark:text-white shadow-lg"
@@ -262,7 +262,7 @@
 							downloadJSONExport();
 						}}
 					>
-						<div class="flex items-center line-clamp-1">{$i18n.t('Export chat (.json)')}</div>
+						<div class="flex items-center line-clamp-1 font-normal">{$i18n.t('Export chat (.json)')}</div>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item
 						class="flex gap-2 items-center px-3 py-2 text-sm  cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
@@ -270,7 +270,7 @@
 							downloadTxt();
 						}}
 					>
-						<div class="flex items-center line-clamp-1">{$i18n.t('Plain text (.txt)')}</div>
+						<div class="flex items-center line-clamp-1 font-normal">{$i18n.t('Plain text (.txt)')}</div>
 					</DropdownMenu.Item>
 
 					<DropdownMenu.Item
@@ -279,7 +279,7 @@
 							downloadPdf();
 						}}
 					>
-						<div class="flex items-center line-clamp-1">{$i18n.t('PDF document (.pdf)')}</div>
+						<div class="flex items-center line-clamp-1 font-normal">{$i18n.t('PDF document (.pdf)')}</div>
 					</DropdownMenu.Item>
 				</DropdownMenu.SubContent>
 			</DropdownMenu.Sub>
@@ -290,7 +290,7 @@
 				}}
 			>
 				<GarbageBin strokeWidth="2" />
-				<div class="flex items-center">{$i18n.t('Delete')}</div>
+				<div class="flex items-center font-normal">{$i18n.t('Delete')}</div>
 			</DropdownMenu.Item>
 
 			<hr class="border-gray-100 dark:border-gray-850 my-0.5" />
