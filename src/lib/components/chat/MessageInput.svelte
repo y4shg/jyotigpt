@@ -1320,7 +1320,7 @@
 														}}
 														aria-label="Call"
 													>
-														<Audio className="size-5" strokeWidth="1.5" />
+														<Audio className="size-5" strokeWidth="2.5" />
 													</button>
 												</Tooltip>
 											</div>
