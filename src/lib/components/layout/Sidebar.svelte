@@ -543,7 +543,7 @@
 			<a href="/" class="flex flex-1 px-1.5" on:click={newChatHandler}>
 				<div
 					id="sidebar-jyotigpt-name"
-					class=" self-center font-medium text-sm text-gray-850 dark:text-white font-primary"
+					class=" self-center font-normal text-sm text-gray-850 dark:text-white font-primary"
 				>
 					{$JYOTIGPT_NAME}
 				</div>
@@ -599,7 +599,7 @@
 						</div>
 
 						<div class="flex flex-1 self-center translate-y-[0.5px]">
-							<div class=" self-center text-sm font-primary">{$i18n.t('New Chat')}</div>
+							<div class=" self-center text-sm font-normal font-primary">{$i18n.t('New Chat')}</div>
 						</div>
 					</a>
 				</div>
@@ -869,7 +869,7 @@
 							{#each $chats as chat, idx}
 								{#if idx === 0 || (idx > 0 && chat.time_range !== $chats[idx - 1].time_range)}
 									<div
-										class="w-full pl-2.5 text-xs text-gray-500 dark:text-gray-500 font-medium {idx ===
+										class="w-full pl-2.5 text-xs text-gray-500 dark:text-gray-500 font-normal {idx ===
 										0
 											? ''
 											: 'pt-5'} pb-1.5"
@@ -970,7 +970,7 @@
 									aria-label={$i18n.t('Open User Profile Menu')}
 								/>
 							</div>
-							<div class=" self-center font-medium">{$user?.name}</div>
+							<div class=" self-center font-normal">{$user?.name}</div>
 						</div>
 					</UserMenu>
 				{/if}
