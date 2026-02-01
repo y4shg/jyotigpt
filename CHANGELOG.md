@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] - 2026-01-31
+
+### Fixed
+
+- fix: adjust stroke width for AdjustmentsHorizontal icon for better visibility
+- refactor: update font styles for consistency across sidebar and chat components
+- refactor: update external links and remove outdated references in various components
+- chore: remove deprecated workflow files and add new disabled workflows for release, backend formatting, and frontend building
+- fix: remove outdated favicon link from app.html
+- Refactor code structure for improved readability and maintainability
+- Refactor: Update references from JYOTIGPT to JyotiGPT across the codebase
+- Updated comments, variable names, and strings to use "JyotiGPT" instead of "JYOTIGPT" for consistency.
+- Modified Dockerfile, backend files, and frontend components to reflect the new naming convention.
+- Incremented version numbers in package.json and package-lock.json to 1.0.7.
+- Updated documentation and error messages to align with the new branding.
+
 ## [1.0.7] - 2026-01-28
 
 ### Fixed

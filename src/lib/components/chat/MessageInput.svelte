@@ -1320,7 +1320,7 @@
 														}}
 														aria-label="Call"
 													>
-														<Audio className="size-5" strokeWidth="2.5" />
+														<Audio className="size-5" strokeWidth="1.5" />
 													</button>
 												</Tooltip>
 											</div>
@@ -1330,7 +1330,7 @@
 													<button
 														id="send-message-button"
 														class="{!(prompt === '' && files.length === 0)
-															? 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100 '
+															? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-white dark:hover:bg-red-700 '
 															: 'text-white bg-gray-200 dark:text-gray-900 dark:bg-gray-700 disabled'} transition rounded-full p-1.5 self-center"
 														type="submit"
 														disabled={prompt === '' && files.length === 0}
