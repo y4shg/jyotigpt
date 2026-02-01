@@ -6,20 +6,18 @@
 <svg
 	aria-hidden="true"
 	xmlns="http://www.w3.org/2000/svg"
-	fill="none"
+	fill="currentColor"
 	viewBox="0 0 24 24"
 	stroke-width={strokeWidth}
 	stroke="currentColor"
 	class={className}
+	><path d="M12 4L12 20" stroke-linecap="round" stroke-linejoin="round"></path><path
+		d="M8 9L8 15"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	></path><path d="M20 10L20 14" stroke-linecap="round" stroke-linejoin="round"></path><path
+		d="M4 10L4 14"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	></path><path d="M16 7L16 17" stroke-linecap="round" stroke-linejoin="round"></path></svg
 >
-	<path
-		d="M7 21H17C18.1046 21 19 20.1046 19 19V9L13 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21Z"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
-	<path
-		d="M13 3V9H19"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
-</svg>
