@@ -63,7 +63,7 @@ dependencies = [
     "sentence-transformers==3.3.1",
     "accelerate",
     "colbert-ai==0.2.21",
-    "einops==0.8.1",
+    "einops==0.8.2",
 
     "ftfy==6.2.3",
     "pypdf==4.3.1",
