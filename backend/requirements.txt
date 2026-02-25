@@ -1,7 +1,7 @@
 fastapi==0.115.7
 uvicorn[standard]==0.34.0
 pydantic==2.10.6
-python-multipart==0.0.20
+python-multipart==0.0.22
 
 python-socketio==5.13.0
 python-jose==3.4.0
@@ -20,7 +20,7 @@ peewee-migrate==1.12.2
 psycopg2-binary==2.9.9
 pgvector==0.4.0
 PyMySQL==1.1.1
-bcrypt==4.3.0
+bcrypt==5.0.0
 
 pymongo
 redis
@@ -55,7 +55,7 @@ elasticsearch==8.17.1
 transformers
 sentence-transformers==3.3.1
 accelerate
-colbert-ai==0.2.21
+colbert-ai==0.2.22
 einops==0.8.1
 
 
@@ -63,8 +63,8 @@ ftfy==6.2.3
 pypdf==4.3.1
 fpdf2==2.8.2
 pymdown-extensions==10.14.2
-docx2txt==0.8
-python-pptx==1.0.0
+docx2txt==0.9
+python-pptx==1.0.2
 unstructured==0.16.17
 nltk==3.9.1
 Markdown==3.7
@@ -86,7 +86,7 @@ rank-bm25==0.2.2
 
 onnxruntime==1.20.1
 
-faster-whisper==1.1.1
+faster-whisper==1.2.1
 
 PyJWT[crypto]==2.10.1
 authlib==1.4.1
@@ -113,7 +113,7 @@ pytest-docker~=3.1.1
 googleapis-common-protos==1.63.2
 google-cloud-storage==2.19.0
 
-azure-identity==1.21.0
+azure-identity==1.25.2
 azure-storage-blob==12.24.1
 
 
@@ -127,14 +127,14 @@ firecrawl-py==1.12.0
 tencentcloud-sdk-python==3.0.1336
 
 ## Trace
-opentelemetry-api==1.31.1
-opentelemetry-sdk==1.31.1
-opentelemetry-exporter-otlp==1.31.1
-opentelemetry-instrumentation==0.52b1
-opentelemetry-instrumentation-fastapi==0.52b1
-opentelemetry-instrumentation-sqlalchemy==0.52b1
-opentelemetry-instrumentation-redis==0.52b1
-opentelemetry-instrumentation-requests==0.52b1
-opentelemetry-instrumentation-logging==0.52b1
-opentelemetry-instrumentation-httpx==0.52b1
-opentelemetry-instrumentation-aiohttp-client==0.52b1
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-exporter-otlp
+opentelemetry-instrumentation
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-sqlalchemy
+opentelemetry-instrumentation-redis
+opentelemetry-instrumentation-requests
+opentelemetry-instrumentation-logging
+opentelemetry-instrumentation-httpx
+opentelemetry-instrumentation-aiohttp-client
