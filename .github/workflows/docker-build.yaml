@@ -224,7 +224,7 @@ jobs:
           IMAGE_NAME: '${{ github.repository }}'
 
       - name: Download digests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: digests-main-*
           path: /tmp/digests
@@ -278,7 +278,7 @@ jobs:
           IMAGE_NAME: '${{ github.repository }}'
 
       - name: Download digests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: digests-cuda-*
           path: /tmp/digests
