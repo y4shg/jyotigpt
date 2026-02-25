@@ -21,7 +21,27 @@ export default {
 					850: 'var(--color-gray-850, #262626)',
 					900: 'var(--color-gray-900, #171717)',
 					950: 'var(--color-gray-950, #0d0d0d)'
-				}
+				},
+				// Semantic theme tokens driven by CSS variables so the
+				// existing dark/light mode switch can swap palettes.
+				background: 'var(--color-background)',
+				foreground: 'var(--color-foreground)',
+				surface: 'var(--color-surface)',
+				'surface-elevated': 'var(--color-surface-elevated)',
+				border: 'var(--color-border)',
+				primary: {
+					50: 'var(--color-primary-50, #fff1f2)',
+					100: 'var(--color-primary-100, #ffe4e6)',
+					200: 'var(--color-primary-200, #fecdd3)',
+					300: 'var(--color-primary-300, #fda4af)',
+					400: 'var(--color-primary-400, #fb7185)',
+					500: 'var(--color-primary-500, #ef4444)',
+					600: 'var(--color-primary-600, #dc2626)',
+					700: 'var(--color-primary-700, #b91c1c)',
+					800: 'var(--color-primary-800, #991b1b)',
+					900: 'var(--color-primary-900, #7f1d1d)'
+				},
+				primaryForeground: 'var(--color-primary-foreground)'
 			},
 			typography: {
 				DEFAULT: {
@@ -36,6 +56,10 @@ export default {
 			},
 			padding: {
 				'safe-bottom': 'env(safe-area-inset-bottom)'
+			},
+			borderRadius: {
+				'btn': '9999px',
+				'xl': '0.9rem'
 			}
 		}
 	},

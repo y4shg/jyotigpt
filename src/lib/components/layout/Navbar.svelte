@@ -46,7 +46,7 @@
 
 <div class="sticky top-0 z-30 w-full px-1.5 py-1.5 -mb-8 flex items-center">
 	<div
-		class=" bg-linear-to-b via-50% from-white via-white to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"
+		class=" bg-linear-to-b via-50% from-background via-background to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"
 	></div>
 
 	<div class=" flex max-w-full w-full mx-auto px-1 pt-0.5 bg-transparent">
@@ -54,11 +54,11 @@
 			<div
 				class="{$showSidebar
 					? 'md:hidden'
-					: ''} mr-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400"
+					: ''} mr-1 self-start flex flex-none items-center text-gray-500 dark:text-gray-300"
 			>
 				<button
 					id="sidebar-toggle-button"
-					class="cursor-pointer px-2 py-2 flex rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+					class="btn-ghost px-2 py-2 rounded-xl"
 					on:click={() => {
 						showSidebar.set(!$showSidebar);
 					}}
@@ -80,7 +80,7 @@
 				{/if}
 			</div>
 
-			<div class="self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
+			<div class="self-start flex flex-none items-center text-gray-500 dark:text-gray-300">
 				<!-- <div class="md:hidden flex self-center w-[1px] h-5 mx-2 bg-gray-300 dark:bg-stone-700" /> -->
 				{#if shareEnabled && chat && (chat.id || $temporaryChatEnabled)}
 					<Menu
@@ -118,7 +118,7 @@
 				{:else if $mobile}
 					<Tooltip content={$i18n.t('Controls')}>
 						<button
-							class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+							class="btn-ghost px-2 py-2 rounded-xl"
 							on:click={async () => {
 								await showControls.set(!$showControls);
 							}}
@@ -134,7 +134,7 @@
 				{#if !$mobile}
 					<Tooltip content={$i18n.t('Controls')}>
 						<button
-							class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+							class="btn-ghost px-2 py-2 rounded-xl"
 							on:click={async () => {
 								await showControls.set(!$showControls);
 							}}
@@ -150,9 +150,9 @@
 				<Tooltip content={$i18n.t('New Chat')}>
 					<button
 						id="new-chat-button"
-						class=" flex {$showSidebar
-							? 'md:hidden'
-							: ''} cursor-pointer px-2 py-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+						class="{$showSidebar
+							? 'md:hidden '
+							: ''}btn-primary px-2 py-2 rounded-xl"
 						on:click={() => {
 							initNewChat();
 						}}
@@ -175,7 +175,7 @@
 						}}
 					>
 						<button
-							class="select-none flex rounded-xl p-1.5 w-full hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+							class="select-none flex rounded-xl p-1.5 w-full hover:bg-gray-100/70 dark:hover:bg-gray-900/60 transition"
 							aria-label="User Menu"
 						>
 							<div class=" self-center">

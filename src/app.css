@@ -12,6 +12,40 @@
 	font-display: swap;
 }
 
+/* Brand font: Open Sauce Sans – loaded from system-installed fonts.
+   Install the family locally (Open Sauce Sans) to activate it in the UI. */
+@font-face {
+	font-family: 'Open Sauce Sans';
+	src: local('Open Sauce Sans Regular'), local('OpenSauceSans-Regular'), local('Open Sauce Sans');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sauce Sans';
+	src: local('Open Sauce Sans Medium'), local('OpenSauceSans-Medium'), local('Open Sauce Sans');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sauce Sans';
+	src: local('Open Sauce Sans SemiBold'), local('OpenSauceSans-SemiBold'), local('Open Sauce Sans');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sauce Sans';
+	src: local('Open Sauce Sans Bold'), local('OpenSauceSans-Bold'), local('Open Sauce Sans');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
 @font-face {
 	font-family: 'Mona Sans';
 	src: url('/assets/fonts/Mona-Sans.woff2');
@@ -24,8 +58,31 @@
 	font-display: swap;
 }
 
+:root {
+	--color-background: #f9fafb;
+	--color-foreground: #020617;
+	--color-surface: #ffffff;
+	--color-surface-elevated: #ffffff;
+	--color-border: #e5e7eb;
+	--color-primary-foreground: #fef2f2;
+}
+
+.dark {
+	--color-background: #020617;
+	--color-foreground: #f9fafb;
+	--color-surface: #020617;
+	--color-surface-elevated: #020617;
+	--color-border: #1f2937;
+	--color-primary-foreground: #fee2e2;
+}
+
 html {
 	word-break: break-word;
+}
+
+body {
+	background-color: theme(colors.background);
+	color: theme(colors.foreground);
 }
 
 code {
@@ -75,7 +132,13 @@ textarea::placeholder {
 }
 
 .font-primary {
-	font-family: 'Archivo', sans-serif;
+	font-family: 'Open Sauce Sans', 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, 'Inter',
+		ui-sans-serif, 'Segoe UI', sans-serif;
+}
+
+.font-brand {
+	font-family: 'Open Sauce Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		sans-serif;
 }
 
 .drag-region {
@@ -397,4 +460,20 @@ input[type='number'] {
 
 .hljs-strong {
 	font-weight: 700;
+}
+
+.btn {
+	@apply inline-flex items-center justify-center rounded-btn font-medium text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+	@apply btn bg-primary-600 text-primary-foreground hover:bg-primary-500 active:bg-primary-700;
+}
+
+.btn-secondary {
+	@apply btn bg-surface-elevated text-foreground border border-border hover:bg-gray-100/60 dark:hover:bg-gray-800/80;
+}
+
+.btn-ghost {
+	@apply btn bg-transparent text-foreground hover:bg-gray-100/80 dark:hover:bg-gray-900/60;
 }

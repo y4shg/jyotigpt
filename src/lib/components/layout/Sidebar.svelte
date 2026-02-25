@@ -510,7 +510,7 @@
 		? 'md:relative w-[260px] max-w-[260px]'
 		: '-translate-x-[260px] w-[0px]'} {$isApp
 		? `ml-[4.5rem] md:ml-0 `
-		: 'transition-width duration-200 ease-in-out'}  shrink-0 bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-200 text-sm fixed z-50 top-0 left-0 overflow-x-hidden
+		: 'transition-width duration-200 ease-in-out'}  shrink-0 bg-surface text-foreground text-sm fixed z-50 top-0 left-0 overflow-x-hidden
         "
 	transition:slide={{ duration: 250, axis: 'x' }}
 	data-state={$showSidebar}
@@ -521,7 +521,7 @@
 			: 'invisible'}"
 	>
 		<div
-			class="sidebar px-[0.5625rem] pt-2 pb-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-3"
+			class="sidebar px-[0.5625rem] pt-2 pb-1.5 flex justify-between space-x-1 text-gray-500 dark:text-gray-300 sticky top-0 z-10 -mb-3"
 		>
 			<a
 				class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition no-drag-region"
@@ -569,7 +569,7 @@
 			<div
 				class="{scrollTop > 0
 					? 'visible'
-					: 'invisible'} sidebar-bg-gradient-to-b bg-linear-to-b from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mb-6"
+					: 'invisible'} sidebar-bg-gradient-to-b bg-linear-to-b from-surface to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mb-6"
 			></div>
 		</div>
 
@@ -585,7 +585,7 @@
 		>
 			<div class="pb-1.5">
 				<!-- New Chat Button -->
-				<div class="px-[0.4375rem] flex justify-center text-gray-800 dark:text-gray-200">
+				<div class="px-[0.4375rem] flex justify-center text-foreground">
 					<a
 						id="sidebar-new-chat-button-main"
 						class="group grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition outline-none"
@@ -619,7 +619,7 @@
 
 				<!-- Workspace Button -->
 				{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools}
-					<div class="px-[0.4375rem] flex justify-center text-gray-800 dark:text-gray-200">
+					<div class="px-[0.4375rem] flex justify-center text-foreground">
 						<a
 							id="sidebar-workspace-button"
 							class="grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
@@ -947,7 +947,7 @@
 
 		<div class="px-1.5 pt-1.5 pb-2 sticky bottom-0 z-10 -mt-3 sidebar">
 			<div
-				class=" sidebar-bg-gradient-to-t bg-linear-to-t from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mt-6"
+				class=" sidebar-bg-gradient-to-t bg-linear-to-t from-surface to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mt-6"
 			></div>
 			<div class="flex flex-col font-primary">
 				{#if $user !== undefined && $user !== null}

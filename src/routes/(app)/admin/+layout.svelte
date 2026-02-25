@@ -30,12 +30,12 @@
 			? 'md:max-w-[calc(100%-260px)]'
 			: ''} max-w-full"
 	>
-		<nav class="   px-2.5 pt-1 backdrop-blur-xl drag-region">
+		<nav class="px-2.5 pt-1 backdrop-blur-xl drag-region">
 			<div class=" flex items-center gap-1">
 				<div class="{$showSidebar ? 'md:hidden' : ''} flex flex-none items-center self-end">
 					<button
 						id="sidebar-toggle-button"
-						class="cursor-pointer p-1.5 flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition"
+						class="btn-ghost p-1.5 rounded-xl"
 						on:click={() => {
 							showSidebar.set(!$showSidebar);
 						}}
@@ -49,33 +49,33 @@
 
 				<div class=" flex w-full">
 					<div
-						class="flex gap-1 scrollbar-none overflow-x-auto w-fit text-center text-sm font-medium rounded-full bg-transparent pt-1"
+						class="flex gap-1 scrollbar-none overflow-x-auto w-fit text-center text-sm font-medium rounded-full bg-surface/60 border border-border px-1 py-0.5"
 					>
 						<a
-							class="min-w-fit rounded-full p-1.5 {['/admin/users'].includes($page.url.pathname)
-								? ''
-								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition"
+							class="min-w-fit rounded-full px-3 py-1.5 {['/admin/users'].includes($page.url.pathname)
+								? 'bg-primary-600 text-primary-foreground'
+								: 'text-gray-500 dark:text-gray-400 hover:text-foreground'} transition"
 							href="/admin">{$i18n.t('Users')}</a
 						>
 
 						<a
-							class="min-w-fit rounded-full p-1.5 {$page.url.pathname.includes('/admin/evaluations')
-								? ''
-								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition"
+							class="min-w-fit rounded-full px-3 py-1.5 {$page.url.pathname.includes('/admin/evaluations')
+								? 'bg-primary-600 text-primary-foreground'
+								: 'text-gray-500 dark:text-gray-400 hover:text-foreground'} transition"
 							href="/admin/evaluations">{$i18n.t('Evaluations')}</a
 						>
 
 						<a
-							class="min-w-fit rounded-full p-1.5 {$page.url.pathname.includes('/admin/functions')
-								? ''
-								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition"
+							class="min-w-fit rounded-full px-3 py-1.5 {$page.url.pathname.includes('/admin/functions')
+								? 'bg-primary-600 text-primary-foreground'
+								: 'text-gray-500 dark:text-gray-400 hover:text-foreground'} transition"
 							href="/admin/functions">{$i18n.t('Functions')}</a
 						>
 
 						<a
-							class="min-w-fit rounded-full p-1.5 {$page.url.pathname.includes('/admin/settings')
-								? ''
-								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition"
+							class="min-w-fit rounded-full px-3 py-1.5 {$page.url.pathname.includes('/admin/settings')
+								? 'bg-primary-600 text-primary-foreground'
+								: 'text-gray-500 dark:text-gray-400 hover:text-foreground'} transition"
 							href="/admin/settings">{$i18n.t('Settings')}</a
 						>
 					</div>
@@ -83,7 +83,7 @@
 			</div>
 		</nav>
 
-		<div class=" pb-1 px-[16px] flex-1 max-h-full overflow-y-auto">
+		<div class=" pb-4 px-[16px] flex-1 max-h-full overflow-y-auto">
 			<slot />
 		</div>
 	</div>
