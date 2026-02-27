@@ -33,8 +33,7 @@ jobs:
         run: npm ci
 
       - name: Run svelte-check (reports ALL errors at once)
-        run: npx svelte-check --output machine-readable 2>&1 | tee svelte-check-results.txt; \
-             npx svelte-check --threshold error
+        run: npx svelte-check --workspace src --threshold error 2>&1 | tee svelte-check-results.txt; exit ${PIPESTATUS[0]}
 
       - name: Upload svelte-check results
         if: always()
