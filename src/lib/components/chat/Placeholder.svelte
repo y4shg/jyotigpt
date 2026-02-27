@@ -136,7 +136,7 @@
 					</div>
 				</div>
 
-				<div class=" line-clamp-1" in:fade={{ duration: 100 }}>
+				<div class=" line-clamp-1 font-secondary" in:fade={{ duration: 100 }}>
 					{#if models[selectedModelIdx]?.name}
 						{models[selectedModelIdx]?.name}
 					{:else}
