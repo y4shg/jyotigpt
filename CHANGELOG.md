@@ -9,12 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- refactor: redefine dark/light mode color palettes via CSS custom properties in `app.css`
-  - Light mode surfaces now use warm off-white tones (`#FFFFFF`, `#FAF8F3`, `#F5F2EB`)
-  - Dark mode surfaces now use warm near-black tones (`#252523`, `#2E2E2C`, `#1E1D1C`)
-- refactor: override primary action red palette with brand-aligned hues (`#E82020` light, `#F03030` dark)
-- feat: apply Instrument Serif font to placeholder heading in `Placeholder.svelte`
-- chore: extend `tailwind.config.js` with CSS variable-driven `red` palette alongside existing `gray` palette
+- refactor: redefine dark/light mode color palettes via CSS custom properties in app.css
+  - Light mode surfaces now use warm off-white tones (#FFFFFF, #FAF8F3, #F5F2EB)
+  - Dark mode surfaces now use warm near-black tones (#252523, #2E2E2C, #1E1D1C)
+- refactor: override primary action red palette with brand-aligned hues (#E82020 light, #F03030 dark)
+- feat: apply Instrument Serif font to placeholder heading in Placeholder.svelte
+- chore: extend tailwind.config.js with CSS variable-driven red palette alongside existing gray palette
 
 ## [1.0.8] - 2026-01-31
 
