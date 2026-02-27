@@ -1266,7 +1266,7 @@
 											<div class=" flex items-center">
 												<Tooltip content={$i18n.t('Call')}>
 													<button
-														class=" bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-white dark:hover:bg-red-700 transition rounded-full p-1.5 self-center"
+														class=" bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-black dark:hover:bg-red-700 transition rounded-full p-1.5 self-center"
 														type="button"
 														on:click={async () => {
 															if (selectedModels.length > 1) {
@@ -1330,7 +1330,7 @@
 													<button
 														id="send-message-button"
 														class="{!(prompt === '' && files.length === 0)
-															? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-white dark:hover:bg-red-700 '
+															? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-black dark:hover:bg-red-700 '
 															: 'text-white bg-gray-200 dark:text-gray-900 dark:bg-gray-700 disabled'} transition rounded-full p-1.5 self-center"
 														type="submit"
 														disabled={prompt === '' && files.length === 0}
