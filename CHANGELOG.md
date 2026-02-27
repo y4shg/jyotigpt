@@ -5,16 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2026-02-26
+## [1.1.1] - 2026-02-26
 
 ### Changed
 
-- refactor: redefine dark/light mode color palettes via CSS custom properties in `app.css`
-  - Light mode surfaces now use warm off-white tones (`#FFFFFF`, `#FAF8F3`, `#F5F2EB`)
-  - Dark mode surfaces now use warm near-black tones (`#252523`, `#2E2E2C`, `#1E1D1C`)
-- refactor: override primary action red palette with brand-aligned hues (`#E82020` light, `#F03030` dark)
-- feat: apply Instrument Serif font to placeholder heading in `Placeholder.svelte`
-- chore: extend `tailwind.config.js` with CSS variable-driven `red` palette alongside existing `gray` palette
+- refactor: redefine dark/light mode color palettes via CSS custom properties in app.css
+  - Light mode surfaces now use warm off-white tones (#FFFFFF, #FAF8F3, #F5F2EB)
+  - Dark mode surfaces now use warm near-black tones (#252523, #2E2E2C, #1E1D1C)
+- refactor: override primary action red palette with brand-aligned hues (#E82020 light, #F03030 dark)
+- feat: apply Instrument Serif font to placeholder heading in Placeholder.svelte
+- chore: extend tailwind.config.js with CSS variable-driven red palette alongside existing gray palette
+- info: the version number was incremented to 1.1.1 to enhance the release process, and reflect major changes.
 
 ## [1.0.8] - 2026-01-31
 
