@@ -208,8 +208,6 @@
 								{$i18n.t('Activate')}
 							</button> -->
 						</div>
-					</div>
-				</div>
 
 				<div class="mb-3">
 					<div class=" mb-2.5 text-base font-medium">{$i18n.t('Authentication')}</div>
