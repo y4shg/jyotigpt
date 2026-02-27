@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate SvelteKit types (required before svelte-check)
+        run: npx svelte-kit sync
+
       - name: Run svelte-check (reports ALL errors at once)
         run: npx svelte-check --workspace src --threshold error 2>&1 | tee svelte-check-results.txt; exit ${PIPESTATUS[0]}
 
