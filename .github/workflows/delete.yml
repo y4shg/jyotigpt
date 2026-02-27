@@ -7,9 +7,18 @@ jobs:
   delete-packages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/delete-package-versions@v5
-        with:
-          package-name: 'jyotigpt'
-          package-type: 'container'
-          min-versions-to-keep: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete all versions
+        run: |
+          while true; do
+            remaining=$(gh api "/user/packages/container/jyotigpt/versions" --paginate | jq 'length')
+            echo "Versions remaining: $remaining"
+            if [ "$remaining" -eq 0 ]; then
+              echo "All versions deleted!"
+              break
+            fi
+            gh api "/user/packages/container/jyotigpt/versions" | \
+              jq -r '.[].id' | \
+              xargs -I{} gh api --method DELETE "/user/packages/container/jyotigpt/versions/{}"
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
