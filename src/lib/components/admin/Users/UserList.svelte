@@ -131,7 +131,7 @@
 		<div class="flex-shrink-0">
 			{$i18n.t('Users')}
 		</div>
-		<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850"></div>
+		<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850" />
 
 		<span class="text-lg font-medium text-gray-500 dark:text-gray-300">{users.length}</span>
 	</div>

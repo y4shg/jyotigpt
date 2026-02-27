@@ -149,7 +149,7 @@
 						/>
 					</ProfilePreview>
 				{:else}
-					<!-- <div class="w-7 h-7 rounded-full bg-transparent"></div> -->
+					<!-- <div class="w-7 h-7 rounded-full bg-transparent" /> -->
 
 					{#if message.created_at}
 						<div

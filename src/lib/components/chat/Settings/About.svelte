@@ -106,6 +106,9 @@
 
 		<hr class=" border-gray-100 dark:border-gray-850" />
 
+			</div>
+		{/if}
+
 		<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
 			Emoji graphics provided by
 			<a href="https://github.com/jdecked/twemoji" target="_blank">Twemoji</a>, licensed under

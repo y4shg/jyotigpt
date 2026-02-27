@@ -782,8 +782,8 @@
 				<div class="mb-3"></div>
 			{/if}
 
-			<div class="hidden w-[42rem]"></div>
-			<div class="hidden w-[32rem]"></div>
+			<div class="hidden w-[42rem]" />
+			<div class="hidden w-[32rem]" />
 		</slot>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
