@@ -126,21 +126,6 @@
 />
 <UserChatsModal bind:show={showUserChatsModal} user={selectedUser} />
 
-{#if ($config?.license_metadata?.seats ?? null) !== null && users.length > $config?.license_metadata?.seats}
-	<div class=" mt-1 mb-2 text-xs text-red-500">
-		<Banner
-			className="mx-0"
-			banner={{
-				type: 'error',
-				title: 'License Error',
-				content:
-					'Exceeded the number of seats in your license. Please contact support to increase the number of seats.',
-				dismissable: true
-			}}
-		/>
-	</div>
-{/if}
-
 <div class="mt-0.5 mb-2 gap-1 flex flex-col md:flex-row justify-between">
 	<div class="flex md:self-center text-lg font-medium px-0.5">
 		<div class="flex-shrink-0">
@@ -148,21 +133,7 @@
 		</div>
 		<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850" />
 
-		{#if ($config?.license_metadata?.seats ?? null) !== null}
-			{#if users.length > $config?.license_metadata?.seats}
-				<span class="text-lg font-medium text-red-500"
-					>{users.length} of {$config?.license_metadata?.seats}
-					<span class="text-sm font-normal">available users</span></span
-				>
-			{:else}
-				<span class="text-lg font-medium text-gray-500 dark:text-gray-300"
-					>{users.length} of {$config?.license_metadata?.seats}
-					<span class="text-sm font-normal">available users</span></span
-				>
-			{/if}
-		{:else}
-			<span class="text-lg font-medium text-gray-500 dark:text-gray-300">{users.length}</span>
-		{/if}
+		<span class="text-lg font-medium text-gray-500 dark:text-gray-300">{users.length}</span>
 	</div>
 
 	<div class="flex gap-1">
@@ -488,15 +459,3 @@
 
 <Pagination bind:page count={users.length} />
 
-{#if !$config?.license_metadata}
-	{#if users.length > 50}
-		<div class="text-sm">
-			<Markdown
-				content={`
-> [!NOTE]
-> # **50+ USERS!!**
-`}
-			/>
-		</div>
-	{/if}
-{/if}

@@ -92,7 +92,6 @@ from jyotigpt.models.users import UserModel, Users
 from jyotigpt.models.chats import Chats
 
 from jyotigpt.config import (
-    LICENSE_KEY,
     # Ollama
     ENABLE_OLLAMA_API,
     OLLAMA_BASE_URLS,
@@ -366,7 +365,6 @@ from jyotigpt.utils.middleware import process_chat_payload, process_chat_respons
 from jyotigpt.utils.access_control import has_access
 
 from jyotigpt.utils.auth import (
-    get_license_data,
     get_http_authorization_cred,
     decode_token,
     get_admin_user,
@@ -431,8 +429,6 @@ async def lifespan(app: FastAPI):
     if RESET_CONFIG_ON_START:
         reset_config()
 
-    if LICENSE_KEY:
-        get_license_data(app, LICENSE_KEY)
 
     asyncio.create_task(periodic_usage_pool_cleanup())
     yield
@@ -454,7 +450,6 @@ app.state.config = AppConfig(
 )
 
 app.state.JYOTIGPT_NAME = JYOTIGPT_NAME
-app.state.LICENSE_METADATA = None
 
 
 ########################################
@@ -583,6 +578,7 @@ app.state.EXTERNAL_PWA_MANIFEST_URL = EXTERNAL_PWA_MANIFEST_URL
 app.state.USER_COUNT = None
 app.state.TOOLS = {}
 app.state.FUNCTIONS = {}
+
 
 ########################################
 #
@@ -1333,7 +1329,6 @@ async def get_app_config(request: Request):
                     "client_id": ONEDRIVE_CLIENT_ID.value,
                     "sharepoint_url": ONEDRIVE_SHAREPOINT_URL.value,
                 },
-                "license_metadata": app.state.LICENSE_METADATA,
                 **(
                     {
                         "active_entries": app.state.USER_COUNT,
