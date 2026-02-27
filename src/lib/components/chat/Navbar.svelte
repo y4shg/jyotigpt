@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
-					<!-- <div class="md:hidden flex self-center w-[1px] h-5 mx-2 bg-gray-300 dark:bg-stone-700" /> -->
+					<!-- <div class="md:hidden flex self-center w-[1px] h-5 mx-2 bg-gray-300 dark:bg-stone-700"></div> -->
 					{#if shareEnabled && chat && (chat.id || $temporaryChatEnabled)}
 						<Menu
 							{chat}
@@ -181,7 +181,15 @@
 			</div>
 		</div>
 	</div>
-
+	{#if $banners.length > 0}
+		<div class="w-full">
+			<div class="flex flex-col gap-1 w-full px-4">
+				{#each $banners as banner, bannerIdx}
+					<Banner
+						{banner}
+						on:dismiss={(e) => {
+							const bannerId = e.detail;
+							localStorage.setItem(
 								'dismissedBannerIds',
 								JSON.stringify(
 									[

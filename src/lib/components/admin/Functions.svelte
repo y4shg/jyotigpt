@@ -200,7 +200,7 @@
 	<div class="flex justify-between items-center">
 		<div class="flex md:self-center text-xl items-center font-medium px-0.5">
 			{$i18n.t('Functions')}
-			<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850" />
+			<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850"></div>
 			<span class="text-base font-lg text-gray-500 dark:text-gray-300">{filteredItems.length}</span>
 		</div>
 	</div>

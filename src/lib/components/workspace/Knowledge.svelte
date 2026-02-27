@@ -88,7 +88,7 @@
 		<div class="flex justify-between items-center">
 			<div class="flex md:self-center text-xl font-medium px-0.5 items-center">
 				{$i18n.t('Knowledge')}
-				<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850" />
+				<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850"></div>
 				<span class="text-lg font-medium text-gray-500 dark:text-gray-300"
 					>{filteredItems.length}</span
 				>

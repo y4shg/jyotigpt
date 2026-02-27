@@ -763,7 +763,7 @@
 						'/static/favicon.png'
 							? `background-image: url('${model?.info?.meta?.profile_image_url}');`
 							: ''}
-					/>
+					></div>
 				{/if}
 				<!-- navbar -->
 			</button>
@@ -855,7 +855,7 @@
 						autoplay
 						class="rounded-2xl h-full min-w-full object-cover object-center"
 						playsinline
-					/>
+					></div>
 
 					<canvas id="camera-canvas" style="display:none;" />
 

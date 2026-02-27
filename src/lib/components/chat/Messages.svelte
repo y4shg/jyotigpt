@@ -455,9 +455,9 @@
 						/>
 					{/each}
 				</div>
-				<div class="pb-12" />
+				<div class="pb-12"></div>
 				{#if bottomPadding}
-					<div class="  pb-6" />
+					<div class="  pb-6"></div>
 				{/if}
 			{/key}
 		</div>

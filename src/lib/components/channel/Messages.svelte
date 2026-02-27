@@ -192,6 +192,6 @@
 			/>
 		{/each}
 
-		<div class="pb-6" />
+		<div class="pb-6"></div>
 	</div>
 {/if}
