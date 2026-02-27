@@ -1,5 +1,61 @@
 @reference "./tailwind.css";
 
+:root {
+	--color-gray-50: #FFFFFF;
+	--color-gray-100: #FAF8F3;
+	--color-gray-200: #F5F2EB;
+	--color-gray-300: #EEE9E0;
+	--color-gray-400: #E5DFD3;
+	--color-gray-500: #E5DFD3;
+	--color-gray-600: #676767;
+	--color-gray-700: #4e4e4e;
+	--color-gray-800: #333333;
+	--color-gray-850: #262626;
+	--color-gray-900: #FAF8F3;
+	/* Ensure consistency with background in some components */
+	--color-gray-950: #FAF8F3;
+	/* Ensure consistency with main surface */
+
+	--color-red-50: #FEF0F0;
+	--color-red-100: #fee2e2;
+	--color-red-200: #fecaca;
+	--color-red-300: #fca5a5;
+	--color-red-400: #f87171;
+	--color-red-500: #ef4444;
+	--color-red-600: #E82020;
+	--color-red-700: #EF3535;
+	--color-red-800: #991b1b;
+	--color-red-900: #3A1818;
+	--color-red-950: #450a0a;
+}
+
+.dark {
+	--color-gray-50: #2E2E2C;
+	--color-gray-100: #1E1D1C;
+	--color-gray-200: #1E1D1C;
+	--color-gray-300: #131312;
+	--color-gray-400: #000000;
+	--color-gray-500: #000000;
+	--color-gray-600: #676767;
+	--color-gray-700: #4e4e4e;
+	--color-gray-800: #333333;
+	--color-gray-850: #252523;
+	--color-gray-900: #252523;
+	--color-gray-950: #252523;
+
+	--color-red-50: #2B2121;
+	--color-red-100: #fee2e2;
+	--color-red-200: #fecaca;
+	--color-red-300: #fca5a5;
+	--color-red-400: #f87171;
+	--color-red-500: #ef4444;
+	--color-red-600: #F03030;
+	--color-red-700: #F54545;
+	--color-red-800: #991b1b;
+	--color-red-900: #3A1818;
+	--color-red-950: #450a0a;
+}
+
 @font-face {
 	font-family: 'Inter';
 	src: url('/assets/fonts/Inter-Variable.ttf');
@@ -63,11 +119,11 @@ textarea::placeholder {
 }
 
 .markdown-prose {
-	@apply prose dark:prose-invert prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal  prose-headings:font-semibold prose-hr:my-4 prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:-my-0 prose-ol:-my-0 prose-li:-my-0 whitespace-pre-line;
+	@apply prose dark:prose-invert prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal prose-headings:font-semibold prose-hr:my-4 prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:-my-0 prose-ol:-my-0 prose-li:-my-0 whitespace-pre-line;
 }
 
 .markdown-prose-xs {
-	@apply text-xs prose dark:prose-invert prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal  prose-headings:font-semibold prose-hr:my-0  prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:-my-0 prose-ol:-my-0 prose-li:-my-0 whitespace-pre-line;
+	@apply text-xs prose dark:prose-invert prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal prose-headings:font-semibold prose-hr:my-0 prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:-my-0 prose-ol:-my-0 prose-li:-my-0 whitespace-pre-line;
 }
 
 .markdown a {
@@ -105,7 +161,8 @@ li p {
 
 /* Dark theme scrollbar styles */
 .dark ::-webkit-scrollbar-thumb {
-	background-color: rgba(42, 42, 42, 0.8); /* Darker color for dark theme */
+	background-color: rgba(42, 42, 42, 0.8);
+	/* Darker color for dark theme */
 	border-color: rgba(0, 0, 0, var(--tw-border-opacity));
 }
 
@@ -137,6 +194,7 @@ select {
 	0% {
 		background-position: 200% 0;
 	}
+
 	100% {
 		background-position: -200% 0;
 	}
@@ -149,7 +207,8 @@ select {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	animation: shimmer 4s linear infinite;
-	color: #818286; /* Fallback color */
+	color: #818286;
+	/* Fallback color */
 }
 
 :global(.dark) .shimmer {
@@ -159,7 +218,8 @@ select {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	animation: shimmer 4s linear infinite;
-	color: #a1a3a7; /* Darker fallback color for dark mode */
+	color: #a1a3a7;
+	/* Darker fallback color for dark mode */
 }
 
 @keyframes smoothFadeIn {
@@ -167,6 +227,7 @@ select {
 		opacity: 0;
 		transform: translateY(-10px);
 	}
+
 	100% {
 		opacity: 1;
 		transform: translateY(0);
@@ -186,6 +247,7 @@ select {
 .scrollbar-hidden:hover::-webkit-scrollbar-thumb {
 	visibility: visible;
 }
+
 .scrollbar-hidden::-webkit-scrollbar-thumb {
 	visibility: hidden;
 }
@@ -195,7 +257,8 @@ select {
 }
 
 .scrollbar-none::-webkit-scrollbar {
-	display: none; /* for Chrome, Safari and Opera */
+	display: none;
+	/* for Chrome, Safari and Opera */
 }
 
 .scrollbar-none::-webkit-scrollbar-corner {
@@ -203,19 +266,23 @@ select {
 }
 
 .scrollbar-none {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	/* display: none; <- Crashes Chrome on hover */
 	-webkit-appearance: none;
-	margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	margin: 0;
+	/* <-- Apparently some margin are still there even though it's hidden */
 }
 
 input[type='number'] {
-	-moz-appearance: textfield; /* Firefox */
+	-moz-appearance: textfield;
+	/* Firefox */
 }
 
 .katex-display {
@@ -232,6 +299,7 @@ input[type='number'] {
 .katex-display:hover::-webkit-scrollbar-thumb {
 	visibility: visible;
 }
+
 .katex-display::-webkit-scrollbar-thumb {
 	visibility: hidden;
 }
@@ -284,11 +352,11 @@ input[type='number'] {
 	background-color: transparent !important;
 }
 
-.svelte-flow__edge > path {
+.svelte-flow__edge>path {
 	stroke-width: 0.5;
 }
 
-.svelte-flow__edge.animated > path {
+.svelte-flow__edge.animated>path {
 	stroke-width: 2;
 	@apply stroke-gray-600 dark:stroke-gray-500;
 }
@@ -321,7 +389,7 @@ input[type='number'] {
 	pointer-events: none;
 }
 
-.tiptap > pre > code {
+.tiptap>pre>code {
 	border-radius: 0.4rem;
 	font-size: 0.85rem;
 	padding: 0.25em 0.3em;
@@ -329,7 +397,7 @@ input[type='number'] {
 	@apply dark:bg-gray-800 bg-gray-100;
 }
 
-.tiptap > pre {
+.tiptap>pre {
 	border-radius: 0.5rem;
 	font-family: 'JetBrainsMono', monospace;
 	margin: 1.5rem 0;
