@@ -88,10 +88,19 @@
 	onMount(() => {});
 </script>
 
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
 <div class="m-auto w-full max-w-6xl px-2 @2xl:px-20 translate-y-6 py-24 text-center">
 	{#if $temporaryChatEnabled}
 		<Tooltip
-			content={$i18n.t('This chat won’t appear in history and your messages will not be saved.')}
+			content={$i18n.t('This chat won't appear in history and your messages will not be saved.')}
 			className="w-full flex justify-center mb-0.5"
 			placement="top"
 		>
@@ -136,7 +145,7 @@
 					</div>
 				</div>
 
-				<div class=" line-clamp-1" in:fade={{ duration: 100 }}>
+				<div class="instrument-serif line-clamp-1" in:fade={{ duration: 100 }}>
 					{#if models[selectedModelIdx]?.name}
 						{models[selectedModelIdx]?.name}
 					{:else}
@@ -226,3 +235,9 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.instrument-serif {
+		font-family: 'Instrument Serif', serif;
+	}
+</style>

@@ -34,6 +34,15 @@
 	});
 </script>
 
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
 {#key mounted}
 	<div class="m-auto w-full max-w-6xl px-8 lg:px-20">
 		<div class="flex justify-start">
@@ -68,7 +77,7 @@
 
 		{#if $temporaryChatEnabled}
 			<Tooltip
-				content={$i18n.t('This chat won’t appear in history and your messages will not be saved.')}
+				content={$i18n.t('This chat won't appear in history and your messages will not be saved.')}
 				className="w-full flex justify-start mb-0.5"
 				placement="top"
 			>
@@ -82,7 +91,7 @@
 			class=" mt-2 mb-4 text-2xl text-gray-800 dark:text-gray-100 text-left flex items-center gap-4 font-primary"
 		>
 			<div>
-				<div class=" capitalize line-clamp-1" in:fade={{ duration: 200 }}>
+				<div class=" capitalize line-clamp-1 instrument-serif" in:fade={{ duration: 200 }}>
 					{#if models[selectedModelIdx]?.name}
 						{models[selectedModelIdx]?.name}
 					{:else}
@@ -116,7 +125,7 @@
 							</div>
 						{/if}
 					{:else}
-						<div class=" text-gray-400 dark:text-gray-500 line-clamp-1 font-p">
+						<div class=" text-gray-400 dark:text-gray-500 line-clamp-1 instrument-serif">
 							{$i18n.t('How can I help you today?')}
 						</div>
 					{/if}
@@ -138,3 +147,9 @@
 		</div>
 	</div>
 {/key}
+
+<style>
+	.instrument-serif {
+		font-family: 'Instrument Serif', serif;
+	}
+</style>
