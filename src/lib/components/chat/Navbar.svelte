@@ -182,18 +182,4 @@
 		</div>
 	</div>
 
-								'dismissedBannerIds',
-								JSON.stringify(
-									[
-										bannerId,
-										...JSON.parse(localStorage.getItem('dismissedBannerIds') ?? '[]')
-									].filter((id) => $banners.find((b) => b.id === id))
-								)
-							);
-						}}
-					/>
-				{/each}
-			</div>
-		</div>
-	{/if}
 </nav>
