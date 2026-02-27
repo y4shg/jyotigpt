@@ -13,8 +13,40 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+  # ──────────────────────────────────────────────
+  # Pre-flight: catch ALL Svelte/TS errors at once
+  # before spending time on Docker builds
+  # ──────────────────────────────────────────────
+  svelte-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run svelte-check (reports ALL errors at once)
+        run: npx svelte-check --output machine-readable 2>&1 | tee svelte-check-results.txt; \
+             npx svelte-check --threshold error
+
+      - name: Upload svelte-check results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: svelte-check-results
+          path: svelte-check-results.txt
+          retention-days: 7
+
   build-main-image:
     runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    needs: [svelte-check]  # ← won't run if svelte-check fails
     permissions:
       contents: read
       packages: write
@@ -112,6 +144,7 @@ jobs:
 
   build-cuda-image:
     runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    needs: [svelte-check]  # ← won't run if svelte-check fails
     permissions:
       contents: read
       packages: write
