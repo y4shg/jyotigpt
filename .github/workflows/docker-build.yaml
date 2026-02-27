@@ -1,356 +1,72 @@
-name: Create and publish Docker images with specific build args
+name: Release
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
-      - dev
-    tags:
-      - v*
-
-env:
-  REGISTRY: ghcr.io
+      - main # or whatever branch you want to use
 
 jobs:
-  # ──────────────────────────────────────────────
-  # Pre-flight: catch ALL Svelte/TS errors at once
-  # before spending time on Docker builds
-  # ──────────────────────────────────────────────
-  svelte-check:
+  release:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Check for changes in package.json
+        run: |
+          git diff --cached --diff-filter=d package.json || {
+            echo "No changes to package.json"
+            exit 1
+          }
+
+      - name: Get version number from package.json
+        id: get_version
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "::set-output name=version::$VERSION"
+
+      - name: Extract latest CHANGELOG entry
+        id: changelog
+        run: |
+          CHANGELOG_CONTENT=$(awk 'BEGIN {print_section=0;} /^## \[/ {if (print_section == 0) {print_section=1;} else {exit;}} print_section {print;}' CHANGELOG.md)
+          CHANGELOG_ESCAPED=$(echo "$CHANGELOG_CONTENT" | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "Extracted latest release notes from CHANGELOG.md:" 
+          echo -e "$CHANGELOG_CONTENT" 
+          echo "::set-output name=content::$CHANGELOG_ESCAPED"
+
+      - name: Create GitHub release
+        uses: actions/github-script@v7
         with:
-          node-version: 22
-          cache: 'npm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const changelog = `${{ steps.changelog.outputs.content }}`;
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: `v${{ steps.get_version.outputs.version }}`,
+              name: `v${{ steps.get_version.outputs.version }}`,
+              body: changelog,
+            })
+            console.log(`Created release ${release.data.html_url}`)
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Generate SvelteKit types (required before svelte-check)
-        run: npx svelte-kit sync
-
-      - name: Run svelte-check (reports ALL errors at once)
-        run: npx svelte-check --workspace src --threshold error 2>&1 | tee svelte-check-results.txt; exit ${PIPESTATUS[0]}
-
-      - name: Upload svelte-check results
-        if: always()
+      - name: Upload package to GitHub release
         uses: actions/upload-artifact@v4
         with:
-          name: svelte-check-results
-          path: svelte-check-results.txt
-          retention-days: 7
-
-  build-main-image:
-    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
-    needs: [svelte-check]  # ← won't run if svelte-check fails
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
-
-    steps:
-      # GitHub Packages requires the entire repository name to be in lowercase
-      # although the repository owner has a lowercase username, this prevents some people from running actions after forking
-      - name: Set repository and image name to lowercase
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >>${GITHUB_ENV}
-          echo "FULL_IMAGE_NAME=ghcr.io/${IMAGE_NAME,,}" >>${GITHUB_ENV}
+          name: package
+          path: |
+            .
+            !.git
         env:
-          IMAGE_NAME: '${{ github.repository }}'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare
-        run: |
-          platform=${{ matrix.platform }}
-          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
+      - name: Trigger Docker build workflow
+        uses: actions/github-script@v7
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker images (default latest tag)
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix=git-
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-          flavor: |
-            latest=${{ github.ref == 'refs/heads/main' }}
-
-      - name: Extract metadata for Docker cache
-        id: cache-meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            ${{ github.ref_type == 'tag' && 'type=raw,value=main' || '' }}
-          flavor: |
-            prefix=cache-${{ matrix.platform }}-
-            latest=false
-
-      - name: Build Docker image (latest)
-        uses: docker/build-push-action@v5
-        id: build
-        with:
-          context: .
-          push: true
-          platforms: ${{ matrix.platform }}
-          labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.FULL_IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          cache-from: type=registry,ref=${{ steps.cache-meta.outputs.tags }}
-          cache-to: type=registry,ref=${{ steps.cache-meta.outputs.tags }},mode=max
-          build-args: |
-            BUILD_HASH=${{ github.sha }}
-
-      - name: Export digest
-        run: |
-          mkdir -p /tmp/digests
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
-
-      - name: Upload digest
-        uses: actions/upload-artifact@v4
-        with:
-          name: digests-main-${{ env.PLATFORM_PAIR }}
-          path: /tmp/digests/*
-          if-no-files-found: error
-          retention-days: 1
-
-  build-cuda-image:
-    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
-    needs: [svelte-check]  # ← won't run if svelte-check fails
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
-
-    steps:
-      # GitHub Packages requires the entire repository name to be in lowercase
-      # although the repository owner has a lowercase username, this prevents some people from running actions after forking
-      - name: Set repository and image name to lowercase
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >>${GITHUB_ENV}
-          echo "FULL_IMAGE_NAME=ghcr.io/${IMAGE_NAME,,}" >>${GITHUB_ENV}
-        env:
-          IMAGE_NAME: '${{ github.repository }}'
-
-      - name: Prepare
-        run: |
-          platform=${{ matrix.platform }}
-          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker images (cuda tag)
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix=git-
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=raw,enable=${{ github.ref == 'refs/heads/main' }},prefix=,suffix=,value=cuda
-          flavor: |
-            latest=${{ github.ref == 'refs/heads/main' }}
-            suffix=-cuda,onlatest=true
-
-      - name: Extract metadata for Docker cache
-        id: cache-meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            ${{ github.ref_type == 'tag' && 'type=raw,value=main' || '' }}
-          flavor: |
-            prefix=cache-cuda-${{ matrix.platform }}-
-            latest=false
-
-      - name: Build Docker image (cuda)
-        uses: docker/build-push-action@v5
-        id: build
-        with:
-          context: .
-          push: true
-          platforms: ${{ matrix.platform }}
-          labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.FULL_IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          cache-from: type=registry,ref=${{ steps.cache-meta.outputs.tags }}
-          cache-to: type=registry,ref=${{ steps.cache-meta.outputs.tags }},mode=max
-          build-args: |
-            BUILD_HASH=${{ github.sha }}
-            USE_CUDA=true
-
-      - name: Export digest
-        run: |
-          mkdir -p /tmp/digests
-          digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}"
-
-      - name: Upload digest
-        uses: actions/upload-artifact@v4
-        with:
-          name: digests-cuda-${{ env.PLATFORM_PAIR }}
-          path: /tmp/digests/*
-          if-no-files-found: error
-          retention-days: 1
-
-  merge-main-images:
-    runs-on: ubuntu-latest
-    needs: [build-main-image]
-    steps:
-      # GitHub Packages requires the entire repository name to be in lowercase
-      # although the repository owner has a lowercase username, this prevents some people from running actions after forking
-      - name: Set repository and image name to lowercase
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >>${GITHUB_ENV}
-          echo "FULL_IMAGE_NAME=ghcr.io/${IMAGE_NAME,,}" >>${GITHUB_ENV}
-        env:
-          IMAGE_NAME: '${{ github.repository }}'
-
-      - name: Download digests
-        uses: actions/download-artifact@v4
-        with:
-          pattern: digests-main-*
-          path: /tmp/digests
-          merge-multiple: true
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker images (default latest tag)
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix=git-
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-          flavor: |
-            latest=${{ github.ref == 'refs/heads/main' }}
-
-      - name: Create manifest list and push
-        working-directory: /tmp/digests
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.FULL_IMAGE_NAME }}@sha256:%s ' *)
-
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ env.FULL_IMAGE_NAME }}:${{ steps.meta.outputs.version }}
-
-  merge-cuda-images:
-    runs-on: ubuntu-latest
-    needs: [build-cuda-image]
-    steps:
-      # GitHub Packages requires the entire repository name to be in lowercase
-      # although the repository owner has a lowercase username, this prevents some people from running actions after forking
-      - name: Set repository and image name to lowercase
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >>${GITHUB_ENV}
-          echo "FULL_IMAGE_NAME=ghcr.io/${IMAGE_NAME,,}" >>${GITHUB_ENV}
-        env:
-          IMAGE_NAME: '${{ github.repository }}'
-
-      - name: Download digests
-        uses: actions/download-artifact@v4
-        with:
-          pattern: digests-cuda-*
-          path: /tmp/digests
-          merge-multiple: true
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata for Docker images (default latest tag)
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.FULL_IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix=git-
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=raw,enable=${{ github.ref == 'refs/heads/main' }},prefix=,suffix=,value=cuda
-          flavor: |
-            latest=${{ github.ref == 'refs/heads/main' }}
-            suffix=-cuda,onlatest=true
-
-      - name: Create manifest list and push
-        working-directory: /tmp/digests
-        run: |
-          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.FULL_IMAGE_NAME }}@sha256:%s ' *)
-
-      - name: Inspect image
-        run: |
-          docker buildx imagetools inspect ${{ env.FULL_IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'docker-build.yaml',
+              ref: 'v${{ steps.get_version.outputs.version }}',
+            })
