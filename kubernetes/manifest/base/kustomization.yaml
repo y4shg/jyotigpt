@@ -1,8 +1,0 @@
-resources:
-  - jyotigpt.yaml
-  - ollama-service.yaml
-  - ollama-statefulset.yaml
-  - jyotigpt-deployment.yaml
-  - jyotigpt-service.yaml
-  - jyotigpt-ingress.yaml
-  - jyotigpt-pvc.yaml
