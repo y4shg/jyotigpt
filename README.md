@@ -13,7 +13,7 @@
 
 ---
 
-<img width="1365" height="643" alt="image" src="https://github.com/user-attachments/assets/b1938211-f37d-41bf-8008-18a9929f41e7" />
+<img width="1435" height="584" alt="image" src="https://github.com/user-attachments/assets/73a6b809-26ef-49a4-af33-611f144485c6" />
 
 **JyotiGPT is a meditation-focused AI designed to support inner clarity, calm thinking, and conscious self-reflection.**
 
