@@ -4,6 +4,7 @@
 	import { getContext, createEventDispatcher, onMount, onDestroy, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import XMark from '$lib/components/icons/XMark.svelte';
+	import { haptic } from '$lib/utils/hapticAction';
 
 	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');
@@ -153,6 +154,7 @@
 				<button
 					class="p-0.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
 					on:click={clearSearchInput}
+					use:haptic={'nudge'}
 				>
 					<XMark className="size-3" strokeWidth="2" />
 				</button>

@@ -27,7 +27,8 @@
 
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
-	import ChatBubbleOval from '$lib/components/icons/ChatBubbleOval.svelte';
+	import { ChatBubbleOval } from '$lib/components/icons';
+	import { haptic } from '$lib/utils/hapticAction';
 	import { goto } from '$app/navigation';
 
 	const i18n = getContext('i18n');
@@ -325,6 +326,7 @@
 		class="relative w-full font-primary"
 		aria-label={placeholder}
 		id="model-selector-{id}-button"
+		use:haptic={'nudge'}
 	>
 		<div
 			class="flex w-full text-left px-0.5 outline-hidden bg-transparent truncate {triggerClassName} justify-between font-medium placeholder-gray-400 focus:outline-hidden"
@@ -479,6 +481,7 @@
 
 							show = false;
 						}}
+						use:haptic={'success'}
 					>
 						<div class="flex flex-col">
 							{#if $mobile && (item?.model?.tags ?? []).length > 0}

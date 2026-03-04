@@ -51,6 +51,7 @@
 		getPromptVariables,
 		processDetails
 	} from '$lib/utils';
+	import { triggerHaptic, HAPTIC_PRESETS } from '$lib/utils/haptics';
 
 	import { generateChatCompletion } from '$lib/apis/ollama';
 	import {
@@ -1119,8 +1120,11 @@
 				} else {
 					message.content += value;
 
-					if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
-						navigator.vibrate(5);
+					if (message.content === value) {
+						// First chunk of the stream
+						setTimeout(() => {
+							triggerHaptic(HAPTIC_PRESETS.TYPING);
+						}, 200);
 					}
 
 					// Emit chat event for TTS
