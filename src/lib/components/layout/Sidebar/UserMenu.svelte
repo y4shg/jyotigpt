@@ -7,7 +7,6 @@
 	import ArchiveBox from '$lib/components/icons/ArchiveBox.svelte';
 	import { showSettings, activeUserIds, USAGE_POOL, mobile, showSidebar, user } from '$lib/stores';
 	import { fade, slide } from 'svelte/transition';
-	import { haptic } from '$lib/utils/hapticAction';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { userSignOut } from '$lib/apis/auths';
 
@@ -48,7 +47,6 @@
 						showSidebar.set(false);
 					}
 				}}
-				use:haptic={'nudge'}
 			>
 				<div class=" self-center mr-3">
 					<svg
@@ -84,7 +82,6 @@
 						showSidebar.set(false);
 					}
 				}}
-				use:haptic={'nudge'}
 			>
 				<div class=" self-center mr-3">
 					<ArchiveBox className="size-5" strokeWidth="1.5" />

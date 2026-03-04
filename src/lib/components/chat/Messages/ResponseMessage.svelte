@@ -4,7 +4,6 @@
 
 	import { createEventDispatcher } from 'svelte';
 	import { onMount, tick, getContext } from 'svelte';
-	import { haptic } from '$lib/utils/hapticAction';
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType, t } from 'i18next';
 
@@ -975,7 +974,6 @@
 												on:click={() => {
 													editMessageHandler();
 												}}
-												use:haptic={'nudge'}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -1004,7 +1002,6 @@
 										on:click={() => {
 											copyToClipboard(message.content);
 										}}
-										use:haptic={'nudge'}
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -1035,7 +1032,6 @@
 													toggleSpeakMessage();
 												}
 											}}
-											use:haptic={'nudge'}
 										>
 											{#if loadingSpeech}
 												<svg
@@ -1115,7 +1111,6 @@
 													generateImage(message);
 												}
 											}}
-											use:haptic={'nudge'}
 										>
 											{#if generatingImage}
 												<svg
@@ -1231,7 +1226,6 @@
 															?.scrollIntoView();
 													}, 0);
 												}}
-												use:haptic={'nudge'}
 											>
 												<svg
 													stroke="currentColor"
@@ -1268,7 +1262,6 @@
 															?.scrollIntoView();
 													}, 0);
 												}}
-												use:haptic={'nudge'}
 											>
 												<svg
 													stroke="currentColor"
@@ -1299,7 +1292,6 @@
 												on:click={() => {
 													continueResponse();
 												}}
-												use:haptic={'success'}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -1346,7 +1338,6 @@
 													});
 												});
 											}}
-											use:haptic={'success'}
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
