@@ -22,7 +22,7 @@
 	import { page } from '$app/stores';
 	import UserMenu from './Sidebar/UserMenu.svelte';
 	import SidebarIcon from '../icons/SidebarIcon.svelte';
-	import AdjustmentsHorizontal from '../icons/AdjustmentsHorizontal.svelte';
+	import ChatPulser from '../icons/ChatPulser.svelte';
 	import Map from '../icons/Map.svelte';
 	import { stringify } from 'postcss';
 	import PencilSquare from '../icons/PencilSquare.svelte';
@@ -125,7 +125,7 @@
 							aria-label="Controls"
 						>
 							<div class=" m-auto self-center">
-								<AdjustmentsHorizontal className=" size-5" strokeWidth="0.5" />
+								<ChatPulser className=" size-5" strokeWidth="0.5" />
 							</div>
 						</button>
 					</Tooltip>
@@ -141,7 +141,7 @@
 							aria-label="Controls"
 						>
 							<div class=" m-auto self-center">
-								<AdjustmentsHorizontal className=" size-5" strokeWidth="0.5" />
+								<ChatPulser className=" size-5" strokeWidth="0.5" />
 							</div>
 						</button>
 					</Tooltip>

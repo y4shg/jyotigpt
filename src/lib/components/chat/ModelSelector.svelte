@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
+	import { haptic } from '$lib/utils/hapticAction';
 	import { onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import Selector from './ModelSelector/Selector.svelte';
@@ -66,6 +67,7 @@
 								on:click={() => {
 									selectedModels = [...selectedModels, ''];
 								}}
+								use:haptic={'nudge'}
 								aria-label="Add Model"
 							>
 								<svg
@@ -92,6 +94,7 @@
 									selectedModels.splice(selectedModelIdx, 1);
 									selectedModels = selectedModels;
 								}}
+								use:haptic={'nudge'}
 								aria-label="Remove Model"
 							>
 								<svg
@@ -115,6 +118,11 @@
 
 {#if showSetDefault}
 	<div class=" absolute text-left mt-[1px] ml-1 text-[0.7rem] text-gray-500 font-primary">
-		<button on:click={saveDefaultModel}> {$i18n.t('Set as default')}</button>
+		<button
+			on:click={saveDefaultModel}
+			use:haptic={'success'}
+		>
+			{$i18n.t('Set as default')}
+		</button>
 	</div>
 {/if}

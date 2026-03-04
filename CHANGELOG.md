@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- fix: adjust stroke width for AdjustmentsHorizontal icon for better visibility
+- fix: adjust stroke width for ChatPulser icon for better visibility
 - refactor: update font styles for consistency across sidebar and chat components
 - refactor: update external links and remove outdated references in various components
 - chore: remove deprecated workflow files and add new disabled workflows for release, backend formatting, and frontend building

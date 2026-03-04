@@ -3,6 +3,7 @@
 	import Bolt from '$lib/components/icons/Bolt.svelte';
 	import { onMount, getContext, createEventDispatcher } from 'svelte';
 	import { JYOTIGPT_NAME } from '$lib/stores';
+	import { haptic } from '$lib/utils/hapticAction';
 	import { JYOTIGPT_VERSION } from '$lib/constants';
 
 	const i18n = getContext('i18n');
@@ -88,6 +89,7 @@
 				       dark:hover:bg-white/5 transition group"
 				style="animation-delay: {idx * 60}ms"
 				on:click={() => dispatch('select', prompt.content)}
+				use:haptic={'nudge'}
 			>
 				<div class="flex flex-col text-left">
 					{#if prompt.title && prompt.title[0] !== ''}

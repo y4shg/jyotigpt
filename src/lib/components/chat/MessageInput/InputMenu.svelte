@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
 	import { flyAndScale } from '$lib/utils/transitions';
+	import { haptic } from '$lib/utils/hapticAction';
 	import { getContext, onMount, tick } from 'svelte';
 
 	import { config, user, tools as _tools, mobile } from '$lib/stores';
@@ -150,6 +151,7 @@
 				className="w-full"
 			>
 				<DropdownMenu.Item
+					use:haptic={'nudge'}
 					class="flex gap-2 items-center px-3 py-2 text-sm  font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800  rounded-xl {!fileUploadEnabled
 						? 'opacity-50'
 						: ''}"
@@ -177,6 +179,7 @@
 				className="w-full"
 			>
 				<DropdownMenu.Item
+					use:haptic={'nudge'}
 					class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl {!fileUploadEnabled
 						? 'opacity-50'
 						: ''}"
@@ -193,6 +196,7 @@
 
 			{#if $config?.features?.enable_google_drive_integration}
 				<DropdownMenu.Item
+					use:haptic={'nudge'}
 					class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
 					on:click={() => {
 						uploadGoogleDriveHandler();
@@ -269,6 +273,7 @@
 						alignOffset={$mobile ? 0 : -8}
 					>
 						<DropdownMenu.Item
+							use:haptic={'nudge'}
 							class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
 							on:click={() => {
 								uploadOneDriveHandler('personal');
@@ -277,6 +282,7 @@
 							<div class="line-clamp-1">{$i18n.t('Microsoft OneDrive (personal)')}</div>
 						</DropdownMenu.Item>
 						<DropdownMenu.Item
+							use:haptic={'nudge'}
 							class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
 							on:click={() => {
 								uploadOneDriveHandler('organizations');

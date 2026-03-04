@@ -60,6 +60,7 @@
 	import PencilSquare from '../icons/PencilSquare.svelte';
 	import Home from '../icons/Home.svelte';
 	import SidebarIcon from '../icons/SidebarIcon.svelte';
+	import { haptic } from '$lib/utils/hapticAction';
 	import { slide } from 'svelte/transition';
 
 	const BREAKPOINT = 768;
@@ -531,6 +532,7 @@
 					await goto('/');
 					newChatHandler();
 				}}
+				use:haptic={'nudge'}
 			>
 				<img
 					crossorigin="anonymous"
@@ -558,6 +560,7 @@
 					on:click={() => {
 						showSidebar.set(!$showSidebar);
 					}}
+					use:haptic={'nudge'}
 					aria-label={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}
 				>
 					<div class=" self-center">
@@ -592,6 +595,7 @@
 						href="/"
 						draggable="false"
 						on:click={newChatHandler}
+						use:haptic={'success'}
 						aria-label={$i18n.t('New Chat')}
 					>
 						<div class="self-center">
@@ -625,6 +629,7 @@
 							class="grow flex items-center space-x-3 rounded-2xl px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 transition"
 							href="/workspace"
 							on:click={itemClickHandler}
+							use:haptic={'nudge'}
 							draggable="false"
 							aria-label={$i18n.t('Workspace')}
 						>
