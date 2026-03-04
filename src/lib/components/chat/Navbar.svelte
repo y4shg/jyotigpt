@@ -24,7 +24,6 @@
 	import Tooltip from '../common/Tooltip.svelte';
 	import Menu from '$lib/components/layout/Navbar/Menu.svelte';
 	import UserMenu from '$lib/components/layout/Sidebar/UserMenu.svelte';
-	import { haptic } from '$lib/utils/hapticAction';
 	import SidebarIcon from '../icons/SidebarIcon.svelte';
 	import ChatPulser from '../icons/ChatPulser.svelte';
 
@@ -67,7 +66,6 @@
 						on:click={() => {
 							showSidebar.set(!$showSidebar);
 						}}
-						use:haptic={'nudge'}
 						aria-label="Toggle Sidebar"
 					>
 						<div class=" m-auto self-center">
@@ -129,7 +127,6 @@
 							on:click={async () => {
 								await showControls.set(!$showControls);
 							}}
-							use:haptic={'nudge'}
 							aria-label="Controls"
 						>
 							<div class=" m-auto self-center">
@@ -147,7 +144,6 @@
 							on:click={() => {
 								initNewChat();
 							}}
-							use:haptic={'nudge'}
 							aria-label="New Chat"
 						>
 							<div class=" m-auto self-center">
@@ -169,7 +165,6 @@
 							<button
 								class="select-none flex rounded-xl p-1.5 w-full hover:bg-gray-50 dark:hover:bg-gray-850 transition"
 								aria-label="User Menu"
-								use:haptic={'nudge'}
 							>
 								<div class=" self-center">
 									<img

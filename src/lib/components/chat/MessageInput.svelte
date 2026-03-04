@@ -27,7 +27,6 @@
 		createMessagesList,
 		extractCurlyBraceWords
 	} from '$lib/utils';
-	import { haptic } from '$lib/utils/hapticAction';
 	import { transcribeAudio } from '$lib/apis/audio';
 	import { uploadFile } from '$lib/apis/files';
 	import { generateAutoCompletion } from '$lib/apis';
@@ -1087,7 +1086,6 @@
 											}}
 										>
 											<button
-												use:haptic={'nudge'}
 												class="bg-transparent hover:bg-gray-100 text-gray-800 dark:text-white dark:hover:bg-gray-800 transition rounded-full p-1.5 outline-hidden focus:outline-hidden"
 												type="button"
 												aria-label="More"
@@ -1113,7 +1111,6 @@
 													})}
 												>
 													<button
-														use:haptic={'nudge'}
 														class="translate-y-[0.5px] flex gap-1 items-center text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 rounded-lg p-1 self-center transition"
 														aria-label="Available Tools"
 														type="button"
@@ -1134,7 +1131,6 @@
 												{#if $config?.features?.enable_web_search && ($_user.role === 'admin' || $_user?.permissions?.features?.web_search)}
 													<Tooltip content={$i18n.t('Search the internet')} placement="top">
 														<button
-															use:haptic={'nudge'}
 															on:click|preventDefault={() => (webSearchEnabled = !webSearchEnabled)}
 															type="button"
 															class="px-1.5 @xl:px-2.5 py-1.5 flex gap-1.5 items-center text-sm rounded-full font-medium transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden border {webSearchEnabled ||
@@ -1154,7 +1150,6 @@
 												{#if $config?.features?.enable_image_generation && ($_user.role === 'admin' || $_user?.permissions?.features?.image_generation)}
 													<Tooltip content={$i18n.t('Generate an image')} placement="top">
 														<button
-															use:haptic={'nudge'}
 															on:click|preventDefault={() =>
 																(imageGenerationEnabled = !imageGenerationEnabled)}
 															type="button"
@@ -1174,7 +1169,6 @@
 												{#if $config?.features?.enable_code_interpreter && ($_user.role === 'admin' || $_user?.permissions?.features?.code_interpreter)}
 													<Tooltip content={$i18n.t('Execute code for analysis')} placement="top">
 														<button
-															use:haptic={'nudge'}
 															on:click|preventDefault={() =>
 																(codeInterpreterEnabled = !codeInterpreterEnabled)}
 															type="button"
@@ -1198,7 +1192,6 @@
 										{#if (!history?.currentId || history.messages[history.currentId]?.done == true) && ($_user?.role === 'admin' || ($_user?.permissions?.chat?.stt ?? true))}
 											<Tooltip content={$i18n.t('Record voice')}>
 												<button
-													use:haptic={'nudge'}
 													id="voice-input-button"
 													class=" text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 transition rounded-full p-1.5 mr-0.5 self-center"
 													type="button"
@@ -1249,7 +1242,6 @@
 											<div class=" flex items-center">
 												<Tooltip content={$i18n.t('Stop')}>
 													<button
-														use:haptic={'nudge'}
 														class="bg-white hover:bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-800 transition rounded-full p-1.5"
 														on:click={() => {
 															stopResponse();
@@ -1274,7 +1266,6 @@
 											<div class=" flex items-center">
 												<Tooltip content={$i18n.t('Call')}>
 													<button
-														use:haptic={'success'}
 														class=" bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-black dark:hover:bg-red-700 transition rounded-full p-1.5 self-center"
 														type="button"
 														on:click={async () => {
@@ -1337,7 +1328,6 @@
 											<div class=" flex items-center">
 												<Tooltip content={$i18n.t('Send message')}>
 													<button
-														use:haptic={'success'}
 														id="send-message-button"
 														class="{!(prompt === '' && files.length === 0)
 															? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-black dark:hover:bg-red-700 '

@@ -9,7 +9,6 @@
 
 	import Suggestions from './Suggestions.svelte';
 	import { sanitizeResponseContent } from '$lib/utils';
-	import { haptic } from '$lib/utils/hapticAction';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import EyeSlash from '$lib/components/icons/EyeSlash.svelte';
 
@@ -53,7 +52,6 @@
 						on:click={() => {
 							selectedModelIdx = modelIdx;
 						}}
-						use:haptic={'nudge'}
 					>
 						<Tooltip
 							content={marked.parse(
