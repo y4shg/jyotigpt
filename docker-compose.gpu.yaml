@@ -1,3 +1,4 @@
+# not needed for now
 services:
   ollama:
     # GPU support

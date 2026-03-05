@@ -1,3 +1,4 @@
+# not needed for now
 services:
   playwright:
     image: mcr.microsoft.com/playwright:v1.49.1-noble # Version must match requirements.txt
