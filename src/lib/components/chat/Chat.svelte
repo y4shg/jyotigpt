@@ -459,6 +459,15 @@
 	});
 
 	onDestroy(() => {
+		if (history?.messages) {
+			Object.values(history.messages).forEach((msg) => {
+				if (msg?.typingHapticStop) {
+					msg.typingHapticStop();
+					msg.typingHapticStop = null;
+				}
+			});
+		}
+
 		chatIdUnsubscriber?.();
 		window.removeEventListener('message', onMessageHandler);
 		$socket?.off('chat-events', chatEventHandler);
@@ -1121,11 +1130,10 @@
 					message.content += value;
 
 					if (!message.typingHapticStop) {
+						if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
+							navigator.vibrate(5);
+						}
 						message.typingHapticStop = startTypingHaptic(2500);
-					}
-
-					if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
-						navigator.vibrate(5);
 					}
 
 					// Emit chat event for TTS
@@ -1159,11 +1167,10 @@
 			message.content = content;
 
 			if (!message.typingHapticStop) {
+				if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
+					navigator.vibrate(5);
+				}
 				message.typingHapticStop = startTypingHaptic(2500);
-			}
-
-			if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
-				navigator.vibrate(5);
 			}
 
 			// Emit chat event for TTS
@@ -1750,6 +1757,10 @@
 			const responseMessage = history.messages[history.currentId];
 			// Set all response messages to done
 			for (const messageId of history.messages[responseMessage.parentId].childrenIds) {
+				if (history.messages[messageId].typingHapticStop) {
+					history.messages[messageId].typingHapticStop();
+					history.messages[messageId].typingHapticStop = null;
+				}
 				history.messages[messageId].done = true;
 			}
 

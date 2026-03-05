@@ -155,8 +155,8 @@
 						? 'opacity-50'
 						: ''}"
 					on:click={() => {
-						hapticTrigger('light');
 						if (fileUploadEnabled) {
+							hapticTrigger('light');
 							if (!detectMobile()) {
 								screenCaptureHandler();
 							} else {
@@ -183,8 +183,8 @@
 						? 'opacity-50'
 						: ''}"
 					on:click={() => {
-						hapticTrigger('light');
 						if (fileUploadEnabled) {
+							hapticTrigger('light');
 							uploadFilesHandler();
 						}
 					}}

@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-// /** @type {import('vite').Plugin} */
+// /** @type {import('vite').Plugin} */ (commented out for now)
 // const viteServerConfig = {
 // 	name: 'log-request-middleware',
 // 	configureServer(server) {
