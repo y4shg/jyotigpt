@@ -1,6 +1,5 @@
 .github
 .DS_Store
-docs
 kubernetes
 node_modules
 /.svelte-kit
