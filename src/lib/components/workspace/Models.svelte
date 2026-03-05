@@ -12,6 +12,7 @@
 	const i18n = getContext('i18n');
 
 	import { JYOTIGPT_NAME, config, mobile, models as _models, settings, user } from '$lib/stores';
+	import { hapticTrigger } from '$lib/utils/haptics';
 	import {
 		createNewModel,
 		deleteModelById,
@@ -313,6 +314,7 @@
 									class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 									type="button"
 									on:click={() => {
+										hapticTrigger('light');
 										deleteModelHandler(model);
 									}}
 								>
@@ -325,6 +327,7 @@
 									class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 									type="button"
 									href={`/workspace/models/edit?id=${encodeURIComponent(model.id)}`}
+									on:click={() => hapticTrigger('medium')}
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -359,6 +362,7 @@
 									hideModelHandler(model);
 								}}
 								deleteHandler={() => {
+									hapticTrigger('light');
 									selectedModel = model;
 									showModelDeleteConfirm = true;
 								}}
@@ -377,6 +381,7 @@
 									<Switch
 										bind:state={model.is_active}
 										on:change={async (e) => {
+											hapticTrigger('light');
 											toggleModelById(localStorage.token, model.id);
 											_models.set(
 												await getModels(

@@ -6,6 +6,7 @@
 	import { onMount, getContext } from 'svelte';
 	import { JYOTIGPT_NAME, config, prompts, tools as _tools, user } from '$lib/stores';
 	import { createNewPrompt, deletePromptByCommand, getPrompts } from '$lib/apis/prompts';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	import { goto } from '$app/navigation';
 	import {
@@ -196,6 +197,7 @@
 				<a
 					class=" px-2 py-2 rounded-xl hover:bg-gray-700/10 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition font-medium text-sm flex items-center space-x-1"
 					href="/workspace/tools/create"
+					on:click={() => hapticTrigger('medium')}
 				>
 					<Plus className="size-3.5" />
 				</a>
@@ -211,6 +213,7 @@
 				<a
 					class=" flex flex-1 space-x-3.5 cursor-pointer w-full"
 					href={`/workspace/tools/edit?id=${encodeURIComponent(tool.id)}`}
+					on:click={() => hapticTrigger('light')}
 				>
 					<div class="flex items-center text-left">
 						<div class=" flex-1 self-center">
@@ -269,6 +272,7 @@
 								class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 								type="button"
 								on:click={() => {
+									hapticTrigger('light');
 									deleteHandler(tool);
 								}}
 							>
@@ -282,6 +286,7 @@
 									class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 									type="button"
 									on:click={() => {
+										hapticTrigger('light');
 										selectedTool = tool;
 										showManifestModal = true;
 									}}
@@ -296,6 +301,7 @@
 								class="self-center w-fit text-sm px-2 py-2 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 								type="button"
 								on:click={() => {
+									hapticTrigger('light');
 									selectedTool = tool;
 									showValvesModal = true;
 								}}
@@ -336,6 +342,7 @@
 								exportHandler(tool);
 							}}
 							deleteHandler={async () => {
+								hapticTrigger('light');
 								selectedTool = tool;
 								showDeleteConfirm = true;
 							}}

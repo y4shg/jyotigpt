@@ -12,6 +12,8 @@
 
 	import { deleteModel, getOllamaVersion, pullModel } from '$lib/apis/ollama';
 
+	import { hapticTrigger } from '$lib/utils/haptics';
+
 	import {
 		user,
 		MODEL_DOWNLOAD_POOL,
@@ -313,7 +315,8 @@
 
 <DropdownMenu.Root
 	bind:open={show}
-	onOpenChange={async () => {
+	onOpenChange={async (isOpen) => {
+		if (isOpen) hapticTrigger('light');
 		searchValue = '';
 		window.setTimeout(() => document.getElementById('model-search-input')?.focus(), 0);
 
@@ -474,6 +477,7 @@
 						data-arrow-selected={index === selectedModelIdx}
 						data-value={item.value}
 						on:click={() => {
+							hapticTrigger('selection');
 							value = item.value;
 							selectedModelIdx = index;
 
