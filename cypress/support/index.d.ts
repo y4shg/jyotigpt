@@ -1,4 +1,4 @@
-// load the global Cypress types
+// Load the global Cypress types
 /// <reference types="cypress" />
 
 declare namespace Cypress {
