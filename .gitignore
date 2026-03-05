@@ -45,7 +45,7 @@ MANIFEST
 *.manifest
 *.spec
 
-# Installer logs
+# Installer logs (important for debugging)
 pip-log.txt
 pip-delete-this-directory.txt
 
