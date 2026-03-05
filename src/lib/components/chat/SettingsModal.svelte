@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getContext, tick } from 'svelte';
-	import { toast } from 'svelte-sonner';
 	import { config, models, settings, user } from '$lib/stores';
 	import { updateUserSettings } from '$lib/apis/users';
 	import { getModels as _getModels } from '$lib/apis';
+	import { hapticTrigger } from '$lib/utils/haptics';
 	import { goto } from '$app/navigation';
 
 	import Modal from '../common/Modal.svelte';
@@ -374,6 +374,7 @@
 			<button
 				class="self-center"
 				on:click={() => {
+					hapticTrigger('light');
 					show = false;
 				}}
 			>
@@ -416,6 +417,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'general';
 								}}
 							>
@@ -442,6 +444,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'interface';
 								}}
 							>
@@ -469,6 +472,7 @@
 										? ''
 										: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 									on:click={() => {
+										hapticTrigger('selection');
 										selectedTab = 'connections';
 									}}
 								>
@@ -495,6 +499,7 @@
 										? ''
 										: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 									on:click={() => {
+										hapticTrigger('selection');
 										selectedTab = 'tools';
 									}}
 								>
@@ -522,6 +527,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'personalization';
 								}}
 							>
@@ -537,6 +543,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'audio';
 								}}
 							>
@@ -564,6 +571,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'chats';
 								}}
 							>
@@ -590,6 +598,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'account';
 								}}
 							>
@@ -616,6 +625,7 @@
 									? ''
 									: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedTab = 'about';
 								}}
 							>
@@ -643,6 +653,7 @@
 										? ''
 										: ' text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'}"
 									on:click={async () => {
+										hapticTrigger('selection');
 										await goto('/admin/settings');
 										show = false;
 									}}

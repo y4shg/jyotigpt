@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { v4 as uuidv4 } from 'uuid';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	import { goto } from '$app/navigation';
 	import {
@@ -358,6 +359,7 @@
 	};
 
 	const newChatHandler = async () => {
+		hapticTrigger('medium');
 		selectedChatId = null;
 		const newChatButton = document.getElementById('new-chat-button');
 		setTimeout(() => {
@@ -369,6 +371,7 @@
 	};
 
 	const itemClickHandler = async () => {
+		hapticTrigger('light');
 		selectedChatId = null;
 		chatId.set('');
 
