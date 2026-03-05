@@ -2,7 +2,7 @@
 
 host_port=11434
 container_port=11434
-
+# todo: remove later
 read -r -p "Do you want ollama in Docker with GPU support? (y/n): " use_gpu
 
 docker rm -f ollama || true
