@@ -112,8 +112,10 @@
 			on:input={() => {
 				dispatch('input');
 			}}
-			on:focus={() => {
+			on:pointerdown={() => {
 				hapticTrigger('light');
+			}}
+			on:focus={() => {
 				focused = true;
 				initTags();
 			}}
