@@ -78,6 +78,7 @@
 		getTaskIdsByChatId
 	} from '$lib/apis';
 	import { getTools } from '$lib/apis/tools';
+	import { startTypingHaptic } from '$lib/utils/responseHaptics';
 
 	import Banner from '../common/Banner.svelte';
 	import MessageInput from '$lib/components/chat/MessageInput.svelte';
@@ -1119,6 +1120,10 @@
 				} else {
 					message.content += value;
 
+					if (!message.typingHapticStop) {
+						message.typingHapticStop = startTypingHaptic(2500);
+					}
+
 					if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
 						navigator.vibrate(5);
 					}
@@ -1152,6 +1157,10 @@
 		if (content) {
 			// REALTIME_CHAT_SAVE is disabled
 			message.content = content;
+
+			if (!message.typingHapticStop) {
+				message.typingHapticStop = startTypingHaptic(2500);
+			}
 
 			if (navigator.vibrate && ($settings?.hapticFeedback ?? false)) {
 				navigator.vibrate(5);
@@ -1193,6 +1202,10 @@
 		history.messages[message.id] = message;
 
 		if (done) {
+			if (message.typingHapticStop) {
+				message.typingHapticStop();
+				message.typingHapticStop = null;
+			}
 			message.done = true;
 
 			if ($settings.responseAutoCopy) {
@@ -1708,6 +1721,10 @@
 		responseMessage.error = {
 			content: $i18n.t(`Uh-oh! There was an issue with the response.`) + '\n' + errorMessage
 		};
+		if (responseMessage.typingHapticStop) {
+			responseMessage.typingHapticStop();
+			responseMessage.typingHapticStop = null;
+		}
 		responseMessage.done = true;
 
 		if (responseMessage.statusHistory) {

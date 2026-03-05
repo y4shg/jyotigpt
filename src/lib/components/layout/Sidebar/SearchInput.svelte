@@ -4,6 +4,7 @@
 	import { getContext, createEventDispatcher, onMount, onDestroy, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import XMark from '$lib/components/icons/XMark.svelte';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');
@@ -112,6 +113,7 @@
 				dispatch('input');
 			}}
 			on:focus={() => {
+				hapticTrigger('light');
 				focused = true;
 				initTags();
 			}}

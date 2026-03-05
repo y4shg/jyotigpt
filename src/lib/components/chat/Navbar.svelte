@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	import {
 		JYOTIGPT_NAME,
@@ -64,6 +65,7 @@
 						id="sidebar-toggle-button"
 						class="cursor-pointer px-2 py-2 flex rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
 						on:click={() => {
+							hapticTrigger('light');
 							showSidebar.set(!$showSidebar);
 						}}
 						aria-label="Toggle Sidebar"
@@ -125,6 +127,7 @@
 						<button
 							class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
 							on:click={async () => {
+								hapticTrigger('light');
 								await showControls.set(!$showControls);
 							}}
 							aria-label="Controls"
@@ -142,6 +145,7 @@
 								? 'md:hidden'
 								: ''} cursor-pointer px-2 py-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition"
 							on:click={() => {
+								hapticTrigger('medium');
 								initNewChat();
 							}}
 							aria-label="New Chat"
@@ -165,6 +169,7 @@
 							<button
 								class="select-none flex rounded-xl p-1.5 w-full hover:bg-gray-50 dark:hover:bg-gray-850 transition"
 								aria-label="User Menu"
+								on:click={() => hapticTrigger('light')}
 							>
 								<div class=" self-center">
 									<img

@@ -4,6 +4,7 @@
 
 	import { createEventDispatcher } from 'svelte';
 	import { onMount, tick, getContext } from 'svelte';
+	import { hapticTrigger } from '$lib/utils/haptics';
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType, t } from 'i18next';
 
@@ -972,6 +973,7 @@
 													? 'visible'
 													: 'invisible group-hover:visible'} p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition"
 												on:click={() => {
+													hapticTrigger('light');
 													editMessageHandler();
 												}}
 											>
@@ -1000,6 +1002,7 @@
 											? 'visible'
 											: 'invisible group-hover:visible'} p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition copy-response-button"
 										on:click={() => {
+											hapticTrigger('light');
 											copyToClipboard(message.content);
 										}}
 									>
@@ -1028,6 +1031,7 @@
 												? 'visible'
 												: 'invisible group-hover:visible'} p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition"
 											on:click={() => {
+												hapticTrigger('light');
 												if (!loadingSpeech) {
 													toggleSpeakMessage();
 												}
@@ -1107,6 +1111,7 @@
 												? 'visible'
 												: 'invisible group-hover:visible'}  p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition"
 											on:click={() => {
+												hapticTrigger('light');
 												if (!generatingImage) {
 													generateImage(message);
 												}
@@ -1219,6 +1224,7 @@
 													: ''} dark:hover:text-white hover:text-black transition disabled:cursor-progress disabled:hover:bg-transparent"
 												disabled={feedbackLoading}
 												on:click={async () => {
+													hapticTrigger('light');
 													await feedbackHandler(1);
 													window.setTimeout(() => {
 														document
@@ -1255,6 +1261,7 @@
 													: ''} dark:hover:text-white hover:text-black transition disabled:cursor-progress disabled:hover:bg-transparent"
 												disabled={feedbackLoading}
 												on:click={async () => {
+													hapticTrigger('light');
 													await feedbackHandler(-1);
 													window.setTimeout(() => {
 														document
@@ -1290,6 +1297,7 @@
 													? 'visible'
 													: 'invisible group-hover:visible'} p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition regenerate-response-button"
 												on:click={() => {
+													hapticTrigger('light');
 													continueResponse();
 												}}
 											>
@@ -1323,6 +1331,7 @@
 												? 'visible'
 												: 'invisible group-hover:visible'} p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg dark:hover:text-white hover:text-black transition regenerate-response-button"
 											on:click={() => {
+												hapticTrigger('medium');
 												showRateComment = false;
 												regenerateResponse(message);
 

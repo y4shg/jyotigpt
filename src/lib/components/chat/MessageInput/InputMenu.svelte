@@ -2,6 +2,7 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { flyAndScale } from '$lib/utils/transitions';
 	import { getContext, onMount, tick } from 'svelte';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	import { config, user, tools as _tools, mobile } from '$lib/stores';
 	import { createPicker } from '$lib/utils/google-drive-picker';
@@ -154,6 +155,7 @@
 						? 'opacity-50'
 						: ''}"
 					on:click={() => {
+						hapticTrigger('light');
 						if (fileUploadEnabled) {
 							if (!detectMobile()) {
 								screenCaptureHandler();
@@ -181,6 +183,7 @@
 						? 'opacity-50'
 						: ''}"
 					on:click={() => {
+						hapticTrigger('light');
 						if (fileUploadEnabled) {
 							uploadFilesHandler();
 						}

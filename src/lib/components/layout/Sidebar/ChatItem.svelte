@@ -2,6 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { onMount, getContext, createEventDispatcher, tick, onDestroy } from 'svelte';
+	import { hapticTrigger } from '$lib/utils/haptics';
 	const i18n = getContext('i18n');
 
 	const dispatch = createEventDispatcher();
@@ -274,6 +275,7 @@
 					: ' group-hover:bg-gray-100 dark:group-hover:bg-gray-950'}  whitespace-nowrap text-ellipsis"
 			href="/c/{id}"
 			on:click={() => {
+				hapticTrigger('light');
 				dispatch('select');
 
 				if ($mobile) {
