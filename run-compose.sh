@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 # Unicode character for tick mark
 TICK='\u2713'
 
-# Detect GPU driver
+# Detect GPU driver (try to remove later we'll see)
 get_gpu_driver() {
     # Detect NVIDIA GPUs using lspci or nvidia-smi
     if lspci | grep -i nvidia >/dev/null || nvidia-smi >/dev/null 2>&1; then
