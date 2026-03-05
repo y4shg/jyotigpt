@@ -9,7 +9,8 @@ NC='\033[0m' # No Color
 # Unicode character for tick mark
 TICK='\u2713'
 
-# Detect GPU driver
+# get_gpu_driver detects the system GPU vendor and prints the corresponding kernel driver name.
+# It prints one of: "nvidia", "amdgpu", "radeon", or "i915"; if no supported GPU is found it prints an error message and exits with status 1.
 get_gpu_driver() {
     # Detect NVIDIA GPUs using lspci or nvidia-smi
     if lspci | grep -i nvidia >/dev/null || nvidia-smi >/dev/null 2>&1; then

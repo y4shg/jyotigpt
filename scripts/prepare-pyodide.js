@@ -20,8 +20,15 @@ import { setGlobalDispatcher, ProxyAgent } from 'undici';
 import { writeFile, readFile, copyFile, readdir, rmdir } from 'fs/promises';
 
 /**
- * Loading network proxy configurations from the environment variables.
- * And the proxy config with lowercase name has the highest priority to use.
+ * Initialize undici's global dispatcher from HTTP(S) proxy environment variables.
+ *
+ * Reads environment variables in the order of priority: `https_proxy`/`HTTPS_PROXY`,
+ * `all_proxy`/`ALL_PROXY`, then `http_proxy`/`HTTP_PROXY`. If a suitable proxy URL
+ * beginning with `http` is found, a ProxyAgent is created and set as the global
+ * undici dispatcher. If no suitable proxy is found or the URL is malformed, the
+ * function returns without throwing and logs a warning or informational message.
+ *
+ * Note: only `http`/`https` proxies are supported.
  */
 function initNetworkProxyFromEnv() {
 	// we assume all subsequent requests in this script are HTTPS:
