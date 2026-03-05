@@ -21,7 +21,7 @@ import { writeFile, readFile, copyFile, readdir, rmdir } from 'fs/promises';
 
 /**
  * Loading network proxy configurations from the environment variables.
- * And the proxy config with lowercase name has the highest priority to use.
+ * And the proxy config with lowercase name has the highest priority to use. PLAN TO REMOVE THIS IN FUTURE
  */
 function initNetworkProxyFromEnv() {
 	// we assume all subsequent requests in this script are HTTPS:
