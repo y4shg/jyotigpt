@@ -2,6 +2,7 @@
 	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
 	import { onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
+	import { hapticTrigger } from '$lib/utils/haptics';
 	import Selector from './ModelSelector/Selector.svelte';
 	import Tooltip from '../common/Tooltip.svelte';
 
@@ -64,6 +65,7 @@
 								class=" "
 								{disabled}
 								on:click={() => {
+									hapticTrigger('selection');
 									selectedModels = [...selectedModels, ''];
 								}}
 								aria-label="Add Model"
@@ -89,6 +91,7 @@
 							<button
 								{disabled}
 								on:click={() => {
+									hapticTrigger('light');
 									selectedModels.splice(selectedModelIdx, 1);
 									selectedModels = selectedModels;
 								}}

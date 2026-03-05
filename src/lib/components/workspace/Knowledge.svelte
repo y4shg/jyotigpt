@@ -15,6 +15,7 @@
 		deleteKnowledgeById,
 		getKnowledgeBaseList
 	} from '$lib/apis/knowledge';
+	import { hapticTrigger } from '$lib/utils/haptics';
 
 	import { goto } from '$app/navigation';
 
@@ -112,6 +113,7 @@
 					class=" px-2 py-2 rounded-xl hover:bg-gray-700/10 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition font-medium text-sm flex items-center space-x-1"
 					aria-label={$i18n.t('Create Knowledge')}
 					on:click={() => {
+						hapticTrigger('medium');
 						goto('/workspace/knowledge/create');
 					}}
 				>
@@ -126,6 +128,7 @@
 			<button
 				class=" flex space-x-4 cursor-pointer text-left w-full px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-850 transition rounded-xl"
 				on:click={() => {
+					hapticTrigger('light');
 					if (item?.meta?.document) {
 						toast.error(
 							$i18n.t(
@@ -148,6 +151,7 @@
 						<div class=" flex self-center -mr-1 translate-y-1">
 							<ItemMenu
 								on:delete={() => {
+									hapticTrigger('light');
 									selectedItem = item;
 									showDeleteConfirm = true;
 								}}

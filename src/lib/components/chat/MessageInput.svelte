@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { hapticTrigger } from '$lib/utils/haptics';
 	import { toast } from 'svelte-sonner';
 	import { v4 as uuidv4 } from 'uuid';
 	import { createPicker, getAuthToken } from '$lib/utils/google-drive-picker';
@@ -1089,6 +1090,7 @@
 												class="bg-transparent hover:bg-gray-100 text-gray-800 dark:text-white dark:hover:bg-gray-800 transition rounded-full p-1.5 outline-hidden focus:outline-hidden"
 												type="button"
 												aria-label="More"
+												on:click={() => hapticTrigger('light')}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -1131,7 +1133,10 @@
 												{#if $config?.features?.enable_web_search && ($_user.role === 'admin' || $_user?.permissions?.features?.web_search)}
 													<Tooltip content={$i18n.t('Search the internet')} placement="top">
 														<button
-															on:click|preventDefault={() => (webSearchEnabled = !webSearchEnabled)}
+															on:click|preventDefault={() => {
+																webSearchEnabled = !webSearchEnabled;
+																hapticTrigger('selection');
+															}}
 															type="button"
 															class="px-1.5 @xl:px-2.5 py-1.5 flex gap-1.5 items-center text-sm rounded-full font-medium transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden border {webSearchEnabled ||
 															($settings?.webSearch ?? false) === 'always'
@@ -1150,8 +1155,10 @@
 												{#if $config?.features?.enable_image_generation && ($_user.role === 'admin' || $_user?.permissions?.features?.image_generation)}
 													<Tooltip content={$i18n.t('Generate an image')} placement="top">
 														<button
-															on:click|preventDefault={() =>
-																(imageGenerationEnabled = !imageGenerationEnabled)}
+															on:click|preventDefault={() => {
+																imageGenerationEnabled = !imageGenerationEnabled;
+																hapticTrigger('selection');
+															}}
 															type="button"
 															class="px-1.5 @xl:px-2.5 py-1.5 flex gap-1.5 items-center text-sm rounded-full font-medium transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden border {imageGenerationEnabled
 																? 'bg-gray-50 dark:bg-gray-400/10 border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-400'
@@ -1169,8 +1176,10 @@
 												{#if $config?.features?.enable_code_interpreter && ($_user.role === 'admin' || $_user?.permissions?.features?.code_interpreter)}
 													<Tooltip content={$i18n.t('Execute code for analysis')} placement="top">
 														<button
-															on:click|preventDefault={() =>
-																(codeInterpreterEnabled = !codeInterpreterEnabled)}
+															on:click|preventDefault={() => {
+																codeInterpreterEnabled = !codeInterpreterEnabled;
+																hapticTrigger('selection');
+															}}
 															type="button"
 															class="px-1.5 @xl:px-2.5 py-1.5 flex gap-1.5 items-center text-sm rounded-full font-medium transition-colors duration-300 focus:outline-hidden max-w-full overflow-hidden border {codeInterpreterEnabled
 																? 'bg-gray-50 dark:bg-gray-400/10 border-gray-100  dark:border-gray-700 text-gray-600 dark:text-gray-400  '
@@ -1196,6 +1205,7 @@
 													class=" text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 transition rounded-full p-1.5 mr-0.5 self-center"
 													type="button"
 													on:click={async () => {
+														hapticTrigger('light');
 														try {
 															let stream = await navigator.mediaDevices
 																.getUserMedia({ audio: true })
@@ -1244,6 +1254,7 @@
 													<button
 														class="bg-white hover:bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-800 transition rounded-full p-1.5"
 														on:click={() => {
+															hapticTrigger('light');
 															stopResponse();
 														}}
 													>
@@ -1269,6 +1280,7 @@
 														class=" bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:text-black dark:hover:bg-red-700 transition rounded-full p-1.5 self-center"
 														type="button"
 														on:click={async () => {
+															hapticTrigger('medium');
 															if (selectedModels.length > 1) {
 																toast.error($i18n.t('Select only one model to call'));
 
@@ -1334,6 +1346,7 @@
 															: 'text-white bg-gray-200 dark:text-gray-900 dark:bg-gray-700 disabled'} transition rounded-full p-1.5 self-center"
 														type="submit"
 														disabled={prompt === '' && files.length === 0}
+														on:click={() => hapticTrigger('medium')}
 													>
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
