@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-04
+
+### Added
+
+- feat: implement haptic feedback using `web-haptics`
+  - Added subtle vibration feedback on button press
+  - Added light impact feedback on message send
+  - Added selection feedback for sidebar interactions
+  - Graceful fallback for unsupported devices
+
+### Fixed
+
+- fix: update Chatpulser naming to ChatPulser for consistency across codebase
+
 ## [1.0.9] - 2026-02-27
 
 ### Added
