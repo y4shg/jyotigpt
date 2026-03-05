@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Warning: This will remove all containers and volumes, including persistent data. Do you want to continue? [Y/N]"
+echo "Warning: This will remove all containers and volumes, including persistent data. Do you want to continue?? [Y/N]"
 read ans
 if [ "$ans" == "Y" ] || [ "$ans" == "y" ]; then
   command docker-compose 2>/dev/null
