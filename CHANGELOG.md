@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- feat: implement haptic feedback using `web-haptics`
+- feat: implement haptic feedback using web-haptics
   - Added subtle vibration feedback on button press
   - Added light impact feedback on message send
   - Added selection feedback for sidebar interactions
