@@ -1,28 +1,24 @@
+"""PDF generation for chat transcripts.
+
+Transforms a chat's title and markdown messages into an HTML document and
+renders it to a PDF via fpdf2. Fonts include Latin plus Korean/Japanese/
+Simplified-Chinese fallbacks and an emoji font.
+"""
+
 from datetime import datetime
+from html import escape
 from io import BytesIO
 from pathlib import Path
-from typing import Dict, Any, List
-from html import escape
+from typing import Any, Dict, List
 
-from markdown import markdown
-
-import site
 from fpdf import FPDF
 
-from jyotigpt.env import STATIC_DIR, FONTS_DIR
+from jyotigpt.env import FONTS_DIR, STATIC_DIR
 from jyotigpt.models.chats import ChatTitleMessagesForm
 
 
 class PDFGenerator:
-    """
-    Description:
-    The `PDFGenerator` class is designed to create PDF documents from chat messages.
-    The process involves transforming markdown content into HTML and then into a PDF format
-
-    Attributes:
-    - `form_data`: An instance of `ChatTitleMessagesForm` containing title and messages.
-
-    """
+    """Build a PDF document from chat title and messages."""
 
     def __init__(self, form_data: ChatTitleMessagesForm):
         self.html_body = None
@@ -32,16 +28,15 @@ class PDFGenerator:
         self.css = Path(STATIC_DIR / "assets" / "pdf-style.css").read_text()
 
     def format_timestamp(self, timestamp: float) -> str:
-        """Convert a UNIX timestamp to a formatted date string."""
+        """Convert a UNIX timestamp to ``YYYY-MM-DD, HH:MM:SS``, else empty."""
         try:
             date_time = datetime.fromtimestamp(timestamp)
             return date_time.strftime("%Y-%m-%d, %H:%M:%S")
-        except (ValueError, TypeError) as e:
-            # Log the error if necessary
+        except (ValueError, TypeError):
             return ""
 
     def _build_html_message(self, message: Dict[str, Any]) -> str:
-        """Build HTML for a single message."""
+        """Build the HTML fragment for a single chat message."""
         role = escape(message.get("role", "user"))
         content = escape(message.get("content", ""))
         timestamp = message.get("timestamp")
@@ -50,12 +45,8 @@ class PDFGenerator:
 
         date_str = escape(self.format_timestamp(timestamp) if timestamp else "")
 
-        # extends pymdownx extension to convert markdown to html.
-        # - https://facelessuser.github.io/pymdown-extensions/usage_notes/
-        # html_content = markdown(content, extensions=["pymdownx.extra"])
-
         content = content.replace("\n", "<br/>")
-        html_message = f"""
+        return f"""
             <div>
                 <div>
                     <h4>
@@ -73,10 +64,9 @@ class PDFGenerator:
             </div>
             <br/>
           """
-        return html_message
 
     def _generate_html_body(self) -> str:
-        """Generate the full HTML body for the PDF."""
+        """Wrap the assembled messages HTML in a full document body."""
         escaped_title = escape(self.form_data.title)
         return f"""
         <html>
@@ -94,31 +84,36 @@ class PDFGenerator:
         </html>
         """
 
+    def _resolve_fonts_dir(self) -> Path:
+        """Locate the bundled fonts directory across deployment layouts."""
+        global FONTS_DIR
+
+        # `pip install jyotigpt` installs static assets into site-packages.
+        if not FONTS_DIR.exists():
+            import site
+
+            FONTS_DIR = Path(site.getsitepackages()[0]) / "static" / "fonts"
+        # `pip install -e .` / running from the repo root.
+        if not FONTS_DIR.exists():
+            FONTS_DIR = Path(".") / "backend" / "static" / "fonts"
+
+        return FONTS_DIR
+
     def generate_chat_pdf(self) -> bytes:
-        """
-        Generate a PDF from chat messages.
-        """
+        """Generate and return the PDF bytes for the chat transcript."""
         try:
-            global FONTS_DIR
+            fonts_dir = self._resolve_fonts_dir()
 
             pdf = FPDF()
             pdf.add_page()
 
-            # When running using `pip install` the static directory is in the site packages.
-            if not FONTS_DIR.exists():
-                FONTS_DIR = Path(site.getsitepackages()[0]) / "static/fonts"
-            # When running using `pip install -e .` the static directory is in the site packages.
-            # This path only works if `jyotigpt serve` is run from the root of this project.
-            if not FONTS_DIR.exists():
-                FONTS_DIR = Path(".") / "backend" / "static" / "fonts"
-
-            pdf.add_font("NotoSans", "", f"{FONTS_DIR}/NotoSans-Regular.ttf")
-            pdf.add_font("NotoSans", "b", f"{FONTS_DIR}/NotoSans-Bold.ttf")
-            pdf.add_font("NotoSans", "i", f"{FONTS_DIR}/NotoSans-Italic.ttf")
-            pdf.add_font("NotoSansKR", "", f"{FONTS_DIR}/NotoSansKR-Regular.ttf")
-            pdf.add_font("NotoSansJP", "", f"{FONTS_DIR}/NotoSansJP-Regular.ttf")
-            pdf.add_font("NotoSansSC", "", f"{FONTS_DIR}/NotoSansSC-Regular.ttf")
-            pdf.add_font("Twemoji", "", f"{FONTS_DIR}/Twemoji.ttf")
+            pdf.add_font("NotoSans", "", f"{fonts_dir}/NotoSans-Regular.ttf")
+            pdf.add_font("NotoSans", "b", f"{fonts_dir}/NotoSans-Bold.ttf")
+            pdf.add_font("NotoSans", "i", f"{fonts_dir}/NotoSans-Italic.ttf")
+            pdf.add_font("NotoSansKR", "", f"{fonts_dir}/NotoSansKR-Regular.ttf")
+            pdf.add_font("NotoSansJP", "", f"{fonts_dir}/NotoSansJP-Regular.ttf")
+            pdf.add_font("NotoSansSC", "", f"{fonts_dir}/NotoSansSC-Regular.ttf")
+            pdf.add_font("Twemoji", "", f"{fonts_dir}/Twemoji.ttf")
 
             pdf.set_font("NotoSans", size=12)
             pdf.set_fallback_fonts(
@@ -127,20 +122,15 @@ class PDFGenerator:
 
             pdf.set_auto_page_break(auto=True, margin=15)
 
-            # Build HTML messages
             messages_html_list: List[str] = [
                 self._build_html_message(msg) for msg in self.form_data.messages
             ]
             self.messages_html = "<div>" + "".join(messages_html_list) + "</div>"
 
-            # Generate full HTML body
             self.html_body = self._generate_html_body()
 
             pdf.write_html(self.html_body)
 
-            # Save the pdf with name .pdf
-            pdf_bytes = pdf.output()
-
-            return bytes(pdf_bytes)
+            return bytes(pdf.output())
         except Exception as e:
             raise e
