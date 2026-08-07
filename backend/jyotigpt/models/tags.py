@@ -1,22 +1,27 @@
+"""Tag persistence.
+
+Chat tags are identified by a slugified name (spaces/uppercase folded) plus
+the owning user, giving a composite primary key of ``(id, user_id)``. Provides
+CRUD scoped to a user.
+"""
+
 import logging
-import time
-import uuid
 from typing import Optional
 
-from jyotigpt.internal.db import Base, get_db
-
-
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.internal.db import Base, get_db
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, JSON, PrimaryKeyConstraint
+from sqlalchemy import JSON, Column, PrimaryKeyConstraint, String
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
 
 
-####################
-# Tag DB Schema
-####################
+def _slugify(name: str) -> str:
+    """Normalize a tag name into its stable id form."""
+    return name.replace(" ", "_").lower()
+
+
 class Tag(Base):
     __tablename__ = "tag"
     id = Column(String)
@@ -24,7 +29,7 @@ class Tag(Base):
     user_id = Column(String)
     meta = Column(JSON, nullable=True)
 
-    # Unique constraint ensuring (id, user_id) is unique, not just the `id` column
+    # Uniqueness is per (id, user_id), not just the `id` column.
     __table_args__ = (PrimaryKeyConstraint("id", "user_id", name="pk_id_user_id"),)
 
 
@@ -36,12 +41,9 @@ class TagModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-####################
-# Forms
-####################
-
-
 class TagChatIdForm(BaseModel):
+    """Associates a tag with a chat."""
+
     name: str
     chat_id: str
 
@@ -49,7 +51,7 @@ class TagChatIdForm(BaseModel):
 class TagTable:
     def insert_new_tag(self, name: str, user_id: str) -> Optional[TagModel]:
         with get_db() as db:
-            id = name.replace(" ", "_").lower()
+            id = _slugify(name)
             tag = TagModel(**{"id": id, "user_id": user_id, "name": name})
             try:
                 result = Tag(**tag.model_dump())
@@ -68,7 +70,7 @@ class TagTable:
         self, name: str, user_id: str
     ) -> Optional[TagModel]:
         try:
-            id = name.replace(" ", "_").lower()
+            id = _slugify(name)
             with get_db() as db:
                 tag = db.query(Tag).filter_by(id=id, user_id=user_id).first()
                 return TagModel.model_validate(tag)
@@ -79,7 +81,7 @@ class TagTable:
         with get_db() as db:
             return [
                 TagModel.model_validate(tag)
-                for tag in (db.query(Tag).filter_by(user_id=user_id).all())
+                for tag in db.query(Tag).filter_by(user_id=user_id).all()
             ]
 
     def get_tags_by_ids_and_user_id(
@@ -96,7 +98,7 @@ class TagTable:
     def delete_tag_by_name_and_user_id(self, name: str, user_id: str) -> bool:
         try:
             with get_db() as db:
-                id = name.replace(" ", "_").lower()
+                id = _slugify(name)
                 res = db.query(Tag).filter_by(id=id, user_id=user_id).delete()
                 log.debug(f"res: {res}")
                 db.commit()
