@@ -21,7 +21,7 @@ router = APIRouter()
 
 @router.get("/", response_model=list[ModelUserResponse])
 async def get_models(id: Optional[str] = None, user=Depends(get_verified_user)):
-    return models.list(is_admin=user.role == "admin", user_id=user.id)
+    return models.list_models(is_admin=user.role == "admin", user_id=user.id)
 
 
 @router.get("/base", response_model=list[ModelResponse])

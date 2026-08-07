@@ -18,7 +18,7 @@ from jyotigpt.models.models import (
 
 
 class ModelCatalogue:
-    def list(self, is_admin: bool, user_id: str) -> list[ModelUserResponse]:
+    def list_models(self, is_admin: bool, user_id: str) -> list[ModelUserResponse]:
         if is_admin:
             return Models.get_models()
         return Models.get_models_by_user_id(user_id)
