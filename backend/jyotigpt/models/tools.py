@@ -1,22 +1,23 @@
+"""Tool persistence.
+
+Tools are user-authored Python functions exposed to models, stored with their
+OpenAPI ``specs``, a ``meta`` manifest, per-instance ``valves``, and optional
+access-control rules. Per-user valve overrides live in the user's settings.
+"""
+
 import logging
 import time
 from typing import Optional
 
-from jyotigpt.internal.db import Base, JSONField, get_db
-from jyotigpt.models.users import Users, UserResponse
 from jyotigpt.env import SRC_LOG_LEVELS
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, JSON
-
+from jyotigpt.internal.db import Base, JSONField, get_db
+from jyotigpt.models.users import UserResponse, Users
 from jyotigpt.utils.access_control import has_access
-
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import JSON, BigInteger, Column, String, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-####################
-# Tools DB Schema
-####################
 
 
 class Tool(Base):
@@ -30,22 +31,14 @@ class Tool(Base):
     meta = Column(JSONField)
     valves = Column(JSONField)
 
-    access_control = Column(JSON, nullable=True)  # Controls data access levels.
-    # Defines access control rules for this entry.
-    # - `None`: Public access, available to all users with the "user" role.
-    # - `{}`: Private access, restricted exclusively to the owner.
-    # - Custom permissions: Specific access control for reading and writing;
-    #   Can specify group or user-level restrictions:
-    #   {
-    #      "read": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      },
-    #      "write": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      }
-    #   }
+    access_control = Column(JSON, nullable=True)
+    """Data access rules for this entry.
+
+    - ``None``: public, available to every user with the "user" role.
+    - ``{}``: private, restricted to the owner.
+    - Custom permissions: per-group / per-user ``read`` and ``write`` rules,
+      e.g. ``{"read": {"group_ids": [...], "user_ids": [...]}}``.
+    """
 
     updated_at = Column(BigInteger)
     created_at = Column(BigInteger)
@@ -69,11 +62,6 @@ class ToolModel(BaseModel):
     created_at: int  # timestamp in epoch
 
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class ToolUserModel(ToolModel):
@@ -131,7 +119,7 @@ class ToolsTable:
                 else:
                     return None
             except Exception as e:
-                log.exception(f"Error creating a new tool: {e}")
+                print(f"Error creating tool: {e}")
                 return None
 
     def get_tool_by_id(self, id: str) -> Optional[ToolModel]:
@@ -175,7 +163,7 @@ class ToolsTable:
                 tool = db.get(Tool, id)
                 return tool.valves if tool.valves else {}
         except Exception as e:
-            log.exception(f"Error getting tool valves by id {id}: {e}")
+            print(f"An error occurred: {e}")
             return None
 
     def update_tool_valves_by_id(self, id: str, valves: dict) -> Optional[ToolValves]:
@@ -196,7 +184,7 @@ class ToolsTable:
             user = Users.get_user_by_id(user_id)
             user_settings = user.settings.model_dump() if user.settings else {}
 
-            # Check if user has "tools" and "valves" settings
+            # Per-user valves live under settings.tools.valves.
             if "tools" not in user_settings:
                 user_settings["tools"] = {}
             if "valves" not in user_settings["tools"]:
@@ -204,9 +192,7 @@ class ToolsTable:
 
             return user_settings["tools"]["valves"].get(id, {})
         except Exception as e:
-            log.exception(
-                f"Error getting user values by id {id} and user_id {user_id}: {e}"
-            )
+            print(f"An error occurred: {e}")
             return None
 
     def update_user_valves_by_id_and_user_id(
@@ -216,7 +202,6 @@ class ToolsTable:
             user = Users.get_user_by_id(user_id)
             user_settings = user.settings.model_dump() if user.settings else {}
 
-            # Check if user has "tools" and "valves" settings
             if "tools" not in user_settings:
                 user_settings["tools"] = {}
             if "valves" not in user_settings["tools"]:
@@ -224,14 +209,12 @@ class ToolsTable:
 
             user_settings["tools"]["valves"][id] = valves
 
-            # Update the user settings in the database
+            # Persist the merged settings back onto the user.
             Users.update_user_by_id(user_id, {"settings": user_settings})
 
             return user_settings["tools"]["valves"][id]
         except Exception as e:
-            log.exception(
-                f"Error updating user valves by id {id} and user_id {user_id}: {e}"
-            )
+            print(f"An error occurred: {e}")
             return None
 
     def update_tool_by_id(self, id: str, updated: dict) -> Optional[ToolModel]:
