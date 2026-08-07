@@ -10,16 +10,14 @@ import json
 def fill_missing_permissions(
     permissions: Dict[str, Any], default_permissions: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """
-    Recursively fills in missing properties in the permissions dictionary
-    using the default permissions as a template.
+    """Recursively backfill any keys absent from ``permissions`` using
+    ``default_permissions`` as the template. Nested dicts are merged in
+    place; existing values are left untouched.
     """
     for key, value in default_permissions.items():
         if key not in permissions:
             permissions[key] = value
-        elif isinstance(value, dict) and isinstance(
-            permissions[key], dict
-        ):  # Both are nested dictionaries
+        elif isinstance(value, dict) and isinstance(permissions[key], dict):
             permissions[key] = fill_missing_permissions(permissions[key], value)
 
     return permissions
@@ -29,16 +27,14 @@ def get_permissions(
     user_id: str,
     default_permissions: Dict[str, Any],
 ) -> Dict[str, Any]:
-    """
-    Get all permissions for a user by combining the permissions of all groups the user is a member of.
-    If a permission is defined in multiple groups, the most permissive value is used (True > False).
-    Permissions are nested in a dict with the permission key as the key and a boolean as the value.
+    """Merge permissions across every group the user belongs to, taking the
+    most permissive value on conflict (True wins over False), then ensure
+    all default keys are present.
     """
 
     def combine_permissions(
         permissions: Dict[str, Any], group_permissions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Combine permissions from multiple groups by taking the most permissive value."""
         for key, value in group_permissions.items():
             if isinstance(value, dict):
                 if key not in permissions:
@@ -48,22 +44,18 @@ def get_permissions(
                 if key not in permissions:
                     permissions[key] = value
                 else:
-                    permissions[key] = (
-                        permissions[key] or value
-                    )  # Use the most permissive value (True > False)
+                    permissions[key] = permissions[key] or value
         return permissions
 
     user_groups = Groups.get_groups_by_member_id(user_id)
 
-    # Deep copy default permissions to avoid modifying the original dict
+    # Deep copy so the caller's default dict is never mutated.
     permissions = json.loads(json.dumps(default_permissions))
 
-    # Combine permissions from all user groups
     for group in user_groups:
         group_permissions = group.permissions
         permissions = combine_permissions(permissions, group_permissions)
 
-    # Ensure all fields from default_permissions are present and filled in
     permissions = fill_missing_permissions(permissions, default_permissions)
 
     return permissions
@@ -74,25 +66,21 @@ def has_permission(
     permission_key: str,
     default_permissions: Dict[str, Any] = {},
 ) -> bool:
-    """
-    Check if a user has a specific permission by checking the group permissions
-    and fall back to default permissions if not found in any group.
-
-    Permission keys can be hierarchical and separated by dots ('.').
+    """Return whether the user is granted ``permission_key`` (a dot-separated
+    hierarchy). Any group granting it short-circuits to True; otherwise the
+    default permissions are consulted.
     """
 
     def get_permission(permissions: Dict[str, Any], keys: List[str]) -> bool:
-        """Traverse permissions dict using a list of keys (from dot-split permission_key)."""
         for key in keys:
             if key not in permissions:
-                return False  # If any part of the hierarchy is missing, deny access
-            permissions = permissions[key]  # Traverse one level deeper
+                return False
+            permissions = permissions[key]
 
-        return bool(permissions)  # Return the boolean at the final level
+        return bool(permissions)
 
     permission_hierarchy = permission_key.split(".")
 
-    # Retrieve user group permissions
     user_groups = Groups.get_groups_by_member_id(user_id)
 
     for group in user_groups:
@@ -100,7 +88,6 @@ def has_permission(
         if get_permission(group_permissions, permission_hierarchy):
             return True
 
-    # Check default permissions afterward if the group permissions don't allow it
     default_permissions = fill_missing_permissions(
         default_permissions, DEFAULT_USER_PERMISSIONS
     )
