@@ -1,19 +1,17 @@
-import json
+"""Channel persistence.
+
+Channels back local sharing: a named room with optional access control that a
+user can participate in. Timestamps are stored as nanosecond epoch integers.
+"""
+
 import time
 import uuid
 from typing import Optional
 
 from jyotigpt.internal.db import Base, get_db
 from jyotigpt.utils.access_control import has_access
-
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Boolean, Column, String, Text, JSON
-from sqlalchemy import or_, func, select, and_, text
-from sqlalchemy.sql import exists
-
-####################
-# Channel DB Schema
-####################
+from sqlalchemy import JSON, BigInteger, Column, Text
 
 
 class Channel(Base):
@@ -48,13 +46,8 @@ class ChannelModel(BaseModel):
     meta: Optional[dict] = None
     access_control: Optional[dict] = None
 
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-
-
-####################
-# Forms
-####################
+    created_at: int  # timestamp in epoch nanoseconds
+    updated_at: int  # timestamp in epoch nanoseconds
 
 
 class ChannelForm(BaseModel):
