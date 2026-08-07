@@ -1,3 +1,9 @@
+"""Memory persistence.
+
+Memories are user-scoped notes the assistant can recall. Timestamps are
+stored as epoch-second integers.
+"""
+
 import time
 import uuid
 from typing import Optional
@@ -5,10 +11,6 @@ from typing import Optional
 from jyotigpt.internal.db import Base, get_db
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import BigInteger, Column, String, Text
-
-####################
-# Memory DB Schema
-####################
 
 
 class Memory(Base):
@@ -25,23 +27,14 @@ class MemoryModel(BaseModel):
     id: str
     user_id: str
     content: str
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
+    updated_at: int  # timestamp in epoch seconds
+    created_at: int  # timestamp in epoch seconds
 
     model_config = ConfigDict(from_attributes=True)
 
 
-####################
-# Forms
-####################
-
-
 class MemoriesTable:
-    def insert_new_memory(
-        self,
-        user_id: str,
-        content: str,
-    ) -> Optional[MemoryModel]:
+    def insert_new_memory(self, user_id: str, content: str) -> Optional[MemoryModel]:
         with get_db() as db:
             id = str(uuid.uuid4())
 
@@ -64,10 +57,7 @@ class MemoriesTable:
                 return None
 
     def update_memory_by_id_and_user_id(
-        self,
-        id: str,
-        user_id: str,
-        content: str,
+        self, id: str, user_id: str, content: str
     ) -> Optional[MemoryModel]:
         with get_db() as db:
             try:
