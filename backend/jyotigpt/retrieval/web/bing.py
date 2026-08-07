@@ -1,17 +1,18 @@
+"""Bing Web Search API provider.
+
+See the API docs at https://docs.microsoft.com/en-us/bing/search-apis/bing-web-search/overview
+"""
+
 import logging
-import os
-from pprint import pprint
-from typing import Optional
+from typing import List, Optional
+
 import requests
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+
 from jyotigpt.env import SRC_LOG_LEVELS
-import argparse
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
-"""
-Documentation: https://docs.microsoft.com/en-us/bing/search-apis/bing-web-search/overview
-"""
 
 
 def search_bing(
@@ -20,8 +21,8 @@ def search_bing(
     locale: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
-) -> list[SearchResult]:
+    filter_list: Optional[List[str]] = None,
+) -> List[SearchResult]:
     mkt = locale
     params = {"q": query, "mkt": mkt, "count": count}
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
@@ -44,30 +45,3 @@ def search_bing(
     except Exception as ex:
         log.error(f"Error: {ex}")
         raise ex
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Search Bing from the command line.")
-    parser.add_argument(
-        "query",
-        type=str,
-        default="Top 10 international news today",
-        help="The search query.",
-    )
-    parser.add_argument(
-        "--count", type=int, default=10, help="Number of search results to return."
-    )
-    parser.add_argument(
-        "--filter", nargs="*", help="List of filters to apply to the search results."
-    )
-    parser.add_argument(
-        "--locale",
-        type=str,
-        default="en-US",
-        help="The locale to use for the search, maps to market in api",
-    )
-
-    args = parser.parse_args()
-
-    results = search_bing(args.locale, args.query, args.count, args.filter)
-    pprint(results)

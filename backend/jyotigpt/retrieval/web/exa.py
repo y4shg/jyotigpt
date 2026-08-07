@@ -1,8 +1,11 @@
+"""Exa search API provider."""
+
 import logging
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 
 import requests
+
 from jyotigpt.env import SRC_LOG_LEVELS
 from jyotigpt.retrieval.web.main import SearchResult
 
@@ -23,16 +26,9 @@ def search_exa(
     api_key: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
-) -> list[SearchResult]:
-    """Search using Exa Search API and return the results as a list of SearchResult objects.
-
-    Args:
-        api_key (str): A Exa Search API key
-        query (str): The query to search for
-        count (int): Number of results to return
-        filter_list (Optional[list[str]]): List of domains to filter results by
-    """
+    filter_list: Optional[List[str]] = None,
+) -> List[SearchResult]:
+    """Search using the Exa Search API and return SearchResult objects."""
     log.info(f"Searching with Exa for query: {query}")
 
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
@@ -42,7 +38,7 @@ def search_exa(
         "numResults": count or 5,
         "includeDomains": filter_list,
         "contents": {"text": True, "highlights": True},
-        "type": "auto",  # Use the auto search type (keyword or neural)
+        "type": "auto",  # keyword or neural
     }
 
     try:
@@ -52,15 +48,14 @@ def search_exa(
         response.raise_for_status()
         data = response.json()
 
-        results = []
-        for result in data["results"]:
-            results.append(
-                ExaResult(
-                    url=result["url"],
-                    title=result["title"],
-                    text=result["text"],
-                )
+        results = [
+            ExaResult(
+                url=result["url"],
+                title=result["title"],
+                text=result["text"],
             )
+            for result in data["results"]
+        ]
 
         log.info(f"Found {len(results)} results")
         return [

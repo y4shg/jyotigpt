@@ -1,12 +1,17 @@
+"""Google Programmable Search Engine API provider."""
+
 import logging
-from typing import Optional
+from typing import List, Optional
 
 import requests
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
+
+MAX_PAGE_SIZE = 10  # Google PSE caps results per query at 10
 
 
 def search_google_pse(
@@ -14,28 +19,24 @@ def search_google_pse(
     search_engine_id: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
-) -> list[SearchResult]:
-    """Search using Google's Programmable Search Engine API and return the results as a list of SearchResult objects.
-    Handles pagination for counts greater than 10.
+    filter_list: Optional[List[str]] = None,
+) -> List[SearchResult]:
+    """Search Google PSE, paging through results for counts over 10.
 
     Args:
-        api_key (str): A Programmable Search Engine API key
-        search_engine_id (str): A Programmable Search Engine ID
-        query (str): The query to search for
-        count (int): The number of results to return (max 100, as PSE max results per query is 10 and max page is 10)
-        filter_list (Optional[list[str]], optional): A list of keywords to filter out from results. Defaults to None.
-
-    Returns:
-        list[SearchResult]: A list of SearchResult objects.
+        api_key: Programmable Search Engine API key.
+        search_engine_id: Programmable Search Engine ID.
+        query: The search query.
+        count: How many results to return (max 100).
+        filter_list: Optional domains to keep.
     """
     url = "https://www.googleapis.com/customsearch/v1"
     headers = {"Content-Type": "application/json"}
     all_results = []
-    start_index = 1  # Google PSE start parameter is 1-based
+    start_index = 1  # Google PSE start is 1-based
 
     while count > 0:
-        num_results_this_page = min(count, 10)  # Google PSE max results per page is 10
+        num_results_this_page = min(count, MAX_PAGE_SIZE)
         params = {
             "cx": search_engine_id,
             "q": query,
@@ -47,14 +48,11 @@ def search_google_pse(
         response.raise_for_status()
         json_response = response.json()
         results = json_response.get("items", [])
-        if results:  # check if results are returned. If not, no more pages to fetch.
-            all_results.extend(results)
-            count -= len(
-                results
-            )  # Decrement count by the number of results fetched in this page.
-            start_index += 10  # Increment start index for the next page
-        else:
-            break  # No more results from Google PSE, break the loop
+        if not results:
+            break  # No more pages available.
+        all_results.extend(results)
+        count -= len(results)
+        start_index += MAX_PAGE_SIZE
 
     if filter_list:
         all_results = get_filtered_results(all_results, filter_list)

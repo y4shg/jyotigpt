@@ -1,13 +1,17 @@
-import logging
+"""Sogou search provider (via Tencent Cloud text moderation search)."""
+
 import json
-from typing import Optional, List
+import logging
+from typing import List, Optional
 
-
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
+
+TENCENT_ENDPOINT = "tms.tencentcloudapi.com"
+TENCENT_VERSION = "2020-12-29"
 
 
 def search_sougou(
@@ -17,8 +21,13 @@ def search_sougou(
     count: int,
     filter_list: Optional[List[str]] = None,
 ) -> List[SearchResult]:
-    from tencentcloud.common.common_client import CommonClient
+    """Search using the Tencent Cloud Sogou search API.
+
+    The SDK is imported lazily so the provider stays importable without
+    the tencentcloud package installed.
+    """
     from tencentcloud.common import credential
+    from tencentcloud.common.common_client import CommonClient
     from tencentcloud.common.exception.tencent_cloud_sdk_exception import (
         TencentCloudSDKException,
     )
@@ -28,12 +37,12 @@ def search_sougou(
     try:
         cred = credential.Credential(sougou_api_sid, sougou_api_sk)
         http_profile = HttpProfile()
-        http_profile.endpoint = "tms.tencentcloudapi.com"
+        http_profile.endpoint = TENCENT_ENDPOINT
         client_profile = ClientProfile()
         client_profile.http_profile = http_profile
         params = json.dumps({"Query": query, "Cnt": 20})
         common_client = CommonClient(
-            "tms", "2020-12-29", cred, "", profile=client_profile
+            "tms", TENCENT_VERSION, cred, "", profile=client_profile
         )
         results = [
             json.loads(page)

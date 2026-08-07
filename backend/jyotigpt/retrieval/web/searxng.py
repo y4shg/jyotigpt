@@ -1,45 +1,42 @@
+"""SearXNG instance search provider."""
+
 import logging
-from typing import Optional
+from typing import List, Optional
 
 import requests
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
+
+USER_AGENT = "JyotiGPT (https://github.com/y4shg/jyotigpt) RAG Bot"
 
 
 def search_searxng(
     query_url: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
+    filter_list: Optional[List[str]] = None,
     **kwargs,
-) -> list[SearchResult]:
-    """
-    Search a SearXNG instance for a given query and return the results as a list of SearchResult objects.
-
-    The function allows passing additional parameters such as language or time_range to tailor the search result.
+) -> List[SearchResult]:
+    """Search a SearXNG instance for a query.
 
     Args:
-        query_url (str): The base URL of the SearXNG server.
-        query (str): The search term or question to find in the SearXNG database.
-        count (int): The maximum number of results to retrieve from the search.
+        query_url: Base URL of the SearXNG server.
+        query: The search term or question.
+        count: Maximum number of results.
 
     Keyword Args:
-        language (str): Language filter for the search results; e.g., "en-US". Defaults to an empty string.
-        safesearch (int): Safe search filter for safer web results; 0 = off, 1 = moderate, 2 = strict. Defaults to 1 (moderate).
-        time_range (str): Time range for filtering results by date; e.g., "2023-04-05..today" or "all-time". Defaults to ''.
-        categories: (Optional[list[str]]): Specific categories within which the search should be performed, defaulting to an empty string if not provided.
+        language: Language filter, e.g. "en-US" (default).
+        safesearch: 0 = off, 1 = moderate (default), 2 = strict.
+        time_range: Date filter, e.g. "2023-04-05..today" or "".
+        categories: Optional list of search categories.
 
     Returns:
-        list[SearchResult]: A list of SearchResults sorted by relevance score in descending order.
-
-    Raise:
-        requests.exceptions.RequestException: If a request error occurs during the search process.
+        Results sorted by relevance score, highest first.
     """
-
-    # Default values for optional parameters are provided as empty strings or None when not specified.
     language = kwargs.get("language", "en-US")
     safesearch = kwargs.get("safesearch", "1")
     time_range = kwargs.get("time_range", "")
@@ -57,9 +54,8 @@ def search_searxng(
         "image_proxy": 0,
     }
 
-    # Legacy query format
+    # Legacy query format: ignore any query params on the instance URL.
     if "<query>" in query_url:
-        # Strip all query parameters from the URL
         query_url = query_url.split("?")[0]
 
     log.debug(f"searching {query_url}")
@@ -67,7 +63,7 @@ def search_searxng(
     response = requests.get(
         query_url,
         headers={
-            "User-Agent": "JyotiGPT (https://github.com/y4shg/jyotigpt) RAG Bot",
+            "User-Agent": USER_AGENT,
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate",
             "Accept-Language": "en-US,en;q=0.5",
@@ -76,7 +72,7 @@ def search_searxng(
         params=params,
     )
 
-    response.raise_for_status()  # Raise an exception for HTTP errors.
+    response.raise_for_status()
 
     json_response = response.json()
     results = json_response.get("results", [])

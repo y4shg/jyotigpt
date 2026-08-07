@@ -1,9 +1,12 @@
+"""serpstack.com search provider."""
+
 import logging
-from typing import Optional
+from typing import List, Optional
 
 import requests
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
@@ -13,15 +16,13 @@ def search_serpstack(
     api_key: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
+    filter_list: Optional[List[str]] = None,
     https_enabled: bool = True,
-) -> list[SearchResult]:
-    """Search using serpstack.com's and return the results as a list of SearchResult objects.
+) -> List[SearchResult]:
+    """Search using serpstack.com's API and return SearchResult objects.
 
     Args:
-        api_key (str): A serpstack.com API key
-        query (str): The query to search for
-        https_enabled (bool): Whether to use HTTPS or HTTP for the API request
+        https_enabled: Whether to call the HTTPS or HTTP endpoint.
     """
     url = f"{'https' if https_enabled else 'http'}://api.serpstack.com/search"
 

@@ -1,14 +1,17 @@
-import validators
+"""Shared web-search primitives: result model and domain filtering."""
 
 from typing import Optional
 from urllib.parse import urlparse
 
+import validators
 from pydantic import BaseModel
 
 
 def get_filtered_results(results, filter_list):
+    """Keep only results whose URL belongs to one of ``filter_list`` domains."""
     if not filter_list:
         return results
+
     filtered_results = []
     for result in results:
         url = result.get("url") or result.get("link", "")
@@ -21,6 +24,8 @@ def get_filtered_results(results, filter_list):
 
 
 class SearchResult(BaseModel):
+    """One web-search hit: the link plus optional title and snippet."""
+
     link: str
     title: Optional[str]
     snippet: Optional[str]

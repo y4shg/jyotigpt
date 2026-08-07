@@ -1,13 +1,18 @@
+"""searchapi.io search provider."""
+
 import logging
-from typing import Optional
+from typing import List, Optional
 from urllib.parse import urlencode
 
 import requests
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
+
+SEARCHAPI_URL = "https://www.searchapi.io/api/v1/search"
 
 
 def search_searchapi(
@@ -15,21 +20,13 @@ def search_searchapi(
     engine: str,
     query: str,
     count: int,
-    filter_list: Optional[list[str]] = None,
-) -> list[SearchResult]:
-    """Search using searchapi.io's API and return the results as a list of SearchResult objects.
-
-    Args:
-      api_key (str): A searchapi.io API key
-      query (str): The query to search for
-    """
-    url = "https://www.searchapi.io/api/v1/search"
-
+    filter_list: Optional[List[str]] = None,
+) -> List[SearchResult]:
+    """Search using searchapi.io's API and return SearchResult objects."""
     engine = engine or "google"
 
     payload = {"engine": engine, "q": query, "api_key": api_key}
-
-    url = f"{url}?{urlencode(payload)}"
+    url = f"{SEARCHAPI_URL}?{urlencode(payload)}"
     response = requests.request("GET", url)
 
     json_response = response.json()

@@ -1,31 +1,24 @@
-import logging
-from typing import Optional
+"""DuckDuckGo search provider (via duckduckgo_search)."""
 
-from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
+import logging
+from typing import List, Optional
+
 from duckduckgo_search import DDGS
 from duckduckgo_search.exceptions import RatelimitException
+
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.web.main import SearchResult, get_filtered_results
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
 
 
 def search_duckduckgo(
-    query: str, count: int, filter_list: Optional[list[str]] = None
-) -> list[SearchResult]:
-    """
-    Search using DuckDuckGo's Search API and return the results as a list of SearchResult objects.
-    Args:
-        query (str): The query to search for
-        count (int): The number of results to return
-
-    Returns:
-        list[SearchResult]: A list of search results
-    """
-    # Use the DDGS context manager to create a DDGS object
+    query: str, count: int, filter_list: Optional[List[str]] = None
+) -> List[SearchResult]:
+    """Search using DuckDuckGo and return SearchResult objects."""
     search_results = []
     with DDGS() as ddgs:
-        # Use the ddgs.text() method to perform the search
         try:
             search_results = ddgs.text(
                 query, safesearch="moderate", max_results=count, backend="lite"
@@ -35,7 +28,6 @@ def search_duckduckgo(
     if filter_list:
         search_results = get_filtered_results(search_results, filter_list)
 
-    # Return the list of search results
     return [
         SearchResult(
             link=result["href"],
