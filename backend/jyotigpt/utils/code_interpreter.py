@@ -1,3 +1,11 @@
+"""Remote code execution against a Jupyter server.
+
+Connects to a Jupyter kernel over its REST and WebSocket APIs, submits an
+``execute_request`` message, and accumulates stdout, stderr, and results
+(text/plain or base64 PNG) until the kernel reports idle or the timeout
+elapses.
+"""
+
 import asyncio
 import json
 import logging
@@ -15,9 +23,7 @@ logger.setLevel(SRC_LOG_LEVELS["MAIN"])
 
 
 class ResultModel(BaseModel):
-    """
-    Execute Code Result Model
-    """
+    """Captured output of one code execution."""
 
     stdout: Optional[str] = ""
     stderr: Optional[str] = ""
@@ -25,8 +31,10 @@ class ResultModel(BaseModel):
 
 
 class JupyterCodeExecuter:
-    """
-    Execute code in jupyter notebook
+    """Execute code in a Jupyter notebook kernel.
+
+    Supports both token- and password-based authentication, creates a fresh
+    kernel for each ``run()``, and always tears the kernel down on exit.
     """
 
     def __init__(
@@ -37,13 +45,6 @@ class JupyterCodeExecuter:
         password: str = "",
         timeout: int = 60,
     ):
-        """
-        :param base_url: Jupyter server URL (e.g., "http://localhost:8888")
-        :param code: Code to execute
-        :param token: Jupyter authentication token (optional)
-        :param password: Jupyter password (optional)
-        :param timeout: WebSocket timeout in seconds (default: 60s)
-        """
         self.base_url = base_url.rstrip("/")
         self.code = code
         self.token = token
@@ -69,6 +70,7 @@ class JupyterCodeExecuter:
         await self.session.close()
 
     async def run(self) -> ResultModel:
+        """Run the full lifecycle: authenticate, create kernel, execute."""
         try:
             await self.sign_in()
             await self.init_kernel()
@@ -79,7 +81,7 @@ class JupyterCodeExecuter:
         return self.result
 
     async def sign_in(self) -> None:
-        # password authentication
+        """Authenticate with a password, or attach a token to all requests."""
         if self.password and not self.token:
             async with self.session.get("/login") as response:
                 response.raise_for_status()
@@ -96,11 +98,11 @@ class JupyterCodeExecuter:
                 response.raise_for_status()
                 self.session.cookie_jar.update_cookies(response.cookies)
 
-        # token authentication
         if self.token:
             self.params.update({"token": self.token})
 
     async def init_kernel(self) -> None:
+        """Create a new kernel and store its id."""
         async with self.session.post(
             url="/api/kernels", params=self.params
         ) as response:
@@ -108,34 +110,32 @@ class JupyterCodeExecuter:
             kernel_data = await response.json()
             self.kernel_id = kernel_data["id"]
 
-    def init_ws(self) -> (str, dict):
+    def init_ws(self):
+        """Derive the kernel WebSocket URL (and auth headers) from session state."""
         ws_base = self.base_url.replace("http", "ws")
-        ws_params = "?" + "&".join([f"{key}={val}" for key, val in self.params.items()])
-        websocket_url = f"{ws_base}/api/kernels/{self.kernel_id}/channels{ws_params if len(ws_params) > 1 else ''}"
+        query = "?" + "&".join(f"{key}={val}" for key, val in self.params.items())
+        websocket_url = f"{ws_base}/api/kernels/{self.kernel_id}/channels{query}"
         ws_headers = {}
         if self.password and not self.token:
             ws_headers = {
                 "Cookie": "; ".join(
-                    [
-                        f"{cookie.key}={cookie.value}"
-                        for cookie in self.session.cookie_jar
-                    ]
+                    f"{cookie.key}={cookie.value}"
+                    for cookie in self.session.cookie_jar
                 ),
                 **self.session.headers,
             }
         return websocket_url, ws_headers
 
     async def execute_code(self) -> None:
-        # initialize ws
+        """Open the kernel channel socket and run the code."""
         websocket_url, ws_headers = self.init_ws()
-        # execute
         async with websockets.connect(
             websocket_url, additional_headers=ws_headers
         ) as ws:
             await self.execute_in_jupyter(ws)
 
     async def execute_in_jupyter(self, ws) -> None:
-        # send message
+        """Send an ``execute_request`` and collect replies until idle/timeout."""
         msg_id = uuid.uuid4().hex
         await ws.send(
             json.dumps(
@@ -162,47 +162,49 @@ class JupyterCodeExecuter:
                 }
             )
         )
-        # parse message
-        stdout, stderr, result = "", "", []
+
+        stdout, stderr = "", ""
+        result_parts = []
         while True:
             try:
-                # wait for message
                 message = await asyncio.wait_for(ws.recv(), self.timeout)
                 message_data = json.loads(message)
-                # msg id not match, skip
+
                 if message_data.get("parent_header", {}).get("msg_id") != msg_id:
                     continue
-                # check message type
+
                 msg_type = message_data.get("msg_type")
                 match msg_type:
                     case "stream":
-                        if message_data["content"]["name"] == "stdout":
+                        stream_name = message_data["content"]["name"]
+                        if stream_name == "stdout":
                             stdout += message_data["content"]["text"]
-                        elif message_data["content"]["name"] == "stderr":
+                        elif stream_name == "stderr":
                             stderr += message_data["content"]["text"]
                     case "execute_result" | "display_data":
                         data = message_data["content"]["data"]
                         if "image/png" in data:
-                            result.append(f"data:image/png;base64,{data['image/png']}")
+                            result_parts.append(f"data:image/png;base64,{data['image/png']}")
                         elif "text/plain" in data:
-                            result.append(data["text/plain"])
+                            result_parts.append(data["text/plain"])
                     case "error":
                         stderr += "\n".join(message_data["content"]["traceback"])
                     case "status":
                         if message_data["content"]["execution_state"] == "idle":
                             break
-
             except asyncio.TimeoutError:
                 stderr += "\nExecution timed out."
                 break
+
         self.result.stdout = stdout.strip()
         self.result.stderr = stderr.strip()
-        self.result.result = "\n".join(result).strip() if result else ""
+        self.result.result = "\n".join(result_parts).strip() if result_parts else ""
 
 
 async def execute_code_jupyter(
     base_url: str, code: str, token: str = "", password: str = "", timeout: int = 60
 ) -> dict:
+    """Execute ``code`` on a Jupyter server and return the serialized result."""
     async with JupyterCodeExecuter(
         base_url, code, token, password, timeout
     ) as executor:
