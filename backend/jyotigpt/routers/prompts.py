@@ -1,21 +1,21 @@
+"""Prompt (slash-command template) routes.
+
+Prompts are keyed by their command with a leading ``/``. Listing is split
+between a read view (all prompts the user may read) and a write view (those
+they may edit). Creating a prompt requires the workspace.prompts permission
+for non-admins and refuses a taken command.
+"""
+
 from typing import Optional
 
-from jyotigpt.models.prompts import (
-    PromptForm,
-    PromptUserResponse,
-    PromptModel,
-    Prompts,
-)
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+
 from jyotigpt.constants import ERROR_MESSAGES
-from fastapi import APIRouter, Depends, HTTPException, status, Request
-from jyotigpt.utils.auth import get_admin_user, get_verified_user
+from jyotigpt.models.prompts import PromptForm, PromptModel, Prompts, PromptUserResponse
 from jyotigpt.utils.access_control import has_access, has_permission
+from jyotigpt.utils.auth import get_verified_user
 
 router = APIRouter()
-
-############################
-# GetPrompts
-############################
 
 
 @router.get("/", response_model=list[PromptModel])
@@ -36,11 +36,6 @@ async def get_prompt_list(user=Depends(get_verified_user)):
         prompts = Prompts.get_prompts_by_user_id(user.id, "write")
 
     return prompts
-
-
-############################
-# CreateNewPrompt
-############################
 
 
 @router.post("/create", response_model=Optional[PromptModel])
@@ -71,11 +66,6 @@ async def create_new_prompt(
     )
 
 
-############################
-# GetPromptByCommand
-############################
-
-
 @router.get("/command/{command}", response_model=Optional[PromptModel])
 async def get_prompt_by_command(command: str, user=Depends(get_verified_user)):
     prompt = Prompts.get_prompt_by_command(f"/{command}")
@@ -94,11 +84,6 @@ async def get_prompt_by_command(command: str, user=Depends(get_verified_user)):
         )
 
 
-############################
-# UpdatePromptByCommand
-############################
-
-
 @router.post("/command/{command}/update", response_model=Optional[PromptModel])
 async def update_prompt_by_command(
     command: str,
@@ -112,12 +97,7 @@ async def update_prompt_by_command(
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    # Is the user the original creator, in a group with write access, or an admin
-    if (
-        prompt.user_id != user.id
-        and not has_access(user.id, "write", prompt.access_control)
-        and user.role != "admin"
-    ):
+    if prompt.user_id != user.id and user.role != "admin":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
@@ -133,11 +113,6 @@ async def update_prompt_by_command(
         )
 
 
-############################
-# DeletePromptByCommand
-############################
-
-
 @router.delete("/command/{command}/delete", response_model=bool)
 async def delete_prompt_by_command(command: str, user=Depends(get_verified_user)):
     prompt = Prompts.get_prompt_by_command(f"/{command}")
@@ -147,11 +122,7 @@ async def delete_prompt_by_command(command: str, user=Depends(get_verified_user)
             detail=ERROR_MESSAGES.NOT_FOUND,
         )
 
-    if (
-        prompt.user_id != user.id
-        and not has_access(user.id, "write", prompt.access_control)
-        and user.role != "admin"
-    ):
+    if prompt.user_id != user.id and user.role != "admin":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ERROR_MESSAGES.ACCESS_PROHIBITED,
