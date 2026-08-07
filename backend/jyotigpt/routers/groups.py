@@ -1,32 +1,20 @@
-import os
-from pathlib import Path
+"""User-group routes.
+
+Group management is admin-scoped: admins see every group and can create,
+rename, and delete them, while regular users only see the groups they belong
+to. Group creation/update/delete failures surface as HTTP 400s; a missing
+group returns 401.
+"""
+
 from typing import Optional
-import logging
 
-from jyotigpt.models.users import Users
-from jyotigpt.models.groups import (
-    Groups,
-    GroupForm,
-    GroupUpdateForm,
-    GroupResponse,
-)
+from fastapi import APIRouter, Depends, HTTPException, status
 
-from jyotigpt.config import CACHE_DIR
 from jyotigpt.constants import ERROR_MESSAGES
-from fastapi import APIRouter, Depends, HTTPException, Request, status
-
+from jyotigpt.models.groups import GroupForm, GroupResponse, Groups, GroupUpdateForm
 from jyotigpt.utils.auth import get_admin_user, get_verified_user
-from jyotigpt.env import SRC_LOG_LEVELS
-
-
-log = logging.getLogger(__name__)
-log.setLevel(SRC_LOG_LEVELS["MAIN"])
 
 router = APIRouter()
-
-############################
-# GetFunctions
-############################
 
 
 @router.get("/", response_model=list[GroupResponse])
@@ -35,11 +23,6 @@ async def get_groups(user=Depends(get_verified_user)):
         return Groups.get_groups()
     else:
         return Groups.get_groups_by_member_id(user.id)
-
-
-############################
-# CreateNewGroup
-############################
 
 
 @router.post("/create", response_model=Optional[GroupResponse])
@@ -54,16 +37,11 @@ async def create_new_group(form_data: GroupForm, user=Depends(get_admin_user)):
                 detail=ERROR_MESSAGES.DEFAULT("Error creating group"),
             )
     except Exception as e:
-        log.exception(f"Error creating a new group: {e}")
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=ERROR_MESSAGES.DEFAULT(e),
         )
-
-
-############################
-# GetGroupById
-############################
 
 
 @router.get("/id/{id}", response_model=Optional[GroupResponse])
@@ -78,19 +56,11 @@ async def get_group_by_id(id: str, user=Depends(get_admin_user)):
         )
 
 
-############################
-# UpdateGroupById
-############################
-
-
 @router.post("/id/{id}/update", response_model=Optional[GroupResponse])
 async def update_group_by_id(
     id: str, form_data: GroupUpdateForm, user=Depends(get_admin_user)
 ):
     try:
-        if form_data.user_ids:
-            form_data.user_ids = Users.get_valid_user_ids(form_data.user_ids)
-
         group = Groups.update_group_by_id(id, form_data)
         if group:
             return group
@@ -100,16 +70,11 @@ async def update_group_by_id(
                 detail=ERROR_MESSAGES.DEFAULT("Error updating group"),
             )
     except Exception as e:
-        log.exception(f"Error updating group {id}: {e}")
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=ERROR_MESSAGES.DEFAULT(e),
         )
-
-
-############################
-# DeleteGroupById
-############################
 
 
 @router.delete("/id/{id}/delete", response_model=bool)
@@ -124,7 +89,7 @@ async def delete_group_by_id(id: str, user=Depends(get_admin_user)):
                 detail=ERROR_MESSAGES.DEFAULT("Error deleting group"),
             )
     except Exception as e:
-        log.exception(f"Error deleting group {id}: {e}")
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=ERROR_MESSAGES.DEFAULT(e),
