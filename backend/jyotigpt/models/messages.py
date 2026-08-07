@@ -1,20 +1,17 @@
-import json
+"""Channel message persistence.
+
+Messages live in channels with optional parent/child (reply) relationships.
+Reactions are stored separately and aggregated per message. Timestamps are
+nanosecond epoch integers.
+"""
+
 import time
 import uuid
 from typing import Optional
 
 from jyotigpt.internal.db import Base, get_db
-from jyotigpt.models.tags import TagModel, Tag, Tags
-
-
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Boolean, Column, String, Text, JSON
-from sqlalchemy import or_, func, select, and_, text
-from sqlalchemy.sql import exists
-
-####################
-# Message DB Schema
-####################
+from sqlalchemy import JSON, BigInteger, Column, Text
 
 
 class MessageReaction(Base):
@@ -33,7 +30,7 @@ class MessageReactionModel(BaseModel):
     user_id: str
     message_id: str
     name: str
-    created_at: int  # timestamp in epoch
+    created_at: int  # timestamp in epoch nanoseconds
 
 
 class Message(Base):
@@ -49,8 +46,8 @@ class Message(Base):
     data = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
 
-    created_at = Column(BigInteger)  # time_ns
-    updated_at = Column(BigInteger)  # time_ns
+    created_at = Column(BigInteger)  # nanoseconds
+    updated_at = Column(BigInteger)  # nanoseconds
 
 
 class MessageModel(BaseModel):
@@ -66,13 +63,8 @@ class MessageModel(BaseModel):
     data: Optional[dict] = None
     meta: Optional[dict] = None
 
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-
-
-####################
-# Forms
-####################
+    created_at: int  # timestamp in epoch nanoseconds
+    updated_at: int  # timestamp in epoch nanoseconds
 
 
 class MessageForm(BaseModel):
@@ -189,7 +181,8 @@ class MessageTable:
                 .all()
             )
 
-            # If length of all_messages is less than limit, then add the parent message
+            # If the reply page is short, include the parent message itself so
+            # the conversation reads continuously.
             if len(all_messages) < limit:
                 all_messages.append(message)
 
@@ -269,7 +262,7 @@ class MessageTable:
         with get_db() as db:
             db.query(Message).filter_by(id=id).delete()
 
-            # Delete all reactions to this message
+            # Also remove every reaction attached to this message.
             db.query(MessageReaction).filter_by(message_id=id).delete()
 
             db.commit()
