@@ -1,18 +1,20 @@
+"""File persistence.
+
+Stores uploaded-file records: identity, content hash, storage path, and
+mutable ``data``/``meta`` blobs. Timestamps are epoch-second integers.
+"""
+
 import logging
 import time
 from typing import Optional
 
-from jyotigpt.internal.db import Base, JSONField, get_db
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.internal.db import Base, get_db
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, JSON
+from sqlalchemy import JSON, BigInteger, Column, String, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-####################
-# Files DB Schema
-####################
 
 
 class File(Base):
@@ -48,13 +50,8 @@ class FileModel(BaseModel):
 
     access_control: Optional[dict] = None
 
-    created_at: Optional[int]  # timestamp in epoch
-    updated_at: Optional[int]  # timestamp in epoch
-
-
-####################
-# Forms
-####################
+    created_at: Optional[int]  # timestamp in epoch seconds
+    updated_at: Optional[int]  # timestamp in epoch seconds
 
 
 class FileMeta(BaseModel):
@@ -74,8 +71,8 @@ class FileModelResponse(BaseModel):
     data: Optional[dict] = None
     meta: FileMeta
 
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
+    created_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
 
     model_config = ConfigDict(extra="allow")
 
@@ -83,8 +80,8 @@ class FileModelResponse(BaseModel):
 class FileMetadataResponse(BaseModel):
     id: str
     meta: dict
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
+    created_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
 
 
 class FileForm(BaseModel):
@@ -197,8 +194,7 @@ class FilesTable:
                 file.data = {**(file.data if file.data else {}), **data}
                 db.commit()
                 return FileModel.model_validate(file)
-            except Exception as e:
-
+            except Exception:
                 return None
 
     def update_file_metadata_by_id(self, id: str, meta: dict) -> Optional[FileModel]:
