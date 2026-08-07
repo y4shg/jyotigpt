@@ -1,17 +1,18 @@
+"""Prompt persistence.
+
+Prompts are slash-command-triggered text templates keyed by their unique
+``command``. Like other shared entities they can carry access-control rules
+restricting read/write by group or user.
+"""
+
 import time
 from typing import Optional
 
 from jyotigpt.internal.db import Base, get_db
-from jyotigpt.models.users import Users, UserResponse
-
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, JSON
-
+from jyotigpt.models.users import UserResponse, Users
 from jyotigpt.utils.access_control import has_access
-
-####################
-# Prompts DB Schema
-####################
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import JSON, BigInteger, Column, String, Text
 
 
 class Prompt(Base):
@@ -23,22 +24,14 @@ class Prompt(Base):
     content = Column(Text)
     timestamp = Column(BigInteger)
 
-    access_control = Column(JSON, nullable=True)  # Controls data access levels.
-    # Defines access control rules for this entry.
-    # - `None`: Public access, available to all users with the "user" role.
-    # - `{}`: Private access, restricted exclusively to the owner.
-    # - Custom permissions: Specific access control for reading and writing;
-    #   Can specify group or user-level restrictions:
-    #   {
-    #      "read": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      },
-    #      "write": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      }
-    #   }
+    access_control = Column(JSON, nullable=True)
+    """Data access rules for this entry.
+
+    - ``None``: public, available to every user with the "user" role.
+    - ``{}``: private, restricted to the owner.
+    - Custom permissions: per-group / per-user ``read`` and ``write`` rules,
+      e.g. ``{"read": {"group_ids": [...], "user_ids": [...]}}``.
+    """
 
 
 class PromptModel(BaseModel):
@@ -50,11 +43,6 @@ class PromptModel(BaseModel):
 
     access_control: Optional[dict] = None
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class PromptUserResponse(PromptModel):
