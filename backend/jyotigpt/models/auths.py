@@ -1,20 +1,25 @@
+"""Authentication persistence and credentials.
+
+Each account has one ``auth`` row (email + password hash + active flag) whose
+id is also the user id. Password verification is delegated to
+:func:`jyotigpt.utils.auth.verify_password`. API keys and trusted-header
+sign-in are resolved here too, alongside the request/response shapes for the
+auth routes.
+"""
+
 import logging
 import uuid
 from typing import Optional
 
+from jyotigpt.env import SRC_LOG_LEVELS
 from jyotigpt.internal.db import Base, get_db
 from jyotigpt.models.users import UserModel, Users
-from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.utils.auth import verify_password
 from pydantic import BaseModel
 from sqlalchemy import Boolean, Column, String, Text
-from jyotigpt.utils.auth import verify_password
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-####################
-# DB MODEL
-####################
 
 
 class Auth(Base):
@@ -31,11 +36,6 @@ class AuthModel(BaseModel):
     email: str
     password: str
     active: bool = True
-
-
-####################
-# Forms
-####################
 
 
 class Token(BaseModel):
@@ -145,7 +145,6 @@ class AuthsTable:
 
     def authenticate_user_by_api_key(self, api_key: str) -> Optional[UserModel]:
         log.info(f"authenticate_user_by_api_key: {api_key}")
-        # if no api_key, return None
         if not api_key:
             return None
 
@@ -189,7 +188,6 @@ class AuthsTable:
     def delete_auth_by_id(self, id: str) -> bool:
         try:
             with get_db() as db:
-                # Delete User
                 result = Users.delete_user_by_id(id)
 
                 if result:
