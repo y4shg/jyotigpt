@@ -1,24 +1,26 @@
+"""Feedback and arena-evaluation routes.
+
+Admins can read/clear all feedback and tweak the arena evaluation config;
+users manage their own feedback entries (create, read, update, delete). Note
+the arena config is mutated live on the app state.
+"""
+
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 
-from jyotigpt.models.users import Users, UserModel
+from jyotigpt.constants import ERROR_MESSAGES
 from jyotigpt.models.feedbacks import (
+    FeedbackForm,
     FeedbackModel,
     FeedbackResponse,
-    FeedbackForm,
     Feedbacks,
 )
-
-from jyotigpt.constants import ERROR_MESSAGES
+from jyotigpt.models.users import UserModel, Users
 from jyotigpt.utils.auth import get_admin_user, get_verified_user
 
 router = APIRouter()
-
-
-############################
-# GetConfig
-############################
 
 
 @router.get("/config")
@@ -27,11 +29,6 @@ async def get_config(request: Request, user=Depends(get_admin_user)):
         "ENABLE_EVALUATION_ARENA_MODELS": request.app.state.config.ENABLE_EVALUATION_ARENA_MODELS,
         "EVALUATION_ARENA_MODELS": request.app.state.config.EVALUATION_ARENA_MODELS,
     }
-
-
-############################
-# UpdateConfig
-############################
 
 
 class UpdateConfigForm(BaseModel):
@@ -56,19 +53,8 @@ async def update_config(
     }
 
 
-class FeedbackUserReponse(BaseModel):
-    id: str
-    name: str
-    email: str
-    role: str = "pending"
-
-    last_active_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
-
-
 class FeedbackUserResponse(FeedbackResponse):
-    user: Optional[FeedbackUserReponse] = None
+    user: Optional[UserModel] = None
 
 
 @router.get("/feedbacks/all", response_model=list[FeedbackUserResponse])
@@ -76,10 +62,7 @@ async def get_all_feedbacks(user=Depends(get_admin_user)):
     feedbacks = Feedbacks.get_all_feedbacks()
     return [
         FeedbackUserResponse(
-            **feedback.model_dump(),
-            user=FeedbackUserReponse(
-                **Users.get_user_by_id(feedback.user_id).model_dump()
-            ),
+            **feedback.model_dump(), user=Users.get_user_by_id(feedback.user_id)
         )
         for feedback in feedbacks
     ]
