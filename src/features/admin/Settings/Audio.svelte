@@ -3,13 +3,13 @@
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	import { getBackendConfig } from '$lib/apis';
+	import { getBackendConfig } from '$api';
 	import {
 		getAudioConfig,
 		updateAudioConfig,
 		getModels as _getModels,
 		getVoices as _getVoices
-	} from '$lib/apis/audio';
+	} from '$api/audio';
 	import { config, settings } from '$shared/stores';
 
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';

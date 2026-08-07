@@ -4,10 +4,10 @@
 
 	const dispatch = createEventDispatcher();
 
-	import { getOllamaConfig, updateOllamaConfig } from '$lib/apis/ollama';
-	import { getOpenAIConfig, updateOpenAIConfig, getOpenAIModels } from '$lib/apis/openai';
-	import { getModels as _getModels } from '$lib/apis';
-	import { getDirectConnectionsConfig, setDirectConnectionsConfig } from '$lib/apis/configs';
+	import { getOllamaConfig, updateOllamaConfig } from '$api/ollama';
+	import { getOpenAIConfig, updateOpenAIConfig, getOpenAIModels } from '$api/openai';
+	import { getModels as _getModels } from '$api';
+	import { getDirectConnectionsConfig, setDirectConnectionsConfig } from '$api/configs';
 
 	import { config, models, settings, user } from '$shared/stores';
 

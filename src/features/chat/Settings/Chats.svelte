@@ -11,7 +11,7 @@
 		getAllChats,
 		getAllUserChats,
 		getChatList
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 	import { getImportOrigin, convertOpenAIChats } from '$shared/utils';
 	import { onMount, getContext } from 'svelte';
 	import { goto } from '$app/navigation';

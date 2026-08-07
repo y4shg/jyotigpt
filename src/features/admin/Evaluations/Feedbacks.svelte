@@ -10,7 +10,7 @@
 	import { onMount, getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { deleteFeedbackById, exportAllFeedbacks, getAllFeedbacks } from '$lib/apis/evaluations';
+	import { deleteFeedbackById, exportAllFeedbacks, getAllFeedbacks } from '$api/evaluations';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import ArrowDownTray from '$shared/icons/ArrowDownTray.svelte';

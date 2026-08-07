@@ -2,7 +2,7 @@
 	import { createEventDispatcher, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
-	import { updateMemoryById } from '$lib/apis/memories';
+	import { updateMemoryById } from '$api/memories';
 
 	import Modal from '$shared/components/Modal.svelte';
 

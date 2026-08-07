@@ -16,8 +16,8 @@
 		uploadModel,
 		getOllamaConfig,
 		getOllamaModels
-	} from '$lib/apis/ollama';
-	import { getModels } from '$lib/apis';
+	} from '$api/ollama';
+	import { getModels } from '$api';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

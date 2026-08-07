@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DOMPurify from 'dompurify';
 
-	import { getBackendConfig, getVersionUpdates, getWebhookUrl, updateWebhookUrl } from '$lib/apis';
+	import { getBackendConfig, getVersionUpdates, getWebhookUrl, updateWebhookUrl } from '$api';
 	import {
 		getAdminConfig,
 		getLdapConfig,
@@ -9,7 +9,7 @@
 		updateAdminConfig,
 		updateLdapConfig,
 		updateLdapServer
-	} from '$lib/apis/auths';
+	} from '$api/auths';
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 	import Switch from '$shared/components/Switch.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

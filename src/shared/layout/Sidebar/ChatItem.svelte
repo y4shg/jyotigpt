@@ -17,7 +17,7 @@
 		getChatListByTagName,
 		getPinnedChatList,
 		updateChatById
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 	import {
 		chatId,
 		chatTitle as _chatTitle,

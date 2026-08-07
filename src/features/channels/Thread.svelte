@@ -3,7 +3,7 @@
 
 	import { socket, user } from '$shared/stores';
 
-	import { getChannelThreadMessages, sendMessage } from '$lib/apis/channels';
+	import { getChannelThreadMessages, sendMessage } from '$api/channels';
 
 	import XMark from '$shared/icons/XMark.svelte';
 	import MessageInput from './MessageInput.svelte';

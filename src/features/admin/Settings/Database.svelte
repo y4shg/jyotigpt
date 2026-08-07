@@ -2,12 +2,12 @@
 	import fileSaver from 'file-saver';
 	const { saveAs } = fileSaver;
 
-	import { downloadDatabase, downloadLiteLLMConfig } from '$lib/apis/utils';
+	import { downloadDatabase, downloadLiteLLMConfig } from '$api/utils';
 	import { onMount, getContext } from 'svelte';
 	import { config, user } from '$shared/stores';
 	import { toast } from 'svelte-sonner';
-	import { getAllUserChats } from '$lib/apis/chats';
-	import { exportConfig, importConfig } from '$lib/apis/configs';
+	import { getAllUserChats } from '$api/chats';
+	import { exportConfig, importConfig } from '$api/configs';
 
 	const i18n = getContext('i18n');
 

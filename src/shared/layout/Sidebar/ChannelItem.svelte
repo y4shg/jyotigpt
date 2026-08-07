@@ -5,7 +5,7 @@
 
 	import { page } from '$app/stores';
 	import { mobile, showSidebar, user } from '$shared/stores';
-	import { updateChannelById } from '$lib/apis/channels';
+	import { updateChannelById } from '$api/channels';
 
 	import Cog6 from '$shared/icons/Cog6.svelte';
 	import ChannelModal from './ChannelModal.svelte';

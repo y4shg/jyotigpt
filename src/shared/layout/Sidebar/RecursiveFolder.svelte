@@ -20,14 +20,14 @@
 		updateFolderIsExpandedById,
 		updateFolderNameById,
 		updateFolderParentIdById
-	} from '$lib/apis/folders';
+	} from '$api/folders';
 	import { toast } from 'svelte-sonner';
 	import {
 		getChatById,
 		getChatsByFolderId,
 		importChat,
 		updateChatFolderIdById
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 	import ChatItem from './ChatItem.svelte';
 	import FolderMenu from './Folders/FolderMenu.svelte';
 	import DeleteConfirmDialog from '$shared/components/ConfirmDialog.svelte';

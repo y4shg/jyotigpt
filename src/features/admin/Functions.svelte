@@ -15,12 +15,12 @@
 		getFunctions,
 		toggleFunctionById,
 		toggleGlobalById
-	} from '$lib/apis/functions';
+	} from '$api/functions';
 
 	import ArrowDownTray from '$shared/icons/ArrowDownTray.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import ConfirmDialog from '$shared/components/ConfirmDialog.svelte';
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import FunctionMenu from './Functions/FunctionMenu.svelte';
 	import EllipsisHorizontal from '$shared/icons/EllipsisHorizontal.svelte';
 	import Switch from '$shared/components/Switch.svelte';

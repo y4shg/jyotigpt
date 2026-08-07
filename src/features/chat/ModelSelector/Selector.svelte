@@ -10,7 +10,7 @@
 	import Check from '$shared/icons/Check.svelte';
 	import Search from '$shared/icons/Search.svelte';
 
-	import { deleteModel, getOllamaVersion, pullModel } from '$lib/apis/ollama';
+	import { deleteModel, getOllamaVersion, pullModel } from '$api/ollama';
 
 	import { hapticTrigger } from '$shared/utils/haptics';
 
@@ -25,7 +25,7 @@
 	} from '$shared/stores';
 	import { toast } from 'svelte-sonner';
 	import { capitalizeFirstLetter, sanitizeResponseContent, splitStream } from '$shared/utils';
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Switch from '$shared/components/Switch.svelte';

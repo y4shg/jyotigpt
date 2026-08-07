@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { user } from '$shared/stores';
 
-	import { getUsers } from '$lib/apis/users';
+	import { getUsers } from '$api/users';
 
 	import UserList from './Users/UserList.svelte';
 	import Groups from './Users/Groups.svelte';

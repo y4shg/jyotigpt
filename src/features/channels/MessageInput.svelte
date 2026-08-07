@@ -13,11 +13,11 @@
 	import RichTextInput from '$shared/components/RichTextInput.svelte';
 	import VoiceRecording from '../chat/MessageInput/VoiceRecording.svelte';
 	import InputMenu from './MessageInput/InputMenu.svelte';
-	import { uploadFile } from '$lib/apis/files';
+	import { uploadFile } from '$api/files';
 	import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 	import FileItem from '$shared/components/FileItem.svelte';
 	import Image from '$shared/components/Image.svelte';
-	import { transcribeAudio } from '$lib/apis/audio';
+	import { transcribeAudio } from '$api/audio';
 	import FilesOverlay from '../chat/MessageInput/FilesOverlay.svelte';
 
 	export let placeholder = $i18n.t('Send a Message');

@@ -4,7 +4,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { onMount, getContext } from 'svelte';
 
-	import { updateUserById } from '$lib/apis/users';
+	import { updateUserById } from '$api/users';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';

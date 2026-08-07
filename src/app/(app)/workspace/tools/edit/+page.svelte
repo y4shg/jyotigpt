@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { getToolById, getTools, updateToolById } from '$lib/apis/tools';
+	import { getToolById, getTools, updateToolById } from '$api/tools';
 	import Spinner from '$shared/components/Spinner.svelte';
 	import ToolkitEditor from '$features/workspace/Tools/ToolkitEditor.svelte';
 	import { JYOTIGPT_VERSION } from '$shared/constants';

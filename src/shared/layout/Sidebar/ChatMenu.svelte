@@ -25,10 +25,10 @@
 		getChatById,
 		getChatPinnedStatusById,
 		toggleChatPinnedStatusById
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 	import { chats, theme } from '$shared/stores';
 	import { createMessagesList } from '$shared/utils';
-	import { downloadChatAsPDF } from '$lib/apis/utils';
+	import { downloadChatAsPDF } from '$api/utils';
 	import Download from '$shared/icons/Download.svelte';
 
 	const i18n = getContext('i18n');

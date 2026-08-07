@@ -22,8 +22,8 @@
 	import Pencil from '$shared/icons/Pencil.svelte';
 	import GroupItem from './Groups/GroupItem.svelte';
 	import AddGroupModal from './Groups/AddGroupModal.svelte';
-	import { createNewGroup, getGroups } from '$lib/apis/groups';
-	import { getUserDefaultPermissions, updateUserDefaultPermissions } from '$lib/apis/users';
+	import { createNewGroup, getGroups } from '$api/groups';
+	import { getUserDefaultPermissions, updateUserDefaultPermissions } from '$api/users';
 
 	const i18n = getContext('i18n');
 

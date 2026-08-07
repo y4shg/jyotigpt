@@ -4,8 +4,8 @@
 	const i18n = getContext('i18n');
 
 	import { models } from '$shared/stores';
-	import { verifyOpenAIConnection } from '$lib/apis/openai';
-	import { verifyOllamaConnection } from '$lib/apis/ollama';
+	import { verifyOpenAIConnection } from '$api/openai';
+	import { verifyOllamaConnection } from '$api/ollama';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import Plus from '$shared/icons/Plus.svelte';
@@ -15,8 +15,8 @@
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Switch from '$shared/components/Switch.svelte';
 	import Tags from '$shared/components/Tags.svelte';
-	import { getToolServerData } from '$lib/apis';
-	import { verifyToolServerConnection } from '$lib/apis/configs';
+	import { getToolServerData } from '$api';
+	import { verifyToolServerConnection } from '$api/configs';
 	import AccessControl from '../workspace/common/AccessControl.svelte';
 
 	export let onSubmit: Function = () => {};

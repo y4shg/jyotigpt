@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
-	import { getModels as _getModels } from '$lib/apis';
+	import { getModels as _getModels } from '$api';
 
 	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');
@@ -15,7 +15,7 @@
 	import Connection from '$features/chat/Settings/Tools/Connection.svelte';
 
 	import AddServerModal from '$features/app/AddServerModal';
-	import { getToolServerConnections, setToolServerConnections } from '$lib/apis/configs';
+	import { getToolServerConnections, setToolServerConnections } from '$api/configs';
 
 	export let saveSettings: Function;
 

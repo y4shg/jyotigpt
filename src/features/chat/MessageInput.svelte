@@ -28,10 +28,10 @@
 		createMessagesList,
 		extractCurlyBraceWords
 	} from '$shared/utils';
-	import { transcribeAudio } from '$lib/apis/audio';
-	import { uploadFile } from '$lib/apis/files';
-	import { generateAutoCompletion } from '$lib/apis';
-	import { deleteFileById } from '$lib/apis/files';
+	import { transcribeAudio } from '$api/audio';
+	import { uploadFile } from '$api/files';
+	import { generateAutoCompletion } from '$api';
+	import { deleteFileById } from '$api/files';
 
 	import { JYOTIGPT_BASE_URL, JYOTIGPT_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$shared/constants';
 

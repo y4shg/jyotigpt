@@ -2,15 +2,15 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { toast } from 'svelte-sonner';
 
-	import { getBackendConfig, getTaskConfig, updateTaskConfig } from '$lib/apis';
-	import { setDefaultPromptSuggestions } from '$lib/apis/configs';
+	import { getBackendConfig, getTaskConfig, updateTaskConfig } from '$api';
+	import { setDefaultPromptSuggestions } from '$api/configs';
 	import { config, models, settings, user } from '$shared/stores';
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 
 	import { banners as _banners } from '$shared/stores';
 	import type { Banner } from '$shared/types';
 
-	import { getBanners, setBanners } from '$lib/apis/configs';
+	import { getBanners, setBanners } from '$api/configs';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Switch from '$shared/components/Switch.svelte';

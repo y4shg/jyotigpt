@@ -10,14 +10,14 @@
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 
-	import { getKnowledgeBases } from '$lib/apis/knowledge';
-	import { getFunctions } from '$lib/apis/functions';
-	import { getModels, getToolServersData, getVersionUpdates } from '$lib/apis';
-	import { getAllTags } from '$lib/apis/chats';
-	import { getPrompts } from '$lib/apis/prompts';
-	import { getTools } from '$lib/apis/tools';
-	import { getBanners } from '$lib/apis/configs';
-	import { getUserSettings } from '$lib/apis/users';
+	import { getKnowledgeBases } from '$api/knowledge';
+	import { getFunctions } from '$api/functions';
+	import { getModels, getToolServersData, getVersionUpdates } from '$api';
+	import { getAllTags } from '$api/chats';
+	import { getPrompts } from '$api/prompts';
+	import { getTools } from '$api/tools';
+	import { getBanners } from '$api/configs';
+	import { getUserSettings } from '$api/users';
 
 	import { JYOTIGPT_VERSION } from '$shared/constants';
 	import { compareVersion } from '$shared/utils';

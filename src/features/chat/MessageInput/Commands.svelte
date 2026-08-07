@@ -7,8 +7,8 @@
 	import { knowledge, prompts } from '$shared/stores';
 
 	import { removeLastWordFromString } from '$shared/utils';
-	import { getPrompts } from '$lib/apis/prompts';
-	import { getKnowledgeBases } from '$lib/apis/knowledge';
+	import { getPrompts } from '$api/prompts';
+	import { getKnowledgeBases } from '$api/knowledge';
 
 	import Prompts from './Commands/Prompts.svelte';
 	import Knowledge from './Commands/Knowledge.svelte';

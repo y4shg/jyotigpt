@@ -5,10 +5,10 @@
 	import { JYOTIGPT_NAME, config, settings } from '$shared/stores';
 
 	import { JYOTIGPT_VERSION } from '$shared/constants';
-	import { getChangelog } from '$lib/apis';
+	import { getChangelog } from '$api';
 
 	import Modal from '$shared/components/Modal.svelte';
-	import { updateUserSettings } from '$lib/apis/users';
+	import { updateUserSettings } from '$api/users';
 
 	const i18n = getContext('i18n');
 

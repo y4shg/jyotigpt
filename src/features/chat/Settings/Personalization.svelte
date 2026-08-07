@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getBackendConfig } from '$lib/apis';
-	import { setDefaultPromptSuggestions } from '$lib/apis/configs';
+	import { getBackendConfig } from '$api';
+	import { setDefaultPromptSuggestions } from '$api/configs';
 	import Switch from '$shared/components/Switch.svelte';
 	import { config, models, settings, user } from '$shared/stores';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';

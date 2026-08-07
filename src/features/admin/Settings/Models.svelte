@@ -13,9 +13,9 @@
 		getBaseModels,
 		toggleModelById,
 		updateModelById
-	} from '$lib/apis/models';
+	} from '$api/models';
 
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import Search from '$shared/icons/Search.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Switch from '$shared/components/Switch.svelte';

@@ -13,7 +13,7 @@
 
 	import { onMount, createEventDispatcher, getContext, tick } from 'svelte';
 
-	import { formatPythonCode } from '$lib/apis/utils';
+	import { formatPythonCode } from '$api/utils';
 	import { toast } from 'svelte-sonner';
 
 	const dispatch = createEventDispatcher();

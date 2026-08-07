@@ -5,11 +5,11 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { config, functions, models, settings } from '$shared/stores';
-	import { updateFunctionById, getFunctions, getFunctionById } from '$lib/apis/functions';
+	import { updateFunctionById, getFunctions, getFunctionById } from '$api/functions';
 
 	import FunctionEditor from '$features/admin/Functions/FunctionEditor.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import { compareVersion, extractFrontmatter } from '$shared/utils';
 	import { JYOTIGPT_VERSION } from '$shared/constants';
 

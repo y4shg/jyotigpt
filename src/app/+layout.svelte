@@ -32,8 +32,8 @@
 	import { page } from '$app/stores';
 	import { Toaster, toast } from 'svelte-sonner';
 
-	import { executeToolServer, getBackendConfig } from '$lib/apis';
-	import { getSessionUser } from '$lib/apis/auths';
+	import { executeToolServer, getBackendConfig } from '$api';
+	import { getSessionUser } from '$api/auths';
 
 	import '../tailwind.css';
 	import '../app.css';
@@ -43,10 +43,10 @@
 	import { JYOTIGPT_BASE_URL, JYOTIGPT_HOSTNAME } from '$shared/constants';
 	import i18n, { initI18n, getLanguages, changeLanguage } from '$shared/i18n';
 	import { bestMatchingLanguage } from '$shared/utils';
-	import { getAllTags, getChatList } from '$lib/apis/chats';
+	import { getAllTags, getChatList } from '$api/chats';
 	import NotificationToast from '$features/app/NotificationToast';
 	import AppSidebar from '$features/app/AppSidebar.svelte';
-	import { chatCompletion } from '$lib/apis/openai';
+	import { chatCompletion } from '$api/openai';
 
 	setContext('i18n', i18n);
 

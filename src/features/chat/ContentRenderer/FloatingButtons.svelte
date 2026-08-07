@@ -7,7 +7,7 @@
 	import { getContext, tick } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { chatCompletion } from '$lib/apis/openai';
+	import { chatCompletion } from '$api/openai';
 
 	import ChatBubble from '$shared/icons/ChatBubble.svelte';
 	import LightBlub from '$shared/icons/LightBlub.svelte';

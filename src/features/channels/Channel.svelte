@@ -6,7 +6,7 @@
 	import { goto } from '$app/navigation';
 
 	import { chatId, showSidebar, socket, user } from '$shared/stores';
-	import { getChannelById, getChannelMessages, sendMessage } from '$lib/apis/channels';
+	import { getChannelById, getChannelMessages, sendMessage } from '$api/channels';
 
 	import Messages from './Messages.svelte';
 	import MessageInput from './MessageInput.svelte';

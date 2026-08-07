@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
-	import { getModels as _getModels, getToolServersData } from '$lib/apis';
+	import { getModels as _getModels, getToolServersData } from '$api';
 
 	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');

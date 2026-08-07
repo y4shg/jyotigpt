@@ -1,6 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { createNewTool, getTools } from '$lib/apis/tools';
+	import { createNewTool, getTools } from '$api/tools';
 	import ToolkitEditor from '$features/workspace/Tools/ToolkitEditor.svelte';
 	import { JYOTIGPT_VERSION } from '$shared/constants';
 	import { tools } from '$shared/stores';

@@ -7,7 +7,7 @@
 
 	import Modal from '$shared/components/Modal.svelte';
 	import AddMemoryModal from './AddMemoryModal.svelte';
-	import { deleteMemoriesByUserId, deleteMemoryById, getMemories } from '$lib/apis/memories';
+	import { deleteMemoriesByUserId, deleteMemoryById, getMemories } from '$api/memories';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import { error } from '@sveltejs/kit';
 	import EditMemoryModal from './EditMemoryModal.svelte';

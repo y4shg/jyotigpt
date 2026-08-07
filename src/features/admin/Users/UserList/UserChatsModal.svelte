@@ -7,7 +7,7 @@
 	const dispatch = createEventDispatcher();
 	dayjs.extend(localizedFormat);
 
-	import { getChatListByUserId, deleteChatById, getArchivedChatList } from '$lib/apis/chats';
+	import { getChatListByUserId, deleteChatById, getArchivedChatList } from '$api/chats';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { getBackendConfig } from '$lib/apis';
-	import { setDefaultPromptSuggestions } from '$lib/apis/configs';
+	import { getBackendConfig } from '$api';
+	import { setDefaultPromptSuggestions } from '$api/configs';
 	import { config, models, settings, user } from '$shared/stores';
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import Tooltip from '$shared/components/Tooltip.svelte';
-	import { updateUserInfo } from '$lib/apis/users';
+	import { updateUserInfo } from '$api/users';
 	import { getUserPosition } from '$shared/utils';
 	const dispatch = createEventDispatcher();
 

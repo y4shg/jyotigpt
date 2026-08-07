@@ -15,10 +15,10 @@
 		updateRerankingConfig,
 		getRAGConfig,
 		updateRAGConfig
-	} from '$lib/apis/retrieval';
+	} from '$api/retrieval';
 
-	import { reindexKnowledgeFiles } from '$lib/apis/knowledge';
-	import { deleteAllFiles } from '$lib/apis/files';
+	import { reindexKnowledgeFiles } from '$api/knowledge';
+	import { deleteAllFiles } from '$api/files';
 
 	import ResetUploadDirConfirmDialog from '$shared/components/ConfirmDialog.svelte';
 	import ResetVectorDBConfirmDialog from '$shared/components/ConfirmDialog.svelte';

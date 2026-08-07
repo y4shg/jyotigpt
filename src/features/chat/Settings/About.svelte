@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getVersionUpdates } from '$lib/apis';
-	import { getOllamaVersion } from '$lib/apis/ollama';
+	import { getVersionUpdates } from '$api';
+	import { getOllamaVersion } from '$api/ollama';
 	import { JYOTIGPT_BUILD_HASH, JYOTIGPT_VERSION } from '$shared/constants';
 	import { JYOTIGPT_NAME, config, showChangelog } from '$shared/stores';
 	import { compareVersion } from '$shared/utils';

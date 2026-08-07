@@ -52,7 +52,7 @@
 		processDetails
 	} from '$shared/utils';
 
-	import { generateChatCompletion } from '$lib/apis/ollama';
+	import { generateChatCompletion } from '$api/ollama';
 	import {
 		addTagById,
 		createNewChat,
@@ -63,12 +63,12 @@
 		getChatList,
 		getTagsById,
 		updateChatById
-	} from '$lib/apis/chats';
-	import { generateOpenAIChatCompletion } from '$lib/apis/openai';
-	import { processWeb, processWebSearch, processYoutubeVideo } from '$lib/apis/retrieval';
-	import { createOpenAITextStream } from '$lib/apis/streaming';
-	import { queryMemory } from '$lib/apis/memories';
-	import { getAndUpdateUserLocation, getUserSettings } from '$lib/apis/users';
+	} from '$api/chats';
+	import { generateOpenAIChatCompletion } from '$api/openai';
+	import { processWeb, processWebSearch, processYoutubeVideo } from '$api/retrieval';
+	import { createOpenAITextStream } from '$api/streaming';
+	import { queryMemory } from '$api/memories';
+	import { getAndUpdateUserLocation, getUserSettings } from '$api/users';
 	import {
 		chatCompleted,
 		generateQueries,
@@ -76,8 +76,8 @@
 		generateMoACompletion,
 		stopTask,
 		getTaskIdsByChatId
-	} from '$lib/apis';
-	import { getTools } from '$lib/apis/tools';
+	} from '$api';
+	import { getTools } from '$api/tools';
 	import { startTypingHaptic } from '$shared/utils/responseHaptics';
 
 	import Banner from '$shared/components/Banner.svelte';

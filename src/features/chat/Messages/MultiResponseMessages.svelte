@@ -5,9 +5,9 @@
 
 	import { mobile, settings } from '$shared/stores';
 
-	import { generateMoACompletion } from '$lib/apis';
-	import { updateChatById } from '$lib/apis/chats';
-	import { createOpenAITextStream } from '$lib/apis/streaming';
+	import { generateMoACompletion } from '$api';
+	import { updateChatById } from '$api/chats';
+	import { createOpenAITextStream } from '$api/streaming';
 
 	import ResponseMessage from './ResponseMessage.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

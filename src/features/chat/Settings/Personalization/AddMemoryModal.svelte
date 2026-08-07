@@ -2,7 +2,7 @@
 	import { createEventDispatcher, getContext } from 'svelte';
 
 	import Modal from '$shared/components/Modal.svelte';
-	import { addNewMemory, updateMemoryById } from '$lib/apis/memories';
+	import { addNewMemory, updateMemoryById } from '$api/memories';
 	import { toast } from 'svelte-sonner';
 
 	const dispatch = createEventDispatcher();

@@ -10,9 +10,9 @@
 	import ActionsSelector from '$features/workspace/Models/ActionsSelector.svelte';
 	import Capabilities from '$features/workspace/Models/Capabilities.svelte';
 	import Textarea from '$shared/components/Textarea.svelte';
-	import { getTools } from '$lib/apis/tools';
-	import { getFunctions } from '$lib/apis/functions';
-	import { getKnowledgeBases } from '$lib/apis/knowledge';
+	import { getTools } from '$api/tools';
+	import { getFunctions } from '$api/functions';
+	import { getKnowledgeBases } from '$api/knowledge';
 	import AccessControl from '../common/AccessControl.svelte';
 	import { stringify } from 'postcss';
 	import { toast } from 'svelte-sonner';

@@ -12,7 +12,7 @@
 	import CodeEditor from '$shared/components/CodeEditor.svelte';
 	import SvgPanZoom from '$shared/components/SVGPanZoom.svelte';
 	import { config } from '$shared/stores';
-	import { executeCode } from '$lib/apis/utils';
+	import { executeCode } from '$api/utils';
 	import { toast } from 'svelte-sonner';
 	import ChevronUp from '$shared/icons/ChevronUp.svelte';
 	import ChevronUpDown from '$shared/icons/ChevronUpDown.svelte';

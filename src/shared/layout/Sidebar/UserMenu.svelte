@@ -8,7 +8,7 @@
 	import { showSettings, activeUserIds, USAGE_POOL, mobile, showSidebar, user } from '$shared/stores';
 	import { fade, slide } from 'svelte/transition';
 	import Tooltip from '$shared/components/Tooltip.svelte';
-	import { userSignOut } from '$lib/apis/auths';
+	import { userSignOut } from '$api/auths';
 	import { hapticTrigger } from '$shared/utils/haptics';
 
 	const i18n = getContext('i18n');

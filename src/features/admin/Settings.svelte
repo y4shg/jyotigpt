@@ -3,7 +3,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import { config } from '$shared/stores';
-	import { getBackendConfig } from '$lib/apis';
+	import { getBackendConfig } from '$api';
 	import Database from './Settings/Database.svelte';
 
 	import General from './Settings/General.svelte';

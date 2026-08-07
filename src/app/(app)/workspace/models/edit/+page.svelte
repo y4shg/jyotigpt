@@ -8,9 +8,9 @@
 	import { page } from '$app/stores';
 	import { config, models, settings } from '$shared/stores';
 
-	import { getModelById, updateModelById } from '$lib/apis/models';
+	import { getModelById, updateModelById } from '$api/models';
 
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import ModelEditor from '$features/workspace/Models/ModelEditor.svelte';
 
 	let model = null;

@@ -14,7 +14,7 @@
 		getKnowledgeBases,
 		deleteKnowledgeById,
 		getKnowledgeBaseList
-	} from '$lib/apis/knowledge';
+	} from '$api/knowledge';
 	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import { goto } from '$app/navigation';

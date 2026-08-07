@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, createEventDispatcher, onMount } from 'svelte';
-	import { createNewChannel, deleteChannelById } from '$lib/apis/channels';
+	import { createNewChannel, deleteChannelById } from '$api/channels';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import AccessControl from '$features/workspace/common/AccessControl.svelte';

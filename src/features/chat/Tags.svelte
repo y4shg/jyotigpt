@@ -7,7 +7,7 @@
 		getChatListByTagName,
 		getTagsById,
 		updateChatById
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 	import {
 		tags as _tags,
 		chats,

@@ -11,7 +11,7 @@
 	import { page } from '$app/stores';
 	import { mobile, showSidebar, knowledge as _knowledge, config, user } from '$shared/stores';
 
-	import { updateFileDataContentById, uploadFile, deleteFileById, getFileById } from '$lib/apis/files';
+	import { updateFileDataContentById, uploadFile, deleteFileById, getFileById } from '$api/files';
 	import {
 		addFileToKnowledgeById,
 		getKnowledgeById,
@@ -20,11 +20,11 @@
 		resetKnowledgeById,
 		updateFileFromKnowledgeById,
 		updateKnowledgeById
-	} from '$lib/apis/knowledge';
+	} from '$api/knowledge';
 
-	import { transcribeAudio } from '$lib/apis/audio';
+	import { transcribeAudio } from '$api/audio';
 	import { blobToFile } from '$shared/utils';
-	import { processFile } from '$lib/apis/retrieval';
+	import { processFile } from '$api/retrieval';
 
 	import Spinner from '$shared/components/Spinner.svelte';
 	import Files from './KnowledgeBase/Files.svelte';

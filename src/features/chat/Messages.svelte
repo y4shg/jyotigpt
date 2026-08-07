@@ -13,7 +13,7 @@
 	const dispatch = createEventDispatcher();
 
 	import { toast } from 'svelte-sonner';
-	import { getChatList, updateChatById } from '$lib/apis/chats';
+	import { getChatList, updateChatById } from '$api/chats';
 	import { copyToClipboard, extractCurlyBraceWords } from '$shared/utils';
 
 	import Message from './Messages/Message.svelte';

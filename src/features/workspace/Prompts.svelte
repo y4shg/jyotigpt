@@ -13,7 +13,7 @@
 		deletePromptByCommand,
 		getPrompts,
 		getPromptList
-	} from '$lib/apis/prompts';
+	} from '$api/prompts';
 
 	import PromptMenu from './Prompts/PromptMenu.svelte';
 	import EllipsisHorizontal from '$shared/icons/EllipsisHorizontal.svelte';

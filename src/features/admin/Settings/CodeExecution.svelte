@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { onMount, getContext } from 'svelte';
-	import { getCodeExecutionConfig, setCodeExecutionConfig } from '$lib/apis/configs';
+	import { getCodeExecutionConfig, setCodeExecutionConfig } from '$api/configs';
 
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 

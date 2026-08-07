@@ -12,7 +12,7 @@
 	} from '$shared/constants';
 	import { JYOTIGPT_NAME, config, user, models, settings } from '$shared/stores';
 
-	import { chatCompletion, generateOpenAIChatCompletion } from '$lib/apis/openai';
+	import { chatCompletion, generateOpenAIChatCompletion } from '$api/openai';
 
 	import { splitStream } from '$shared/utils';
 	import Collapsible from '$shared/components/Collapsible.svelte';

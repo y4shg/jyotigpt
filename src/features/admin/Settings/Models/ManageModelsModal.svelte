@@ -9,7 +9,7 @@
 
 	import Modal from '$shared/components/Modal.svelte';
 	import ManageOllama from './Manage/ManageOllama.svelte';
-	import { getOllamaConfig } from '$lib/apis/ollama';
+	import { getOllamaConfig } from '$api/ollama';
 	import Spinner from '$shared/components/Spinner.svelte';
 	import ManageMultipleOllama from './Manage/ManageMultipleOllama.svelte';
 

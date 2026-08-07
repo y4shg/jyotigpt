@@ -2,8 +2,8 @@
 	import { getContext, tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { config, models, settings, user } from '$shared/stores';
-	import { updateUserSettings } from '$lib/apis/users';
-	import { getModels as _getModels } from '$lib/apis';
+	import { updateUserSettings } from '$api/users';
+	import { getModels as _getModels } from '$api';
 	import { hapticTrigger } from '$shared/utils/haptics';
 	import { goto } from '$app/navigation';
 

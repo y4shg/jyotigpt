@@ -6,13 +6,13 @@
 	const dispatch = createEventDispatcher();
 
 	import { models } from '$shared/stores';
-	import { deleteAllModels } from '$lib/apis/models';
+	import { deleteAllModels } from '$api/models';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import ConfirmDialog from '$shared/components/ConfirmDialog.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import ModelList from './ModelList.svelte';
-	import { getModelsConfig, setModelsConfig } from '$lib/apis/configs';
+	import { getModelsConfig, setModelsConfig } from '$api/configs';
 	import Spinner from '$shared/components/Spinner.svelte';
 	import Minus from '$shared/icons/Minus.svelte';
 	import Plus from '$shared/icons/Plus.svelte';

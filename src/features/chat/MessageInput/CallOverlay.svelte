@@ -5,8 +5,8 @@
 	const dispatch = createEventDispatcher();
 
 	import { blobToFile } from '$shared/utils';
-	import { generateEmoji } from '$lib/apis';
-	import { synthesizeOpenAISpeech, transcribeAudio } from '$lib/apis/audio';
+	import { generateEmoji } from '$api';
+	import { synthesizeOpenAISpeech, transcribeAudio } from '$api/audio';
 
 	import { toast } from 'svelte-sonner';
 

@@ -16,7 +16,7 @@
 		downloadPipeline,
 		deletePipeline,
 		uploadPipeline
-	} from '$lib/apis';
+	} from '$api';
 
 	import Spinner from '$shared/components/Spinner.svelte';
 	import Switch from '$shared/components/Switch.svelte';

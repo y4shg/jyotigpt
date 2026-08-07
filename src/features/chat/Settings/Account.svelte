@@ -3,10 +3,10 @@
 	import { onMount, getContext } from 'svelte';
 
 	import { user, config, settings } from '$shared/stores';
-	import { updateUserProfile, createAPIKey, getAPIKey, getSessionUser } from '$lib/apis/auths';
+	import { updateUserProfile, createAPIKey, getAPIKey, getSessionUser } from '$api/auths';
 
 	import UpdatePassword from './Account/UpdatePassword.svelte';
-	import { getGravatarUrl } from '$lib/apis/utils';
+	import { getGravatarUrl } from '$api/utils';
 	import { generateInitialsImage, canvasPixelTest } from '$shared/utils';
 	import { copyToClipboard } from '$shared/utils';
 	import Plus from '$shared/icons/Plus.svelte';

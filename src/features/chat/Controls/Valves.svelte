@@ -9,13 +9,13 @@
 		getUserValvesById as getToolUserValvesById,
 		updateUserValvesById as updateToolUserValvesById,
 		getTools
-	} from '$lib/apis/tools';
+	} from '$api/tools';
 	import {
 		getUserValvesSpecById as getFunctionUserValvesSpecById,
 		getUserValvesById as getFunctionUserValvesById,
 		updateUserValvesById as updateFunctionUserValvesById,
 		getFunctions
-	} from '$lib/apis/functions';
+	} from '$api/functions';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';

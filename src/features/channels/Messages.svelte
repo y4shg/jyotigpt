@@ -16,7 +16,7 @@
 	import Message from './Messages/Message.svelte';
 	import Loader from '$shared/components/Loader.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';
-	import { addReaction, deleteMessage, removeReaction, updateMessage } from '$lib/apis/channels';
+	import { addReaction, deleteMessage, removeReaction, updateMessage } from '$api/channels';
 
 	const i18n = getContext('i18n');
 

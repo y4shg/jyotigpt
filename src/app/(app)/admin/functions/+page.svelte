@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { functions } from '$shared/stores';
 
-	import { getFunctions } from '$lib/apis/functions';
+	import { getFunctions } from '$api/functions';
 	import Functions from '$features/admin/Functions.svelte';
 
 	onMount(async () => {

@@ -8,13 +8,13 @@
 	import { settings, chatId, JYOTIGPT_NAME, models, config } from '$shared/stores';
 	import { convertMessagesToHistory, createMessagesList } from '$shared/utils';
 
-	import { getChatByShareId, cloneSharedChatById } from '$lib/apis/chats';
+	import { getChatByShareId, cloneSharedChatById } from '$api/chats';
 
 	import Messages from '$features/chat/Messages.svelte';
 	import Navbar from '$shared/layout/Navbar.svelte';
 
-	import { getUserById, getUserSettings } from '$lib/apis/users';
-	import { getModels } from '$lib/apis';
+	import { getUserById, getUserSettings } from '$api/users';
+	import { getModels } from '$api';
 	import { toast } from 'svelte-sonner';
 	import localizedFormat from 'dayjs/plugin/localizedFormat';
 

@@ -4,7 +4,7 @@
 
 	const i18n = getContext('i18n');
 
-	import { deleteGroupById, updateGroupById } from '$lib/apis/groups';
+	import { deleteGroupById, updateGroupById } from '$api/groups';
 
 	import Pencil from '$shared/icons/Pencil.svelte';
 	import User from '$shared/icons/User.svelte';

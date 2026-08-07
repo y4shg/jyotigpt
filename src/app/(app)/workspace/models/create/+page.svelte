@@ -5,8 +5,8 @@
 	import { config, models, settings } from '$shared/stores';
 
 	import { onMount, tick, getContext } from 'svelte';
-	import { createNewModel, getModelById } from '$lib/apis/models';
-	import { getModels } from '$lib/apis';
+	import { createNewModel, getModelById } from '$api/models';
+	import { getModels } from '$api';
 
 	import ModelEditor from '$features/workspace/Models/ModelEditor.svelte';
 

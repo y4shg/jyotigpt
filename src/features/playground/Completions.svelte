@@ -6,7 +6,7 @@
 
 	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 	import { JYOTIGPT_NAME, config, user, models, settings, showSidebar } from '$shared/stores';
-	import { chatCompletion } from '$lib/apis/openai';
+	import { chatCompletion } from '$api/openai';
 
 	import { splitStream } from '$shared/utils';
 	import Selector from '$features/chat/ModelSelector/Selector.svelte';

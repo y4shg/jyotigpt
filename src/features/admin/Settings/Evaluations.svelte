@@ -4,8 +4,8 @@
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-	import { getModels } from '$lib/apis';
-	import { getConfig, updateConfig } from '$lib/apis/evaluations';
+	import { getModels } from '$api';
+	import { getConfig, updateConfig } from '$api/evaluations';
 
 	import Switch from '$shared/components/Switch.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';

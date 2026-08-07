@@ -1,6 +1,6 @@
 import { APP_NAME } from '$shared/constants';
 import { type Writable, writable } from 'svelte/store';
-import type { ModelConfig } from '$lib/apis';
+import type { ModelConfig } from '$api';
 import type { Banner } from '$shared/types';
 import type { Socket } from 'socket.io-client';
 

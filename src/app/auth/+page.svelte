@@ -5,8 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	import { getBackendConfig } from '$lib/apis';
-	import { ldapUserSignIn, getSessionUser, userSignIn, userSignUp } from '$lib/apis/auths';
+	import { getBackendConfig } from '$api';
+	import { ldapUserSignIn, getSessionUser, userSignIn, userSignUp } from '$api/auths';
 
 	import { JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$shared/constants';
 	import { JYOTIGPT_NAME, config, user, socket } from '$shared/stores';

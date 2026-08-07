@@ -12,7 +12,7 @@
 
 	import { toast } from 'svelte-sonner';
 
-	import { updateUserRole, getUsers, deleteUserById } from '$lib/apis/users';
+	import { updateUserRole, getUsers, deleteUserById } from '$api/users';
 
 	import Pagination from '$shared/components/Pagination.svelte';
 	import ChatBubbles from '$shared/icons/ChatBubbles.svelte';

@@ -9,7 +9,7 @@
 	import jsPDF from 'jspdf';
 	import html2canvas from 'html2canvas-pro';
 
-	import { downloadChatAsPDF } from '$lib/apis/utils';
+	import { downloadChatAsPDF } from '$api/utils';
 	import { copyToClipboard, createMessagesList } from '$shared/utils';
 
 	import {
@@ -28,7 +28,7 @@
 	import Clipboard from '$shared/icons/Clipboard.svelte';
 	import ChatPulser from '$shared/icons/ChatPulser.svelte';
 	import Cube from '$shared/icons/Cube.svelte';
-	import { getChatById } from '$lib/apis/chats';
+	import { getChatById } from '$api/chats';
 
 	const i18n = getContext('i18n');
 

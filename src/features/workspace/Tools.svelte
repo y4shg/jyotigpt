@@ -5,7 +5,7 @@
 
 	import { onMount, getContext } from 'svelte';
 	import { JYOTIGPT_NAME, config, prompts, tools as _tools, user } from '$shared/stores';
-	import { createNewPrompt, deletePromptByCommand, getPrompts } from '$lib/apis/prompts';
+	import { createNewPrompt, deletePromptByCommand, getPrompts } from '$api/prompts';
 	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import { goto } from '$app/navigation';
@@ -16,7 +16,7 @@
 		getToolById,
 		getToolList,
 		getTools
-	} from '$lib/apis/tools';
+	} from '$api/tools';
 	import ArrowDownTray from '$shared/icons/ArrowDownTray.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import ConfirmDialog from '$shared/components/ConfirmDialog.svelte';

@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { config, models, settings } from '$shared/stores';
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import Models from '$features/workspace/Models.svelte';
 
 	onMount(async () => {

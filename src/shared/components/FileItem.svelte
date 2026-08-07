@@ -25,7 +25,7 @@
 	export let type: string;
 	export let size: number;
 
-	import { deleteFileById } from '$lib/apis/files';
+	import { deleteFileById } from '$api/files';
 
 	let showModal = false;
 

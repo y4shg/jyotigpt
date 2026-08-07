@@ -40,8 +40,8 @@
 		getChatById,
 		updateChatFolderIdById,
 		importChat
-	} from '$lib/apis/chats';
-	import { createNewFolder, getFolders, updateFolderParentIdById } from '$lib/apis/folders';
+	} from '$api/chats';
+	import { createNewFolder, getFolders, updateFolderParentIdById } from '$api/folders';
 	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import ArchivedChatsModal from './Sidebar/ArchivedChatsModal.svelte';
@@ -55,7 +55,7 @@
 	import Plus from '../icons/Plus.svelte';
 	import Tooltip from '../components/Tooltip.svelte';
 	import Folders from './Sidebar/Folders.svelte';
-	import { getChannels, createNewChannel } from '$lib/apis/channels';
+	import { getChannels, createNewChannel } from '$api/channels';
 	import ChannelModal from './Sidebar/ChannelModal.svelte';
 	import ChannelItem from './Sidebar/ChannelItem.svelte';
 	import PencilSquare from '../icons/PencilSquare.svelte';

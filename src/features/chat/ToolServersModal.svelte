@@ -3,7 +3,7 @@
 	import { models, config, toolServers, tools } from '$shared/stores';
 
 	import { toast } from 'svelte-sonner';
-	import { deleteSharedChatById, getChatById, shareChatById } from '$lib/apis/chats';
+	import { deleteSharedChatById, getChatById, shareChatById } from '$api/chats';
 	import { copyToClipboard } from '$shared/utils';
 
 	import Modal from '$shared/components/Modal.svelte';

@@ -4,7 +4,7 @@
 	import { config, settings } from '$shared/stores';
 	import { blobToFile, calculateSHA256, extractCurlyBraceWords } from '$shared/utils';
 
-	import { transcribeAudio } from '$lib/apis/audio';
+	import { transcribeAudio } from '$api/audio';
 
 	const i18n = getContext('i18n');
 

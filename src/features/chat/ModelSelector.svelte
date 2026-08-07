@@ -6,7 +6,7 @@
 	import Selector from './ModelSelector/Selector.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 
-	import { updateUserSettings } from '$lib/apis/users';
+	import { updateUserSettings } from '$api/users';
 	const i18n = getContext('i18n');
 
 	export let selectedModels = [''];

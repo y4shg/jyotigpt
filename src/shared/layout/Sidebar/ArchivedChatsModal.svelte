@@ -15,7 +15,7 @@
 		deleteChatById,
 		getAllArchivedChats,
 		getArchivedChatList
-	} from '$lib/apis/chats';
+	} from '$api/chats';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

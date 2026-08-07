@@ -4,9 +4,9 @@
 	import { goto } from '$app/navigation';
 
 	import { config, functions, models, settings } from '$shared/stores';
-	import { createNewFunction, getFunctions } from '$lib/apis/functions';
+	import { createNewFunction, getFunctions } from '$api/functions';
 	import FunctionEditor from '$features/admin/Functions/FunctionEditor.svelte';
-	import { getModels } from '$lib/apis';
+	import { getModels } from '$api';
 	import { compareVersion, extractFrontmatter } from '$shared/utils';
 	import { JYOTIGPT_VERSION } from '$shared/constants';
 

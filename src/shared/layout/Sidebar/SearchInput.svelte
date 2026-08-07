@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAllTags } from '$lib/apis/chats';
+	import { getAllTags } from '$api/chats';
 	import { tags } from '$shared/stores';
 	import { getContext, createEventDispatcher, onMount, onDestroy, tick } from 'svelte';
 	import { fade } from 'svelte/transition';

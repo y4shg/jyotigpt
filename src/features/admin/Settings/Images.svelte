@@ -4,7 +4,7 @@
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	import { config as backendConfig, user } from '$shared/stores';
 
-	import { getBackendConfig } from '$lib/apis';
+	import { getBackendConfig } from '$api';
 	import {
 		getImageGenerationModels,
 		getImageGenerationConfig,
@@ -12,7 +12,7 @@
 		getConfig,
 		updateConfig,
 		verifyConfigUrl
-	} from '$lib/apis/images';
+	} from '$api/images';
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 	import Switch from '$shared/components/Switch.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
