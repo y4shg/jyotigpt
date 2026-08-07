@@ -307,3 +307,8 @@ dist
 cypress/videos
 cypress/screenshots
 .vscode/settings.json
+
+# Local AI-process files (owner directive 2026-08-07) — never commit these
+CLAUDE.md
+REWRITE.md
+.claude/
