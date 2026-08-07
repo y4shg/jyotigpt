@@ -1,21 +1,21 @@
+"""Chat persistence.
+
+Chats store the full conversation transcript in a JSON ``chat`` blob (title,
+history, current id, messages). Chats can be pinned, archived, tagged, placed
+in folders, and shared — a shared chat is a duplicate row keyed to
+``shared-<chat_id>`` with the original's ``share_id`` set to the copy's id.
+"""
+
 import logging
-import json
 import time
 import uuid
 from typing import Optional
 
-from jyotigpt.internal.db import Base, get_db
-from jyotigpt.models.tags import TagModel, Tag, Tags
 from jyotigpt.env import SRC_LOG_LEVELS
-
+from jyotigpt.internal.db import Base, get_db
+from jyotigpt.models.tags import TagModel, Tags
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Boolean, Column, String, Text, JSON
-from sqlalchemy import or_, func, select, and_, text
-from sqlalchemy.sql import exists
-
-####################
-# Chat DB Schema
-####################
+from sqlalchemy import JSON, BigInteger, Boolean, Column, String, Text, and_, or_, text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
@@ -48,8 +48,8 @@ class ChatModel(BaseModel):
     title: str
     chat: dict
 
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
+    created_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
 
     share_id: Optional[str] = None
     archived: bool = False
@@ -57,11 +57,6 @@ class ChatModel(BaseModel):
 
     meta: dict = {}
     folder_id: Optional[str] = None
-
-
-####################
-# Forms
-####################
 
 
 class ChatForm(BaseModel):
@@ -88,8 +83,8 @@ class ChatResponse(BaseModel):
     user_id: str
     title: str
     chat: dict
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
+    updated_at: int  # timestamp in epoch seconds
+    created_at: int  # timestamp in epoch seconds
     share_id: Optional[str] = None  # id of the chat to be shared
     archived: bool
     pinned: Optional[bool] = False
@@ -102,6 +97,11 @@ class ChatTitleIdResponse(BaseModel):
     title: str
     updated_at: int
     created_at: int
+
+
+def _shared_user_id(chat_id: str) -> str:
+    """The user_id assigned to a chat's shared copy."""
+    return f"shared-{chat_id}"
 
 
 class ChatTable:
@@ -268,16 +268,16 @@ class ChatTable:
 
     def insert_shared_chat_by_chat_id(self, chat_id: str) -> Optional[ChatModel]:
         with get_db() as db:
-            # Get the existing chat to share
+            # The existing chat to share.
             chat = db.get(Chat, chat_id)
-            # Check if the chat is already shared
+            # Already shared: return the existing copy.
             if chat.share_id:
                 return self.get_chat_by_id_and_user_id(chat.share_id, "shared")
-            # Create a new chat with the same data, but with a new ID
+            # Create a copy under the shared user id, with a fresh chat id.
             shared_chat = ChatModel(
                 **{
                     "id": str(uuid.uuid4()),
-                    "user_id": f"shared-{chat_id}",
+                    "user_id": _shared_user_id(chat_id),
                     "title": chat.title,
                     "chat": chat.chat,
                     "created_at": chat.created_at,
@@ -289,7 +289,7 @@ class ChatTable:
             db.commit()
             db.refresh(shared_result)
 
-            # Update the original chat with the share_id
+            # Record the copy's id on the original.
             result = (
                 db.query(Chat)
                 .filter_by(id=chat_id)
@@ -303,7 +303,7 @@ class ChatTable:
             with get_db() as db:
                 chat = db.get(Chat, chat_id)
                 shared_chat = (
-                    db.query(Chat).filter_by(user_id=f"shared-{chat_id}").first()
+                    db.query(Chat).filter_by(user_id=_shared_user_id(chat_id)).first()
                 )
 
                 if shared_chat is None:
@@ -323,7 +323,7 @@ class ChatTable:
     def delete_shared_chat_by_chat_id(self, chat_id: str) -> bool:
         try:
             with get_db() as db:
-                db.query(Chat).filter_by(user_id=f"shared-{chat_id}").delete()
+                db.query(Chat).filter_by(user_id=_shared_user_id(chat_id)).delete()
                 db.commit()
 
                 return True
@@ -384,7 +384,6 @@ class ChatTable:
                 db.query(Chat)
                 .filter_by(user_id=user_id, archived=True)
                 .order_by(Chat.updated_at.desc())
-                # .limit(limit).offset(skip)
                 .all()
             )
             return [ChatModel.model_validate(chat) for chat in all_chats]
@@ -436,7 +435,7 @@ class ChatTable:
 
             all_chats = query.all()
 
-            # result has to be destrctured from sqlalchemy `row` and mapped to a dict since the `ChatModel`is not the returned dataclass.
+            # Map the raw rows back into the response model.
             return [
                 ChatTitleIdResponse.model_validate(
                     {
@@ -473,8 +472,8 @@ class ChatTable:
     def get_chat_by_share_id(self, id: str) -> Optional[ChatModel]:
         try:
             with get_db() as db:
-                # it is possible that the shared link was deleted. hence,
-                # we check if the chat is still shared by checking if a chat with the share_id exists
+                # The shared copy may have been deleted; only return the chat if
+                # a row still carries the requested share_id.
                 chat = db.query(Chat).filter_by(share_id=id).first()
 
                 if chat:
@@ -495,9 +494,7 @@ class ChatTable:
     def get_chats(self, skip: int = 0, limit: int = 50) -> list[ChatModel]:
         with get_db() as db:
             all_chats = (
-                db.query(Chat)
-                # .limit(limit).offset(skip)
-                .order_by(Chat.updated_at.desc())
+                db.query(Chat).order_by(Chat.updated_at.desc())
             )
             return [ChatModel.model_validate(chat) for chat in all_chats]
 
@@ -536,8 +533,11 @@ class ChatTable:
         skip: int = 0,
         limit: int = 60,
     ) -> list[ChatModel]:
-        """
-        Filters chats based on a search query using Python, allowing pagination using skip and limit.
+        """Search a user's chats by title and message content, with tag filters.
+
+        ``tag:``-prefixed words in the query become required tag filters;
+        ``tag:none`` matches chats without any tags. Matching is delegated to
+        dialect-specific JSON queries (SQLite JSON1 / Postgres json_array).
         """
         search_text = search_text.lower().strip()
 
@@ -546,7 +546,6 @@ class ChatTable:
 
         search_text_words = search_text.split(" ")
 
-        # search_text might contain 'tag:tag_name' format so we need to extract the tag_name, split the search_text and remove the tags
         tag_ids = [
             word.replace("tag:", "").replace(" ", "_").lower()
             for word in search_text_words
@@ -567,20 +566,16 @@ class ChatTable:
 
             query = query.order_by(Chat.updated_at.desc())
 
-            # Check if the database dialect is either 'sqlite' or 'postgresql'
             dialect_name = db.bind.dialect.name
             if dialect_name == "sqlite":
-                # SQLite case: using JSON1 extension for JSON searching
                 query = query.filter(
                     (
-                        Chat.title.ilike(
-                            f"%{search_text}%"
-                        )  # Case-insensitive search in title
+                        Chat.title.ilike(f"%{search_text}%")
                         | text(
                             """
                             EXISTS (
-                                SELECT 1 
-                                FROM json_each(Chat.chat, '$.messages') AS message 
+                                SELECT 1
+                                FROM json_each(Chat.chat, '$.messages') AS message
                                 WHERE LOWER(message.value->>'content') LIKE '%' || :search_text || '%'
                             )
                             """
@@ -588,7 +583,7 @@ class ChatTable:
                     ).params(search_text=search_text)
                 )
 
-                # Check if there are any tags to filter, it should have all the tags
+                # If any tags were requested, every one of them must match.
                 if "none" in tag_ids:
                     query = query.filter(
                         text(
@@ -619,12 +614,9 @@ class ChatTable:
                     )
 
             elif dialect_name == "postgresql":
-                # PostgreSQL relies on proper JSON query for search
                 query = query.filter(
                     (
-                        Chat.title.ilike(
-                            f"%{search_text}%"
-                        )  # Case-insensitive search in title
+                        Chat.title.ilike(f"%{search_text}%")
                         | text(
                             """
                             EXISTS (
@@ -637,7 +629,6 @@ class ChatTable:
                     ).params(search_text=search_text)
                 )
 
-                # Check if there are any tags to filter, it should have all the tags
                 if "none" in tag_ids:
                     query = query.filter(
                         text(
@@ -671,12 +662,10 @@ class ChatTable:
                     f"Unsupported dialect: {db.bind.dialect.name}"
                 )
 
-            # Perform pagination at the SQL level
             all_chats = query.offset(skip).limit(limit).all()
 
             log.info(f"The number of chats: {len(all_chats)}")
 
-            # Validate and return chats
             return [ChatModel.model_validate(chat) for chat in all_chats]
 
     def get_chats_by_folder_id_and_user_id(
@@ -735,16 +724,13 @@ class ChatTable:
             query = db.query(Chat).filter_by(user_id=user_id)
             tag_id = tag_name.replace(" ", "_").lower()
 
-            log.info(f"DB dialect name: {db.bind.dialect.name}")
             if db.bind.dialect.name == "sqlite":
-                # SQLite JSON1 querying for tags within the meta JSON field
                 query = query.filter(
                     text(
                         f"EXISTS (SELECT 1 FROM json_each(Chat.meta, '$.tags') WHERE json_each.value = :tag_id)"
                     )
                 ).params(tag_id=tag_id)
             elif db.bind.dialect.name == "postgresql":
-                # PostgreSQL JSON query for tags within the meta JSON field (for `json` type)
                 query = query.filter(
                     text(
                         "EXISTS (SELECT 1 FROM json_array_elements_text(Chat.meta->'tags') elem WHERE elem = :tag_id)"
@@ -783,37 +769,30 @@ class ChatTable:
             return None
 
     def count_chats_by_tag_name_and_user_id(self, tag_name: str, user_id: str) -> int:
-        with get_db() as db:  # Assuming `get_db()` returns a session object
+        with get_db() as db:
             query = db.query(Chat).filter_by(user_id=user_id, archived=False)
 
-            # Normalize the tag_name for consistency
             tag_id = tag_name.replace(" ", "_").lower()
 
             if db.bind.dialect.name == "sqlite":
-                # SQLite JSON1 support for querying the tags inside the `meta` JSON field
                 query = query.filter(
                     text(
                         f"EXISTS (SELECT 1 FROM json_each(Chat.meta, '$.tags') WHERE json_each.value = :tag_id)"
                     )
                 ).params(tag_id=tag_id)
-
             elif db.bind.dialect.name == "postgresql":
-                # PostgreSQL JSONB support for querying the tags inside the `meta` JSON field
                 query = query.filter(
                     text(
                         "EXISTS (SELECT 1 FROM json_array_elements_text(Chat.meta->'tags') elem WHERE elem = :tag_id)"
                     )
                 ).params(tag_id=tag_id)
-
             else:
                 raise NotImplementedError(
                     f"Unsupported dialect: {db.bind.dialect.name}"
                 )
 
-            # Get the count of matching records
             count = query.count()
 
-            # Debugging output for inspection
             log.info(f"Count of chats for tag '{tag_name}': {count}")
 
             return count
@@ -899,7 +878,7 @@ class ChatTable:
         try:
             with get_db() as db:
                 chats_by_user = db.query(Chat).filter_by(user_id=user_id).all()
-                shared_chat_ids = [f"shared-{chat.id}" for chat in chats_by_user]
+                shared_chat_ids = [_shared_user_id(chat.id) for chat in chats_by_user]
 
                 db.query(Chat).filter(Chat.user_id.in_(shared_chat_ids)).delete()
                 db.commit()
