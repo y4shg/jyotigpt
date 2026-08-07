@@ -1,99 +1,69 @@
+"""Model registry persistence.
+
+A ``model`` row is either a *base* model (proxied to an upstream provider,
+``base_model_id`` is null) or an override that wraps one (it sets
+``base_model_id``). Overrides carry params, display meta, and optional
+access-control rules restricting read/write by group or user.
+"""
+
 import logging
 import time
 from typing import Optional
 
-from jyotigpt.internal.db import Base, JSONField, get_db
 from jyotigpt.env import SRC_LOG_LEVELS
-
-from jyotigpt.models.users import Users, UserResponse
-
-
-from pydantic import BaseModel, ConfigDict
-
-from sqlalchemy import or_, and_, func
-from sqlalchemy.dialects import postgresql, sqlite
-from sqlalchemy import BigInteger, Column, Text, JSON, Boolean
-
-
+from jyotigpt.internal.db import Base, JSONField, get_db
+from jyotigpt.models.users import UserResponse, Users
 from jyotigpt.utils.access_control import has_access
-
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import BigInteger, Boolean, Column, JSON, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
 
 
-####################
-# Models DB Schema
-####################
-
-
-# ModelParams is a model for the data stored in the params field of the Model table
+# Arbitrary extra keys are allowed in both params and meta.
 class ModelParams(BaseModel):
     model_config = ConfigDict(extra="allow")
-    pass
 
 
-# ModelMeta is a model for the data stored in the meta field of the Model table
 class ModelMeta(BaseModel):
     profile_image_url: Optional[str] = "/static/favicon.png"
 
     description: Optional[str] = None
-    """
-        User-facing description of the model.
-    """
+    """User-facing description of the model."""
 
     capabilities: Optional[dict] = None
 
     model_config = ConfigDict(extra="allow")
-
-    pass
 
 
 class Model(Base):
     __tablename__ = "model"
 
     id = Column(Text, primary_key=True)
-    """
-        The model's id as used in the API. If set to an existing model, it will override the model.
-    """
+    """The model's id as used in the API. Overrides an existing model if reused."""
     user_id = Column(Text)
 
     base_model_id = Column(Text, nullable=True)
-    """
-        An optional pointer to the actual model that should be used when proxying requests.
-    """
+    """Optional pointer to the actual upstream model to proxy requests to."""
 
     name = Column(Text)
-    """
-        The human-readable display name of the model.
-    """
+    """The human-readable display name of the model."""
 
     params = Column(JSONField)
-    """
-        Holds a JSON encoded blob of parameters, see `ModelParams`.
-    """
+    """JSON-encoded blob of parameters, see ``ModelParams``."""
 
     meta = Column(JSONField)
-    """
-        Holds a JSON encoded blob of metadata, see `ModelMeta`.
-    """
+    """JSON-encoded blob of metadata, see ``ModelMeta``."""
 
-    access_control = Column(JSON, nullable=True)  # Controls data access levels.
-    # Defines access control rules for this entry.
-    # - `None`: Public access, available to all users with the "user" role.
-    # - `{}`: Private access, restricted exclusively to the owner.
-    # - Custom permissions: Specific access control for reading and writing;
-    #   Can specify group or user-level restrictions:
-    #   {
-    #      "read": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      },
-    #      "write": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      }
-    #   }
+    access_control = Column(JSON, nullable=True)
+    """Data access rules for this entry.
+
+    - ``None``: public, available to every user with the "user" role.
+    - ``{}``: private, restricted to the owner.
+    - Custom permissions: per-group / per-user ``read`` and ``write`` rules,
+      e.g. ``{"read": {"group_ids": [...], "user_ids": [...]}}``.
+    """
 
     is_active = Column(Boolean, default=True)
 
@@ -117,11 +87,6 @@ class ModelModel(BaseModel):
     created_at: int  # timestamp in epoch
 
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class ModelUserResponse(ModelModel):
@@ -166,7 +131,7 @@ class ModelsTable:
                 else:
                     return None
         except Exception as e:
-            log.exception(f"Failed to insert a new model: {e}")
+            print(e)
             return None
 
     def get_all_models(self) -> list[ModelModel]:
@@ -234,7 +199,7 @@ class ModelsTable:
     def update_model_by_id(self, id: str, model: ModelForm) -> Optional[ModelModel]:
         try:
             with get_db() as db:
-                # update only the fields that are present in the model
+                # The id is immutable; update only the remaining fields.
                 result = (
                     db.query(Model)
                     .filter_by(id=id)
@@ -246,7 +211,8 @@ class ModelsTable:
                 db.refresh(model)
                 return ModelModel.model_validate(model)
         except Exception as e:
-            log.exception(f"Failed to update the model by id {id}: {e}")
+            print(e)
+
             return None
 
     def delete_model_by_id(self, id: str) -> bool:
