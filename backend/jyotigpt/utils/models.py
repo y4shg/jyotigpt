@@ -1,29 +1,25 @@
-import time
+"""Model aggregation and access control.
+
+Combines base models from the enabled backends (Ollama, OpenAI, function
+plugins), overlays custom/preset models, adds arena-evaluation models, and
+resolves action menus. Also enforces per-model access control.
+"""
+
 import logging
 import sys
+import time
 
-from aiocache import cached
 from fastapi import Request
 
-from jyotigpt.routers import openai, ollama
+from jyotigpt.config import DEFAULT_ARENA_MODEL
+from jyotigpt.env import GLOBAL_LOG_LEVEL, SRC_LOG_LEVELS
 from jyotigpt.functions import get_function_models
-
-
 from jyotigpt.models.functions import Functions
 from jyotigpt.models.models import Models
-
-
-from jyotigpt.utils.plugin import load_function_module_by_id
-from jyotigpt.utils.access_control import has_access
-
-
-from jyotigpt.config import (
-    DEFAULT_ARENA_MODEL,
-)
-
-from jyotigpt.env import SRC_LOG_LEVELS, GLOBAL_LOG_LEVEL
 from jyotigpt.models.users import UserModel
-
+from jyotigpt.routers import ollama, openai
+from jyotigpt.utils.access_control import has_access
+from jyotigpt.utils.plugin import load_function_module_by_id
 
 logging.basicConfig(stream=sys.stdout, level=GLOBAL_LOG_LEVEL)
 log = logging.getLogger(__name__)
@@ -31,6 +27,7 @@ log.setLevel(SRC_LOG_LEVELS["MAIN"])
 
 
 async def get_all_base_models(request: Request, user: UserModel = None):
+    """Return the raw model list from enabled backends plus function models."""
     function_models = []
     openai_models = []
     ollama_models = []
@@ -55,51 +52,43 @@ async def get_all_base_models(request: Request, user: UserModel = None):
         ]
 
     function_models = await get_function_models(request)
-    models = function_models + openai_models + ollama_models
+    return function_models + openai_models + ollama_models
 
-    return models
+
+def _build_arena_model(arena_config: dict) -> dict:
+    """Shape a single arena model entry."""
+    return {
+        "id": arena_config["id"],
+        "name": arena_config["name"],
+        "info": {"meta": arena_config["meta"]},
+        "object": "model",
+        "created": int(time.time()),
+        "owned_by": "arena",
+        "arena": True,
+    }
 
 
 async def get_all_models(request, user: UserModel = None):
+    """Return the fully-assembled model catalog for ``user``.
+
+    Appends arena models when enabled, merges custom/preset models over
+    their base models (adding new entries for derived models), and resolves
+    each model's action list from its action ids.
+    """
     models = await get_all_base_models(request, user=user)
 
-    # If there are no models, return an empty list
     if len(models) == 0:
         return []
 
-    # Add arena models
     if request.app.state.config.ENABLE_EVALUATION_ARENA_MODELS:
         arena_models = []
         if len(request.app.state.config.EVALUATION_ARENA_MODELS) > 0:
             arena_models = [
-                {
-                    "id": model["id"],
-                    "name": model["name"],
-                    "info": {
-                        "meta": model["meta"],
-                    },
-                    "object": "model",
-                    "created": int(time.time()),
-                    "owned_by": "arena",
-                    "arena": True,
-                }
+                _build_arena_model(model)
                 for model in request.app.state.config.EVALUATION_ARENA_MODELS
             ]
         else:
-            # Add default arena model
-            arena_models = [
-                {
-                    "id": DEFAULT_ARENA_MODEL["id"],
-                    "name": DEFAULT_ARENA_MODEL["name"],
-                    "info": {
-                        "meta": DEFAULT_ARENA_MODEL["meta"],
-                    },
-                    "object": "model",
-                    "created": int(time.time()),
-                    "owned_by": "arena",
-                    "arena": True,
-                }
-            ]
+            arena_models = [_build_arena_model(DEFAULT_ARENA_MODEL)]
         models = models + arena_models
 
     global_action_ids = [
@@ -114,13 +103,12 @@ async def get_all_models(request, user: UserModel = None):
     for custom_model in custom_models:
         if custom_model.base_model_id is None:
             for model in models:
-                if custom_model.id == model["id"] or (
-                    model.get("owned_by") == "ollama"
-                    and custom_model.id
-                    == model["id"].split(":")[
-                        0
-                    ]  # Ollama may return model ids in different formats (e.g., 'llama3' vs. 'llama3:7b')
-                ):
+                base_id_matches = (
+                    custom_model.id == model["id"]
+                    or model.get("owned_by") == "ollama"
+                    and custom_model.id == model["id"].split(":")[0]
+                )
+                if base_id_matches:
                     if custom_model.is_active:
                         model["name"] = custom_model.name
                         model["info"] = custom_model.model_dump()
@@ -171,9 +159,13 @@ async def get_all_models(request, user: UserModel = None):
                 }
             )
 
-    # Process action_ids to get the actions
     def get_action_items_from_module(function, module):
-        actions = []
+        """Map a function's actions (or the function itself) to menu items.
+
+        When the module exposes an ``actions`` list each entry becomes an
+        item keyed as ``<function id>.<action id>``; otherwise a single item
+        is derived from the function's metadata.
+        """
         if hasattr(module, "actions"):
             actions = module.actions
             return [
@@ -187,20 +179,23 @@ async def get_all_models(request, user: UserModel = None):
                 }
                 for action in actions
             ]
-        else:
-            return [
-                {
-                    "id": function.id,
-                    "name": function.name,
-                    "description": function.meta.description,
-                    "icon_url": function.meta.manifest.get("icon_url", None),
-                }
-            ]
+        return [
+            {
+                "id": function.id,
+                "name": function.name,
+                "description": function.meta.description,
+                "icon_url": function.meta.manifest.get("icon_url", None),
+            }
+        ]
 
-    def get_function_module_by_id(function_id):
-        if function_id in request.app.state.FUNCTIONS:
-            function_module = request.app.state.FUNCTIONS[function_id]
-        else:
+    def load_function_module(function_id):
+        """Ensure the function's module is loaded and cached.
+
+        Mirrors the historical behavior: the module is loaded purely for its
+        side effect of caching in ``request.app.state.FUNCTIONS``; the
+        action items are derived from function metadata, not the module.
+        """
+        if function_id not in request.app.state.FUNCTIONS:
             function_module, _, _ = load_function_module_by_id(function_id)
             request.app.state.FUNCTIONS[function_id] = function_module
 
@@ -217,10 +212,11 @@ async def get_all_models(request, user: UserModel = None):
             if action_function is None:
                 raise Exception(f"Action not found: {action_id}")
 
-            function_module = get_function_module_by_id(action_id)
+            function_module = load_function_module(action_id)
             model["actions"].extend(
                 get_action_items_from_module(action_function, function_module)
             )
+
     log.debug(f"get_all_models() returned {len(models)} models")
 
     request.app.state.MODELS = {model["id"]: model for model in models}
@@ -228,6 +224,11 @@ async def get_all_models(request, user: UserModel = None):
 
 
 def check_model_access(user, model):
+    """Raise if ``user`` may not read ``model``.
+
+    Arena models are checked against their metadata access control; other
+    models are checked against the stored custom model record.
+    """
     if model.get("arena"):
         if not has_access(
             user.id,
