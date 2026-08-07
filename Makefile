@@ -8,10 +8,6 @@ endif
 install:
 	$(DOCKER_COMPOSE) up -d
 
-remove:
-	@chmod +x confirm_remove.sh
-	@./confirm_remove.sh
-
 start:
 	$(DOCKER_COMPOSE) start
 startAndBuild: 
@@ -19,15 +15,4 @@ startAndBuild:
 
 stop:
 	$(DOCKER_COMPOSE) stop
-
-update:
-	# Calls the LLM update script
-	chmod +x update_ollama_models.sh
-	@./update_ollama_models.sh
-	@git pull
-	$(DOCKER_COMPOSE) down
-	# Make sure the ollama-jyotigpt container is stopped before rebuilding
-	@docker stop jyotigpt || true
-	$(DOCKER_COMPOSE) up --build -d
-	$(DOCKER_COMPOSE) start
 
