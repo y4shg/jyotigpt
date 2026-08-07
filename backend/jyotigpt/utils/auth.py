@@ -14,11 +14,11 @@ import uuid
 from datetime import datetime, timedelta
 from typing import Optional, Union
 
+import bcrypt
 import jwt
 import requests
 from fastapi import BackgroundTasks, Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from passlib.context import CryptContext
 from pytz import UTC
 
 from jyotigpt.constants import ERROR_MESSAGES
@@ -30,9 +30,6 @@ from jyotigpt.env import (
 )
 from jyotigpt.models.users import Users
 
-# passlib emits noisy warnings about bcrypt backend version probing; silence them.
-logging.getLogger("passlib").setLevel(logging.ERROR)
-
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["OAUTH"])
 
@@ -40,7 +37,6 @@ SESSION_SECRET = JYOTIGPT_SECRET_KEY
 ALGORITHM = "HS256"
 
 bearer_security = HTTPBearer(auto_error=False)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 ##############
@@ -130,16 +126,30 @@ def verify_password(plain_password, hashed_password):
     """Verify a plaintext password against its bcrypt hash.
 
     Returns None (not False) when no hash is supplied, matching callers that
-    distinguish "no credential on record" from "credential mismatch".
+    distinguish "no credential on record" from "credential mismatch". A
+    malformed stored hash is treated as a mismatch rather than an error.
     """
     if not hashed_password:
         return None
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return bcrypt.checkpw(
+            plain_password.encode("utf-8")[:72], hashed_password.encode("utf-8")
+        )
+    except (TypeError, ValueError):
+        return False
 
 
 def get_password_hash(password):
-    """Return a bcrypt hash for ``password``."""
-    return pwd_context.hash(password)
+    """Return a bcrypt hash for ``password``.
+
+    Passwords longer than 72 bytes are truncated to 72 bytes before hashing,
+    bcrypt's effective input limit. Modern bcrypt rejects oversized secrets
+    instead of truncating them, so the truncation is done here explicitly to
+    keep the historical behavior.
+    """
+    return bcrypt.hashpw(
+        password.encode("utf-8")[:72], bcrypt.gensalt()
+    ).decode("utf-8")
 
 
 def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
