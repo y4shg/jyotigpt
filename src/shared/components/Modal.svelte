@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	export let show = true;
 	export let size = 'md';

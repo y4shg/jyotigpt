@@ -7,9 +7,9 @@
 	const { saveAs } = fileSaver;
 
 	import { marked, type Token } from 'marked';
-	import { unescapeHtml } from '$lib/utils';
+	import { unescapeHtml } from '$shared/utils';
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import CodeBlock from '$features/chat/Messages/CodeBlock.svelte';
 	import MarkdownInlineTokens from '$features/chat/Messages/Markdown/MarkdownInlineTokens.svelte';
@@ -20,7 +20,7 @@
 	import ArrowDownTray from '$shared/icons/ArrowDownTray.svelte';
 
 	import Source from './Source.svelte';
-	import { settings } from '$lib/stores';
+	import { settings } from '$shared/stores';
 
 	export let id: string;
 	export let tokens: Token[];

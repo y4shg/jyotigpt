@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Banner } from '$lib/types';
+	import type { Banner } from '$shared/types';
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import DOMPurify from 'dompurify';

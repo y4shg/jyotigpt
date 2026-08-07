@@ -4,7 +4,7 @@
 	const dispatch = createEventDispatcher();
 
 	import Modal from '$shared/components/Modal.svelte';
-	import { models } from '$lib/stores';
+	import { models } from '$shared/stores';
 	import Plus from '$shared/icons/Plus.svelte';
 	import Minus from '$shared/icons/Minus.svelte';
 	import PencilSolid from '$shared/icons/PencilSolid.svelte';

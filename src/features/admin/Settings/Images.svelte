@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
-	import { config as backendConfig, user } from '$lib/stores';
+	import { config as backendConfig, user } from '$shared/stores';
 
 	import { getBackendConfig } from '$lib/apis';
 	import {

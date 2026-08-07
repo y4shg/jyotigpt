@@ -3,9 +3,9 @@
 	import { toast } from 'svelte-sonner';
 	import { tick, getContext, onMount } from 'svelte';
 
-	import { models, settings } from '$lib/stores';
-	import { user as _user } from '$lib/stores';
-	import { copyToClipboard as _copyToClipboard, formatDate } from '$lib/utils';
+	import { models, settings } from '$shared/stores';
+	import { user as _user } from '$shared/stores';
+	import { copyToClipboard as _copyToClipboard, formatDate } from '$shared/utils';
 
 	import Name from './Name.svelte';
 	import ProfileImage from './ProfileImage.svelte';

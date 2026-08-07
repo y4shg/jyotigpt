@@ -7,7 +7,7 @@
 	import AccessControl from '../common/AccessControl.svelte';
 	import LockClosed from '$shared/icons/LockClosed.svelte';
 	import AccessControlModal from '../common/AccessControlModal.svelte';
-	import { user } from '$lib/stores';
+	import { user } from '$shared/stores';
 
 	export let onSubmit: Function;
 	export let edit = false;

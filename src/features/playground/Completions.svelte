@@ -4,11 +4,11 @@
 	import { goto } from '$app/navigation';
 	import { onMount, tick, getContext } from 'svelte';
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
-	import { JYOTIGPT_NAME, config, user, models, settings, showSidebar } from '$lib/stores';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
+	import { JYOTIGPT_NAME, config, user, models, settings, showSidebar } from '$shared/stores';
 	import { chatCompletion } from '$lib/apis/openai';
 
-	import { splitStream } from '$lib/utils';
+	import { splitStream } from '$shared/utils';
 	import Selector from '$features/chat/ModelSelector/Selector.svelte';
 	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 

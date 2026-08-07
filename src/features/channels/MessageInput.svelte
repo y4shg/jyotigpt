@@ -6,15 +6,15 @@
 
 	const i18n = getContext('i18n');
 
-	import { config, mobile, settings, socket } from '$lib/stores';
-	import { blobToFile, compressImage } from '$lib/utils';
+	import { config, mobile, settings, socket } from '$shared/stores';
+	import { blobToFile, compressImage } from '$shared/utils';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import RichTextInput from '$shared/components/RichTextInput.svelte';
 	import VoiceRecording from '../chat/MessageInput/VoiceRecording.svelte';
 	import InputMenu from './MessageInput/InputMenu.svelte';
 	import { uploadFile } from '$lib/apis/files';
-	import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 	import FileItem from '$shared/components/FileItem.svelte';
 	import Image from '$shared/components/Image.svelte';
 	import { transcribeAudio } from '$lib/apis/audio';

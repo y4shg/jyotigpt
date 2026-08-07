@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext } from 'svelte';
-	import { config } from '$lib/stores';
+	import { config } from '$shared/stores';
 
 	import Dropdown from '$shared/components/Dropdown.svelte';
 	import GarbageBin from '$shared/icons/GarbageBin.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { settings, playingNotificationSound, isLastActiveTab } from '$lib/stores';
+	import { settings, playingNotificationSound, isLastActiveTab } from '$shared/stores';
 	import DOMPurify from 'dompurify';
 
 	import { marked } from 'marked';

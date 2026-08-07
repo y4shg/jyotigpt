@@ -7,9 +7,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
-	import { sanitizeResponseContent, extractCurlyBraceWords } from '$lib/utils';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { config, user, models as _models, temporaryChatEnabled } from '$shared/stores';
+	import { sanitizeResponseContent, extractCurlyBraceWords } from '$shared/utils';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Suggestions from './Suggestions.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

@@ -7,8 +7,8 @@
 
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
-	import { copyToClipboard, unescapeHtml } from '$lib/utils';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
+	import { copyToClipboard, unescapeHtml } from '$shared/utils';
 
 	import Image from '$shared/components/Image.svelte';
 	import KatexRenderer from './KatexRenderer.svelte';

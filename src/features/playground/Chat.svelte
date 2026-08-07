@@ -9,12 +9,12 @@
 		OPENAI_API_BASE_URL,
 		JYOTIGPT_API_BASE_URL,
 		JYOTIGPT_BASE_URL
-	} from '$lib/constants';
-	import { JYOTIGPT_NAME, config, user, models, settings } from '$lib/stores';
+	} from '$shared/constants';
+	import { JYOTIGPT_NAME, config, user, models, settings } from '$shared/stores';
 
 	import { chatCompletion, generateOpenAIChatCompletion } from '$lib/apis/openai';
 
-	import { splitStream } from '$lib/utils';
+	import { splitStream } from '$shared/utils';
 	import Collapsible from '$shared/components/Collapsible.svelte';
 
 	import Messages from '$features/playground/Chat/Messages.svelte';

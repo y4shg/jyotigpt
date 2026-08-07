@@ -25,7 +25,7 @@
 	import StarterKit from '@tiptap/starter-kit';
 	import { all, createLowlight } from 'lowlight';
 
-	import { PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
+	import { PASTED_TEXT_CHARACTER_LIMIT } from '$shared/constants';
 
 	export let oncompositionstart = (e) => {};
 	export let oncompositionend = (e) => {};

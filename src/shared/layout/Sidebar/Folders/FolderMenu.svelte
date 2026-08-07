@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext, createEventDispatcher } from 'svelte';
 
 	const i18n = getContext('i18n');

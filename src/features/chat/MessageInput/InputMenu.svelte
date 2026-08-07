@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext, onMount, tick } from 'svelte';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
-	import { config, user, tools as _tools, mobile } from '$lib/stores';
-	import { createPicker } from '$lib/utils/google-drive-picker';
+	import { config, user, tools as _tools, mobile } from '$shared/stores';
+	import { createPicker } from '$shared/utils/google-drive-picker';
 
 	import { getTools } from '$lib/apis/tools';
 

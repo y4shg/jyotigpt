@@ -3,7 +3,7 @@
 	import fileSaver from 'file-saver';
 	const { saveAs } = fileSaver;
 
-	import { JYOTIGPT_NAME, config, functions, models, settings } from '$lib/stores';
+	import { JYOTIGPT_NAME, config, functions, models, settings } from '$shared/stores';
 	import { onMount, getContext, tick } from 'svelte';
 
 	import { goto } from '$app/navigation';

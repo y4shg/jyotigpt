@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 
 	import { toast } from 'svelte-sonner';
-	import { config, models, settings } from '$lib/stores';
+	import { config, models, settings } from '$shared/stores';
 	import { getContext, onMount, tick } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType } from 'i18next';

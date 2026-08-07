@@ -2,7 +2,7 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	export let show = false;
 	export let side = 'bottom';

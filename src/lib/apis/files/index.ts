@@ -1,4 +1,4 @@
-import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
+import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 
 export const uploadFile = async (token: string, file: File) => {
 	const data = new FormData();

@@ -1,6 +1,6 @@
 <script>
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
-	import { JYOTIGPT_NAME, config, user, showSidebar } from '$lib/stores';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
+	import { JYOTIGPT_NAME, config, user, showSidebar } from '$shared/stores';
 	import { goto } from '$app/navigation';
 	import { onMount, getContext } from 'svelte';
 

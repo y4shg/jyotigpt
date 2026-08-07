@@ -3,7 +3,7 @@
 	import { marked } from 'marked';
 	import Fuse from 'fuse.js';
 
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
 
 	import ChevronDown from '$shared/icons/ChevronDown.svelte';
@@ -12,7 +12,7 @@
 
 	import { deleteModel, getOllamaVersion, pullModel } from '$lib/apis/ollama';
 
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import {
 		user,
@@ -22,9 +22,9 @@
 		temporaryChatEnabled,
 		settings,
 		config
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { toast } from 'svelte-sonner';
-	import { capitalizeFirstLetter, sanitizeResponseContent, splitStream } from '$lib/utils';
+	import { capitalizeFirstLetter, sanitizeResponseContent, splitStream } from '$shared/utils';
 	import { getModels } from '$lib/apis';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';

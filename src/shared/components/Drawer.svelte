@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { fade, fly, slide } from 'svelte/transition';
-	import { isApp } from '$lib/stores';
+	import { isApp } from '$shared/stores';
 
 	export let show = false;
 	export let className = '';

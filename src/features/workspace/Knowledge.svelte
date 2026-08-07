@@ -9,13 +9,13 @@
 	import { onMount, getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_NAME, knowledge } from '$lib/stores';
+	import { JYOTIGPT_NAME, knowledge } from '$shared/stores';
 	import {
 		getKnowledgeBases,
 		deleteKnowledgeById,
 		getKnowledgeBaseList
 	} from '$lib/apis/knowledge';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import { goto } from '$app/navigation';
 
@@ -25,7 +25,7 @@
 	import Search from '$shared/icons/Search.svelte';
 	import Plus from '$shared/icons/Plus.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';
-	import { capitalizeFirstLetter } from '$lib/utils';
+	import { capitalizeFirstLetter } from '$shared/utils';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 
 	let loaded = false;

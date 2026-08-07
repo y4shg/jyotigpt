@@ -1,4 +1,4 @@
-import WorkerInstance from '$lib/workers/kokoro.worker?worker';
+import WorkerInstance from '$shared/workers/kokoro.worker?worker';
 
 export class KokoroWorker {
 	private worker: Worker | null = null;

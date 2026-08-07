@@ -2,7 +2,7 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Marquee from '$shared/components/Marquee.svelte';
 	import SlideShow from '$shared/components/SlideShow.svelte';

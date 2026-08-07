@@ -2,14 +2,14 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { createEventDispatcher, getContext, onMount } from 'svelte';
 
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { goto } from '$app/navigation';
 	import ArchiveBox from '$shared/icons/ArchiveBox.svelte';
-	import { showSettings, activeUserIds, USAGE_POOL, mobile, showSidebar, user } from '$lib/stores';
+	import { showSettings, activeUserIds, USAGE_POOL, mobile, showSidebar, user } from '$shared/stores';
 	import { fade, slide } from 'svelte/transition';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import { userSignOut } from '$lib/apis/auths';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	const i18n = getContext('i18n');
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { models, showSettings, settings, user, mobile, config } from '$lib/stores';
+	import { models, showSettings, settings, user, mobile, config } from '$shared/stores';
 	import { onMount, tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 	import Selector from './ModelSelector/Selector.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 

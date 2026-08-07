@@ -1,4 +1,4 @@
-import PyodideWorker from '$lib/pyodide/pyodideKernel.worker?worker';
+import PyodideWorker from '$shared/pyodide/pyodideKernel.worker?worker';
 
 export type CellState = {
 	id: string;

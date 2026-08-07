@@ -3,8 +3,8 @@
 
 	import { DropdownMenu } from 'bits-ui';
 	import { onMount, getContext, createEventDispatcher } from 'svelte';
-	import { flyAndScale } from '$lib/utils/transitions';
-	import { knowledge } from '$lib/stores';
+	import { flyAndScale } from '$shared/utils/transitions';
+	import { knowledge } from '$shared/stores';
 	import Dropdown from '$shared/components/Dropdown.svelte';
 
 	const i18n = getContext('i18n');

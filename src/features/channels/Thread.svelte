@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { socket, user } from '$lib/stores';
+	import { socket, user } from '$shared/stores';
 
 	import { getChannelThreadMessages, sendMessage } from '$lib/apis/channels';
 

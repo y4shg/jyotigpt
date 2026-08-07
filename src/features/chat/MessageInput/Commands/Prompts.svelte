@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { prompts, settings, user } from '$lib/stores';
+	import { prompts, settings, user } from '$shared/stores';
 	import {
 		extractCurlyBraceWords,
 		getUserPosition,
@@ -8,7 +8,7 @@
 		getCurrentDateTime,
 		getUserTimezone,
 		getWeekday
-	} from '$lib/utils';
+	} from '$shared/utils';
 	import { tick, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 

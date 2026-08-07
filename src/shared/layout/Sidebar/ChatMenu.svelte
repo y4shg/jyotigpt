@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext, createEventDispatcher } from 'svelte';
 
 	import fileSaver from 'file-saver';
@@ -26,8 +26,8 @@
 		getChatPinnedStatusById,
 		toggleChatPinnedStatusById
 	} from '$lib/apis/chats';
-	import { chats, theme } from '$lib/stores';
-	import { createMessagesList } from '$lib/utils';
+	import { chats, theme } from '$shared/stores';
+	import { createMessagesList } from '$shared/utils';
 	import { downloadChatAsPDF } from '$lib/apis/utils';
 	import Download from '$shared/icons/Download.svelte';
 

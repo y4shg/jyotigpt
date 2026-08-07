@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showSidebar } from '$lib/stores';
+	import { showSidebar } from '$shared/stores';
 	import AddFilesPlaceholder from '$features/app/AddFilesPlaceholder';
 
 	export let show = false;

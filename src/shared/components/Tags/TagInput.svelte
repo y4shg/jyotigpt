@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, getContext } from 'svelte';
-	import { tags } from '$lib/stores';
+	import { tags } from '$shared/stores';
 	import { toast } from 'svelte-sonner';
 	const dispatch = createEventDispatcher();
 

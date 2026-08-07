@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext } from 'svelte';
 
 	import Dropdown from '$shared/components/Dropdown.svelte';
@@ -14,7 +14,7 @@
 	import ArrowDownTray from '$shared/icons/ArrowDownTray.svelte';
 	import ArrowUpCircle from '$shared/icons/ArrowUpCircle.svelte';
 
-	import { config } from '$lib/stores';
+	import { config } from '$shared/stores';
 
 	const i18n = getContext('i18n');
 

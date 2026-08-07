@@ -3,8 +3,8 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_NAME, models, MODEL_DOWNLOAD_POOL, user, config, settings } from '$lib/stores';
-	import { splitStream } from '$lib/utils';
+	import { JYOTIGPT_NAME, models, MODEL_DOWNLOAD_POOL, user, config, settings } from '$shared/stores';
+	import { splitStream } from '$shared/utils';
 
 	import {
 		createModel,

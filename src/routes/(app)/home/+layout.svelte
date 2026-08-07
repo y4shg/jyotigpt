@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, getContext } from 'svelte';
-	import { JYOTIGPT_NAME, showSidebar, functions } from '$lib/stores';
+	import { JYOTIGPT_NAME, showSidebar, functions } from '$shared/stores';
 	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 	import { page } from '$app/stores';
 

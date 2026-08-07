@@ -3,7 +3,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/stores';
+	import { user } from '$shared/stores';
 
 	import { getUsers } from '$lib/apis/users';
 

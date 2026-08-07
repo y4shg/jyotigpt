@@ -2,7 +2,7 @@
 	import fileSaver from 'file-saver';
 	const { saveAs } = fileSaver;
 
-	import { chats, user, settings, scrollPaginationEnabled, currentChatPage } from '$lib/stores';
+	import { chats, user, settings, scrollPaginationEnabled, currentChatPage } from '$shared/stores';
 
 	import {
 		archiveAllChats,
@@ -12,7 +12,7 @@
 		getAllUserChats,
 		getChatList
 	} from '$lib/apis/chats';
-	import { getImportOrigin, convertOpenAIChats } from '$lib/utils';
+	import { getImportOrigin, convertOpenAIChats } from '$shared/utils';
 	import { onMount, getContext } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { toast } from 'svelte-sonner';

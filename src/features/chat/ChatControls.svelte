@@ -4,7 +4,7 @@
 	import { Pane, PaneResizer } from 'paneforge';
 
 	import { onDestroy, onMount, tick } from 'svelte';
-	import { mobile, showControls, showCallOverlay, showOverview, showArtifacts } from '$lib/stores';
+	import { mobile, showControls, showCallOverlay, showOverview, showArtifacts } from '$shared/stores';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import Controls from './Controls/Controls.svelte';

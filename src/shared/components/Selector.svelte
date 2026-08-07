@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Select } from 'bits-ui';
 
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	import { createEventDispatcher } from 'svelte';
 	import ChevronDown from '../icons/ChevronDown.svelte';

@@ -6,7 +6,7 @@
 	const i18n = getContext('i18n');
 
 	import { page } from '$app/stores';
-	import { config, models, settings } from '$lib/stores';
+	import { config, models, settings } from '$shared/stores';
 
 	import { getModelById, updateModelById } from '$lib/apis/models';
 

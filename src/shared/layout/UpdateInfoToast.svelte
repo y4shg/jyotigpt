@@ -4,7 +4,7 @@
 	const dispatch = createEventDispatcher();
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_VERSION } from '$lib/constants';
+	import { JYOTIGPT_VERSION } from '$shared/constants';
 	import XMark from '../icons/XMark.svelte';
 
 	export let version = {

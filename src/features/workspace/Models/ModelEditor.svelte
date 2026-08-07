@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, getContext, tick } from 'svelte';
-	import { models, tools, functions, knowledge as knowledgeCollections, user } from '$lib/stores';
+	import { models, tools, functions, knowledge as knowledgeCollections, user } from '$shared/stores';
 
 	import AdvancedParams from '$features/chat/Settings/Advanced/AdvancedParams.svelte';
 	import Tags from '$shared/components/Tags.svelte';

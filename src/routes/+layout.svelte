@@ -1,7 +1,7 @@
 <script>
 	import { io } from 'socket.io-client';
 	import { spring } from 'svelte/motion';
-	import PyodideWorker from '$lib/workers/pyodide.worker?worker';
+	import PyodideWorker from '$shared/workers/pyodide.worker?worker';
 
 	let loadingProgress = spring(0, {
 		stiffness: 0.05
@@ -27,7 +27,7 @@
 		isApp,
 		appInfo,
 		toolServers
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Toaster, toast } from 'svelte-sonner';
@@ -40,9 +40,9 @@
 
 	import 'tippy.js/dist/tippy.css';
 
-	import { JYOTIGPT_BASE_URL, JYOTIGPT_HOSTNAME } from '$lib/constants';
-	import i18n, { initI18n, getLanguages, changeLanguage } from '$lib/i18n';
-	import { bestMatchingLanguage } from '$lib/utils';
+	import { JYOTIGPT_BASE_URL, JYOTIGPT_HOSTNAME } from '$shared/constants';
+	import i18n, { initI18n, getLanguages, changeLanguage } from '$shared/i18n';
+	import { bestMatchingLanguage } from '$shared/utils';
 	import { getAllTags, getChatList } from '$lib/apis/chats';
 	import NotificationToast from '$features/app/NotificationToast';
 	import AppSidebar from '$features/app/AppSidebar.svelte';

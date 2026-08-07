@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { v4 as uuidv4 } from 'uuid';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import { goto } from '$app/navigation';
 	import {
@@ -23,7 +23,7 @@
 		config,
 		isApp,
 		JYOTIGPT_NAME
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { onMount, getContext, tick, onDestroy } from 'svelte';
 
 	const i18n = getContext('i18n');
@@ -42,7 +42,7 @@
 		importChat
 	} from '$lib/apis/chats';
 	import { createNewFolder, getFolders, updateFolderParentIdById } from '$lib/apis/folders';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import ArchivedChatsModal from './Sidebar/ArchivedChatsModal.svelte';
 	import UserMenu from './Sidebar/UserMenu.svelte';

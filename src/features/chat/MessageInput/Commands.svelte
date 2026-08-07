@@ -4,9 +4,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	import { knowledge, prompts } from '$lib/stores';
+	import { knowledge, prompts } from '$shared/stores';
 
-	import { removeLastWordFromString } from '$lib/utils';
+	import { removeLastWordFromString } from '$shared/utils';
 	import { getPrompts } from '$lib/apis/prompts';
 	import { getKnowledgeBases } from '$lib/apis/knowledge';
 

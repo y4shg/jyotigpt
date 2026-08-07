@@ -10,7 +10,7 @@
 	import html2canvas from 'html2canvas-pro';
 
 	import { downloadChatAsPDF } from '$lib/apis/utils';
-	import { copyToClipboard, createMessagesList } from '$lib/utils';
+	import { copyToClipboard, createMessagesList } from '$shared/utils';
 
 	import {
 		showOverview,
@@ -19,8 +19,8 @@
 		mobile,
 		temporaryChatEnabled,
 		theme
-	} from '$lib/stores';
-	import { flyAndScale } from '$lib/utils/transitions';
+	} from '$shared/stores';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	import Dropdown from '$shared/components/Dropdown.svelte';
 	import Tags from '$features/chat/Tags.svelte';

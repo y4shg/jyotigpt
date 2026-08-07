@@ -4,14 +4,14 @@
 	import { v4 as uuidv4 } from 'uuid';
 
 	import { getContext, onMount, tick, onDestroy } from 'svelte';
-	import { copyToClipboard } from '$lib/utils';
+	import { copyToClipboard } from '$shared/utils';
 
 	import 'highlight.js/styles/github-dark.min.css';
 
-	import PyodideWorker from '$lib/workers/pyodide.worker?worker';
+	import PyodideWorker from '$shared/workers/pyodide.worker?worker';
 	import CodeEditor from '$shared/components/CodeEditor.svelte';
 	import SvgPanZoom from '$shared/components/SVGPanZoom.svelte';
-	import { config } from '$lib/stores';
+	import { config } from '$shared/stores';
 	import { executeCode } from '$lib/apis/utils';
 	import { toast } from 'svelte-sonner';
 	import ChevronUp from '$shared/icons/ChevronUp.svelte';

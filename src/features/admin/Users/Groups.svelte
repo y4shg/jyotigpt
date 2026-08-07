@@ -7,8 +7,8 @@
 	import { onMount, getContext } from 'svelte';
 	import { goto } from '$app/navigation';
 
-	import { JYOTIGPT_NAME, config, user, showSidebar, knowledge } from '$lib/stores';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_NAME, config, user, showSidebar, knowledge } from '$shared/stores';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Plus from '$shared/icons/Plus.svelte';

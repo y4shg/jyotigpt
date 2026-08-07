@@ -4,7 +4,7 @@
 	import { onMount, getContext } from 'svelte';
 	import { addUser } from '$lib/apis/auths';
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Modal from '$shared/components/Modal.svelte';
 

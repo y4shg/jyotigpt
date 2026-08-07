@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from 'svelte';
-	import { formatFileSize, getLineCount } from '$lib/utils';
-	import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
+	import { formatFileSize, getLineCount } from '$shared/utils';
+	import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 
 	const i18n = getContext('i18n');
 

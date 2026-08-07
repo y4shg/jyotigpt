@@ -13,9 +13,9 @@
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 	import Switch from '$shared/components/Switch.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
-	import { JYOTIGPT_BUILD_HASH, JYOTIGPT_VERSION } from '$lib/constants';
-	import { config, showChangelog } from '$lib/stores';
-	import { compareVersion } from '$lib/utils';
+	import { JYOTIGPT_BUILD_HASH, JYOTIGPT_VERSION } from '$shared/constants';
+	import { config, showChangelog } from '$shared/stores';
+	import { compareVersion } from '$shared/utils';
 	import { onMount, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 

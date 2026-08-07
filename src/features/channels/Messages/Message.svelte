@@ -13,9 +13,9 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext<Writable<i18nType>>('i18n');
 
-	import { settings, user, shortCodesToEmojis } from '$lib/stores';
+	import { settings, user, shortCodesToEmojis } from '$shared/stores';
 
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Markdown from '$features/chat/Messages/Markdown.svelte';
 	import ProfileImage from '$features/chat/Messages/ProfileImage.svelte';
@@ -32,7 +32,7 @@
 	import FaceSmile from '$shared/icons/FaceSmile.svelte';
 	import ReactionPicker from './Message/ReactionPicker.svelte';
 	import ChevronRight from '$shared/icons/ChevronRight.svelte';
-	import { formatDate } from '$lib/utils';
+	import { formatDate } from '$shared/utils';
 
 	export let message;
 	export let showUserProfile = true;

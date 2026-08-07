@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { config, models, settings, showCallOverlay, TTSWorker } from '$lib/stores';
+	import { config, models, settings, showCallOverlay, TTSWorker } from '$shared/stores';
 	import { onMount, tick, getContext, onDestroy, createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
-	import { blobToFile } from '$lib/utils';
+	import { blobToFile } from '$shared/utils';
 	import { generateEmoji } from '$lib/apis';
 	import { synthesizeOpenAISpeech, transcribeAudio } from '$lib/apis/audio';
 
@@ -12,7 +12,7 @@
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import VideoInputMenu from './CallOverlay/VideoInputMenu.svelte';
-	import { KokoroWorker } from '$lib/workers/KokoroWorker';
+	import { KokoroWorker } from '$shared/workers/KokoroWorker';
 
 	const i18n = getContext('i18n');
 

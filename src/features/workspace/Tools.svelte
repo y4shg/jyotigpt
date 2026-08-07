@@ -4,9 +4,9 @@
 	const { saveAs } = fileSaver;
 
 	import { onMount, getContext } from 'svelte';
-	import { JYOTIGPT_NAME, config, prompts, tools as _tools, user } from '$lib/stores';
+	import { JYOTIGPT_NAME, config, prompts, tools as _tools, user } from '$shared/stores';
 	import { createNewPrompt, deletePromptByCommand, getPrompts } from '$lib/apis/prompts';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import { goto } from '$app/navigation';
 	import {
@@ -31,7 +31,7 @@
 	import Plus from '$shared/icons/Plus.svelte';
 	import ChevronRight from '$shared/icons/ChevronRight.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';
-	import { capitalizeFirstLetter } from '$lib/utils';
+	import { capitalizeFirstLetter } from '$shared/utils';
 
 	const i18n = getContext('i18n');
 

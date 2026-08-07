@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 	import { toast } from 'svelte-sonner';
 	import { v4 as uuidv4 } from 'uuid';
-	import { createPicker, getAuthToken } from '$lib/utils/google-drive-picker';
-	import { pickAndDownloadFile } from '$lib/utils/onedrive-file-picker';
+	import { createPicker, getAuthToken } from '$shared/utils/google-drive-picker';
+	import { pickAndDownloadFile } from '$shared/utils/onedrive-file-picker';
 
 	import { onMount, tick, getContext, createEventDispatcher, onDestroy } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -20,20 +20,20 @@
 		user as _user,
 		showControls,
 		TTSWorker
-	} from '$lib/stores';
+	} from '$shared/stores';
 
 	import {
 		blobToFile,
 		compressImage,
 		createMessagesList,
 		extractCurlyBraceWords
-	} from '$lib/utils';
+	} from '$shared/utils';
 	import { transcribeAudio } from '$lib/apis/audio';
 	import { uploadFile } from '$lib/apis/files';
 	import { generateAutoCompletion } from '$lib/apis';
 	import { deleteFileById } from '$lib/apis/files';
 
-	import { JYOTIGPT_BASE_URL, JYOTIGPT_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL, JYOTIGPT_API_BASE_URL, PASTED_TEXT_CHARACTER_LIMIT } from '$shared/constants';
 
 	import InputMenu from './MessageInput/InputMenu.svelte';
 	import VoiceRecording from './MessageInput/VoiceRecording.svelte';
@@ -51,7 +51,7 @@
 	import PhotoSolid from '$shared/icons/PhotoSolid.svelte';
 	import Photo from '$shared/icons/Photo.svelte';
 	import CommandLine from '$shared/icons/CommandLine.svelte';
-	import { KokoroWorker } from '$lib/workers/KokoroWorker';
+	import { KokoroWorker } from '$shared/workers/KokoroWorker';
 	import ToolServersModal from './ToolServersModal.svelte';
 	import Wrench from '$shared/icons/Wrench.svelte';
 

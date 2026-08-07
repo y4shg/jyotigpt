@@ -4,9 +4,9 @@
 	const dispatch = createEventDispatcher();
 
 	import Markdown from './Markdown.svelte';
-	import { chatId, mobile, settings, showArtifacts, showControls, showOverview } from '$lib/stores';
+	import { chatId, mobile, settings, showArtifacts, showControls, showOverview } from '$shared/stores';
 	import FloatingButtons from '../ContentRenderer/FloatingButtons.svelte';
-	import { createMessagesList } from '$lib/utils';
+	import { createMessagesList } from '$shared/utils';
 
 	export let id;
 	export let content;

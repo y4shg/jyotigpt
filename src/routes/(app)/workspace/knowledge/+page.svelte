@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { knowledge } from '$lib/stores';
+	import { knowledge } from '$shared/stores';
 
 	import { getKnowledgeBases } from '$lib/apis/knowledge';
 	import Knowledge from '$features/workspace/Knowledge.svelte';

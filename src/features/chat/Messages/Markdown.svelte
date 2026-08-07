@@ -1,10 +1,10 @@
 <script>
 	import { marked } from 'marked';
-	import { replaceTokens, processResponseContent } from '$lib/utils';
-	import { user } from '$lib/stores';
+	import { replaceTokens, processResponseContent } from '$shared/utils';
+	import { user } from '$shared/stores';
 
-	import markedExtension from '$lib/utils/marked/extension';
-	import markedKatexExtension from '$lib/utils/marked/katex-extension';
+	import markedExtension from '$shared/utils/marked/extension';
+	import markedKatexExtension from '$shared/utils/marked/katex-extension';
 
 	import MarkdownTokens from './Markdown/MarkdownTokens.svelte';
 

@@ -5,7 +5,7 @@
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();
 
-	import { models } from '$lib/stores';
+	import { models } from '$shared/stores';
 	import { deleteAllModels } from '$lib/apis/models';
 
 	import Modal from '$shared/components/Modal.svelte';

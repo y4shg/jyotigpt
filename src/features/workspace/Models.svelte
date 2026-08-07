@@ -11,8 +11,8 @@
 	import { goto } from '$app/navigation';
 	const i18n = getContext('i18n');
 
-	import { JYOTIGPT_NAME, config, mobile, models as _models, settings, user } from '$lib/stores';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { JYOTIGPT_NAME, config, mobile, models as _models, settings, user } from '$shared/stores';
+	import { hapticTrigger } from '$shared/utils/haptics';
 	import {
 		createNewModel,
 		deleteModelById,
@@ -34,7 +34,7 @@
 	import ChevronRight from '$shared/icons/ChevronRight.svelte';
 	import Switch from '$shared/components/Switch.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';
-	import { capitalizeFirstLetter } from '$lib/utils';
+	import { capitalizeFirstLetter } from '$shared/utils';
 
 	let shiftKey = false;
 

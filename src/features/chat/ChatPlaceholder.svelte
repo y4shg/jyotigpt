@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 	import { marked } from 'marked';
 
-	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
+	import { config, user, models as _models, temporaryChatEnabled } from '$shared/stores';
 	import { onMount, getContext } from 'svelte';
 
 	import { blur, fade } from 'svelte/transition';
 
 	import Suggestions from './Suggestions.svelte';
-	import { sanitizeResponseContent } from '$lib/utils';
+	import { sanitizeResponseContent } from '$shared/utils';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import EyeSlash from '$shared/icons/EyeSlash.svelte';
 

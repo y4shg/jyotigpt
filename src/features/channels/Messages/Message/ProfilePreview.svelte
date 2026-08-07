@@ -2,9 +2,9 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { createEventDispatcher } from 'svelte';
 
-	import { flyAndScale } from '$lib/utils/transitions';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
-	import { activeUserIds } from '$lib/stores';
+	import { flyAndScale } from '$shared/utils/transitions';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
+	import { activeUserIds } from '$shared/stores';
 
 	export let side = 'right';
 	export let align = 'top';

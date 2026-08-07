@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
-	import { showArchivedChats, showSidebar, user } from '$lib/stores';
+	import { showArchivedChats, showSidebar, user } from '$shared/stores';
 
 	import { slide } from 'svelte/transition';
 	import { page } from '$app/stores';

@@ -9,7 +9,7 @@
 	import FileItem from '$shared/components/FileItem.svelte';
 	import Collapsible from '$shared/components/Collapsible.svelte';
 
-	import { user } from '$lib/stores';
+	import { user } from '$shared/stores';
 	export let models = [];
 	export let chatFiles = [];
 	export let params = {};

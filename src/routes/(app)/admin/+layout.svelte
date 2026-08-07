@@ -2,7 +2,7 @@
 	import { onMount, getContext } from 'svelte';
 	import { goto } from '$app/navigation';
 
-	import { JYOTIGPT_NAME, showSidebar, user } from '$lib/stores';
+	import { JYOTIGPT_NAME, showSidebar, user } from '$shared/stores';
 	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 	import { page } from '$app/stores';
 

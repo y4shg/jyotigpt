@@ -4,7 +4,7 @@
 	import { createEventDispatcher, getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { models } from '$lib/stores';
+	import { models } from '$shared/stores';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import EllipsisVertical from '$shared/icons/EllipsisVertical.svelte';
 

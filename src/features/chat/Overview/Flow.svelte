@@ -3,7 +3,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	import { theme } from '$lib/stores';
+	import { theme } from '$shared/stores';
 	import { Background, Controls, SvelteFlow, BackgroundVariant } from '@xyflow/svelte';
 
 	export let nodes;

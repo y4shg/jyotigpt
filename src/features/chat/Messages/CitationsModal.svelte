@@ -2,7 +2,7 @@
 	import { getContext, onMount, tick } from 'svelte';
 	import Modal from '$shared/components/Modal.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
-	import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 
 	const i18n = getContext('i18n');
 

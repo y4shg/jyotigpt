@@ -4,7 +4,7 @@
 	const i18n = getContext('i18n');
 
 	import { page } from '$app/stores';
-	import { mobile, showSidebar, user } from '$lib/stores';
+	import { mobile, showSidebar, user } from '$shared/stores';
 	import { updateChannelById } from '$lib/apis/channels';
 
 	import Cog6 from '$shared/icons/Cog6.svelte';

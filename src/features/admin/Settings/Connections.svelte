@@ -9,7 +9,7 @@
 	import { getModels as _getModels } from '$lib/apis';
 	import { getDirectConnectionsConfig, setDirectConnectionsConfig } from '$lib/apis/configs';
 
-	import { config, models, settings, user } from '$lib/stores';
+	import { config, models, settings, user } from '$shared/stores';
 
 	import Switch from '$shared/components/Switch.svelte';
 	import Spinner from '$shared/components/Spinner.svelte';

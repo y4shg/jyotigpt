@@ -4,9 +4,9 @@
 	import { getToolById, getTools, updateToolById } from '$lib/apis/tools';
 	import Spinner from '$shared/components/Spinner.svelte';
 	import ToolkitEditor from '$features/workspace/Tools/ToolkitEditor.svelte';
-	import { JYOTIGPT_VERSION } from '$lib/constants';
-	import { tools } from '$lib/stores';
-	import { compareVersion, extractFrontmatter } from '$lib/utils';
+	import { JYOTIGPT_VERSION } from '$shared/constants';
+	import { tools } from '$shared/stores';
+	import { compareVersion, extractFrontmatter } from '$shared/utils';
 	import { onMount, getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
 

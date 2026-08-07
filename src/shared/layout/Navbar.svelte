@@ -12,7 +12,7 @@
 		showSidebar,
 		temporaryChatEnabled,
 		user
-	} from '$lib/stores';
+	} from '$shared/stores';
 
 	import { slide } from 'svelte/transition';
 	import ShareChatModal from '$features/chat/ShareChatModal.svelte';

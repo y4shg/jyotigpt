@@ -2,9 +2,9 @@
 	import { onMount, getContext } from 'svelte';
 	import { Confetti } from 'svelte-confetti';
 
-	import { JYOTIGPT_NAME, config, settings } from '$lib/stores';
+	import { JYOTIGPT_NAME, config, settings } from '$shared/stores';
 
-	import { JYOTIGPT_VERSION } from '$lib/constants';
+	import { JYOTIGPT_VERSION } from '$shared/constants';
 	import { getChangelog } from '$lib/apis';
 
 	import Modal from '$shared/components/Modal.svelte';

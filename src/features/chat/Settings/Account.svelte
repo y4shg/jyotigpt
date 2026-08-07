@@ -2,13 +2,13 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount, getContext } from 'svelte';
 
-	import { user, config, settings } from '$lib/stores';
+	import { user, config, settings } from '$shared/stores';
 	import { updateUserProfile, createAPIKey, getAPIKey, getSessionUser } from '$lib/apis/auths';
 
 	import UpdatePassword from './Account/UpdatePassword.svelte';
 	import { getGravatarUrl } from '$lib/apis/utils';
-	import { generateInitialsImage, canvasPixelTest } from '$lib/utils';
-	import { copyToClipboard } from '$lib/utils';
+	import { generateInitialsImage, canvasPixelTest } from '$shared/utils';
+	import { copyToClipboard } from '$shared/utils';
 	import Plus from '$shared/icons/Plus.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';

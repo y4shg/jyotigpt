@@ -4,7 +4,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { tick, getContext } from 'svelte';
 
-	import { models } from '$lib/stores';
+	import { models } from '$shared/stores';
 
 	const i18n = getContext('i18n');
 

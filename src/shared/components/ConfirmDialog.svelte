@@ -4,7 +4,7 @@
 	const dispatch = createEventDispatcher();
 
 	import { fade } from 'svelte/transition';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	export let title = '';
 	export let message = '';

@@ -14,7 +14,7 @@
 		pinnedChats,
 		currentChatPage,
 		scrollPaginationEnabled
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();

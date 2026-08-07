@@ -1,5 +1,5 @@
-import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
-import { getTimeRange } from '$lib/utils';
+import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
+import { getTimeRange } from '$shared/utils';
 
 export const createNewChat = async (token: string, chat: object) => {
 	let error = null;

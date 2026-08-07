@@ -5,8 +5,8 @@
 
 	import dayjs from 'dayjs';
 
-	import { settings, chatId, JYOTIGPT_NAME, models, config } from '$lib/stores';
-	import { convertMessagesToHistory, createMessagesList } from '$lib/utils';
+	import { settings, chatId, JYOTIGPT_NAME, models, config } from '$shared/stores';
+	import { convertMessagesToHistory, createMessagesList } from '$shared/utils';
 
 	import { getChatByShareId, cloneSharedChatById } from '$lib/apis/chats';
 

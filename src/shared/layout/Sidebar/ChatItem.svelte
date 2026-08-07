@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { onMount, getContext, createEventDispatcher, tick, onDestroy } from 'svelte';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 	const i18n = getContext('i18n');
 
 	const dispatch = createEventDispatcher();
@@ -27,7 +27,7 @@
 		showSidebar,
 		currentChatPage,
 		tags
-	} from '$lib/stores';
+	} from '$shared/stores';
 
 	import ChatMenu from './ChatMenu.svelte';
 	import DeleteConfirmDialog from '$shared/components/ConfirmDialog.svelte';

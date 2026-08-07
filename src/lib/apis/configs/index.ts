@@ -1,5 +1,5 @@
-import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
-import type { Banner } from '$lib/types';
+import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
+import type { Banner } from '$shared/types';
 
 export const importConfig = async (token: string, config) => {
 	let error = null;

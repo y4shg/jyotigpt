@@ -2,8 +2,8 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { getContext } from 'svelte';
 
-	import { showSettings } from '$lib/stores';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { showSettings } from '$shared/stores';
+	import { flyAndScale } from '$shared/utils/transitions';
 
 	import Dropdown from '$shared/components/Dropdown.svelte';
 	import QuestionMarkCircle from '$shared/icons/QuestionMarkCircle.svelte';

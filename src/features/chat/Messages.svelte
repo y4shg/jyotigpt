@@ -8,13 +8,13 @@
 		mobile,
 		currentChatPage,
 		temporaryChatEnabled
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { tick, getContext, onMount, createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
 	import { toast } from 'svelte-sonner';
 	import { getChatList, updateChatById } from '$lib/apis/chats';
-	import { copyToClipboard, extractCurlyBraceWords } from '$lib/utils';
+	import { copyToClipboard, extractCurlyBraceWords } from '$shared/utils';
 
 	import Message from './Messages/Message.svelte';
 	import Loader from '$shared/components/Loader.svelte';

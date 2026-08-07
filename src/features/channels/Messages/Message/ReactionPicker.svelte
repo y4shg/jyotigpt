@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
-	import emojiGroups from '$lib/emoji-groups.json';
-	import emojiShortCodes from '$lib/emoji-shortcodes.json';
+	import { flyAndScale } from '$shared/utils/transitions';
+	import emojiGroups from '$shared/emoji-groups.json';
+	import emojiShortCodes from '$shared/emoji-shortcodes.json';
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import VirtualList from '@sveltejs/svelte-virtual-list';
 

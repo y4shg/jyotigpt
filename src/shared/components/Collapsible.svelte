@@ -5,7 +5,7 @@
 	import { getContext, createEventDispatcher } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import dayjs from '$lib/dayjs';
+	import dayjs from '$shared/dayjs';
 	import duration from 'dayjs/plugin/duration';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 

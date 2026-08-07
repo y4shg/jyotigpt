@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 	import ImagePreview from './ImagePreview.svelte';
 
 	export let src = '';

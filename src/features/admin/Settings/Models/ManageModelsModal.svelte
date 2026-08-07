@@ -5,7 +5,7 @@
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();
 
-	import { user } from '$lib/stores';
+	import { user } from '$shared/stores';
 
 	import Modal from '$shared/components/Modal.svelte';
 	import ManageOllama from './Manage/ManageOllama.svelte';

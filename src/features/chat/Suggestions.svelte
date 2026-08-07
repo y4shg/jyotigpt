@@ -2,8 +2,8 @@
 	import Fuse from 'fuse.js';
 	import Bolt from '$shared/icons/Bolt.svelte';
 	import { onMount, getContext, createEventDispatcher } from 'svelte';
-	import { JYOTIGPT_NAME } from '$lib/stores';
-	import { JYOTIGPT_VERSION } from '$lib/constants';
+	import { JYOTIGPT_NAME } from '$shared/stores';
+	import { JYOTIGPT_VERSION } from '$shared/constants';
 
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();

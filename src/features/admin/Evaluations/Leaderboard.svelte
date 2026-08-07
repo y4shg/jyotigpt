@@ -5,7 +5,7 @@
 	env.backends.onnx.wasm.wasmPaths = '/wasm/';
 
 	import { onMount, getContext } from 'svelte';
-	import { models } from '$lib/stores';
+	import { models } from '$shared/stores';
 
 	import Spinner from '$shared/components/Spinner.svelte';
 	import Tooltip from '$shared/components/Tooltip.svelte';

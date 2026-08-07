@@ -11,7 +11,7 @@
 	dayjs.extend(isYesterday);
 	import { tick, getContext, onMount, createEventDispatcher } from 'svelte';
 
-	import { settings, user } from '$lib/stores';
+	import { settings, user } from '$shared/stores';
 
 	import Message from './Messages/Message.svelte';
 	import Loader from '$shared/components/Loader.svelte';

@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { config, models, settings } from '$lib/stores';
+	import { config, models, settings } from '$shared/stores';
 	import { getModels } from '$lib/apis';
 	import Models from '$features/workspace/Models.svelte';
 

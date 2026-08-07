@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
-	import { config, models } from '$lib/stores';
+	import { config, models } from '$shared/stores';
 	import Tags from '$shared/components/Tags.svelte';
 
 	const i18n = getContext('i18n');

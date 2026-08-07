@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 	import { createEventDispatcher, tick, getContext, onMount, onDestroy } from 'svelte';
-	import { config, settings } from '$lib/stores';
-	import { blobToFile, calculateSHA256, extractCurlyBraceWords } from '$lib/utils';
+	import { config, settings } from '$shared/stores';
+	import { blobToFile, calculateSHA256, extractCurlyBraceWords } from '$shared/utils';
 
 	import { transcribeAudio } from '$lib/apis/audio';
 

@@ -10,11 +10,11 @@
 		getModels as _getModels,
 		getVoices as _getVoices
 	} from '$lib/apis/audio';
-	import { config, settings } from '$lib/stores';
+	import { config, settings } from '$shared/stores';
 
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 
-	import { TTS_RESPONSE_SPLIT } from '$lib/types';
+	import { TTS_RESPONSE_SPLIT } from '$shared/types';
 
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType } from 'i18next';

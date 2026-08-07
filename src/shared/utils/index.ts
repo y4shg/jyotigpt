@@ -12,12 +12,12 @@ dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 dayjs.extend(localizedFormat);
 
-import { JYOTIGPT_BASE_URL } from '$lib/constants';
-import { TTS_RESPONSE_SPLIT } from '$lib/types';
+import { JYOTIGPT_BASE_URL } from '$shared/constants';
+import { TTS_RESPONSE_SPLIT } from '$shared/types';
 
 import { marked } from 'marked';
-import markedExtension from '$lib/utils/marked/extension';
-import markedKatexExtension from '$lib/utils/marked/katex-extension';
+import markedExtension from '$shared/utils/marked/extension';
+import markedKatexExtension from '$shared/utils/marked/katex-extension';
 import hljs from 'highlight.js';
 
 //////////////////////////

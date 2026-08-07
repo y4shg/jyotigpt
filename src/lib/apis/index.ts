@@ -1,5 +1,5 @@
-import { JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$lib/constants';
-import { convertOpenApiToToolPayload } from '$lib/utils';
+import { JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$shared/constants';
+import { convertOpenApiToToolPayload } from '$shared/utils';
 import { getOpenAIModelsDirect } from './openai';
 
 import { parse } from 'yaml';

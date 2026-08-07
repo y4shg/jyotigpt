@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
-	import { flyAndScale } from '$lib/utils/transitions';
+	import { flyAndScale } from '$shared/utils/transitions';
 	import { getContext, onMount, tick } from 'svelte';
 
-	import { config, user, tools as _tools, mobile } from '$lib/stores';
+	import { config, user, tools as _tools, mobile } from '$shared/stores';
 	import { getTools } from '$lib/apis/tools';
 
 	import Dropdown from '$shared/components/Dropdown.svelte';

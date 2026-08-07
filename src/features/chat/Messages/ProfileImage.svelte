@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	export let className = 'size-8';
 	export let src = `${JYOTIGPT_BASE_URL}/static/favicon.png`;

@@ -19,8 +19,8 @@
 	import { getBanners } from '$lib/apis/configs';
 	import { getUserSettings } from '$lib/apis/users';
 
-	import { JYOTIGPT_VERSION } from '$lib/constants';
-	import { compareVersion } from '$lib/utils';
+	import { JYOTIGPT_VERSION } from '$shared/constants';
+	import { compareVersion } from '$shared/utils';
 
 	import {
 		config,
@@ -37,7 +37,7 @@
 		showChangelog,
 		temporaryChatEnabled,
 		toolServers
-	} from '$lib/stores';
+	} from '$shared/stores';
 
 	import Sidebar from '$shared/layout/Sidebar.svelte';
 	import SettingsModal from '$features/chat/SettingsModal.svelte';

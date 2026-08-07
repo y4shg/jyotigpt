@@ -8,10 +8,10 @@
 	import { getBackendConfig } from '$lib/apis';
 	import { ldapUserSignIn, getSessionUser, userSignIn, userSignUp } from '$lib/apis/auths';
 
-	import { JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$lib/constants';
-	import { JYOTIGPT_NAME, config, user, socket } from '$lib/stores';
+	import { JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$shared/constants';
+	import { JYOTIGPT_NAME, config, user, socket } from '$shared/stores';
 
-	import { generateInitialsImage, canvasPixelTest } from '$lib/utils';
+	import { generateInitialsImage, canvasPixelTest } from '$shared/utils';
 
 	import Spinner from '$shared/components/Spinner.svelte';
 	import OnBoarding from '$features/app/OnBoarding';

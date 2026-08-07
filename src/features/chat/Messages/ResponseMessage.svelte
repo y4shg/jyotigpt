@@ -4,7 +4,7 @@
 
 	import { createEventDispatcher } from 'svelte';
 	import { onMount, tick, getContext } from 'svelte';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType, t } from 'i18next';
 
@@ -16,7 +16,7 @@
 	import { getChatById } from '$lib/apis/chats';
 	import { generateTags } from '$lib/apis';
 
-	import { config, models, settings, temporaryChatEnabled, TTSWorker, user } from '$lib/stores';
+	import { config, models, settings, temporaryChatEnabled, TTSWorker, user } from '$shared/stores';
 	import { synthesizeOpenAISpeech } from '$lib/apis/audio';
 	import { imageGenerations } from '$lib/apis/images';
 	import {
@@ -28,8 +28,8 @@
 		formatDate,
 		removeDetails,
 		removeAllDetails
-	} from '$lib/utils';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	} from '$shared/utils';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 
 	import Name from './Name.svelte';
 	import ProfileImage from './ProfileImage.svelte';
@@ -47,7 +47,7 @@
 	import Citations from './Citations.svelte';
 	import CodeExecutions from './CodeExecutions.svelte';
 	import ContentRenderer from './ContentRenderer.svelte';
-	import { KokoroWorker } from '$lib/workers/KokoroWorker';
+	import { KokoroWorker } from '$shared/workers/KokoroWorker';
 	import FileItem from '$shared/components/FileItem.svelte';
 
 	interface MessageType {

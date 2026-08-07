@@ -2,7 +2,7 @@
 	import { getBackendConfig } from '$lib/apis';
 	import { setDefaultPromptSuggestions } from '$lib/apis/configs';
 	import Switch from '$shared/components/Switch.svelte';
-	import { config, models, settings, user } from '$lib/stores';
+	import { config, models, settings, user } from '$shared/stores';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import ManageModal from './Personalization/ManageModal.svelte';

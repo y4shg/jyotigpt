@@ -3,7 +3,7 @@
 	import { onMount, tick, getContext } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	import { mobile, settings } from '$lib/stores';
+	import { mobile, settings } from '$shared/stores';
 
 	import { generateMoACompletion } from '$lib/apis';
 	import { updateChatById } from '$lib/apis/chats';

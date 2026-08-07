@@ -10,7 +10,7 @@
 		prompts,
 		knowledge,
 		tools
-	} from '$lib/stores';
+	} from '$shared/stores';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 

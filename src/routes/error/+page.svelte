@@ -1,6 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { JYOTIGPT_NAME, config } from '$lib/stores';
+	import { JYOTIGPT_NAME, config } from '$shared/stores';
 	import { onMount, getContext } from 'svelte';
 
 	const i18n = getContext('i18n');

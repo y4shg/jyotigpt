@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getVersionUpdates } from '$lib/apis';
 	import { getOllamaVersion } from '$lib/apis/ollama';
-	import { JYOTIGPT_BUILD_HASH, JYOTIGPT_VERSION } from '$lib/constants';
-	import { JYOTIGPT_NAME, config, showChangelog } from '$lib/stores';
-	import { compareVersion } from '$lib/utils';
+	import { JYOTIGPT_BUILD_HASH, JYOTIGPT_VERSION } from '$shared/constants';
+	import { JYOTIGPT_NAME, config, showChangelog } from '$shared/stores';
+	import { compareVersion } from '$shared/utils';
 	import { onMount, getContext } from 'svelte';
 
 	import Tooltip from '$shared/components/Tooltip.svelte';

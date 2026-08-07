@@ -1,4 +1,4 @@
-import { JYOTIGPT_API_BASE_URL } from '$lib/constants';
+import { JYOTIGPT_API_BASE_URL } from '$shared/constants';
 
 export const getGravatarUrl = async (token: string, email: string) => {
 	let error = null;

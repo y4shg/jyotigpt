@@ -11,7 +11,7 @@
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import LockClosed from '$shared/icons/LockClosed.svelte';
 	import AccessControlModal from '../common/AccessControlModal.svelte';
-	import { user } from '$lib/stores';
+	import { user } from '$shared/stores';
 
 	let formElement = null;
 	let loading = false;

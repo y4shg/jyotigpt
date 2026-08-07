@@ -1,4 +1,4 @@
-import { OPENAI_API_BASE_URL, JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$lib/constants';
+import { OPENAI_API_BASE_URL, JYOTIGPT_API_BASE_URL, JYOTIGPT_BASE_URL } from '$shared/constants';
 
 export const getOpenAIConfig = async (token: string = '') => {
 	let error = null;

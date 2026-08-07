@@ -7,8 +7,8 @@
 	dayjs.extend(relativeTime);
 
 	import { createEventDispatcher, tick, getContext, onMount } from 'svelte';
-	import { removeLastWordFromString, isValidHttpUrl } from '$lib/utils';
-	import { knowledge } from '$lib/stores';
+	import { removeLastWordFromString, isValidHttpUrl } from '$shared/utils';
+	import { knowledge } from '$shared/stores';
 
 	const i18n = getContext('i18n');
 

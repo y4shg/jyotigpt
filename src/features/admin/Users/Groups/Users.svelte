@@ -4,7 +4,7 @@
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import Plus from '$shared/icons/Plus.svelte';
-	import { JYOTIGPT_BASE_URL } from '$lib/constants';
+	import { JYOTIGPT_BASE_URL } from '$shared/constants';
 	import Checkbox from '$shared/components/Checkbox.svelte';
 	import Badge from '$shared/components/Badge.svelte';
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import { hapticTrigger } from '$lib/utils/haptics';
+	import { hapticTrigger } from '$shared/utils/haptics';
 
 	import {
 		JYOTIGPT_NAME,
@@ -15,7 +15,7 @@
 		showSidebar,
 		temporaryChatEnabled,
 		user
-	} from '$lib/stores';
+	} from '$shared/stores';
 
 	import { slide } from 'svelte/transition';
 	import { page } from '$app/stores';

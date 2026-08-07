@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
 
-	import { config, functions, models, settings, tools, user } from '$lib/stores';
+	import { config, functions, models, settings, tools, user } from '$shared/stores';
 	import { createEventDispatcher, onMount, getContext, tick } from 'svelte';
 
 	import {

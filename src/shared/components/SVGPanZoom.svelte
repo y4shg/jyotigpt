@@ -10,7 +10,7 @@
 	import { onMount, getContext } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { copyToClipboard } from '$lib/utils';
+	import { copyToClipboard } from '$shared/utils';
 
 	import DocumentDuplicate from '../icons/DocumentDuplicate.svelte';
 	import Tooltip from './Tooltip.svelte';

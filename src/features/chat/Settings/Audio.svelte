@@ -3,7 +3,7 @@
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	import { KokoroTTS } from 'kokoro-js';
 
-	import { user, settings, config } from '$lib/stores';
+	import { user, settings, config } from '$shared/stores';
 	import { getVoices as _getVoices } from '$lib/apis/audio';
 
 	import Switch from '$shared/components/Switch.svelte';

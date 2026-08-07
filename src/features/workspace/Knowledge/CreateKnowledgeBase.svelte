@@ -5,7 +5,7 @@
 
 	import { createNewKnowledge, getKnowledgeBases } from '$lib/apis/knowledge';
 	import { toast } from 'svelte-sonner';
-	import { knowledge, user } from '$lib/stores';
+	import { knowledge, user } from '$shared/stores';
 	import AccessControl from '../common/AccessControl.svelte';
 
 	let loading = false;
