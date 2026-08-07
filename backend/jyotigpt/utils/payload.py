@@ -1,16 +1,27 @@
-from jyotigpt.utils.task import prompt_template, prompt_variables_template
-from jyotigpt.utils.misc import (
-    add_or_update_system_message,
-)
+"""Request-payload shaping helpers.
 
-from typing import Callable, Optional
+Applies model-level system prompts and parameters onto outgoing request
+bodies, and converts OpenAI-shaped chat payloads into the Ollama chat API
+shape. The apply_* helpers mutate ``form_data`` in place and also return it.
+"""
+
 import json
+from typing import Callable, Optional
+
+from jyotigpt.utils.misc import add_or_update_system_message
+from jyotigpt.utils.task import prompt_template, prompt_variables_template
 
 
 # inplace function: form_data is modified
 def apply_model_system_prompt_to_body(
     params: dict, form_data: dict, metadata: Optional[dict] = None, user=None
 ) -> dict:
+    """Render the model's ``system`` prompt and merge it into ``form_data``.
+
+    Applies metadata ``variables`` substitution (JyotiGPT usage) and legacy
+    per-user template params (API usage) before prepending the result as a
+    system message. No-op when the model defines no system prompt.
+    """
     system = params.get("system", None)
     if not system:
         return form_data
@@ -42,6 +53,10 @@ def apply_model_system_prompt_to_body(
 def apply_model_params_to_body(
     params: dict, form_data: dict, mappings: dict[str, Callable]
 ) -> dict:
+    """Copy each mapped param into ``form_data``, cast via its mapping func.
+
+    Only non-None param values are applied. No-op when ``params`` is empty.
+    """
     if not params:
         return form_data
 
@@ -54,6 +69,7 @@ def apply_model_params_to_body(
 
 # inplace function: form_data is modified
 def apply_model_params_to_body_openai(params: dict, form_data: dict) -> dict:
+    """Apply OpenAI-style params to ``form_data`` with appropriate casts."""
     mappings = {
         "temperature": float,
         "top_p": float,
@@ -69,6 +85,12 @@ def apply_model_params_to_body_openai(params: dict, form_data: dict) -> dict:
 
 
 def apply_model_params_to_body_ollama(params: dict, form_data: dict) -> dict:
+    """Apply params to ``form_data`` using Ollama option names and casts.
+
+    Renames OpenAI ``max_tokens`` to Ollama ``num_predict`` on ``params``,
+    and lifts ``keep_alive``/``format`` out of ``form_data['options']`` to
+    the top level to avoid Ollama invalid-option warnings.
+    """
     # Convert OpenAI parameter names to Ollama parameter names if needed.
     name_differences = {
         "max_tokens": "num_predict",
@@ -124,6 +146,13 @@ def apply_model_params_to_body_ollama(params: dict, form_data: dict) -> dict:
 
 
 def convert_messages_openai_to_ollama(messages: list[dict]) -> list[dict]:
+    """Convert OpenAI-shaped messages into Ollama message dicts.
+
+    Handles plain-string content (with optional ``tool_call_id``), tool
+    calls (arguments JSON-decoded, content forced to empty string), and
+    multimodal content lists (text concatenated, image URLs collected with
+    base64 data-URIs trimmed to their payload).
+    """
     ollama_messages = []
 
     for message in messages:
@@ -198,8 +227,7 @@ def convert_messages_openai_to_ollama(messages: list[dict]) -> list[dict]:
 
 
 def convert_payload_openai_to_ollama(openai_payload: dict) -> dict:
-    """
-    Converts a payload formatted for OpenAI's API to be compatible with Ollama's API endpoint for chat completions.
+    """Convert an OpenAI chat-completions payload to the Ollama shape.
 
     Args:
         openai_payload (dict): The payload originally designed for OpenAI API usage.
