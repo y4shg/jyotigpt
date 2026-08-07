@@ -7,6 +7,11 @@ from jyotigpt.utils.misc import (
 
 
 def convert_ollama_tool_call_to_openai(tool_calls: dict) -> dict:
+    """Convert Ollama tool-call entries into OpenAI tool-call dicts.
+
+    Generates a ``call_<uuid>`` id when absent and JSON-encodes the
+    function arguments.
+    """
     openai_tool_calls = []
     for tool_call in tool_calls:
         openai_tool_call = {
@@ -25,6 +30,12 @@ def convert_ollama_tool_call_to_openai(tool_calls: dict) -> dict:
 
 
 def convert_ollama_usage_to_openai(data: dict) -> dict:
+    """Map Ollama timing/token counts to an OpenAI-compatible usage dict.
+
+    Token-rate fields are ``"N/A"`` when the corresponding duration is
+    non-positive; also emits OpenAI-compatible ``prompt_tokens``,
+    ``completion_tokens``, and ``total_tokens`` keys.
+    """
     return {
         "response_token/s": (
             round(
@@ -81,6 +92,7 @@ def convert_ollama_usage_to_openai(data: dict) -> dict:
 
 
 def convert_response_ollama_to_openai(ollama_response: dict) -> dict:
+    """Convert a full Ollama chat response into an OpenAI-shaped response."""
     model = ollama_response.get("model", "ollama")
     message_content = ollama_response.get("message", {}).get("content", "")
     tool_calls = ollama_response.get("message", {}).get("tool_calls", None)
@@ -100,6 +112,11 @@ def convert_response_ollama_to_openai(ollama_response: dict) -> dict:
 
 
 async def convert_streaming_response_ollama_to_openai(ollama_streaming_response):
+    """Convert a streaming Ollama response into OpenAI SSE chunks.
+
+    Yields ``data: {...}`` lines per chunk, attaches usage on the final
+    (``done``) chunk, and terminates with ``data: [DONE]``.
+    """
     async for data in ollama_streaming_response.body_iterator:
         data = json.loads(data)
 
