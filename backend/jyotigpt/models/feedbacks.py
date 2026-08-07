@@ -1,22 +1,21 @@
+"""Feedback persistence.
+
+Stores user feedback (ratings, comments, arena evaluations) keyed by a type,
+with an optional snapshot of the chat context the feedback refers to.
+"""
+
 import logging
 import time
 import uuid
 from typing import Optional
 
-from jyotigpt.internal.db import Base, get_db
-from jyotigpt.models.chats import Chats
-
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.internal.db import Base, get_db
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, Text, JSON, Boolean
+from sqlalchemy import JSON, BigInteger, Column, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-
-####################
-# Feedback DB Schema
-####################
 
 
 class Feedback(Base):
@@ -44,11 +43,6 @@ class FeedbackModel(BaseModel):
     updated_at: int
 
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class FeedbackResponse(BaseModel):
@@ -172,6 +166,15 @@ class FeedbackTable:
                 .all()
             ]
 
+    def _apply_updates(self, feedback, form_data: FeedbackForm) -> None:
+        """Copy the updated portions of ``form_data`` onto the row."""
+        if form_data.data:
+            feedback.data = form_data.data.model_dump()
+        if form_data.meta:
+            feedback.meta = form_data.meta
+        if form_data.snapshot:
+            feedback.snapshot = form_data.snapshot.model_dump()
+
     def update_feedback_by_id(
         self, id: str, form_data: FeedbackForm
     ) -> Optional[FeedbackModel]:
@@ -180,13 +183,7 @@ class FeedbackTable:
             if not feedback:
                 return None
 
-            if form_data.data:
-                feedback.data = form_data.data.model_dump()
-            if form_data.meta:
-                feedback.meta = form_data.meta
-            if form_data.snapshot:
-                feedback.snapshot = form_data.snapshot.model_dump()
-
+            self._apply_updates(feedback, form_data)
             feedback.updated_at = int(time.time())
 
             db.commit()
@@ -200,13 +197,7 @@ class FeedbackTable:
             if not feedback:
                 return None
 
-            if form_data.data:
-                feedback.data = form_data.data.model_dump()
-            if form_data.meta:
-                feedback.meta = form_data.meta
-            if form_data.snapshot:
-                feedback.snapshot = form_data.snapshot.model_dump()
-
+            self._apply_updates(feedback, form_data)
             feedback.updated_at = int(time.time())
 
             db.commit()
