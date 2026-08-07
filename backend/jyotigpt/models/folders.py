@@ -1,24 +1,22 @@
+"""Folder persistence.
+
+Folders organize chats into a user-owned tree. Deleting a folder cascades to
+its chats (optionally) and to all descendant folders.
+"""
+
 import logging
 import time
 import uuid
 from typing import Optional
 
+from jyotigpt.env import SRC_LOG_LEVELS
 from jyotigpt.internal.db import Base, get_db
 from jyotigpt.models.chats import Chats
-
-from jyotigpt.env import SRC_LOG_LEVELS
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, Text, JSON, Boolean
-from jyotigpt.utils.access_control import get_permissions
-
+from sqlalchemy import JSON, BigInteger, Boolean, Column, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-
-####################
-# Folder DB Schema
-####################
 
 
 class Folder(Base):
@@ -46,11 +44,6 @@ class FolderModel(BaseModel):
     updated_at: int
 
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class FolderForm(BaseModel):
@@ -103,7 +96,7 @@ class FolderTable:
 
     def get_children_folders_by_id_and_user_id(
         self, id: str, user_id: str
-    ) -> Optional[FolderModel]:
+    ) -> list[FolderModel]:
         try:
             with get_db() as db:
                 folders = []
@@ -137,7 +130,6 @@ class FolderTable:
     ) -> Optional[FolderModel]:
         try:
             with get_db() as db:
-                # Check if folder exists
                 folder = (
                     db.query(Folder)
                     .filter_by(parent_id=parent_id, user_id=user_id)
@@ -165,10 +157,7 @@ class FolderTable:
             ]
 
     def update_folder_parent_id_by_id_and_user_id(
-        self,
-        id: str,
-        user_id: str,
-        parent_id: str,
+        self, id: str, user_id: str, parent_id: str
     ) -> Optional[FolderModel]:
         try:
             with get_db() as db:
@@ -197,6 +186,7 @@ class FolderTable:
                 if not folder:
                     return None
 
+                # Refuse to rename onto a sibling that already has this name.
                 existing_folder = (
                     db.query(Folder)
                     .filter_by(name=name, parent_id=folder.parent_id, user_id=user_id)
@@ -249,7 +239,7 @@ class FolderTable:
                     # Delete all chats in the folder
                     Chats.delete_chats_by_user_id_and_folder_id(user_id, folder.id)
 
-                # Delete all children folders
+                # Delete all children folders, cascading chats along the way.
                 def delete_children(folder):
                     folder_children = self.get_folders_by_parent_id_and_user_id(
                         folder.id, user_id
