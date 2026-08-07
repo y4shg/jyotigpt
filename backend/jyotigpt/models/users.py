@@ -1,19 +1,18 @@
+"""User persistence.
+
+Accounts carry identity, role, an optional API key, JSON blobs for settings
+and info, and an OAuth subject for external sign-in. Deleting a user cascades
+through their group memberships and chats.
+"""
+
 import time
 from typing import Optional
 
 from jyotigpt.internal.db import Base, JSONField, get_db
-
-
 from jyotigpt.models.chats import Chats
 from jyotigpt.models.groups import Groups
-
-
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import BigInteger, Column, String, Text
-
-####################
-# User DB Schema
-####################
 
 
 class User(Base):
@@ -39,7 +38,6 @@ class User(Base):
 class UserSettings(BaseModel):
     ui: Optional[dict] = {}
     model_config = ConfigDict(extra="allow")
-    pass
 
 
 class UserModel(BaseModel):
@@ -49,9 +47,9 @@ class UserModel(BaseModel):
     role: str = "pending"
     profile_image_url: str
 
-    last_active_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
+    last_active_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
+    created_at: int  # timestamp in epoch seconds
 
     api_key: Optional[str] = None
     settings: Optional[UserSettings] = None
@@ -60,11 +58,6 @@ class UserModel(BaseModel):
     oauth_sub: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
-
-
-####################
-# Forms
-####################
 
 
 class UserResponse(BaseModel):
@@ -163,7 +156,6 @@ class UsersTable:
         self, skip: Optional[int] = None, limit: Optional[int] = None
     ) -> list[UserModel]:
         with get_db() as db:
-
             query = db.query(User).order_by(User.created_at.desc())
 
             if skip:
@@ -267,7 +259,6 @@ class UsersTable:
 
                 user = db.query(User).filter_by(id=id).first()
                 return UserModel.model_validate(user)
-                # return UserModel(**user.dict())
         except Exception:
             return None
 
@@ -291,14 +282,12 @@ class UsersTable:
 
     def delete_user_by_id(self, id: str) -> bool:
         try:
-            # Remove User from Groups
+            # Remove the user from all groups, then delete their chats.
             Groups.remove_user_from_all_groups(id)
 
-            # Delete User Chats
             result = Chats.delete_chats_by_user_id(id)
             if result:
                 with get_db() as db:
-                    # Delete User
                     db.query(User).filter_by(id=id).delete()
                     db.commit()
 
