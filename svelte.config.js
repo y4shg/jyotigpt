@@ -15,6 +15,9 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html'
 		}),
+		files: {
+			routes: 'src/app'
+		},
 		alias: {
 			$api: 'src/api',
 			$features: 'src/features',
