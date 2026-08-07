@@ -1,27 +1,25 @@
-import json
+"""Knowledge-base persistence.
+
+Knowledge bases group uploaded files for retrieval. Each row carries data,
+meta, and optional access-control rules; the response models can attach the
+owner's user object and/or a resolved file list.
+"""
+
 import logging
 import time
 from typing import Optional
 import uuid
 
-from jyotigpt.internal.db import Base, get_db
 from jyotigpt.env import SRC_LOG_LEVELS
-
+from jyotigpt.internal.db import Base, get_db
 from jyotigpt.models.files import FileMetadataResponse
-from jyotigpt.models.users import Users, UserResponse
-
-
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, JSON
-
+from jyotigpt.models.users import UserResponse, Users
 from jyotigpt.utils.access_control import has_access
+from pydantic import BaseModel, ConfigDict
+from sqlalchemy import JSON, BigInteger, Column, String, Text
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-####################
-# Knowledge DB Schema
-####################
 
 
 class Knowledge(Base):
@@ -36,22 +34,14 @@ class Knowledge(Base):
     data = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
 
-    access_control = Column(JSON, nullable=True)  # Controls data access levels.
-    # Defines access control rules for this entry.
-    # - `None`: Public access, available to all users with the "user" role.
-    # - `{}`: Private access, restricted exclusively to the owner.
-    # - Custom permissions: Specific access control for reading and writing;
-    #   Can specify group or user-level restrictions:
-    #   {
-    #      "read": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      },
-    #      "write": {
-    #          "group_ids": ["group_id1", "group_id2"],
-    #          "user_ids":  ["user_id1", "user_id2"]
-    #      }
-    #   }
+    access_control = Column(JSON, nullable=True)
+    """Data access rules for this entry.
+
+    - ``None``: public, available to every user with the "user" role.
+    - ``{}``: private, restricted to the owner.
+    - Custom permissions: per-group / per-user ``read`` and ``write`` rules,
+      e.g. ``{"read": {"group_ids": [...], "user_ids": [...]}}``.
+    """
 
     created_at = Column(BigInteger)
     updated_at = Column(BigInteger)
@@ -73,11 +63,6 @@ class KnowledgeModel(BaseModel):
 
     created_at: int  # timestamp in epoch
     updated_at: int  # timestamp in epoch
-
-
-####################
-# Forms
-####################
 
 
 class KnowledgeUserModel(KnowledgeModel):
@@ -167,7 +152,6 @@ class KnowledgeTable:
     ) -> Optional[KnowledgeModel]:
         try:
             with get_db() as db:
-                knowledge = self.get_knowledge_by_id(id=id)
                 db.query(Knowledge).filter_by(id=id).update(
                     {
                         **form_data.model_dump(),
@@ -185,7 +169,6 @@ class KnowledgeTable:
     ) -> Optional[KnowledgeModel]:
         try:
             with get_db() as db:
-                knowledge = self.get_knowledge_by_id(id=id)
                 db.query(Knowledge).filter_by(id=id).update(
                     {
                         "data": data,
