@@ -1,3 +1,11 @@
+"""Logging configuration.
+
+Sets up Loguru as the primary logger with a console handler for general
+output and an optional file handler for structured audit logs. Bridges
+Python's standard ``logging`` module through Loguru via ``InterceptHandler``
+so libraries like Uvicorn emit through the same pipeline.
+"""
+
 import json
 import logging
 import sys
@@ -12,19 +20,15 @@ from jyotigpt.env import (
     GLOBAL_LOG_LEVEL,
 )
 
-
 if TYPE_CHECKING:
     from loguru import Record
 
 
 def stdout_format(record: "Record") -> str:
-    """
-    Generates a formatted string for log records that are output to the console. This format includes a timestamp, log level, source location (module, function, and line), the log message, and any extra data (serialized as JSON).
+    """Format a log record for console output.
 
-    Parameters:
-    record (Record): A Loguru record that contains logging details including time, level, name, function, line, message, and any extra context.
-    Returns:
-    str: A formatted log string intended for stdout.
+    Includes timestamp, level, source location, message, and any extra
+    context serialized as JSON.
     """
     record["extra"]["extra_json"] = json.dumps(record["extra"])
     return (
@@ -37,17 +41,13 @@ def stdout_format(record: "Record") -> str:
 
 
 class InterceptHandler(logging.Handler):
-    """
-    Intercepts log records from Python's standard logging module
-    and redirects them to Loguru's logger.
+    """Bridge standard-library logging into Loguru.
+
+    Walks the call stack to find the true caller so Loguru reports the
+    correct source location rather than the bridge itself.
     """
 
     def emit(self, record):
-        """
-        Called by the standard logging module for each log event.
-        It transforms the standard `LogRecord` into a format compatible with Loguru
-        and passes it to Loguru's logger.
-        """
         try:
             level = logger.level(record.levelname).name
         except ValueError:
@@ -64,15 +64,7 @@ class InterceptHandler(logging.Handler):
 
 
 def file_format(record: "Record"):
-    """
-    Formats audit log records into a structured JSON string for file output.
-
-    Parameters:
-    record (Record): A Loguru record containing extra audit data.
-    Returns:
-    str: A JSON-formatted string representing the audit data.
-    """
-
+    """Format an audit log record as a single-line JSON string for file output."""
     audit_data = {
         "id": record["extra"].get("id", ""),
         "timestamp": int(record["time"].timestamp()),
@@ -93,15 +85,12 @@ def file_format(record: "Record"):
 
 
 def start_logger():
-    """
-    Initializes and configures Loguru's logger with distinct handlers:
+    """Initialize Loguru with console and optional audit-file handlers.
 
-    A console (stdout) handler for general log messages (excluding those marked as auditable).
-    An optional file handler for audit logs if audit logging is enabled.
-    Additionally, this function reconfigures Python’s standard logging to route through Loguru and adjusts logging levels for Uvicorn.
-
-    Parameters:
-    enable_audit_logging (bool): Determines whether audit-specific log entries should be recorded to file.
+    Removes default handlers, adds a stdout handler (filtering out audit
+    records), optionally adds a rotating file handler for audit entries,
+    and bridges standard-library logging through ``InterceptHandler``.
+    Uvicorn loggers are reconfigured to use the same pipeline.
     """
     logger.remove()
 
