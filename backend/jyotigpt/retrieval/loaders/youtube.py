@@ -1,7 +1,14 @@
-import logging
+"""YouTube transcript loader.
 
+Resolves a YouTube watch URL (or video ID) to its transcript text via the
+``youtube-transcript-api`` package. The video is identified locally first
+by parsing the URL; lookups go through the optional proxy when set.
+"""
+
+import logging
 from typing import Any, Dict, Generator, List, Optional, Sequence, Union
 from urllib.parse import parse_qs, urlparse
+
 from langchain_core.documents import Document
 from jyotigpt.env import SRC_LOG_LEVELS
 
@@ -20,7 +27,7 @@ ALLOWED_NETLOCS = {
 
 
 def _parse_video_id(url: str) -> Optional[str]:
-    """Parse a YouTube URL and return the video ID if valid, otherwise None."""
+    """Extract the 11-character video ID from a YouTube URL, if valid."""
     parsed_url = urlparse(url)
 
     if parsed_url.scheme not in ALLOWED_SCHEMES:
@@ -32,25 +39,23 @@ def _parse_video_id(url: str) -> Optional[str]:
     path = parsed_url.path
 
     if path.endswith("/watch"):
-        query = parsed_url.query
-        parsed_query = parse_qs(query)
-        if "v" in parsed_query:
-            ids = parsed_query["v"]
-            video_id = ids if isinstance(ids, str) else ids[0]
-        else:
+        parsed_query = parse_qs(parsed_url.query)
+        if "v" not in parsed_query:
             return None
+        video_id = parsed_query["v"][0]
     else:
         path = parsed_url.path.lstrip("/")
         video_id = path.split("/")[-1]
 
-    if len(video_id) != 11:  # Video IDs are 11 characters long
+    # Video IDs are 11 characters long.
+    if len(video_id) != 11:
         return None
 
     return video_id
 
 
 class YoutubeLoader:
-    """Load `YouTube` video transcripts."""
+    """Load YouTube video transcripts as Documents."""
 
     def __init__(
         self,
@@ -58,19 +63,14 @@ class YoutubeLoader:
         language: Union[str, Sequence[str]] = "en",
         proxy_url: Optional[str] = None,
     ):
-        """Initialize with YouTube video ID."""
         _video_id = _parse_video_id(video_id)
         self.video_id = _video_id if _video_id is not None else video_id
         self._metadata = {"source": video_id}
-        self.language = language
+        self.language = [language] if isinstance(language, str) else list(language)
         self.proxy_url = proxy_url
-        if isinstance(language, str):
-            self.language = [language]
-        else:
-            self.language = language
 
     def load(self) -> List[Document]:
-        """Load YouTube transcripts into `Document` objects."""
+        """Fetch the transcript and wrap it in a single Document."""
         try:
             from youtube_transcript_api import (
                 NoTranscriptFound,
@@ -88,7 +88,7 @@ class YoutubeLoader:
                 "http": self.proxy_url,
                 "https": self.proxy_url,
             }
-            # Don't log complete URL because it might contain secrets
+            # Don't log the full URL — it may contain credentials.
             log.debug(f"Using proxy URL: {self.proxy_url[:14]}...")
         else:
             youtube_proxies = None
@@ -107,11 +107,7 @@ class YoutubeLoader:
             transcript = transcript_list.find_transcript(["en"])
 
         transcript_pieces: List[Dict[str, Any]] = transcript.fetch()
-
         transcript = " ".join(
-            map(
-                lambda transcript_piece: transcript_piece.text.strip(" "),
-                transcript_pieces,
-            )
+            piece.text.strip(" ") for piece in transcript_pieces
         )
         return [Document(page_content=transcript, metadata=self._metadata)]
