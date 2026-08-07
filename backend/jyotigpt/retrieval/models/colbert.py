@@ -1,7 +1,15 @@
-import os
+"""ColBERT late-interaction re-ranking model.
+
+Wraps the ``colbert`` package's checkpoint so that a set of (query,
+document) pairs can be scored for retrieval. The model is loaded lazily
+by the retrieval service — this module is only imported on demand.
+"""
+
 import logging
-import torch
+import os
+
 import numpy as np
+import torch
 from colbert.infra import ColBERTConfig
 from colbert.modeling.checkpoint import Checkpoint
 
@@ -12,17 +20,16 @@ log.setLevel(SRC_LOG_LEVELS["RAG"])
 
 
 class ColBERT:
+    """Late-interaction re-ranker around a ColBERT checkpoint."""
+
     def __init__(self, name, **kwargs) -> None:
-        log.info("ColBERT: Loading model", name)
+        log.info(f"ColBERT: Loading model {name}")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        DOCKER = kwargs.get("env") == "docker"
-        if DOCKER:
-            # This is a workaround for the issue with the docker container
-            # where the torch extension is not loaded properly
-            # and the following error is thrown:
-            # /root/.cache/torch_extensions/py311_cpu/segmented_maxsim_cpp/segmented_maxsim_cpp.so: cannot open shared object file: No such file or directory
-
+        if kwargs.get("env") == "docker":
+            # The torch C++ extension can be left in a stale, half-built state
+            # inside the Docker image; a leftover lock file makes it fail to
+            # load at runtime, so clear it before checkpoint loading.
             lock_file = (
                 "/root/.cache/torch_extensions/py311_cpu/segmented_maxsim_cpp/lock"
             )
@@ -33,14 +40,13 @@ class ColBERT:
             name,
             colbert_config=ColBERTConfig(model_name=name),
         ).to(self.device)
-        pass
 
     def calculate_similarity_scores(self, query_embeddings, document_embeddings):
-
+        """MaxSim score of each query against each document, softmax-normalized."""
         query_embeddings = query_embeddings.to(self.device)
         document_embeddings = document_embeddings.to(self.device)
 
-        # Validate dimensions to ensure compatibility
+        # Validate dimensions to ensure compatibility.
         if query_embeddings.dim() != 3:
             raise ValueError(
                 f"Expected query embeddings to have 3 dimensions, but got {query_embeddings.dim()}."
@@ -54,14 +60,12 @@ class ColBERT:
                 "There should be either one query or queries equal to the number of documents."
             )
 
-        # Transpose the query embeddings to align for matrix multiplication
+        # Permute query embeddings (B, F, T) -> (B, T, F) so the matmul
+        # produces per-token similarity maps, then take the best token match
+        # per query token (MaxSim) and sum over the query tokens.
         transposed_query_embeddings = query_embeddings.permute(0, 2, 1)
-        # Compute similarity scores using batch matrix multiplication
         computed_scores = torch.matmul(document_embeddings, transposed_query_embeddings)
-        # Apply max pooling to extract the highest semantic similarity across each document's sequence
         maximum_scores = torch.max(computed_scores, dim=1).values
-
-        # Sum up the maximum scores across features to get the overall document relevance scores
         final_scores = maximum_scores.sum(dim=1)
 
         normalized_scores = torch.softmax(final_scores, dim=0)
@@ -69,17 +73,13 @@ class ColBERT:
         return normalized_scores.detach().cpu().numpy().astype(np.float32)
 
     def predict(self, sentences):
-
+        """Score ``[(query, document), ...]`` pairs with the ColBERT model."""
         query = sentences[0][0]
-        docs = [i[1] for i in sentences]
+        docs = [pair[1] for pair in sentences]
 
-        # Embedding the documents
         embedded_docs = self.ckpt.docFromText(docs, bsize=32)[0]
-        # Embedding the queries
-        embedded_queries = self.ckpt.queryFromText([query], bsize=32)
-        embedded_query = embedded_queries[0]
+        embedded_query = self.ckpt.queryFromText([query], bsize=32)[0]
 
-        # Calculate retrieval scores for the query against all documents
         scores = self.calculate_similarity_scores(
             embedded_query.unsqueeze(0), embedded_docs
         )
