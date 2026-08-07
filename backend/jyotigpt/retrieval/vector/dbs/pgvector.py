@@ -1,31 +1,39 @@
-from typing import Optional, List, Dict, Any
+"""pgvector vector-store client.
+
+Either reuses the application database session (no ``PGVECTOR_DB_URL``)
+or opens its own engine. Rows live in a ``document_chunk`` table with a
+fixed vector dimension (``PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH``);
+shorter embeddings are zero-padded, longer ones are rejected. Cosine
+distance spans [2, 0]; it is converted to a [0, 1] score with 1 = best.
+"""
+
 import logging
+from typing import Any, Dict, List, Optional
+
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
-    cast,
-    column,
-    create_engine,
     Column,
     Integer,
     MetaData,
+    Table,
+    Text,
+    cast,
+    column,
+    create_engine,
     select,
     text,
-    Text,
-    Table,
+    true,
     values,
 )
-from sqlalchemy.sql import true
+from sqlalchemy.dialects.postgresql import JSONB, array
+from sqlalchemy.exc import NoSuchTableError
+from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
 from sqlalchemy.pool import NullPool
 
-from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
-from sqlalchemy.dialects.postgresql import JSONB, array
-from pgvector.sqlalchemy import Vector
-from sqlalchemy.ext.mutable import MutableDict
-from sqlalchemy.exc import NoSuchTableError
-
-from jyotigpt.retrieval.vector.main import VectorItem, SearchResult, GetResult
 from jyotigpt.config import PGVECTOR_DB_URL, PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH
-
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.vector.main import GetResult, SearchResult, VectorItem
 
 VECTOR_LENGTH = PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH
 Base = declarative_base()
@@ -35,6 +43,8 @@ log.setLevel(SRC_LOG_LEVELS["RAG"])
 
 
 class DocumentChunk(Base):
+    """One vector row: text plus JSON metadata, keyed by collection."""
+
     __tablename__ = "document_chunk"
 
     id = Column(Text, primary_key=True)
@@ -45,9 +55,10 @@ class DocumentChunk(Base):
 
 
 class PgvectorClient:
-    def __init__(self) -> None:
+    """CRUD/search client for a Postgres database with pgvector."""
 
-        # if no pgvector uri, use the existing database connection
+    def __init__(self) -> None:
+        # Without a dedicated URL, piggyback on the application database.
         if not PGVECTOR_DB_URL:
             from jyotigpt.internal.db import Session
 
@@ -62,19 +73,15 @@ class PgvectorClient:
             self.session = scoped_session(SessionLocal)
 
         try:
-            # Ensure the pgvector extension is available
+            # The extension, vector-dimension guard, table and indexes are
+            # all set up lazily here so the client is usable immediately.
             self.session.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
 
-            # Check vector length consistency
             self.check_vector_length()
 
-            # Create the tables if they do not exist
-            # Base.metadata.create_all requires a bind (engine or connection)
-            # Get the connection from the session
             connection = self.session.connection()
             Base.metadata.create_all(bind=connection)
 
-            # Create an index on the vector column if it doesn't exist
             self.session.execute(
                 text(
                     "CREATE INDEX IF NOT EXISTS idx_document_chunk_vector "
@@ -94,46 +101,37 @@ class PgvectorClient:
             log.exception(f"Error during initialization: {e}")
             raise
 
+    # --- dimension handling ----------------------------------------------
+
     def check_vector_length(self) -> None:
-        """
-        Check if the VECTOR_LENGTH matches the existing vector column dimension in the database.
-        Raises an exception if there is a mismatch.
+        """Fail loudly if the existing column has a different dimension.
+
+        Reflecting the table first means a fresh database skips the check.
         """
         metadata = MetaData()
         try:
-            # Attempt to reflect the 'document_chunk' table
             document_chunk_table = Table(
                 "document_chunk", metadata, autoload_with=self.session.bind
             )
         except NoSuchTableError:
-            # Table does not exist; no action needed
             return
 
-        # Proceed to check the vector column
-        if "vector" in document_chunk_table.columns:
-            vector_column = document_chunk_table.columns["vector"]
-            vector_type = vector_column.type
-            if isinstance(vector_type, Vector):
-                db_vector_length = vector_type.dim
-                if db_vector_length != VECTOR_LENGTH:
-                    raise Exception(
-                        f"VECTOR_LENGTH {VECTOR_LENGTH} does not match existing vector column dimension {db_vector_length}. "
-                        "Cannot change vector size after initialization without migrating the data."
-                    )
-            else:
+        vector_column = document_chunk_table.columns["vector"]
+        vector_type = vector_column.type
+        if isinstance(vector_type, Vector):
+            db_vector_length = vector_type.dim
+            if db_vector_length != VECTOR_LENGTH:
                 raise Exception(
-                    "The 'vector' column exists but is not of type 'Vector'."
+                    f"VECTOR_LENGTH {VECTOR_LENGTH} does not match existing vector column dimension {db_vector_length}. "
+                    "Cannot change vector size after initialization without migrating the data."
                 )
         else:
-            raise Exception(
-                "The 'vector' column does not exist in the 'document_chunk' table."
-            )
+            raise Exception("The 'vector' column exists but is not of type 'Vector'.")
 
     def adjust_vector_length(self, vector: List[float]) -> List[float]:
-        # Adjust vector to have length VECTOR_LENGTH
+        """Pad short vectors with zeros; reject over-long ones."""
         current_length = len(vector)
         if current_length < VECTOR_LENGTH:
-            # Pad the vector with zeros
             vector += [0.0] * (VECTOR_LENGTH - current_length)
         elif current_length > VECTOR_LENGTH:
             raise Exception(
@@ -141,19 +139,20 @@ class PgvectorClient:
             )
         return vector
 
+    # --- persistence -----------------------------------------------------
+
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         try:
-            new_items = []
-            for item in items:
-                vector = self.adjust_vector_length(item["vector"])
-                new_chunk = DocumentChunk(
+            new_items = [
+                DocumentChunk(
                     id=item["id"],
-                    vector=vector,
+                    vector=self.adjust_vector_length(item["vector"]),
                     collection_name=collection_name,
                     text=item["text"],
                     vmetadata=item["metadata"],
                 )
-                new_items.append(new_chunk)
+                for item in items
+            ]
             self.session.bulk_save_objects(new_items)
             self.session.commit()
             log.info(
@@ -177,18 +176,17 @@ class PgvectorClient:
                     existing.vector = vector
                     existing.text = item["text"]
                     existing.vmetadata = item["metadata"]
-                    existing.collection_name = (
-                        collection_name  # Update collection_name if necessary
-                    )
+                    existing.collection_name = collection_name
                 else:
-                    new_chunk = DocumentChunk(
-                        id=item["id"],
-                        vector=vector,
-                        collection_name=collection_name,
-                        text=item["text"],
-                        vmetadata=item["metadata"],
+                    self.session.add(
+                        DocumentChunk(
+                            id=item["id"],
+                            vector=vector,
+                            collection_name=collection_name,
+                            text=item["text"],
+                            vmetadata=item["metadata"],
+                        )
                     )
-                    self.session.add(new_chunk)
             self.session.commit()
             log.info(
                 f"Upserted {len(items)} items into collection '{collection_name}'."
@@ -198,24 +196,25 @@ class PgvectorClient:
             log.exception(f"Error during upsert: {e}")
             raise
 
+    # --- reads -----------------------------------------------------------
+
     def search(
         self,
         collection_name: str,
         vectors: List[List[float]],
         limit: Optional[int] = None,
     ) -> Optional[SearchResult]:
+        """Nearest-neighbor lookup via a lateral join of query vectors."""
         try:
             if not vectors:
                 return None
 
-            # Adjust query vectors to VECTOR_LENGTH
             vectors = [self.adjust_vector_length(vector) for vector in vectors]
             num_queries = len(vectors)
 
             def vector_expr(vector):
                 return cast(array(vector), Vector(VECTOR_LENGTH))
 
-            # Create the values for query vectors
             qid_col = column("qid", Integer)
             q_vector_col = column("q_vector", Vector(VECTOR_LENGTH))
             query_vectors = (
@@ -226,26 +225,24 @@ class PgvectorClient:
                 .alias("query_vectors")
             )
 
-            # Build the lateral subquery for each query vector
             subq = (
                 select(
                     DocumentChunk.id,
                     DocumentChunk.text,
                     DocumentChunk.vmetadata,
-                    (
-                        DocumentChunk.vector.cosine_distance(query_vectors.c.q_vector)
+                    DocumentChunk.vector.cosine_distance(
+                        query_vectors.c.q_vector
                     ).label("distance"),
                 )
                 .where(DocumentChunk.collection_name == collection_name)
                 .order_by(
-                    (DocumentChunk.vector.cosine_distance(query_vectors.c.q_vector))
+                    DocumentChunk.vector.cosine_distance(query_vectors.c.q_vector)
                 )
             )
             if limit is not None:
                 subq = subq.limit(limit)
             subq = subq.lateral("result")
 
-            # Build the main query by joining query_vectors and the lateral subquery
             stmt = (
                 select(
                     query_vectors.c.qid,
@@ -278,8 +275,7 @@ class PgvectorClient:
             for row in results:
                 qid = int(row.qid)
                 ids[qid].append(row.id)
-                # normalize and re-orders pgvec distance from [2, 0] to [0, 1] score range
-                # https://github.com/pgvector/pgvector?tab=readme-ov-file#querying
+                # pgvector cosine distance spans [2, 0]; flip to a [0, 1] score.
                 distances[qid].append((2.0 - row.distance) / 2.0)
                 documents[qid].append(row.text)
                 metadatas[qid].append(row.vmetadata)
@@ -294,6 +290,7 @@ class PgvectorClient:
     def query(
         self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None
     ) -> Optional[GetResult]:
+        """Rows whose metadata matches every key in ``filter``."""
         try:
             query = self.session.query(DocumentChunk).filter(
                 DocumentChunk.collection_name == collection_name
@@ -306,18 +303,13 @@ class PgvectorClient:
                 query = query.limit(limit)
 
             results = query.all()
-
             if not results:
                 return None
 
-            ids = [[result.id for result in results]]
-            documents = [[result.text for result in results]]
-            metadatas = [[result.vmetadata for result in results]]
-
             return GetResult(
-                ids=ids,
-                documents=documents,
-                metadatas=metadatas,
+                ids=[[result.id for result in results]],
+                documents=[[result.text for result in results]],
+                metadatas=[[result.vmetadata for result in results]],
             )
         except Exception as e:
             log.exception(f"Error during query: {e}")
@@ -326,6 +318,7 @@ class PgvectorClient:
     def get(
         self, collection_name: str, limit: Optional[int] = None
     ) -> Optional[GetResult]:
+        """Everything in the collection (optionally capped at ``limit``)."""
         try:
             query = self.session.query(DocumentChunk).filter(
                 DocumentChunk.collection_name == collection_name
@@ -334,33 +327,41 @@ class PgvectorClient:
                 query = query.limit(limit)
 
             results = query.all()
-
             if not results:
                 return None
 
-            ids = [[result.id for result in results]]
-            documents = [[result.text for result in results]]
-            metadatas = [[result.vmetadata for result in results]]
-
-            return GetResult(ids=ids, documents=documents, metadatas=metadatas)
+            return GetResult(
+                ids=[[result.id for result in results]],
+                documents=[[result.text for result in results]],
+                metadatas=[[result.vmetadata for result in results]],
+            )
         except Exception as e:
             log.exception(f"Error during get: {e}")
             return None
+
+    # --- writes ----------------------------------------------------------
 
     def delete(
         self,
         collection_name: str,
         ids: Optional[List[str]] = None,
         filter: Optional[Dict[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
+        """Delete a collection's rows by ``ids`` and/or a ``filter``.
+
+        ``metadata`` is an accepted alias for ``filter`` — some callers pass
+        the selector under that name.
+        """
         try:
+            effective_filter = filter or metadata
             query = self.session.query(DocumentChunk).filter(
                 DocumentChunk.collection_name == collection_name
             )
             if ids:
                 query = query.filter(DocumentChunk.id.in_(ids))
-            if filter:
-                for key, value in filter.items():
+            if effective_filter:
+                for key, value in effective_filter.items():
                     query = query.filter(
                         DocumentChunk.vmetadata[key].astext == str(value)
                     )
@@ -373,6 +374,7 @@ class PgvectorClient:
             raise
 
     def reset(self) -> None:
+        """Wipe the whole ``document_chunk`` table."""
         try:
             deleted = self.session.query(DocumentChunk).delete()
             self.session.commit()
@@ -387,19 +389,21 @@ class PgvectorClient:
     def close(self) -> None:
         pass
 
+    # --- collections -----------------------------------------------------
+
     def has_collection(self, collection_name: str) -> bool:
         try:
-            exists = (
+            return (
                 self.session.query(DocumentChunk)
                 .filter(DocumentChunk.collection_name == collection_name)
                 .first()
                 is not None
             )
-            return exists
         except Exception as e:
             log.exception(f"Error checking collection existence: {e}")
             return False
 
     def delete_collection(self, collection_name: str) -> None:
+        """Drop every row belonging to the collection."""
         self.delete(collection_name)
         log.info(f"Collection '{collection_name}' deleted.")

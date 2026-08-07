@@ -1,18 +1,29 @@
+"""OpenSearch vector-store client.
+
+Connects to OpenSearch with the configured URI and credentials. Each
+collection is its own index under the ``jyotigpt_`` prefix, with a faiss
+HNSW knn-vector field. Cosine similarity is computed via script_score and
+normalized to [0, 1] with 1 = most similar.
+"""
+
+from typing import List, Optional
+
 from opensearchpy import OpenSearch
 from opensearchpy.helpers import bulk
-from typing import Optional
 
-from jyotigpt.retrieval.vector.main import VectorItem, SearchResult, GetResult
 from jyotigpt.config import (
-    OPENSEARCH_URI,
-    OPENSEARCH_SSL,
     OPENSEARCH_CERT_VERIFY,
-    OPENSEARCH_USERNAME,
     OPENSEARCH_PASSWORD,
+    OPENSEARCH_SSL,
+    OPENSEARCH_URI,
+    OPENSEARCH_USERNAME,
 )
+from jyotigpt.retrieval.vector.main import GetResult, SearchResult, VectorItem
 
 
 class OpenSearchClient:
+    """CRUD/search client for an OpenSearch server."""
+
     def __init__(self):
         self.index_prefix = "jyotigpt"
         self.client = OpenSearch(
@@ -22,38 +33,29 @@ class OpenSearchClient:
             http_auth=(OPENSEARCH_USERNAME, OPENSEARCH_PASSWORD),
         )
 
+    # --- internal helpers -------------------------------------------------
+
     def _get_index_name(self, collection_name: str) -> str:
         return f"{self.index_prefix}_{collection_name}"
 
-    def _result_to_get_result(self, result) -> GetResult:
+    def _result_to_get_result(self, result) -> Optional[GetResult]:
         if not result["hits"]["hits"]:
             return None
 
-        ids = []
-        documents = []
-        metadatas = []
-
-        for hit in result["hits"]["hits"]:
-            ids.append(hit["_id"])
-            documents.append(hit["_source"].get("text"))
-            metadatas.append(hit["_source"].get("metadata"))
+        ids = [hit["_id"] for hit in result["hits"]["hits"]]
+        documents = [hit["_source"].get("text") for hit in result["hits"]["hits"]]
+        metadatas = [hit["_source"].get("metadata") for hit in result["hits"]["hits"]]
 
         return GetResult(ids=[ids], documents=[documents], metadatas=[metadatas])
 
-    def _result_to_search_result(self, result) -> SearchResult:
+    def _result_to_search_result(self, result) -> Optional[SearchResult]:
         if not result["hits"]["hits"]:
             return None
 
-        ids = []
-        distances = []
-        documents = []
-        metadatas = []
-
-        for hit in result["hits"]["hits"]:
-            ids.append(hit["_id"])
-            distances.append(hit["_score"])
-            documents.append(hit["_source"].get("text"))
-            metadatas.append(hit["_source"].get("metadata"))
+        ids = [hit["_id"] for hit in result["hits"]["hits"]]
+        distances = [hit["_score"] for hit in result["hits"]["hits"]]
+        documents = [hit["_source"].get("text") for hit in result["hits"]["hits"]]
+        metadatas = [hit["_source"].get("metadata") for hit in result["hits"]["hits"]]
 
         return SearchResult(
             ids=[ids],
@@ -70,12 +72,13 @@ class OpenSearchClient:
                     "id": {"type": "keyword"},
                     "vector": {
                         "type": "knn_vector",
-                        "dimension": dimension,  # Adjust based on your vector dimensions
+                        "dimension": dimension,
                         "index": True,
                         "similarity": "faiss",
                         "method": {
                             "name": "hnsw",
-                            "space_type": "innerproduct",  # Use inner product to approximate cosine similarity
+                            # Inner product approximates cosine similarity.
+                            "space_type": "innerproduct",
                             "engine": "faiss",
                             "parameters": {
                                 "ef_construction": 128,
@@ -92,23 +95,29 @@ class OpenSearchClient:
             index=self._get_index_name(collection_name), body=body
         )
 
-    def _create_batches(self, items: list[VectorItem], batch_size=100):
+    def _create_index_if_not_exists(self, collection_name: str, dimension: int):
+        if not self.has_collection(collection_name):
+            self._create_index(collection_name, dimension)
+
+    def _create_batches(self, items: List[VectorItem], batch_size=100):
         for i in range(0, len(items), batch_size):
             yield items[i : i + batch_size]
 
+    # --- collections ------------------------------------------------------
+
     def has_collection(self, collection_name: str) -> bool:
-        # has_collection here means has index.
-        # We are simply adapting to the norms of the other DBs.
+        # "Collection" is mapped to "index" here to match the other backends.
         return self.client.indices.exists(index=self._get_index_name(collection_name))
 
     def delete_collection(self, collection_name: str):
-        # delete_collection here means delete index.
-        # We are simply adapting to the norms of the other DBs.
         self.client.indices.delete(index=self._get_index_name(collection_name))
 
+    # --- reads ------------------------------------------------------------
+
     def search(
-        self, collection_name: str, vectors: list[list[float | int]], limit: int
+        self, collection_name: str, vectors: List[List[float | int]], limit: int
     ) -> Optional[SearchResult]:
+        """Nearest-neighbor lookup; returns up to ``limit`` rows with scores."""
         try:
             if not self.has_collection(collection_name):
                 return None
@@ -120,11 +129,12 @@ class OpenSearchClient:
                     "script_score": {
                         "query": {"match_all": {}},
                         "script": {
+                            # cosine similarity spans [-1, 1]; normalize to [0, 1].
                             "source": "(cosineSimilarity(params.query_value, doc[params.field]) + 1.0) / 2.0",
                             "params": {
                                 "field": "vector",
-                                "query_value": vectors[0],
-                            },  # Assuming single query vector
+                                "query_value": vectors[0],  # single query vector
+                            },
                         },
                     }
                 },
@@ -135,13 +145,13 @@ class OpenSearchClient:
             )
 
             return self._result_to_search_result(result)
-
-        except Exception as e:
+        except Exception:
             return None
 
     def query(
         self, collection_name: str, filter: dict, limit: Optional[int] = None
     ) -> Optional[GetResult]:
+        """Rows whose metadata matches every key in ``filter``."""
         if not self.has_collection(collection_name):
             return None
 
@@ -165,15 +175,11 @@ class OpenSearchClient:
             )
 
             return self._result_to_get_result(result)
-
-        except Exception as e:
+        except Exception:
             return None
 
-    def _create_index_if_not_exists(self, collection_name: str, dimension: int):
-        if not self.has_collection(collection_name):
-            self._create_index(collection_name, dimension)
-
     def get(self, collection_name: str) -> Optional[GetResult]:
+        """Everything in the collection."""
         query = {"query": {"match_all": {}}, "_source": ["text", "metadata"]}
 
         result = self.client.search(
@@ -181,7 +187,10 @@ class OpenSearchClient:
         )
         return self._result_to_get_result(result)
 
-    def insert(self, collection_name: str, items: list[VectorItem]):
+    # --- writes -----------------------------------------------------------
+
+    def insert(self, collection_name: str, items: List[VectorItem]):
+        """Insert rows, creating the index if needed."""
         self._create_index_if_not_exists(
             collection_name=collection_name, dimension=len(items[0]["vector"])
         )
@@ -202,7 +211,8 @@ class OpenSearchClient:
             ]
             bulk(self.client, actions)
 
-    def upsert(self, collection_name: str, items: list[VectorItem]):
+    def upsert(self, collection_name: str, items: List[VectorItem]):
+        """Insert-or-update rows; creates the index if needed."""
         self._create_index_if_not_exists(
             collection_name=collection_name, dimension=len(items[0]["vector"])
         )
@@ -227,9 +237,16 @@ class OpenSearchClient:
     def delete(
         self,
         collection_name: str,
-        ids: Optional[list[str]] = None,
+        ids: Optional[List[str]] = None,
         filter: Optional[dict] = None,
+        metadata: Optional[dict] = None,
     ):
+        """Delete rows by ``ids`` or by a metadata ``filter``.
+
+        ``metadata`` is an accepted alias for ``filter`` — some callers pass
+        the selector under that name.
+        """
+        effective_filter = filter or metadata
         if ids:
             actions = [
                 {
@@ -240,11 +257,9 @@ class OpenSearchClient:
                 for id in ids
             ]
             bulk(self.client, actions)
-        elif filter:
-            query_body = {
-                "query": {"bool": {"filter": []}},
-            }
-            for field, value in filter.items():
+        elif effective_filter:
+            query_body = {"query": {"bool": {"filter": []}}}
+            for field, value in effective_filter.items():
                 query_body["query"]["bool"]["filter"].append(
                     {"match": {"metadata." + str(field): value}}
                 )
@@ -253,6 +268,7 @@ class OpenSearchClient:
             )
 
     def reset(self):
+        """Delete every index under the ``jyotigpt_`` prefix."""
         indices = self.client.indices.get(index=f"{self.index_prefix}_*")
         for index in indices:
             self.client.indices.delete(index=index)

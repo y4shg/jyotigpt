@@ -1,22 +1,28 @@
-from pymilvus import MilvusClient as Client
-from pymilvus import FieldSchema, DataType
+"""Milvus vector-store client.
+
+Connects via ``MILVUS_URI`` (optionally authenticated with
+``MILVUS_TOKEN``). Collections are prefixed ``jyotigpt_`` and dash
+characters are not allowed in Milvus names, so ``-`` is replaced with
+``_``. Raw cosine scores span [-1, 1]; they are normalized to [0, 1].
+"""
+
 import json
 import logging
-from typing import Optional
+from typing import List, Optional
 
-from jyotigpt.retrieval.vector.main import VectorItem, SearchResult, GetResult
-from jyotigpt.config import (
-    MILVUS_URI,
-    MILVUS_DB,
-    MILVUS_TOKEN,
-)
+from pymilvus import DataType, FieldSchema, MilvusClient as Client
+
+from jyotigpt.config import MILVUS_DB, MILVUS_TOKEN, MILVUS_URI
 from jyotigpt.env import SRC_LOG_LEVELS
+from jyotigpt.retrieval.vector.main import GetResult, SearchResult, VectorItem
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["RAG"])
 
 
 class MilvusClient:
+    """CRUD/search client for a Milvus server."""
+
     def __init__(self):
         self.collection_prefix = "jyotigpt"
         if MILVUS_TOKEN is None:
@@ -24,7 +30,13 @@ class MilvusClient:
         else:
             self.client = Client(uri=MILVUS_URI, db_name=MILVUS_DB, token=MILVUS_TOKEN)
 
-    def _result_to_get_result(self, result) -> GetResult:
+    # --- internal helpers -------------------------------------------------
+
+    def _safe_name(self, collection_name: str) -> str:
+        """Milvus collection names cannot contain dashes."""
+        return collection_name.replace("-", "_")
+
+    def _to_get_result(self, result) -> GetResult:
         ids = []
         documents = []
         metadatas = []
@@ -42,15 +54,9 @@ class MilvusClient:
             documents.append(_documents)
             metadatas.append(_metadatas)
 
-        return GetResult(
-            **{
-                "ids": ids,
-                "documents": documents,
-                "metadatas": metadatas,
-            }
-        )
+        return GetResult(ids=ids, documents=documents, metadatas=metadatas)
 
-    def _result_to_search_result(self, result) -> SearchResult:
+    def _to_search_result(self, result) -> SearchResult:
         ids = []
         distances = []
         documents = []
@@ -64,10 +70,8 @@ class MilvusClient:
 
             for item in match:
                 _ids.append(item.get("id"))
-                # normalize milvus score from [-1, 1] to [0, 1] range
-                # https://milvus.io/docs/de/metric.md
-                _dist = (item.get("distance") + 1.0) / 2.0
-                _distances.append(_dist)
+                # Milvus cosine similarity spans [-1, 1]; normalize to [0, 1].
+                _distances.append((item.get("distance") + 1.0) / 2.0)
                 _documents.append(item.get("entity", {}).get("data", {}).get("text"))
                 _metadatas.append(item.get("entity", {}).get("metadata"))
 
@@ -77,12 +81,10 @@ class MilvusClient:
             metadatas.append(_metadatas)
 
         return SearchResult(
-            **{
-                "ids": ids,
-                "distances": distances,
-                "documents": documents,
-                "metadatas": metadatas,
-            }
+            ids=ids,
+            distances=distances,
+            documents=documents,
+            metadatas=metadatas,
         )
 
     def _create_collection(self, collection_name: str, dimension: int):
@@ -116,72 +118,61 @@ class MilvusClient:
         )
 
         self.client.create_collection(
-            collection_name=f"{self.collection_prefix}_{collection_name}",
+            collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}",
             schema=schema,
             index_params=index_params,
         )
 
+    def _as_filter_string(self, filter: dict) -> str:
+        """Build the Milvus boolean expression for a metadata match."""
+        return " && ".join(
+            f'metadata["{key}"] == {json.dumps(value)}'
+            for key, value in filter.items()
+        )
+
+    # --- public API -------------------------------------------------------
+
     def has_collection(self, collection_name: str) -> bool:
-        # Check if the collection exists based on the collection name.
-        collection_name = collection_name.replace("-", "_")
         return self.client.has_collection(
-            collection_name=f"{self.collection_prefix}_{collection_name}"
+            collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}"
         )
 
     def delete_collection(self, collection_name: str):
-        # Delete the collection based on the collection name.
-        collection_name = collection_name.replace("-", "_")
         return self.client.drop_collection(
-            collection_name=f"{self.collection_prefix}_{collection_name}"
+            collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}"
         )
 
     def search(
-        self, collection_name: str, vectors: list[list[float | int]], limit: int
+        self, collection_name: str, vectors: List[List[float | int]], limit: int
     ) -> Optional[SearchResult]:
-        # Search for the nearest neighbor items based on the vectors and return 'limit' number of results.
-        collection_name = collection_name.replace("-", "_")
+        """Nearest-neighbor lookup; returns up to ``limit`` rows with scores."""
         result = self.client.search(
-            collection_name=f"{self.collection_prefix}_{collection_name}",
+            collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}",
             data=vectors,
             limit=limit,
             output_fields=["data", "metadata"],
         )
 
-        return self._result_to_search_result(result)
+        return self._to_search_result(result)
 
     def query(self, collection_name: str, filter: dict, limit: Optional[int] = None):
-        # Construct the filter string for querying
-        collection_name = collection_name.replace("-", "_")
+        """Rows whose metadata matches every key in ``filter`` (paginated)."""
         if not self.has_collection(collection_name):
             return None
 
-        filter_string = " && ".join(
-            [
-                f'metadata["{key}"] == {json.dumps(value)}'
-                for key, value in filter.items()
-            ]
-        )
+        filter_string = self._as_filter_string(filter)
 
-        max_limit = 16383  # The maximum number of records per request
+        max_limit = 16383  # per-request cap imposed by Milvus
         all_results = []
-
-        if limit is None:
-            limit = float("inf")  # Use infinity as a placeholder for no limit
-
-        # Initialize offset and remaining to handle pagination
-        offset = 0
-        remaining = limit
+        remaining = limit if limit is not None else float("inf")
 
         try:
-            # Loop until there are no more items to fetch or the desired limit is reached
+            offset = 0
             while remaining > 0:
-                log.info(f"remaining: {remaining}")
-                current_fetch = min(
-                    max_limit, remaining
-                )  # Determine how many items to fetch in this iteration
+                current_fetch = min(max_limit, remaining)
 
                 results = self.client.query(
-                    collection_name=f"{self.collection_prefix}_{collection_name}",
+                    collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}",
                     filter=filter_string,
                     output_fields=["*"],
                     limit=current_fetch,
@@ -192,18 +183,15 @@ class MilvusClient:
                     break
 
                 all_results.extend(results)
-                results_count = len(results)
-                remaining -= (
-                    results_count  # Decrease remaining by the number of items fetched
-                )
-                offset += results_count
+                remaining -= len(results)
+                offset += len(results)
 
-                # Break the loop if the results returned are less than the requested fetch count
-                if results_count < current_fetch:
+                # A short page means we have reached the end of the data.
+                if len(results) < current_fetch:
                     break
 
             log.debug(all_results)
-            return self._result_to_get_result([all_results])
+            return self._to_get_result([all_results])
         except Exception as e:
             log.exception(
                 f"Error querying collection {collection_name} with limit {limit}: {e}"
@@ -211,26 +199,29 @@ class MilvusClient:
             return None
 
     def get(self, collection_name: str) -> Optional[GetResult]:
-        # Get all the items in the collection.
-        collection_name = collection_name.replace("-", "_")
+        """Everything in the collection."""
         result = self.client.query(
-            collection_name=f"{self.collection_prefix}_{collection_name}",
+            collection_name=f"{self.collection_prefix}_{self._safe_name(collection_name)}",
             filter='id != ""',
         )
-        return self._result_to_get_result([result])
+        return self._to_get_result([result])
 
-    def insert(self, collection_name: str, items: list[VectorItem]):
-        # Insert the items into the collection, if the collection does not exist, it will be created.
-        collection_name = collection_name.replace("-", "_")
-        if not self.client.has_collection(
-            collection_name=f"{self.collection_prefix}_{collection_name}"
-        ):
+    def _collection_or_create(self, collection_name: str, items: List[VectorItem]):
+        """Return the (prefixed, dashed) name, creating the collection first."""
+        safe_name = self._safe_name(collection_name)
+        prefixed = f"{self.collection_prefix}_{safe_name}"
+        if not self.client.has_collection(collection_name=prefixed):
             self._create_collection(
-                collection_name=collection_name, dimension=len(items[0]["vector"])
+                collection_name=safe_name, dimension=len(items[0]["vector"])
             )
+        return prefixed
+
+    def insert(self, collection_name: str, items: List[VectorItem]):
+        """Insert rows, creating the collection if needed."""
+        prefixed = self._collection_or_create(collection_name, items)
 
         return self.client.insert(
-            collection_name=f"{self.collection_prefix}_{collection_name}",
+            collection_name=prefixed,
             data=[
                 {
                     "id": item["id"],
@@ -242,18 +233,12 @@ class MilvusClient:
             ],
         )
 
-    def upsert(self, collection_name: str, items: list[VectorItem]):
-        # Update the items in the collection, if the items are not present, insert them. If the collection does not exist, it will be created.
-        collection_name = collection_name.replace("-", "_")
-        if not self.client.has_collection(
-            collection_name=f"{self.collection_prefix}_{collection_name}"
-        ):
-            self._create_collection(
-                collection_name=collection_name, dimension=len(items[0]["vector"])
-            )
+    def upsert(self, collection_name: str, items: List[VectorItem]):
+        """Insert-or-update rows; creates the collection if needed."""
+        prefixed = self._collection_or_create(collection_name, items)
 
         return self.client.upsert(
-            collection_name=f"{self.collection_prefix}_{collection_name}",
+            collection_name=prefixed,
             data=[
                 {
                     "id": item["id"],
@@ -268,32 +253,27 @@ class MilvusClient:
     def delete(
         self,
         collection_name: str,
-        ids: Optional[list[str]] = None,
+        ids: Optional[List[str]] = None,
         filter: Optional[dict] = None,
+        metadata: Optional[dict] = None,
     ):
-        # Delete the items from the collection based on the ids.
-        collection_name = collection_name.replace("-", "_")
-        if ids:
-            return self.client.delete(
-                collection_name=f"{self.collection_prefix}_{collection_name}",
-                ids=ids,
-            )
-        elif filter:
-            # Convert the filter dictionary to a string using JSON_CONTAINS.
-            filter_string = " && ".join(
-                [
-                    f'metadata["{key}"] == {json.dumps(value)}'
-                    for key, value in filter.items()
-                ]
-            )
+        """Delete rows by ``ids`` or by a metadata ``filter``.
 
+        ``metadata`` is an accepted alias for ``filter`` — some callers pass
+        the selector under that name.
+        """
+        prefixed = f"{self.collection_prefix}_{self._safe_name(collection_name)}"
+
+        if ids:
+            return self.client.delete(collection_name=prefixed, ids=ids)
+        elif filter or metadata:
             return self.client.delete(
-                collection_name=f"{self.collection_prefix}_{collection_name}",
-                filter=filter_string,
+                collection_name=prefixed,
+                filter=self._as_filter_string(filter or metadata),
             )
 
     def reset(self):
-        # Resets the database. This will delete all collections and item entries.
+        """Drop every collection under the ``jyotigpt_`` prefix."""
         collection_names = self.client.list_collections()
         for collection_name in collection_names:
             if collection_name.startswith(self.collection_prefix):
