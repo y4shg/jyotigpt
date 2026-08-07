@@ -4,7 +4,7 @@
 
 	import Tooltip from '$shared/components/Tooltip.svelte';
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
-	import AddConnectionModal from '$features/app/AddConnectionModal';
+	import AddConnectionModal from '$features/app/AddConnectionModal.svelte';
 	import ConfirmDialog from '$shared/components/ConfirmDialog.svelte';
 
 	import Cog6 from '$shared/icons/Cog6.svelte';

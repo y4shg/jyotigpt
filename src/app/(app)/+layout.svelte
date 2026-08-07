@@ -41,7 +41,7 @@
 
 	import Sidebar from '$shared/layout/Sidebar.svelte';
 	import SettingsModal from '$features/chat/SettingsModal.svelte';
-	import ChangelogModal from '$features/app/ChangelogModal';
+	import ChangelogModal from '$features/app/ChangelogModal.svelte';
 	import AccountPending from '$shared/layout/Overlay/AccountPending.svelte';
 	import UpdateInfoToast from '$shared/layout/UpdateInfoToast.svelte';
 	import { get } from 'svelte/store';

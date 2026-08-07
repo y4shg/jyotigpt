@@ -14,7 +14,7 @@
 	import Plus from '$shared/icons/Plus.svelte';
 	import Connection from '$features/chat/Settings/Tools/Connection.svelte';
 
-	import AddServerModal from '$features/app/AddServerModal';
+	import AddServerModal from '$features/app/AddServerModal.svelte';
 	import { getToolServerConnections, setToolServerConnections } from '$api/configs';
 
 	export let saveSettings: Function;

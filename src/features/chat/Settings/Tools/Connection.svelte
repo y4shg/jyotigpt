@@ -6,7 +6,7 @@
 	import SensitiveInput from '$shared/components/SensitiveInput.svelte';
 	import Cog6 from '$shared/icons/Cog6.svelte';
 	import ConfirmDialog from '$shared/components/ConfirmDialog.svelte';
-	import AddServerModal from '$features/app/AddServerModal';
+	import AddServerModal from '$features/app/AddServerModal.svelte';
 
 	export let onDelete = () => {};
 	export let onSubmit = () => {};

@@ -14,7 +14,7 @@
 	import Plus from '$shared/icons/Plus.svelte';
 	import Connection from './Connections/Connection.svelte';
 
-	import AddConnectionModal from '$features/app/AddConnectionModal';
+	import AddConnectionModal from '$features/app/AddConnectionModal.svelte';
 
 	export let saveSettings: Function;
 

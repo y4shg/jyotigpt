@@ -28,7 +28,7 @@
 
 	import Spinner from '$shared/components/Spinner.svelte';
 	import Files from './KnowledgeBase/Files.svelte';
-	import AddFilesPlaceholder from '$features/app/AddFilesPlaceholder';
+	import AddFilesPlaceholder from '$features/app/AddFilesPlaceholder.svelte';
 
 	import AddContentMenu from './KnowledgeBase/AddContentMenu.svelte';
 	import AddTextContentModal from './KnowledgeBase/AddTextContentModal.svelte';

@@ -14,7 +14,7 @@
 	import { generateInitialsImage, canvasPixelTest } from '$shared/utils';
 
 	import Spinner from '$shared/components/Spinner.svelte';
-	import OnBoarding from '$features/app/OnBoarding';
+	import OnBoarding from '$features/app/OnBoarding.svelte';
 
 	const i18n = getContext('i18n');
 
