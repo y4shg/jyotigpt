@@ -10,6 +10,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 __pycache__
 .idea
+backend/backend
 venv
 _old
 uploads
