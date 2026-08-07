@@ -44,8 +44,8 @@
 	import i18n, { initI18n, getLanguages, changeLanguage } from '$lib/i18n';
 	import { bestMatchingLanguage } from '$lib/utils';
 	import { getAllTags, getChatList } from '$lib/apis/chats';
-	import NotificationToast from '$lib/components/NotificationToast.svelte';
-	import AppSidebar from '$lib/components/app/AppSidebar.svelte';
+	import NotificationToast from '$features/app/NotificationToast';
+	import AppSidebar from '$features/app/AppSidebar.svelte';
 	import { chatCompletion } from '$lib/apis/openai';
 
 	setContext('i18n', i18n);

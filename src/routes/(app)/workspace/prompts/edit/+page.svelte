@@ -9,7 +9,7 @@
 	import { getPromptByCommand, getPrompts, updatePromptByCommand } from '$lib/apis/prompts';
 	import { page } from '$app/stores';
 
-	import PromptEditor from '$lib/components/workspace/Prompts/PromptEditor.svelte';
+	import PromptEditor from '$features/workspace/Prompts/PromptEditor.svelte';
 
 	let prompt = null;
 	const onSubmit = async (_prompt) => {

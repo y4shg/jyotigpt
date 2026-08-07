@@ -1,5 +1,5 @@
 <script>
-	import Prompts from '$lib/components/workspace/Prompts.svelte';
+	import Prompts from '$features/workspace/Prompts.svelte';
 </script>
 
 <Prompts />

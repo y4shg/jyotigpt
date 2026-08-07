@@ -2,8 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { getToolById, getTools, updateToolById } from '$lib/apis/tools';
-	import Spinner from '$lib/components/common/Spinner.svelte';
-	import ToolkitEditor from '$lib/components/workspace/Tools/ToolkitEditor.svelte';
+	import Spinner from '$shared/components/Spinner.svelte';
+	import ToolkitEditor from '$features/workspace/Tools/ToolkitEditor.svelte';
 	import { JYOTIGPT_VERSION } from '$lib/constants';
 	import { tools } from '$lib/stores';
 	import { compareVersion, extractFrontmatter } from '$lib/utils';

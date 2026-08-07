@@ -1,5 +1,5 @@
 import { browser, dev } from '$app/environment';
-// import { version } from '../../package.json';
+// import { version } from '../package.json';
 
 export const APP_NAME = 'JyotiGPT';
 

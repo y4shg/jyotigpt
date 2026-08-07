@@ -13,8 +13,8 @@
 
 	import { generateInitialsImage, canvasPixelTest } from '$lib/utils';
 
-	import Spinner from '$lib/components/common/Spinner.svelte';
-	import OnBoarding from '$lib/components/OnBoarding.svelte';
+	import Spinner from '$shared/components/Spinner.svelte';
+	import OnBoarding from '$features/app/OnBoarding';
 
 	const i18n = getContext('i18n');
 

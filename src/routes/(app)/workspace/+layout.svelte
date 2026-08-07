@@ -14,7 +14,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	import SidebarIcon from '$lib/components/icons/SidebarIcon.svelte';
+	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 
 	const i18n = getContext('i18n');
 

@@ -7,8 +7,8 @@
 	import { config, functions, models, settings } from '$lib/stores';
 	import { updateFunctionById, getFunctions, getFunctionById } from '$lib/apis/functions';
 
-	import FunctionEditor from '$lib/components/admin/Functions/FunctionEditor.svelte';
-	import Spinner from '$lib/components/common/Spinner.svelte';
+	import FunctionEditor from '$features/admin/Functions/FunctionEditor.svelte';
+	import Spinner from '$shared/components/Spinner.svelte';
 	import { getModels } from '$lib/apis';
 	import { compareVersion, extractFrontmatter } from '$lib/utils';
 	import { JYOTIGPT_VERSION } from '$lib/constants';

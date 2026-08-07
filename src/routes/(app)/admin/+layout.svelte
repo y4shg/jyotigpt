@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 
 	import { JYOTIGPT_NAME, showSidebar, user } from '$lib/stores';
-	import SidebarIcon from '$lib/components/icons/SidebarIcon.svelte';
+	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 	import { page } from '$app/stores';
 
 	const i18n = getContext('i18n');

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, getContext } from 'svelte';
 	import { JYOTIGPT_NAME, showSidebar, functions } from '$lib/stores';
-	import SidebarIcon from '$lib/components/icons/SidebarIcon.svelte';
+	import SidebarIcon from '$shared/icons/SidebarIcon.svelte';
 	import { page } from '$app/stores';
 
 	const i18n = getContext('i18n');

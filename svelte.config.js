@@ -14,7 +14,12 @@ const config = {
 			pages: 'build',
 			assets: 'build',
 			fallback: 'index.html'
-		})
+		}),
+		alias: {
+			$api: 'src/api',
+			$features: 'src/features',
+			$shared: 'src/shared'
+		}
 	},
 	vitePlugin: {
 		// inspector: {
