@@ -1,25 +1,22 @@
-import json
+"""User-group persistence.
+
+Groups bundle users under shared permissions. Membership is stored as a JSON
+list of user ids on the group row, so membership lookups filter on the
+serialized array.
+"""
+
 import logging
 import time
-from typing import Optional
 import uuid
+from typing import Optional
 
-from jyotigpt.internal.db import Base, get_db
 from jyotigpt.env import SRC_LOG_LEVELS
-
-from jyotigpt.models.files import FileMetadataResponse
-
-
+from jyotigpt.internal.db import Base, get_db
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import BigInteger, Column, String, Text, JSON, func
-
+from sqlalchemy import JSON, BigInteger, Column, String, Text, func
 
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
-
-####################
-# UserGroup DB Schema
-####################
 
 
 class Group(Base):
@@ -55,13 +52,8 @@ class GroupModel(BaseModel):
     permissions: Optional[dict] = None
     user_ids: list[str] = []
 
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-
-
-####################
-# Forms
-####################
+    created_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
 
 
 class GroupResponse(BaseModel):
@@ -73,8 +65,8 @@ class GroupResponse(BaseModel):
     data: Optional[dict] = None
     meta: Optional[dict] = None
     user_ids: list[str] = []
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
+    created_at: int  # timestamp in epoch seconds
+    updated_at: int  # timestamp in epoch seconds
 
 
 class GroupForm(BaseModel):
@@ -88,9 +80,7 @@ class GroupUpdateForm(GroupForm):
 
 
 class GroupTable:
-    def insert_new_group(
-        self, user_id: str, form_data: GroupForm
-    ) -> Optional[GroupModel]:
+    def insert_new_group(self, user_id: str, form_data: GroupForm) -> Optional[GroupModel]:
         with get_db() as db:
             group = GroupModel(
                 **{
@@ -127,12 +117,8 @@ class GroupTable:
             return [
                 GroupModel.model_validate(group)
                 for group in db.query(Group)
-                .filter(
-                    func.json_array_length(Group.user_ids) > 0
-                )  # Ensure array exists
-                .filter(
-                    Group.user_ids.cast(String).like(f'%"{user_id}"%')
-                )  # String-based check
+                .filter(func.json_array_length(Group.user_ids) > 0)  # array present
+                .filter(Group.user_ids.cast(String).like(f'%"{user_id}"%'))
                 .order_by(Group.updated_at.desc())
                 .all()
             ]
@@ -145,7 +131,7 @@ class GroupTable:
         except Exception:
             return None
 
-    def get_group_user_ids_by_id(self, id: str) -> Optional[str]:
+    def get_group_user_ids_by_id(self, id: str) -> Optional[list[str]]:
         group = self.get_group_by_id(id)
         if group:
             return group.user_ids
