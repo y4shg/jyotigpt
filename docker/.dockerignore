@@ -10,5 +10,3 @@ data
 .env
 .env.local
 *.db
-.venv
-**/.venv

@@ -1,0 +1,326 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens — the product gray ramp (dark-first), fonts, shadows.
+   Contract extracted from the previous implementation's visual surface.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-gray-50: #f9f9f9;
+  --color-gray-100: #ececec;
+  --color-gray-200: #e3e3e3;
+  --color-gray-300: #cdcdcd;
+  --color-gray-400: #b4b4b4;
+  --color-gray-500: #9b9b9b;
+  --color-gray-600: #676767;
+  --color-gray-700: #4e4e4e;
+  --color-gray-800: #333333;
+  --color-gray-850: #262626;
+  --color-gray-900: #171717;
+  --color-gray-950: #0d0d0d;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter Variable", ui-sans-serif,
+    system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif,
+    "Helvetica Neue", Arial;
+  --font-primary: "Archivo Variable", "Inter Variable", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-secondary: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mona: "Mona Sans", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-3xl: 0 20px 50px -12px rgb(0 0 0 / 0.35);
+  --shadow-mini: 0 1px 1px 0 rgb(0 0 0 / 0.1);
+}
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Inter-Variable.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Archivo-Variable.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Mona Sans";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Mona-Sans.woff2") format("woff2");
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  html {
+    color-scheme: dark;
+    word-break: break-word;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  pre {
+    font-family: var(--font-sans);
+    white-space: pre-wrap;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  code {
+    overflow-x: auto;
+    width: auto;
+  }
+
+  li p {
+    display: inline;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    --tw-border-opacity: 1;
+    background-color: rgba(236, 236, 236, 0.8);
+    border-color: rgba(255, 255, 255, var(--tw-border-opacity));
+    border-radius: 9999px;
+    border-width: 1px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: rgba(42, 42, 42, 0.8);
+    border-color: rgba(0, 0, 0, var(--tw-border-opacity));
+  }
+
+  ::-webkit-scrollbar {
+    height: 0.8rem;
+    width: 0.4rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 9999px;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 0rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
+}
+
+/* ------------------------------------------------------------- utilities */
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar-thumb {
+    visibility: hidden;
+  }
+  &:active::-webkit-scrollbar-thumb,
+  &:focus::-webkit-scrollbar-thumb,
+  &:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}
+
+@utility scrollbar-none {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Typography helpers (product copy) */
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+.instrument-serif {
+  font-family: "Instrument Serif", serif;
+}
+
+.markdown-prose {
+  @apply prose prose-sm dark:prose-invert prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-headings:font-semibold prose-hr:my-4 prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:my-0 prose-ol:my-0 prose-li:my-0 whitespace-pre-line;
+}
+
+.markdown-prose-xs {
+  @apply prose prose-sm dark:prose-invert prose-blockquote:border-s-2 prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:border-s-gray-100 prose-blockquote:dark:border-gray-800 prose-headings:font-semibold prose-hr:my-0 prose-hr:border-gray-100 prose-hr:dark:border-gray-800 prose-p:my-0 prose-img:my-1 prose-headings:my-1 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-ul:my-0 prose-ol:my-0 prose-li:my-0 whitespace-pre-line;
+  font-size: 0.8rem;
+}
+
+.markdown-prose a {
+  @apply underline;
+}
+
+.codespan {
+  color: #eb5757;
+  border-width: 0px;
+  padding: 3px 8px;
+  font-size: 0.8em;
+  font-weight: 600;
+  @apply rounded-md dark:bg-gray-800 bg-gray-100 mx-0.5;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #9a9b9e 25%, #2a2929 50%, #9a9b9e 75%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+  color: #818286;
+}
+
+.dark .shimmer {
+  background: linear-gradient(90deg, #818286 25%, #eae5e5 50%, #818286 75%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+  color: #a1a3a7;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes smoothFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-description {
+  animation: smoothFadeIn 0.2s forwards;
+}
+
+@keyframes sizePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.animate-size {
+  animation: sizePulse 1.5s ease-in-out infinite;
+}
+
+.hljs {
+  @apply rounded-lg;
+}
+
+/* Code highlighting palette (product look) */
+.hljs-comment,
+.hljs-quote {
+  color: #616161;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-regexp,
+.hljs-link,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #f98181;
+}
+
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #fbbc88;
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #b9f18d;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #faf594;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #70cff8;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
