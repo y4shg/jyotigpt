@@ -1,14 +1,16 @@
-.git
-.next
-node_modules
-__pycache__
-*.pyc
-*.egg-info
-.pytest_cache
-.ruff_cache
-data
-.env
-.env.local
-*.db
-.venv
+# Build context exclusions. Docker matches a pattern only at the context root
+# unless it carries a leading `**/`; the nested forms below are what keep
+# web/node_modules, web/.next, api/.venv, etc. out of the context.
+**/.git
+**/.next
+**/node_modules
+**/__pycache__
+**/*.pyc
+**/*.egg-info
+**/.pytest_cache
+**/.ruff_cache
+**/data
+**/.env
+**/.env.local
+**/*.db
 **/.venv

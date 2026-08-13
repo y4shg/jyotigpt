@@ -1,20 +1,22 @@
-# JyotiGPT — local development + production compose
+# JyotiGPT — all-in-one compose
+# A single container runs both the FastAPI backend (:8000, internal) and the
+# Next.js web server (:3001, the origin you browse to). /api/* is proxied to
+# the backend by the web server, so only port 3001 is published.
 # Usage:
 #   docker compose up -d          (build + start)
-#   docker compose logs -f api    (tail API logs)
+#   docker compose logs -f        (tail logs)
 #   docker compose down           (stop + remove)
 
 services:
-  api:
+  jyotigpt:
     build:
       context: ..
-      dockerfile: docker/Dockerfile.api
+      dockerfile: docker/Dockerfile
     ports:
-      - "8000:8000"
+      - "3001:3001"
     environment:
       - APP_ENV=production
       - DATA_DIR=/app/data
-      - DATABASE_URL=sqlite:///data/jyoti.db
       - FRONTEND_ORIGINS=http://localhost:3001,http://localhost:3000
       - WEBUI_URL=http://localhost:3001
       # Add your provider keys here:
@@ -25,26 +27,13 @@ services:
       # - AUDIO_STT_ENGINE=
       # - AUDIO_TTS_ENGINE=
     volumes:
-      - api-data:/app/data
+      - jyotigpt-data:/app/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/api/v1/config').raise_for_status()"]
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:3001/api/v1/config').raise_for_status()"]
       interval: 30s
       timeout: 5s
-      start_period: 10s
-
-  web:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.web
-    ports:
-      - "3001:3001"
-    environment:
-      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
-    depends_on:
-      api:
-        condition: service_healthy
-    restart: unless-stopped
+      start_period: 15s
 
 volumes:
-  api-data:
+  jyotigpt-data:

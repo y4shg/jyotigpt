@@ -163,7 +163,7 @@ New vars (own design): `JYOTI_SECRET_KEY` (alias for JWT secret), `JYOTI_ADMIN_E
 - [x] Verify: `tsc --noEmit` clean, `npm run build` clean (10 routes, all static/dynamic), backend `py_compile` clean, backend imports resolve
 
 ### Phase 9 — Docker + verification ✅
-- [x] `docker/Dockerfile.api` (Python 3.12-slim, gcc+libxml2, pip install, uvicorn, healthcheck), `docker/Dockerfile.web` (multi-stage Node 22, npm ci + build → production), `docker/docker-compose.yaml` (api:8000 + web:3001, healthcheck, api-data volume, env placeholders)
+- [x] `docker/Dockerfile` — **all-in-one** (multi-stage: node:22-slim `web-build` → npm ci + `next build`; python:3.12-slim runtime + Node 22 tarball via TARGETARCH, pip install, both apps copied, EXPOSE 3001 8000, healthcheck through :3001/api/v1/config). Replaces the split `Dockerfile.web`/`Dockerfile.api` (removed). `docker/entrypoint.sh` starts uvicorn (:8000, background) + `next start` (:3001, primary) with INT/TERM trap. `docker-compose.yaml` is now a single `jyotigpt` service (3001 published, jyotigpt-data volume). Web is the single origin: `web/next.config.ts` rewrite `/api/:path*` → `http://localhost:8000` (production only)
 - [x] `.dockerignore` (root + docker/) — .git, .next, node_modules, __pycache__, data, .env, *.db
 - [x] `web/eslint.config.mjs` — ESLint 9 native flat config, disabled overly strict react-hooks rules (set-state-in-effect, immutability)
 - [x] ESLint fixes: RoomChat.tsx (useMemo deps `room?.created_at`→`room`, Date.now()→0, ref cleanup copy), RoomsSection.tsx (unused disable directive removed)
