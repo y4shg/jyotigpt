@@ -3,7 +3,7 @@
 // ChatInput — autosizing composer with plus menu, mic, image/web-search toggles, send/stop.
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, Mic, Paperclip, Photo, Square, Search } from "lucide-react";
+import { ArrowUp, Mic, Paperclip, ImageIcon, Square, Search } from "lucide-react";
 import { clsx } from "clsx";
 import { useChat } from "./useChatStore";
 import { useApp } from "@/lib/store";
@@ -151,7 +151,7 @@ export function ChatInput({ onNavigate }: { onNavigate?: (id: string) => void })
                   : "bg-transparent border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
               )}
             >
-              <Photo className="size-5" strokeWidth={1.75} />
+              <ImageIcon className="size-5" strokeWidth={1.75} />
               <span className="hidden @xl:block translate-y-[0.5px]">Image</span>
             </button>
           </Tooltip>

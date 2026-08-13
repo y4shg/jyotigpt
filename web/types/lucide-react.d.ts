@@ -63,7 +63,6 @@ declare module "lucide-react" {
   export const FileText: LucideIcon;
   export const CheckCircle2: LucideIcon;
   export const XCircle: LucideIcon;
-  export const Photo: LucideIcon;
   export const Users: LucideIcon;
   export const ShieldCheck: LucideIcon;
   export const ChartColumn: LucideIcon;
