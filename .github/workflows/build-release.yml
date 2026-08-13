@@ -1,17 +1,17 @@
 name: Release
 
-# Create a GitHub release for each push to dev. The rewrite is dev-only, so
-# there is no main trigger and no tag trigger. The version comes from
-# web/package.json (there is no root package.json), and — since the rewrite has
-# no CHANGELOG.md — the release body is assembled from recent git log entries.
-# The release step is idempotent: if the tag already exists (e.g. version is
-# still 0.1.0 and a release was already cut), the job logs and exits cleanly
-# instead of failing.
+# Create a GitHub release for each push to main. Releases are cut only from
+# main — never from dev — so the tag follows the released code. The version
+# comes from web/package.json (there is no root package.json), and — since the
+# rewrite has no CHANGELOG.md — the release body is assembled from recent git
+# log entries. The release step is idempotent: if the tag already exists (e.g.
+# the version was already released), the job logs and exits cleanly instead of
+# failing.
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   release:
