@@ -1,0 +1,57 @@
+name: Release
+
+# Create a GitHub release for each push to dev. The rewrite is dev-only, so
+# there is no main trigger and no tag trigger. The version comes from
+# web/package.json (there is no root package.json), and — since the rewrite has
+# no CHANGELOG.md — the release body is assembled from recent git log entries.
+# The release step is idempotent: if the tag already exists (e.g. version is
+# still 0.1.0 and a release was already cut), the job logs and exits cleanly
+# instead of failing.
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version number from web/package.json
+        id: get_version
+        run: |
+          VERSION=$(jq -r '.version' web/package.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Version is $VERSION"
+
+      - name: Build release body from git log
+        id: body
+        run: |
+          git log -30 --pretty=format:"- %h %s" --no-merges > /tmp/body.md || true
+          echo "body_path=/tmp/body.md" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const version = `v${{ steps.get_version.outputs.version }}`;
+            const body = fs.readFileSync('${{ steps.body.outputs.body_path }}', 'utf8') || `Automated release for ${version}.`;
+            try {
+              const release = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: version,
+                name: version,
+                body,
+              });
+              console.log(`Created release ${release.data.html_url}`);
+            } catch (err) {
+              console.log(`Release ${version} already exists or could not be created: ${err.message}`);
+              console.log('Skipping — not a failure.');
+            }
